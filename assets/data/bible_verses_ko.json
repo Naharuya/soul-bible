@@ -1,0 +1,282 @@
+{
+  "schemaVersion": "1.0",
+  "translation": "REFERENCE_ONLY",
+  "copyrightNotice": "정식 출시 전 사용하려는 성경 번역본의 라이선스를 확인하고 text 필드를 허가된 본문으로 교체하세요. 현재 text는 개발용 요약 문구입니다.",
+  "verses": [
+    {
+      "id": "PHP_4_6_7",
+      "book": "빌립보서",
+      "chapter": 4,
+      "verseStart": 6,
+      "verseEnd": 7,
+      "reference": "빌립보서 4:6-7",
+      "translation": "REFERENCE_ONLY",
+      "text": "염려를 내려놓고 기도와 감사로 마음을 맡기며 평안을 구하는 말씀입니다.",
+      "emotions": [
+        "불안"
+      ],
+      "tags": [
+        "염려",
+        "평안",
+        "기도",
+        "맡김"
+      ],
+      "reflectionQuestion": "지금 하나님께 맡기고 싶은 걱정은 무엇인가요?"
+    },
+    {
+      "id": "ISA_41_10",
+      "book": "이사야",
+      "chapter": 41,
+      "verseStart": 10,
+      "verseEnd": null,
+      "reference": "이사야 41:10",
+      "translation": "REFERENCE_ONLY",
+      "text": "두려움 가운데 함께하시고 힘과 도움을 주신다는 말씀입니다.",
+      "emotions": [
+        "불안",
+        "외로움"
+      ],
+      "tags": [
+        "두려움",
+        "함께함",
+        "도움",
+        "보호"
+      ],
+      "reflectionQuestion": "지금 가장 도움이 필요하다고 느끼는 부분은 무엇인가요?"
+    },
+    {
+      "id": "PSA_23_4",
+      "book": "시편",
+      "chapter": 23,
+      "verseStart": 4,
+      "verseEnd": null,
+      "reference": "시편 23:4",
+      "translation": "REFERENCE_ONLY",
+      "text": "어두운 길을 지날 때에도 혼자가 아니라는 고백의 말씀입니다.",
+      "emotions": [
+        "외로움",
+        "슬픔"
+      ],
+      "tags": [
+        "동행",
+        "보호",
+        "위로"
+      ],
+      "reflectionQuestion": "혼자가 아니라고 느끼게 해줄 사람이나 기억이 있나요?"
+    },
+    {
+      "id": "HEB_13_5",
+      "book": "히브리서",
+      "chapter": 13,
+      "verseStart": 5,
+      "verseEnd": null,
+      "reference": "히브리서 13:5",
+      "translation": "REFERENCE_ONLY",
+      "text": "버리지 않고 떠나지 않으신다는 약속을 기억하게 하는 말씀입니다.",
+      "emotions": [
+        "외로움"
+      ],
+      "tags": [
+        "버리지않음",
+        "함께함",
+        "신실함"
+      ],
+      "reflectionQuestion": "이 말씀을 읽으며 떠오르는 관계가 있나요?"
+    },
+    {
+      "id": "MAT_11_28",
+      "book": "마태복음",
+      "chapter": 11,
+      "verseStart": 28,
+      "verseEnd": null,
+      "reference": "마태복음 11:28",
+      "translation": "REFERENCE_ONLY",
+      "text": "무거운 짐을 지고 지친 이들이 쉼을 구하도록 초대하는 말씀입니다.",
+      "emotions": [
+        "지침",
+        "슬픔"
+      ],
+      "tags": [
+        "쉼",
+        "무거운짐",
+        "회복"
+      ],
+      "reflectionQuestion": "지금 잠시 내려놓아도 되는 짐은 무엇인가요?"
+    },
+    {
+      "id": "ISA_40_31",
+      "book": "이사야",
+      "chapter": 40,
+      "verseStart": 31,
+      "verseEnd": null,
+      "reference": "이사야 40:31",
+      "translation": "REFERENCE_ONLY",
+      "text": "기다림 속에서 새 힘을 얻고 다시 걸어갈 수 있다는 말씀입니다.",
+      "emotions": [
+        "지침"
+      ],
+      "tags": [
+        "새힘",
+        "기다림",
+        "회복"
+      ],
+      "reflectionQuestion": "오늘 회복을 위해 가장 먼저 필요한 것은 무엇인가요?"
+    },
+    {
+      "id": "JAS_1_19_20",
+      "book": "야고보서",
+      "chapter": 1,
+      "verseStart": 19,
+      "verseEnd": 20,
+      "reference": "야고보서 1:19-20",
+      "translation": "REFERENCE_ONLY",
+      "text": "듣기와 말하기, 분노를 다루는 태도를 돌아보게 하는 말씀입니다.",
+      "emotions": [
+        "분노"
+      ],
+      "tags": [
+        "분노",
+        "경청",
+        "절제",
+        "말"
+      ],
+      "reflectionQuestion": "감정을 해치지 않게 표현하려면 어떤 문장이 좋을까요?"
+    },
+    {
+      "id": "PRO_15_1",
+      "book": "잠언",
+      "chapter": 15,
+      "verseStart": 1,
+      "verseEnd": null,
+      "reference": "잠언 15:1",
+      "translation": "REFERENCE_ONLY",
+      "text": "부드러운 대답이 갈등의 온도를 낮출 수 있음을 가르치는 말씀입니다.",
+      "emotions": [
+        "분노"
+      ],
+      "tags": [
+        "온유",
+        "말",
+        "갈등"
+      ],
+      "reflectionQuestion": "사실과 요청을 차분하게 표현한다면 어떻게 말할 수 있을까요?"
+    },
+    {
+      "id": "PSA_34_18",
+      "book": "시편",
+      "chapter": 34,
+      "verseStart": 18,
+      "verseEnd": null,
+      "reference": "시편 34:18",
+      "translation": "REFERENCE_ONLY",
+      "text": "마음이 상하고 낙심한 이들에게 가까이하신다는 위로의 말씀입니다.",
+      "emotions": [
+        "슬픔"
+      ],
+      "tags": [
+        "상한마음",
+        "위로",
+        "가까이함"
+      ],
+      "reflectionQuestion": "지금 가장 위로받고 싶은 마음은 무엇인가요?"
+    },
+    {
+      "id": "JHN_14_27",
+      "book": "요한복음",
+      "chapter": 14,
+      "verseStart": 27,
+      "verseEnd": null,
+      "reference": "요한복음 14:27",
+      "translation": "REFERENCE_ONLY",
+      "text": "두려움에 휩쓸리지 않도록 평안을 마음에 두게 하는 말씀입니다.",
+      "emotions": [
+        "슬픔",
+        "불안"
+      ],
+      "tags": [
+        "평안",
+        "두려움",
+        "마음"
+      ],
+      "reflectionQuestion": "지금 마음에 필요한 평안은 어떤 모습인가요?"
+    },
+    {
+      "id": "PRO_3_5_6",
+      "book": "잠언",
+      "chapter": 3,
+      "verseStart": 5,
+      "verseEnd": 6,
+      "reference": "잠언 3:5-6",
+      "translation": "REFERENCE_ONLY",
+      "text": "자신의 이해만 의지하지 않고 길을 인도받기를 구하는 말씀입니다.",
+      "emotions": [
+        "복잡함",
+        "불안"
+      ],
+      "tags": [
+        "인도",
+        "길",
+        "신뢰",
+        "선택"
+      ],
+      "reflectionQuestion": "오늘 당장 결론 내리지 않아도 되는 부분은 무엇인가요?"
+    },
+    {
+      "id": "JAS_1_5",
+      "book": "야고보서",
+      "chapter": 1,
+      "verseStart": 5,
+      "verseEnd": null,
+      "reference": "야고보서 1:5",
+      "translation": "REFERENCE_ONLY",
+      "text": "지혜가 부족할 때 구할 수 있음을 알려주는 말씀입니다.",
+      "emotions": [
+        "복잡함"
+      ],
+      "tags": [
+        "지혜",
+        "분별",
+        "구함"
+      ],
+      "reflectionQuestion": "결정 전에 더 확인해야 할 정보는 무엇인가요?"
+    },
+    {
+      "id": "1TH_5_18",
+      "book": "데살로니가전서",
+      "chapter": 5,
+      "verseStart": 18,
+      "verseEnd": null,
+      "reference": "데살로니가전서 5:18",
+      "translation": "REFERENCE_ONLY",
+      "text": "삶의 여러 순간 속에서 감사를 발견하도록 권하는 말씀입니다.",
+      "emotions": [
+        "감사"
+      ],
+      "tags": [
+        "감사",
+        "일상",
+        "기도"
+      ],
+      "reflectionQuestion": "오늘의 감사를 누구에게 표현하고 싶나요?"
+    },
+    {
+      "id": "PSA_100_4",
+      "book": "시편",
+      "chapter": 100,
+      "verseStart": 4,
+      "verseEnd": null,
+      "reference": "시편 100:4",
+      "translation": "REFERENCE_ONLY",
+      "text": "감사와 찬양으로 하나님께 나아가는 마음을 담은 말씀입니다.",
+      "emotions": [
+        "감사"
+      ],
+      "tags": [
+        "감사",
+        "찬양",
+        "기쁨"
+      ],
+      "reflectionQuestion": "오늘 기억하고 싶은 감사 한 가지는 무엇인가요?"
+    }
+  ]
+}
