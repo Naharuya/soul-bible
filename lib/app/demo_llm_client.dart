@@ -12,7 +12,7 @@ class DemoLlmApiClient implements LlmApiClient {
 
     if (turn == 0) {
       return LlmConversationResponse(
-        message: '${emotion.label}한 마음을 혼자 견디고 계셨군요. 여기서는 서두르지 않아도 괜찮아요.',
+        message: '${emotion.naturalFeelingPhrase}을 혼자 견디고 계셨군요. 여기서는 서두르지 않아도 괜찮아요.',
         question: '그 마음이 가장 크게 느껴진 순간에는 어떤 일이 있었나요?',
         stage: ConversationStage.situation,
         detectedEmotion: emotion,

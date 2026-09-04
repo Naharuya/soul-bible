@@ -118,3 +118,15 @@ LLM 제공자 API 키를 Flutter 앱에 직접 넣지 마세요. 프록시에서
 - `lib/src/`: 기존 대화·안전·API·말씀 핵심 로직
 - `backend_contract/openapi.yaml`: 실제 백엔드 연동 계약
 - `backend/`: OpenAI Responses API 기반 실제 LLM 프록시, 안전 필터 및 테스트
+
+## 기술스택 및 운영 배포
+
+전체 기술스택, 데이터 저장 방식, Docker 호스팅 설치, Flutter APK/AAB 패키징 절차는
+[`TECH_STACK_AND_DEPLOYMENT.md`](TECH_STACK_AND_DEPLOYMENT.md)를 참고하세요.
+
+## 백엔드 도메인
+- http://lightshare8.mycafe24.com/
+- ip : 104.105.128.84
+- os : Rocky 9
+- SSH 접속: `ssh soul-bible-server` (로컬 `~/.ssh/config`와 전용 키 필요)
+- 비밀번호와 API 키는 문서나 Git에 저장하지 말고 서버의 비밀 환경변수로 관리

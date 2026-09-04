@@ -177,7 +177,7 @@ class _ConversationPageState extends State<ConversationPage> {
       selectedEmotion: widget.emotion,
       emotionIntensity: widget.intensity,
     );
-    _items.add(_ChatItem('${widget.emotion.label}한 마음이 오늘 ${widget.intensity}/10 정도로 느껴지는군요.\n\n무슨 일이 있었는지 편한 만큼만 들려주세요.'));
+    _items.add(_ChatItem('${widget.emotion.naturalFeelingPhrase}이 오늘 ${widget.intensity}/10 정도로 느껴지는군요.\n\n무슨 일이 있었는지 편한 만큼만 들려주세요.'));
     _configureTts();
   }
 

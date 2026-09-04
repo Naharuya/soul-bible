@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../app/app_theme.dart';
 import '../bible_mind_core.dart';
+import '../app/mind_card_store.dart';
 import 'conversation_page.dart';
 import 'saved_cards_page.dart';
 
@@ -15,6 +16,10 @@ class CheckInPage extends StatefulWidget {
 class _CheckInPageState extends State<CheckInPage> {
   EmotionType? _emotion;
   double _intensity = 5;
+  final _dailyUsageStore = DailyUsageStore();
+  int _dailyUsageCount = 0;
+  bool _loadingUsage = true;
+  bool _startingConversation = false;
 
   static const _icons = <EmotionType, String>{
     EmotionType.anxiety: '🌊',
@@ -37,6 +42,7 @@ class _CheckInPageState extends State<CheckInPage> {
 
   @override
   Widget build(BuildContext context) {
+    final usageLimitReached = _dailyUsageCount >= DailyUsageStore.maxUsesPerDay;
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -57,12 +63,24 @@ class _CheckInPageState extends State<CheckInPage> {
                   const SizedBox(width: 10),
                   const Text('소울바이블', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
                   const Spacer(),
-                  IconButton(
-                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SavedCardsPage())),
-                    icon: const Icon(Icons.bookmarks_outlined, color: AppTheme.green, size: 22),
-                    tooltip: '저장된 카드',
-                    constraints: const BoxConstraints(),
-                    padding: EdgeInsets.zero,
+                  PopupMenuButton<String>(
+                    icon: const Icon(Icons.menu, color: AppTheme.green, size: 24),
+                    tooltip: '메뉴',
+                    onSelected: (value) {
+                      if (value == 'saved_cards') {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SavedCardsPage()));
+                      }
+                    },
+                    itemBuilder: (_) => const [
+                      PopupMenuItem<String>(
+                        value: 'saved_cards',
+                        child: Row(children: [
+                          Icon(Icons.bookmarks_outlined),
+                          SizedBox(width: 12),
+                          Text('저장된 카드'),
+                        ]),
+                      ),
+                    ],
                   ),
                 ]),
                 const SizedBox(height: 20),
@@ -118,24 +136,20 @@ class _CheckInPageState extends State<CheckInPage> {
                 const SizedBox(height: 16),
                 FilledButton(
                   style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(52)),
-                  onPressed: _emotion == null
+                  onPressed: _emotion == null || _loadingUsage || usageLimitReached || _startingConversation
                       ? null
-                      : () => Navigator.of(context)
-                          .push(MaterialPageRoute(
-                              builder: (_) => ConversationPage(
-                                  emotion: _emotion!,
-                                  intensity: _intensity.round())))
-                          .then((_) {
-                          if (mounted) {
-                            setState(() {
-                              _emotion = null;
-                              _intensity = 5;
-                            });
-                          }
-                        }),
-                  child: const Text('마음 이야기 시작하기'),
+                      : _startConversation,
+                  child: Text(usageLimitReached ? '오늘 사용 횟수를 모두 사용했어요' : '마음 이야기 시작하기'),
                 ),
                 const SizedBox(height: 12),
+                Text(
+                  DailyUsageStore.isComputerTestMode
+                      ? '컴퓨터 테스트 모드 · 사용 횟수 제한 없음'
+                      : '오늘 ${DailyUsageStore.maxUsesPerDay}회 중 $_dailyUsageCount회 사용했어요.',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 11, color: Color(0xFF7B817E)),
+                ),
+                const SizedBox(height: 4),
                 const Text('긴급한 위험이 있다면 112, 119 또는 109에 연락해 주세요.', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, color: Color(0xFF7B817E))),
               ],
             ),
@@ -143,5 +157,50 @@ class _CheckInPageState extends State<CheckInPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDailyUsage();
+  }
+
+  Future<void> _loadDailyUsage() async {
+    final count = await _dailyUsageStore.getCount();
+    if (!mounted) return;
+    setState(() {
+      _dailyUsageCount = count;
+      _loadingUsage = false;
+    });
+  }
+
+  Future<void> _startConversation() async {
+    setState(() => _startingConversation = true);
+    final consumed = await _dailyUsageStore.tryConsume();
+    if (!mounted) return;
+    if (!consumed) {
+      setState(() {
+        _dailyUsageCount = DailyUsageStore.maxUsesPerDay;
+        _startingConversation = false;
+      });
+      return;
+    }
+
+    setState(() {
+      _dailyUsageCount++;
+      _startingConversation = false;
+    });
+    await Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => ConversationPage(
+        emotion: _emotion!,
+        intensity: _intensity.round(),
+      ),
+    ));
+    if (mounted) {
+      setState(() {
+        _emotion = null;
+        _intensity = 5;
+      });
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MindCardRecord {
@@ -96,5 +97,43 @@ class MindCardStore {
     return saved
         .map((s) => MindCardRecord.fromJson(jsonDecode(s) as Map<String, dynamic>))
         .toList();
+  }
+}
+
+class DailyUsageStore {
+  DailyUsageStore({SharedPreferencesAsync? preferences})
+      : _preferences = preferences ?? SharedPreferencesAsync();
+
+  static const _dateKey = 'soul_bible.daily_usage.date.v1';
+  static const _countKey = 'soul_bible.daily_usage.count.v1';
+    static const mobileMaxUsesPerDay = 3;
+    static const _unlimitedTestUsesPerDay = 1 << 30;
+    static bool get isComputerTestMode =>
+      kIsWeb || defaultTargetPlatform == TargetPlatform.windows;
+    static int get maxUsesPerDay =>
+      isComputerTestMode ? _unlimitedTestUsesPerDay : mobileMaxUsesPerDay;
+  final SharedPreferencesAsync _preferences;
+
+  Future<int> getCount() async {
+    final today = _todayKey();
+    final savedDate = await _preferences.getString(_dateKey);
+    if (savedDate != today) return 0;
+    return await _preferences.getInt(_countKey) ?? 0;
+  }
+
+  Future<bool> tryConsume() async {
+    final count = await getCount();
+    if (count >= maxUsesPerDay) return false;
+
+    await _preferences.setString(_dateKey, _todayKey());
+    await _preferences.setInt(_countKey, count + 1);
+    return true;
+  }
+
+  String _todayKey() {
+    final now = DateTime.now();
+    final month = now.month.toString().padLeft(2, '0');
+    final day = now.day.toString().padLeft(2, '0');
+    return '${now.year}-$month-$day';
   }
 }

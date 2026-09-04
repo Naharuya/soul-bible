@@ -6,6 +6,9 @@
 build/
 android/.gradle/
 android/local.properties
+android/key.properties
+android/*.jks
+android/*.keystore
 ios/Pods/
 ios/.symlinks/
 *.iml
