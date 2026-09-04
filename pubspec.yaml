@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: ^2.3.0
   flutter_tts: ^4.2.5
   http: ^1.2.2
   meta: ^1.15.0
@@ -27,3 +28,4 @@ flutter:
   assets:
     - assets/data/bible_verses_ko.json
     - assets/prompts/system_prompt_ko.txt
+    - assets/images/

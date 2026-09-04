@@ -30,11 +30,117 @@ class _ConversationPageState extends State<ConversationPage> {
   static const _cardTitle = '오늘의 마음 카드';
   static const _cardClosingMessage =
       '오늘 마음을 외면하지 않고 바라본 것만으로도 충분히 의미 있는 시간이었어요.';
-  static const _examplePrompts = <String>[
-    '오늘 있었던 일 중 가장 마음에 남는 장면은 무엇인가요?',
-    '그 순간 어떤 생각과 감정이 함께 떠올랐나요?',
-    '그 감정이 몸에서는 어떻게 느껴지나요?',
-  ];
+
+  static const _emotionSpecificPrompts = <EmotionType, List<String>>{
+    EmotionType.anxiety: [
+      '내일 있을 중요한 일이 자꾸 걱정돼요.',
+      '미래가 불투명해서 마음이 불안하고 떨려요.',
+      '갑자기 안 좋은 일이 생길까 봐 불안한 마음이 커요.'
+    ],
+    EmotionType.loneliness: [
+      '문득 세상에 나 혼자 남겨진 것 같은 기분이 들어요.',
+      '진심으로 내 마음을 이해해줄 사람이 없는 것 같아 외로워요.',
+      '혼자 있는 시간이 길어지니 마음이 공허해지네요.'
+    ],
+    EmotionType.exhaustion: [
+      '요즘 업무가 너무 많아 몸과 마음이 다 타버린 것 같아요.',
+      '아무것도 하고 싶지 않고 그저 쉬고만 싶어요.',
+      '반복되는 일상에 지쳐서 에너지가 하나도 없어요.'
+    ],
+    EmotionType.anger: [
+      '상대방이 무례하게 행동해서 화를 참기 힘들어요.',
+      '정당하지 못한 상황을 겪으니 너무 억울하고 화가 나요.',
+      '자꾸만 짜증이 나고 마음이 날카로워져 있어요.'
+    ],
+    EmotionType.sadness: [
+      '이유 없이 자꾸만 눈물이 나고 마음이 울적해요.',
+      '소중한 것을 잃어버린 것 같은 상실감이 커요.',
+      '가슴 한구석이 먹먹하고 슬픈 기분이 가시질 않아요.'
+    ],
+    EmotionType.complexity: [
+      '여러 가지 고민이 겹쳐서 머릿속이 너무 복잡해요.',
+      '내 마음을 나도 잘 모르겠어서 답답한 기분이에요.',
+      '어떤 선택을 해야 할지 몰라 마음이 갈팡질팡해요.'
+    ],
+    EmotionType.gratitude: [
+      '오늘 하루를 평안하게 보낼 수 있음에 감사해요.',
+      '주변 사람들의 따뜻한 말 한마디가 큰 힘이 되었어요.',
+      '작은 일에서도 감사를 발견하니 마음이 풍요로워지네요.'
+    ],
+    EmotionType.joy: [
+      '오랫동안 기다려온 기쁜 소식을 들었어요.',
+      '내가 좋아하는 일을 할 수 있어서 너무 즐거워요.',
+      '함께 웃고 떠들 수 있는 사람이 곁에 있어 기뻐요.'
+    ],
+    EmotionType.fear: [
+      '새로운 도전을 앞두고 실패할까 봐 너무 무서워요.',
+      '안 좋은 일이 일어날 것 같은 예감에 마음이 졸여요.',
+      '어두운 밤이나 혼자 있는 상황이 두렵게 느껴질 때가 있어요.'
+    ],
+    EmotionType.disgust: [
+      '누군가의 비도덕적인 행동을 보고 마음이 상했어요.',
+      '정말 싫어하는 상황에 놓이게 되어 기분이 좋지 않아요.',
+      '받아들이기 힘든 일을 겪고 거부감이 강하게 들어요.'
+    ],
+    EmotionType.surprise: [
+      '생각지도 못한 깜짝 파티를 받아서 놀랐어요.',
+      '갑작스러운 변화에 어떻게 대처해야 할지 얼떨떨해요.',
+      '믿기지 않는 놀라운 이야기를 들어서 가슴이 두근거려요.'
+    ],
+    EmotionType.happiness: [
+      '날씨가 너무 좋아서 걷는 것만으로도 행복해요.',
+      '사랑하는 가족과 함께 맛있는 음식을 먹어 행복해요.',
+      '지금 이 평화로운 순간이 오래도록 유지되면 좋겠어요.'
+    ],
+    EmotionType.anticipation: [
+      '조만간 떠날 여행을 생각하니 벌써부터 설레요.',
+      '새로운 일을 시작하게 되어 기분 좋은 긴장감이 들어요.',
+      '내일은 어떤 즐거운 일이 생길지 기대하며 기다리고 있어요.'
+    ],
+    EmotionType.admiration: [
+      '아름다운 노을을 보며 자연의 신비로움에 감탄했어요.',
+      '누군가의 훌륭한 성품이나 성취를 보고 큰 감명을 받았어요.',
+      '예술 작품을 보며 말로 표현하기 힘든 감동을 느꼈어요.'
+    ],
+    EmotionType.overwhelmed: [
+      '너무 큰 사랑과 격려를 받아서 마음이 벅차올라요.',
+      '나에게 주어진 축복이 너무 과분하다는 생각이 들어요.',
+      '가슴이 꽉 찬 것 같은 벅찬 감동에 말을 잇기 힘들어요.'
+    ],
+    EmotionType.jealousy: [
+      '나보다 앞서가는 사람을 보니 자꾸 비교하게 돼요.',
+      '내가 갖고 싶던 걸 가진 친구를 보며 질투심이 생겨요.',
+      '타인의 행복이 마냥 축하해주기 힘들 때가 있어 괴로워요.'
+    ],
+  };
+
+  static const _emotionSpecificActions = <EmotionType, List<String>>{
+    EmotionType.anxiety: ['1분간 천천히 호흡하기', '평안을 구하는 짧은 기도 하기', '주변의 소리 3가지에 집중해보기'],
+    EmotionType.fear: ['1분간 천천히 호흡하기', '나를 지키시는 약속 붙들기', '따뜻한 차 한 잔 마시기'],
+    EmotionType.surprise: ['깊게 세 번 숨 들이마시기', '현재 상황을 차분히 정리해보기', '잠시 눈을 감고 마음 고르기'],
+    EmotionType.loneliness: ['소중한 사람에게 짧은 안부 보내기', '나를 향한 응원의 메시지 적어보기', '오늘 하루 나를 위한 작은 선물하기'],
+    EmotionType.sadness: ['믿을 수 있는 사람과 마음 나누기', '충분히 울거나 감정 표현하기', '나를 위로하는 찬양 듣기'],
+    EmotionType.exhaustion: ['10분간 아무 생각 없이 쉬기', '가벼운 스트레칭으로 몸 풀기', '일찍 잠자리에 들 준비하기'],
+    EmotionType.anger: ['자리를 잠시 옮겨 마음 가라앉히기', '차가운 물 한 잔 마시기', '용서와 온유함을 구하는 기도하기'],
+    EmotionType.disgust: ['좋아하는 향기나 풍경에 집중하기', '마음을 깨끗하게 하는 짧은 산책', '부정적인 생각 흘려보내기'],
+    EmotionType.jealousy: ['나만의 고유한 장점 3가지 적기', '타인을 축복하는 짧은 기도하기', '남과 비교하지 않는 연습하기'],
+    EmotionType.complexity: ['책상이나 주변 환경 정리하기', '머릿속 생각을 종이에 적어보기', '가장 단순한 일 하나만 먼저 하기'],
+    EmotionType.gratitude: ['감사한 대상에게 고마움 전하기', '오늘의 감사 일기 한 줄 쓰기', '감사의 기도로 하루 마무리하기'],
+    EmotionType.joy: ['기쁜 소식을 소중한 사람과 나누기', '이 즐거움을 주신 분께 찬양하기', '오늘의 기쁨을 사진이나 글로 기록하기'],
+    EmotionType.happiness: ['지금 이 평화를 충분히 누리기', '주변 사람들에게 밝은 인사 건네기', '나눔을 실천할 수 있는 방법 찾기'],
+    EmotionType.admiration: ['감동받은 내용을 깊이 묵상하기', '예술적 영감을 기록으로 남기기', '위대함을 찬양하는 짧은 글 쓰기'],
+    EmotionType.overwhelmed: ['벅찬 감동을 짧은 기도로 표현하기', '받은 사랑을 어떻게 나눌지 생각하기', '지금 이 순간을 온전히 기억하기'],
+    EmotionType.anticipation: ['기대되는 일을 위해 차분히 준비하기', '좋은 결과가 있기를 기도하기', '설레는 마음을 긍정적인 에너지로 쓰기'],
+  };
+
+  List<String> get _currentExamplePrompts {
+    return _emotionSpecificPrompts[widget.emotion] ??
+        [
+          '오늘 마음을 편하게 들려주세요.',
+          '무슨 일이 있었는지 궁금해요.',
+          '지금 떠오르는 생각을 적어주세요.'
+        ];
+  }
   final _controller = TextEditingController();
   final _scrollController = ScrollController();
   final _speech = SpeechToText();
@@ -51,7 +157,6 @@ class _ConversationPageState extends State<ConversationPage> {
   bool _isListening = false;
   bool _isSpeaking = false;
   bool _savingCard = false;
-  bool _cardSaved = false;
   bool _showVerseOffer = false;
   BibleVerse? _verse;
   bool _showActions = false;
@@ -220,10 +325,10 @@ class _ConversationPageState extends State<ConversationPage> {
       ..setCompletionHandler(() {
         if (mounted) setState(() => _isSpeaking = false);
       })
-      ..setCancelHandler((_) {
+      ..setCancelHandler(() {
         if (mounted) setState(() => _isSpeaking = false);
       })
-      ..setErrorHandler((_) {
+      ..setErrorHandler((msg) {
         if (!mounted) return;
         setState(() => _isSpeaking = false);
         _showVoiceMessage('말씀을 재생하지 못했어요. 기기의 한국어 음성을 확인해 주세요.');
@@ -303,7 +408,7 @@ class _ConversationPageState extends State<ConversationPage> {
   }
 
   Future<void> _saveMindCard() async {
-    if (_savingCard || _cardSaved || _verse == null || _chosenAction == null) return;
+    if (_savingCard || _verse == null || _chosenAction == null) return;
     final now = DateTime.now();
     setState(() => _savingCard = true);
     try {
@@ -316,16 +421,14 @@ class _ConversationPageState extends State<ConversationPage> {
         intensity: widget.intensity,
         verseReference: _verse!.reference,
         verseText: _verse!.text,
+        englishVerseText: _verse!.englishText,
         reflectionQuestion: _verse!.reflectionQuestion,
         action: _chosenAction!,
         closingMessage: _cardClosingMessage,
       ));
       if (!mounted) return;
-      setState(() {
-        _savingCard = false;
-        _cardSaved = true;
-      });
       _showVoiceMessage('오늘의 마음 카드 문구를 모두 저장했어요.');
+      Navigator.of(context).pop();
     } catch (_) {
       if (!mounted) return;
       setState(() => _savingCard = false);
@@ -402,7 +505,7 @@ class _ConversationPageState extends State<ConversationPage> {
                   child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                     const Text('이렇게 시작해 보세요', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Color(0xFF65726B))),
                     const SizedBox(height: 8),
-                    ..._examplePrompts.map((prompt) => Padding(
+                    ..._currentExamplePrompts.map((prompt) => Padding(
                       padding: const EdgeInsets.only(bottom: 7),
                       child: OutlinedButton.icon(
                         onPressed: _busy ? null : () => _selectExample(prompt),
@@ -431,6 +534,13 @@ class _ConversationPageState extends State<ConversationPage> {
                     Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
                       Expanded(child: TextField(controller: _controller, enabled: !_busy, minLines: 1, maxLines: 4, textInputAction: TextInputAction.send, onSubmitted: (_) => _send(), decoration: const InputDecoration(hintText: '마음을 편하게 적어 주세요', filled: false))),
                       const SizedBox(width: 10),
+                      IconButton.filled(
+                        onPressed: _busy ? null : _send,
+                        icon: const Icon(Icons.arrow_upward_rounded),
+                        tooltip: '보내기',
+                        style: IconButton.styleFrom(minimumSize: const Size(56, 56)),
+                      ),
+                      const SizedBox(width: 8),
                       Semantics(
                         button: true,
                         label: '음성으로 마음 말하기',
@@ -443,19 +553,12 @@ class _ConversationPageState extends State<ConversationPage> {
                             onTap: _busy ? null : _toggleVoiceInput,
                             customBorder: const CircleBorder(),
                             child: SizedBox(
-                              width: 60,
-                              height: 60,
-                              child: Icon(_isListening ? Icons.stop_rounded : Icons.mic_rounded, color: Colors.white, size: 32),
+                              width: 56,
+                              height: 56,
+                              child: Icon(_isListening ? Icons.stop_rounded : Icons.mic_rounded, color: Colors.white, size: 28),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      IconButton.filled(
-                        onPressed: _busy ? null : _send,
-                        icon: const Icon(Icons.arrow_upward_rounded),
-                        tooltip: '보내기',
-                        style: IconButton.styleFrom(minimumSize: const Size(52, 52)),
                       ),
                     ]),
                   ]),
@@ -497,8 +600,16 @@ class _ConversationPageState extends State<ConversationPage> {
     Text(verse.reference, style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w800)),
     const SizedBox(height: 12),
     Text(verse.text, style: const TextStyle(fontSize: 17, height: 1.7), textAlign: TextAlign.center),
-    const SizedBox(height: 14),
-    Text(verse.reflectionQuestion, style: const TextStyle(color: Color(0xFF596761), height: 1.5), textAlign: TextAlign.center),
+    if (verse.englishText.isNotEmpty) ...[
+      const SizedBox(height: 16),
+      const Text('English (NIV)', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFF9EACA3))),
+      const SizedBox(height: 6),
+      Text(verse.englishText, style: const TextStyle(fontSize: 15, height: 1.6, color: Color(0xFF596761), fontStyle: FontStyle.italic), textAlign: TextAlign.center),
+    ],
+    if (verse.reflectionQuestion.isNotEmpty) ...[
+      const SizedBox(height: 14),
+      Text(verse.reflectionQuestion, style: const TextStyle(color: Color(0xFF596761), height: 1.5, fontWeight: FontWeight.w600), textAlign: TextAlign.center),
+    ],
     const SizedBox(height: 16),
     OutlinedButton.icon(
       onPressed: () => _toggleVerseSpeech(verse),
@@ -520,7 +631,7 @@ class _ConversationPageState extends State<ConversationPage> {
   Widget _actionCard() => _panel(children: [
     const Text('지금 할 수 있는\n아주 작은 한 걸음', style: TextStyle(fontSize: 21, fontWeight: FontWeight.w800, height: 1.35), textAlign: TextAlign.center),
     const SizedBox(height: 16),
-    ...['1분간 천천히 호흡하기', '믿을 수 있는 사람에게 안부 보내기', '짧게 기도하고 마음 한 줄 적기'].map(
+    ...(_emotionSpecificActions[widget.emotion] ?? ['1분간 천천히 호흡하기', '믿을 수 있는 사람에게 안부 보내기', '짧게 기도하고 마음 한 줄 적기']).map(
       (action) => Padding(
         padding: const EdgeInsets.only(bottom: 9),
         child: OutlinedButton(
@@ -548,11 +659,11 @@ class _ConversationPageState extends State<ConversationPage> {
     const Text(_cardClosingMessage, textAlign: TextAlign.center, style: TextStyle(height: 1.6, color: Color(0xFF596761))),
     const SizedBox(height: 18),
     FilledButton.icon(
-      onPressed: _savingCard || _cardSaved ? null : _saveMindCard,
+      onPressed: _savingCard ? null : _saveMindCard,
       icon: _savingCard
           ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
-          : Icon(_cardSaved ? Icons.check_rounded : Icons.bookmark_add_outlined),
-      label: Text(_cardSaved ? '저장 완료' : '마음 카드 저장하기'),
+          : const Icon(Icons.bookmark_add_outlined),
+      label: const Text('마음 카드 저장하기'),
     ),
     const SizedBox(height: 8),
     OutlinedButton(

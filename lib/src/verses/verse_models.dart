@@ -10,6 +10,7 @@ class BibleVerse {
     required this.reference,
     required this.translation,
     required this.text,
+    required this.englishText,
     required this.emotions,
     required this.tags,
     required this.reflectionQuestion,
@@ -23,6 +24,7 @@ class BibleVerse {
   final String reference;
   final String translation;
   final String text;
+  final String englishText;
   final List<EmotionType> emotions;
   final List<String> tags;
   final String reflectionQuestion;
@@ -37,6 +39,7 @@ class BibleVerse {
       reference: json['reference'] as String,
       translation: json['translation'] as String,
       text: json['text'] as String,
+      englishText: json['englishText'] as String? ?? '',
       emotions: (json['emotions'] as List)
           .whereType<String>()
           .map(EmotionType.fromWire)

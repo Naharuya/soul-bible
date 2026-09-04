@@ -6,7 +6,15 @@ enum EmotionType {
   sadness('슬픔'),
   complexity('복잡함'),
   gratitude('감사'),
-  other('기타');
+  joy('기쁨'),
+  fear('공포'),
+  disgust('혐오'),
+  surprise('놀람'),
+  happiness('행복'),
+  anticipation('기대'),
+  admiration('감탄'),
+  overwhelmed('벅참'),
+  jealousy('질투');
 
   const EmotionType(this.label);
   final String label;
@@ -14,7 +22,7 @@ enum EmotionType {
   static EmotionType fromWire(String value) {
     return EmotionType.values.firstWhere(
       (item) => item.name == value || item.label == value,
-      orElse: () => EmotionType.other,
+      orElse: () => EmotionType.happiness,
     );
   }
 }
