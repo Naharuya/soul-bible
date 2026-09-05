@@ -3,6 +3,7 @@ const patterns = {
   violence: [/죽이고 싶/, /해치고 싶/, /복수하고 싶/, /다치게 하/, /공격하고 싶/],
   active: [/죽고 싶/, /자살하고 싶/, /목숨을 끊/, /나를 해치/, /자해하고 싶/, /끝내 버리고 싶/],
   passive: [/사라지고 싶/, /눈을 뜨지 않았으면/, /사는 의미가 없/, /살 이유가 없/, /모든 걸 포기하고 싶/, /없어졌으면 좋겠/],
+  psychosis: [/생각을 읽고 있/, /누가 나를 감시/, /목소리가 시켜/, /환청/, /내 머릿속에 말/],
   imminent: [/계획을 세웠/, /방법을 정했/, /유서를/, /준비해 뒀/, /실행할/, /도구를 준비/, /위험한 물건/, /수단이 있/, /이미 준비/, /오늘 밤/, /지금 당장/, /곧 실행/],
 };
 
@@ -13,6 +14,7 @@ export function assessCrisis(raw) {
   if (patterns.violence.some((p) => p.test(text))) return { level: imminent ? 3 : 2, immediate: imminent, kind: 'violence' };
   if (patterns.active.some((p) => p.test(text))) return { level: imminent ? 3 : 2, immediate: imminent, kind: 'self_harm' };
   if (patterns.passive.some((p) => p.test(text))) return { level: 1, immediate: false, kind: 'passive_self_harm' };
+  if (patterns.psychosis.some((p) => p.test(text))) return { level: 1, immediate: false, kind: 'psychosis' };
   return { level: 0, immediate: false, kind: 'safe' };
 }
 
@@ -25,6 +27,8 @@ export function crisisResponse(emotion, assessment) {
     question: urgent ? '지금 곁에 함께 있어 줄 사람에게 바로 연락할 수 있나요?' : '지금 연락할 수 있는 믿을 만한 사람이 있나요?',
     stage: 'crisis', detectedEmotion: emotion, secondaryEmotion: null,
     riskLevel: assessment.level, shouldOfferVerse: false, verseTags: [], actionTags: ['현실지원연결'],
-    shouldEndConversation: false, suggestedVerseId: null,
+    shouldEndConversation: true, suggestedVerseId: null,
+    agent: 'integrated', memorySummary: '위기 신호가 감지되어 현실의 안전 지원을 우선해야 합니다.',
+    clinicalReflection: null, integratedInsight: null,
   };
 }

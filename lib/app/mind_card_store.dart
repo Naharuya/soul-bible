@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MindCardRecord {
@@ -17,6 +16,11 @@ class MindCardRecord {
     required this.reflectionQuestion,
     required this.action,
     required this.closingMessage,
+    this.agent = 'integrated',
+    this.memorySummary = '',
+    this.clinicalReflection,
+    this.integratedInsight,
+    this.verseLanguage = 'bilingual',
   });
 
   final String id;
@@ -31,6 +35,11 @@ class MindCardRecord {
   final String reflectionQuestion;
   final String action;
   final String closingMessage;
+  final String agent;
+  final String memorySummary;
+  final String? clinicalReflection;
+  final String? integratedInsight;
+  final String verseLanguage;
 
   String get fullText => [
         title,
@@ -42,6 +51,11 @@ class MindCardRecord {
           'English (NIV):\n$englishVerseText',
         '묵상 질문: $reflectionQuestion',
         '작은 실천: $action',
+        if (clinicalReflection != null && clinicalReflection!.isNotEmpty)
+          '임상심리 성찰: $clinicalReflection',
+        if (integratedInsight != null && integratedInsight!.isNotEmpty)
+          '심리·신앙 통합 인사이트: $integratedInsight',
+        if (memorySummary.isNotEmpty) 'AI 기억 요약: $memorySummary',
         closingMessage,
       ].join('\n\n');
 
@@ -58,6 +72,11 @@ class MindCardRecord {
         reflectionQuestion: json['reflectionQuestion'] as String,
         action: json['action'] as String,
         closingMessage: json['closingMessage'] as String,
+        agent: json['agent'] as String? ?? 'integrated',
+        memorySummary: json['memorySummary'] as String? ?? '',
+        clinicalReflection: json['clinicalReflection'] as String?,
+        integratedInsight: json['integratedInsight'] as String?,
+        verseLanguage: json['verseLanguage'] as String? ?? 'bilingual',
       );
 
   Map<String, dynamic> toJson() => {
@@ -73,7 +92,11 @@ class MindCardRecord {
         'reflectionQuestion': reflectionQuestion,
         'action': action,
         'closingMessage': closingMessage,
-        'fullText': fullText,
+        'agent': agent,
+        'memorySummary': memorySummary,
+        'clinicalReflection': clinicalReflection,
+        'integratedInsight': integratedInsight,
+        'verseLanguage': verseLanguage,
       };
 }
 
@@ -86,33 +109,83 @@ class MindCardStore {
 
   Future<void> save(MindCardRecord card) async {
     final saved = await _preferences.getStringList(_storageKey) ?? <String>[];
+    final filtered = saved.where((value) {
+      try {
+        final decoded = jsonDecode(value);
+        return decoded is! Map<String, dynamic> || decoded['id'] != card.id;
+      } catch (_) {
+        return true;
+      }
+    });
     await _preferences.setStringList(
       _storageKey,
-      <String>[jsonEncode(card.toJson()), ...saved],
+      <String>[jsonEncode(card.toJson()), ...filtered.take(100)],
     );
+  }
+
+  Future<void> delete(String id) async {
+    final saved = await _preferences.getStringList(_storageKey) ?? <String>[];
+    final remaining = saved.where((value) {
+      try {
+        final decoded = jsonDecode(value);
+        return decoded is! Map<String, dynamic> || decoded['id'] != id;
+      } catch (_) {
+        return true;
+      }
+    }).toList(growable: false);
+    await _preferences.setStringList(_storageKey, remaining);
   }
 
   Future<List<MindCardRecord>> getAll() async {
     final saved = await _preferences.getStringList(_storageKey) ?? <String>[];
-    return saved
-        .map((s) => MindCardRecord.fromJson(jsonDecode(s) as Map<String, dynamic>))
-        .toList();
+    final cards = <MindCardRecord>[];
+    for (final value in saved) {
+      try {
+        final decoded = jsonDecode(value);
+        if (decoded is Map<String, dynamic>) {
+          cards.add(MindCardRecord.fromJson(decoded));
+        }
+      } on FormatException {
+        // Ignore an individual damaged record and keep the remaining cards usable.
+      } on TypeError {
+        // Ignore an individual record with an incompatible older schema.
+      }
+    }
+    return cards;
   }
 }
 
+enum MembershipTier { free, premium }
+
+class MembershipConfig {
+  const MembershipConfig._();
+
+  static const _premiumMember = String.fromEnvironment(
+    'SOUL_BIBLE_PREMIUM_MEMBER',
+    defaultValue: 'false',
+  );
+
+  static MembershipTier get current =>
+      _premiumMember.toLowerCase() == 'true'
+          ? MembershipTier.premium
+          : MembershipTier.free;
+}
+
 class DailyUsageStore {
-  DailyUsageStore({SharedPreferencesAsync? preferences})
-      : _preferences = preferences ?? SharedPreferencesAsync();
+  DailyUsageStore({
+    SharedPreferencesAsync? preferences,
+    MembershipTier? tier,
+  })  : _preferences = preferences ?? SharedPreferencesAsync(),
+        tier = tier ?? MembershipConfig.current;
 
   static const _dateKey = 'soul_bible.daily_usage.date.v1';
   static const _countKey = 'soul_bible.daily_usage.count.v1';
-    static const mobileMaxUsesPerDay = 3;
-    static const _unlimitedTestUsesPerDay = 1 << 30;
-    static bool get isComputerTestMode =>
-      kIsWeb || defaultTargetPlatform == TargetPlatform.windows;
-    static int get maxUsesPerDay =>
-      isComputerTestMode ? _unlimitedTestUsesPerDay : mobileMaxUsesPerDay;
   final SharedPreferencesAsync _preferences;
+  final MembershipTier tier;
+
+  int get maxUsesPerDay => tier == MembershipTier.premium ? 1 << 30 : 3;
+
+  bool get isPremium => tier == MembershipTier.premium;
 
   Future<int> getCount() async {
     final today = _todayKey();
@@ -124,7 +197,6 @@ class DailyUsageStore {
   Future<bool> tryConsume() async {
     final count = await getCount();
     if (count >= maxUsesPerDay) return false;
-
     await _preferences.setString(_dateKey, _todayKey());
     await _preferences.setInt(_countKey, count + 1);
     return true;

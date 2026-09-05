@@ -95,7 +95,27 @@ APP_BEARER_TOKEN=충분히_긴_랜덤_토큰
 
 네이티브 앱은 일반적으로 Origin 헤더를 보내지 않으므로 `ALLOWED_ORIGINS`는 Web 앱 도메인에만 맞춥니다. 공개 API 앞단에 reverse proxy를 두고 HTTPS를 종료하는 구성을 권장합니다.
 
-### 4.2 Docker Compose로 실행
+### 4.2 운영 서버 실행
+
+Docker가 설치되지 않은 서버에서는 `systemd`가 `/opt/soul-bible/backend`의
+Node 프로세스를 관리합니다. 로컬 PowerShell에서 다음 명령을 실행합니다.
+
+```powershell
+.\script\deploy-backend.ps1
+```
+
+이 스크립트는 `src`, `package.json`, `package-lock.json`만 업로드하고 서버의
+`backend/.env`는 덮어쓰지 않습니다. 설치 후 다음으로 상태를 확인합니다.
+
+```bash
+systemctl status soul-bible-backend
+curl http://127.0.0.1:8787/health
+journalctl -u soul-bible-backend -n 100 --no-pager
+```
+
+### 4.3 Docker Compose로 실행
+
+Docker를 사용하는 서버라면 저장소 루트에서 실행합니다.
 
 저장소 루트에서 실행합니다.
 
@@ -118,7 +138,7 @@ git pull
 docker compose up -d --build
 ```
 
-### 4.3 운영 점검
+### 4.4 운영 점검
 
 - reverse proxy에서 `/health`를 주기적으로 확인
 - 8787 포트는 외부에 직접 공개하지 않고 방화벽에서 reverse proxy만 허용
@@ -143,10 +163,13 @@ flutter build apk --debug
 
 ```bash
 flutter build apk --release \
-  --dart-define=SOUL_BIBLE_API_URL=https://api.example.com/v1/mind/chat
+  --dart-define=SOUL_BIBLE_API_BASE_URL=https://api.example.com
 ```
 
-현재 앱의 `appTokenProvider`는 토큰을 보내지 않으므로 `APP_BEARER_TOKEN`을 활성화할 경우 Flutter 인증 구현도 함께 추가해야 합니다. 공개 모바일 앱에 정적 Bearer 토큰을 넣는 방식은 완전한 비밀 보장이 아니므로, 운영에서는 사용자 인증 또는 API Gateway 정책을 권장합니다.
+`APP_BEARER_TOKEN`을 활성화한 개발 환경에서는 `SOUL_BIBLE_APP_TOKEN`을 같은
+빌드에 전달할 수 있습니다. 공개 모바일 앱에 정적 Bearer 토큰을 넣는 방식은
+완전한 비밀 보장이 아니므로, 운영에서는 사용자 인증 또는 API Gateway 정책을
+권장합니다.
 
 ### Android 스토어 배포 전 필수 작업
 
@@ -160,7 +183,7 @@ release 빌드는 `android/key.properties`에 지정한 별도 release 키로 �
 
 ```bash
 flutter build appbundle --release \
-  --dart-define=SOUL_BIBLE_API_URL=https://api.example.com/v1/mind/chat
+  --dart-define=SOUL_BIBLE_API_BASE_URL=https://api.example.com
 ```
 
 산출물: `build/app/outputs/bundle/release/app-release.aab`

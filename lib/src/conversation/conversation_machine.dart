@@ -49,6 +49,7 @@ class ConversationMachine {
         stage: ConversationStage.crisis,
         riskLevel: assessment.level,
         lastUserMessage: userMessage,
+        isEnded: true,
       ),
       uiAction: assessment.requiresImmediateUi
           ? ConversationUiAction.showEmergencySupport
@@ -70,6 +71,8 @@ class ConversationMachine {
           riskLevel: mergedRisk,
           turnCount: session.turnCount + 1,
           lastAssistantQuestion: response.question,
+          agentMemory: response.memorySummary,
+          isEnded: true,
         ),
         uiAction: mergedRisk >= 3
             ? ConversationUiAction.showEmergencySupport
@@ -88,6 +91,7 @@ class ConversationMachine {
         stage: shouldEnd ? ConversationStage.ended : nextStage,
         turnCount: nextTurn,
         lastAssistantQuestion: response.question,
+        agentMemory: response.memorySummary,
         isEnded: shouldEnd,
       ),
       uiAction: shouldEnd

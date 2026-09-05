@@ -5,6 +5,7 @@ import 'package:speech_to_text/speech_to_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../app/app_theme.dart';
+import '../app/api_config.dart';
 import '../app/asset_loader.dart';
 import '../app/demo_llm_client.dart';
 import '../app/mind_card_store.dart';
@@ -26,7 +27,6 @@ class ConversationPage extends StatefulWidget {
 }
 
 class _ConversationPageState extends State<ConversationPage> {
-  static const _apiUrl = String.fromEnvironment('SOUL_BIBLE_API_URL');
   static const _cardTitle = '오늘의 마음 카드';
   static const _cardClosingMessage =
       '오늘 마음을 외면하지 않고 바라본 것만으로도 충분히 의미 있는 시간이었어요.';
@@ -159,18 +159,24 @@ class _ConversationPageState extends State<ConversationPage> {
   bool _savingCard = false;
   bool _showVerseOffer = false;
   BibleVerse? _verse;
+  BibleVerse? _suggestedVerse;
   bool _showActions = false;
   bool _showSummary = false;
   String? _chosenAction;
+  String _agentMode = 'auto';
+  String _verseLanguage = 'bilingual';
+  String _lastAgent = 'integrated';
+  String? _clinicalReflection;
+  String? _integratedInsight;
 
   @override
   void initState() {
     super.initState();
-    _client = _apiUrl.isEmpty
+    _client = ApiConfig.chatUrl == null
         ? const DemoLlmApiClient()
         : ProxyLlmApiClient(
-            endpoint: Uri.parse(_apiUrl),
-            appTokenProvider: () async => null,
+        endpoint: ApiConfig.chatUrl!,
+            appTokenProvider: () async => ApiConfig.appToken,
           );
     _session = ConversationSession(
       sessionId: DateTime.now().microsecondsSinceEpoch.toString(),
@@ -213,17 +219,31 @@ class _ConversationPageState extends State<ConversationPage> {
     }
 
     try {
+      final allowedVerses = await _verseRepository.findForEmotion(
+        widget.emotion,
+        limit: 100,
+      );
       final response = await _client.send(LlmConversationRequest(
         session: _session,
         userMessage: text,
         systemPromptVersion: 'ko-v1',
+        allowedVerseIds: allowedVerses.map((verse) => verse.id).toList(growable: false),
+        agentMode: _agentMode,
+        verseLanguage: _verseLanguage,
       ));
       final transition = _machine.applyLlmResponse(_session, response);
-      _session = transition.session;
-      final shouldAutoShowVerse = _session.turnCount >= 3 &&
+      _session = transition.session.copyWith(agentMemory: response.memorySummary);
+      _lastAgent = response.agent;
+      _clinicalReflection = response.clinicalReflection;
+      _integratedInsight = response.integratedInsight;
+      final suggestedVerse = response.suggestedVerseId == null
+          ? null
+          : await _verseRepository.getById(response.suggestedVerseId!);
+      final shouldAutoShowVerse = response.shouldOfferVerse &&
+          !_session.isEnded &&
           _session.riskLevel == 0 &&
-          transition.uiAction != ConversationUiAction.showCrisisSupport &&
-          transition.uiAction != ConversationUiAction.showEmergencySupport;
+          suggestedVerse != null;
+      _suggestedVerse = suggestedVerse;
       setState(() {
         final replyParts = <String>[response.message];
         if (shouldAutoShowVerse) {
@@ -231,12 +251,22 @@ class _ConversationPageState extends State<ConversationPage> {
         } else if (response.question != null) {
           replyParts.add(response.question!);
         }
+        if (transition.uiAction == ConversationUiAction.end) {
+          replyParts.add('오늘 대화를 여기서 마칠게요.');
+        }
+        if (response.clinicalReflection != null) {
+          replyParts.add('성찰: ${response.clinicalReflection!}');
+        }
+        if (response.integratedInsight != null) {
+          replyParts.add('통합 인사이트: ${response.integratedInsight!}');
+        }
         _items.add(_ChatItem(replyParts.join('\n\n')));
         _showVerseOffer = !shouldAutoShowVerse &&
-            transition.uiAction == ConversationUiAction.showVerseConsent;
+          response.shouldOfferVerse &&
+          transition.uiAction == ConversationUiAction.showVerseConsent;
         _busy = false;
       });
-      if (transition.uiAction == ConversationUiAction.showCrisisSupport ||
+        if (transition.uiAction == ConversationUiAction.showCrisisSupport ||
           transition.uiAction == ConversationUiAction.showEmergencySupport) {
         await _showCrisisSupport(
           transition.uiAction == ConversationUiAction.showEmergencySupport,
@@ -296,7 +326,12 @@ class _ConversationPageState extends State<ConversationPage> {
 
     await _speech.listen(
       onResult: _onSpeechResult,
-      localeId: 'ko_KR',
+      listenOptions: SpeechListenOptions(
+        localeId: _verseLanguage == 'english' ? 'en_US' : 'ko_KR',
+        partialResults: true,
+        listenMode: ListenMode.dictation,
+        cancelOnError: true,
+      ),
     );
     if (mounted) setState(() => _isListening = _speech.isListening);
   }
@@ -346,20 +381,28 @@ class _ConversationPageState extends State<ConversationPage> {
       if (mounted) setState(() => _isListening = false);
     }
 
-    await _tts.setLanguage('ko-KR');
     await _tts.setSpeechRate(0.42);
     await _tts.setPitch(1.0);
     await _tts.setVolume(1.0);
     await _tts.awaitSpeakCompletion(true);
-    await _tts.speak(
-      '${verse.reference}. ${verse.text}. 묵상 질문입니다. ${verse.reflectionQuestion}',
-    );
+    final korean = '${verse.reference}. ${verse.text}. 묵상 질문입니다. ${verse.reflectionQuestion}';
+    final english = verse.englishText.isEmpty ? '' : '${verse.reference}. ${verse.englishText}.';
+    if (_verseLanguage == 'english' && english.isNotEmpty) {
+      await _tts.setLanguage('en-US');
+      await _tts.speak(english);
+    } else {
+      await _tts.setLanguage('ko-KR');
+      await _tts.speak(korean);
+      if (_verseLanguage == 'bilingual' && english.isNotEmpty) {
+        await _tts.setLanguage('en-US');
+        await _tts.speak(english);
+      }
+    }
   }
 
   Future<void> _acceptVerse() async {
-    final verses = await _verseRepository.findForEmotion(widget.emotion, limit: 1);
-    if (!mounted || verses.isEmpty) return;
-    final verse = verses.first;
+    final verse = _suggestedVerse ?? (await _verseRepository.findForEmotion(widget.emotion, limit: 1)).firstOrNull;
+    if (!mounted || verse == null) return;
     _session = _machine.acceptVerse(_session, verseId: verse.id).session;
     setState(() {
       _verse = verse;
@@ -369,12 +412,11 @@ class _ConversationPageState extends State<ConversationPage> {
   }
 
   Future<void> _showVerseAutomatically() async {
-    final verses = await _verseRepository.findForEmotion(widget.emotion, limit: 1);
-    if (!mounted || verses.isEmpty) {
+    final verse = _suggestedVerse ?? (await _verseRepository.findForEmotion(widget.emotion, limit: 1)).firstOrNull;
+    if (!mounted || verse == null) {
       if (mounted) _showVoiceMessage('지금은 말씀을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.');
       return;
     }
-    final verse = verses.first;
     _session = _machine.acceptVerse(_session, verseId: verse.id).session;
     setState(() {
       _verse = verse;
@@ -425,6 +467,11 @@ class _ConversationPageState extends State<ConversationPage> {
         reflectionQuestion: _verse!.reflectionQuestion,
         action: _chosenAction!,
         closingMessage: _cardClosingMessage,
+        agent: _lastAgent,
+        memorySummary: _session.agentMemory,
+        clinicalReflection: _clinicalReflection,
+        integratedInsight: _integratedInsight,
+        verseLanguage: _verseLanguage,
       ));
       if (!mounted) return;
       _showVoiceMessage('오늘의 마음 카드 문구를 모두 저장했어요.');
@@ -476,7 +523,31 @@ class _ConversationPageState extends State<ConversationPage> {
           const Text('마음 대화', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
           Text('${widget.emotion.label} · ${widget.intensity}/10', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400)),
         ]),
-        actions: [IconButton(onPressed: () => _showCrisisSupport(false), icon: const Icon(Icons.health_and_safety_outlined), tooltip: '도움받기')],
+        actions: [
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.tune_rounded),
+            tooltip: '대화 에이전트와 말씀 언어',
+            onSelected: (value) {
+              if (value.startsWith('agent:')) {
+                setState(() => _agentMode = value.substring(6));
+              } else if (value.startsWith('language:')) {
+                setState(() => _verseLanguage = value.substring(9));
+              }
+            },
+            itemBuilder: (_) => [
+              const PopupMenuItem(value: 'agent:auto', child: Text('자동 통합 라우터')),
+              const PopupMenuItem(value: 'agent:bible_ko', child: Text('한국어 성경 에이전트')),
+              const PopupMenuItem(value: 'agent:bible_en', child: Text('영어 성경 에이전트')),
+              const PopupMenuItem(value: 'agent:clinical_reflection', child: Text('임상심리 성찰 에이전트')),
+              const PopupMenuItem(value: 'agent:integrated', child: Text('심리·신앙 통합 에이전트')),
+              const PopupMenuDivider(),
+              const PopupMenuItem(value: 'language:korean', child: Text('한국어 말씀')),
+              const PopupMenuItem(value: 'language:english', child: Text('영어 말씀')),
+              const PopupMenuItem(value: 'language:bilingual', child: Text('한국어·영어 함께')),
+            ],
+          ),
+          IconButton(onPressed: () => _showCrisisSupport(false), icon: const Icon(Icons.health_and_safety_outlined), tooltip: '도움받기'),
+        ],
       ),
       body: SafeArea(
         child: Center(
@@ -488,7 +559,7 @@ class _ConversationPageState extends State<ConversationPage> {
                   controller: _scrollController,
                   padding: const EdgeInsets.fromLTRB(18, 18, 18, 22),
                   children: [
-                    const Center(child: Padding(padding: EdgeInsets.only(bottom: 22), child: Text('이 대화는 기기에 저장되지 않는 MVP 데모입니다', style: TextStyle(fontSize: 11, color: Color(0xFF7B817E))))),
+                    const Center(child: Padding(padding: EdgeInsets.only(bottom: 22), child: Text('마음을 살피는 조용한 대화', style: TextStyle(fontSize: 12, color: AppTheme.gold, fontWeight: FontWeight.w700, letterSpacing: 0.5)))),
                     ..._items.map(_bubble),
                     if (_busy) _typing(),
                     if (_showVerseOffer) _verseOffer(),
@@ -498,17 +569,17 @@ class _ConversationPageState extends State<ConversationPage> {
                   ],
                 ),
               ),
-              if (!_showSummary && !_showActions && _verse == null && !_showVerseOffer)
+              if (!_session.isEnded && !_showSummary && !_showActions && _verse == null && !_showVerseOffer)
                 Container(
                   padding: const EdgeInsets.fromLTRB(16, 12, 16, 14),
-                  decoration: const BoxDecoration(color: Colors.white, border: Border(top: BorderSide(color: Color(0xFFE8E4DC)))),
+                  decoration: const BoxDecoration(color: Colors.white, border: Border(top: BorderSide(color: AppTheme.border))),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                    const Text('이렇게 시작해 보세요', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Color(0xFF65726B))),
+                    const Text('이렇게 시작해 보세요', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppTheme.muted)),
                     const SizedBox(height: 8),
                     ..._currentExamplePrompts.map((prompt) => Padding(
                       padding: const EdgeInsets.only(bottom: 7),
                       child: OutlinedButton.icon(
-                        onPressed: _busy ? null : () => _selectExample(prompt),
+                        onPressed: _busy || _session.isEnded ? null : () => _selectExample(prompt),
                         icon: const Icon(Icons.touch_app_outlined, size: 18),
                         label: Text(prompt, maxLines: 2, overflow: TextOverflow.ellipsis),
                         style: OutlinedButton.styleFrom(
@@ -517,7 +588,7 @@ class _ConversationPageState extends State<ConversationPage> {
                           alignment: Alignment.centerLeft,
                           foregroundColor: AppTheme.green,
                           side: const BorderSide(color: Color(0xFFD5DED3)),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppTheme.radius)),
                         ),
                       ),
                     )),
@@ -532,10 +603,10 @@ class _ConversationPageState extends State<ConversationPage> {
                         ]),
                       ),
                     Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                      Expanded(child: TextField(controller: _controller, enabled: !_busy, minLines: 1, maxLines: 4, textInputAction: TextInputAction.send, onSubmitted: (_) => _send(), decoration: const InputDecoration(hintText: '마음을 편하게 적어 주세요', filled: false))),
+                      Expanded(child: TextField(controller: _controller, enabled: !_busy && !_session.isEnded, minLines: 1, maxLines: 4, textInputAction: TextInputAction.send, onSubmitted: (_) => _send(), decoration: const InputDecoration(hintText: '마음을 편하게 적어 주세요', filled: false))),
                       const SizedBox(width: 10),
                       IconButton.filled(
-                        onPressed: _busy ? null : _send,
+                        onPressed: _busy || _session.isEnded ? null : _send,
                         icon: const Icon(Icons.arrow_upward_rounded),
                         tooltip: '보내기',
                         style: IconButton.styleFrom(minimumSize: const Size(56, 56)),
@@ -550,7 +621,7 @@ class _ConversationPageState extends State<ConversationPage> {
                           shadowColor: _isListening ? AppTheme.coral : AppTheme.green,
                           shape: const CircleBorder(),
                           child: InkWell(
-                            onTap: _busy ? null : _toggleVoiceInput,
+                            onTap: _busy || _session.isEnded ? null : _toggleVoiceInput,
                             customBorder: const CircleBorder(),
                             child: SizedBox(
                               width: 56,
@@ -576,12 +647,39 @@ class _ConversationPageState extends State<ConversationPage> {
       constraints: const BoxConstraints(maxWidth: 520),
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
-      decoration: BoxDecoration(color: item.fromUser ? AppTheme.green : Colors.white, borderRadius: BorderRadius.only(topLeft: const Radius.circular(20), topRight: const Radius.circular(20), bottomLeft: Radius.circular(item.fromUser ? 20 : 5), bottomRight: Radius.circular(item.fromUser ? 5 : 20))),
-      child: Text(item.text, style: TextStyle(color: item.fromUser ? Colors.white : AppTheme.ink, height: 1.5)),
+      decoration: BoxDecoration(color: item.fromUser ? AppTheme.green : AppTheme.panel, border: item.fromUser ? null : Border.all(color: AppTheme.border), borderRadius: BorderRadius.only(topLeft: const Radius.circular(18), topRight: const Radius.circular(18), bottomLeft: Radius.circular(item.fromUser ? 18 : 5), bottomRight: Radius.circular(item.fromUser ? 5 : 18))),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Flexible(child: Text(item.text, style: TextStyle(color: item.fromUser ? Colors.white : AppTheme.ink, height: 1.5))),
+          if (!item.fromUser) ...[
+            const SizedBox(width: 8),
+            IconButton(
+              visualDensity: VisualDensity.compact,
+              onPressed: () => _speakText(item.text),
+              icon: Icon(_isSpeaking ? Icons.stop_rounded : Icons.volume_up_outlined, size: 18, color: AppTheme.green),
+              tooltip: '답변 듣기',
+            ),
+          ],
+        ],
+      ),
     ),
   );
 
   Widget _typing() => const Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.all(16), child: SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2))));
+
+  Future<void> _speakText(String text) async {
+    if (_isSpeaking) {
+      await _tts.stop();
+      if (mounted) setState(() => _isSpeaking = false);
+      return;
+    }
+    await _tts.setLanguage('ko-KR');
+    await _tts.setSpeechRate(0.44);
+    await _tts.awaitSpeakCompletion(true);
+    await _tts.speak(text);
+  }
 
   Widget _verseOffer() => _panel(
     children: [
@@ -595,20 +693,20 @@ class _ConversationPageState extends State<ConversationPage> {
   );
 
   Widget _verseCard(BibleVerse verse) => _panel(children: [
-    const Text('오늘의 말씀', style: TextStyle(color: AppTheme.green, fontWeight: FontWeight.w800)),
+    const Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.menu_book_outlined, size: 18, color: AppTheme.gold), SizedBox(width: 8), Text('오늘의 말씀', style: TextStyle(color: AppTheme.gold, fontWeight: FontWeight.w800, letterSpacing: 0.5))]),
     const SizedBox(height: 14),
-    Text(verse.reference, style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w800)),
+    Text(verse.reference, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: AppTheme.ink)),
     const SizedBox(height: 12),
-    Text(verse.text, style: const TextStyle(fontSize: 17, height: 1.7), textAlign: TextAlign.center),
+    Text('“${verse.text}”', style: const TextStyle(fontSize: 17, height: 1.8, fontStyle: FontStyle.italic), textAlign: TextAlign.center),
     if (verse.englishText.isNotEmpty) ...[
       const SizedBox(height: 16),
       const Text('English (NIV)', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFF9EACA3))),
       const SizedBox(height: 6),
-      Text(verse.englishText, style: const TextStyle(fontSize: 15, height: 1.6, color: Color(0xFF596761), fontStyle: FontStyle.italic), textAlign: TextAlign.center),
+      Text(verse.englishText, style: const TextStyle(fontSize: 15, height: 1.6, color: AppTheme.muted, fontStyle: FontStyle.italic), textAlign: TextAlign.center),
     ],
     if (verse.reflectionQuestion.isNotEmpty) ...[
       const SizedBox(height: 14),
-      Text(verse.reflectionQuestion, style: const TextStyle(color: Color(0xFF596761), height: 1.5, fontWeight: FontWeight.w600), textAlign: TextAlign.center),
+      Text(verse.reflectionQuestion, style: const TextStyle(color: AppTheme.muted, height: 1.5, fontWeight: FontWeight.w600), textAlign: TextAlign.center),
     ],
     const SizedBox(height: 16),
     OutlinedButton.icon(
@@ -619,7 +717,7 @@ class _ConversationPageState extends State<ConversationPage> {
         minimumSize: const Size.fromHeight(52),
         foregroundColor: _isSpeaking ? AppTheme.coral : AppTheme.green,
         side: BorderSide(color: _isSpeaking ? AppTheme.coral : AppTheme.green),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppTheme.radius)),
       ),
     ),
     const SizedBox(height: 8),
@@ -639,7 +737,7 @@ class _ConversationPageState extends State<ConversationPage> {
           style: OutlinedButton.styleFrom(
             minimumSize: const Size.fromHeight(52),
             alignment: Alignment.centerLeft,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppTheme.radius)),
           ),
           child: Text(action),
         ),
@@ -656,7 +754,7 @@ class _ConversationPageState extends State<ConversationPage> {
     if (_verse != null) _summaryRow('함께한 말씀', _verse!.reference),
     _summaryRow('작은 실천', _chosenAction ?? ''),
     const SizedBox(height: 20),
-    const Text(_cardClosingMessage, textAlign: TextAlign.center, style: TextStyle(height: 1.6, color: Color(0xFF596761))),
+    const Text(_cardClosingMessage, textAlign: TextAlign.center, style: TextStyle(height: 1.6, color: AppTheme.muted)),
     const SizedBox(height: 18),
     FilledButton.icon(
       onPressed: _savingCard ? null : _saveMindCard,

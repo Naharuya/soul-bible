@@ -90,6 +90,7 @@ class ConversationSession {
     this.verseAccepted,
     this.selectedVerseId,
     this.riskLevel = 0,
+    this.agentMemory = '',
     this.isEnded = false,
   });
 
@@ -104,6 +105,7 @@ class ConversationSession {
   final bool? verseAccepted;
   final String? selectedVerseId;
   final int riskLevel;
+  final String agentMemory;
   final bool isEnded;
 
   ConversationSession copyWith({
@@ -115,6 +117,7 @@ class ConversationSession {
     bool? verseAccepted,
     String? selectedVerseId,
     int? riskLevel,
+    String? agentMemory,
     bool? isEnded,
   }) {
     return ConversationSession(
@@ -130,6 +133,7 @@ class ConversationSession {
       verseAccepted: verseAccepted ?? this.verseAccepted,
       selectedVerseId: selectedVerseId ?? this.selectedVerseId,
       riskLevel: riskLevel ?? this.riskLevel,
+      agentMemory: agentMemory ?? this.agentMemory,
       isEnded: isEnded ?? this.isEnded,
     );
   }
@@ -146,5 +150,6 @@ class ConversationSession {
         'verseAccepted': verseAccepted,
         'selectedVerse': selectedVerseId,
         'riskLevel': riskLevel,
+        'conversationMemory': agentMemory,
       };
 }

@@ -3,6 +3,30 @@ info:
   title: Bible Mind LLM Proxy
   version: 0.3.0
 paths:
+  /v1/auth/signup:
+    post:
+      summary: Create a member account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberSignupRequest'
+      responses:
+        '201':
+          description: Member created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [member]
+                properties:
+                  member:
+                    $ref: '#/components/schemas/PublicMember'
+        '400':
+          description: Invalid signup request
+        '409':
+          description: Phone number already registered
   /v1/mind/chat:
     post:
       summary: Generate one safe conversation turn
@@ -19,15 +43,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ConversationResponse'
+        '401':
+          description: Invalid application token
+        '429':
+          description: Rate limit exceeded
+        '502':
+          description: AI response generation failed
 components:
   schemas:
+    MemberSignupRequest:
+      type: object
+      required: [name, phone, churchName]
+      properties:
+        name: { type: string, minLength: 1, maxLength: 40 }
+        phone: { type: string, pattern: '^01[0-9]-?[0-9]{3,4}-?[0-9]{4}$' }
+        churchName: { type: string, minLength: 1, maxLength: 100 }
+        loginProvider:
+          type: string
+          enum: [phone, naver, kakao, google]
+        providerUserId: { type: string, minLength: 1, maxLength: 200 }
+    PublicMember:
+      type: object
+      required: [id, name, phone, churchName, loginProvider, createdAt]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        phone: { type: string, pattern: '^01[0-9]{8,9}$' }
+        churchName: { type: string }
+        loginProvider: { type: string, enum: [phone, naver, kakao, google] }
+        createdAt: { type: string }
     ConversationRequest:
       type: object
       required: [session, userMessage, systemPromptVersion, allowedVerseIds, locale]
       properties:
         session:
           type: object
+          required: [sessionId, selectedEmotion, emotionIntensity]
           additionalProperties: true
+          properties:
+            sessionId: { type: string, minLength: 1, maxLength: 128 }
+            selectedEmotion:
+              enum: [불안, 외로움, 지침, 분노, 슬픔, 복잡함, 감사, 기쁨, 공포, 혐오, 놀람, 행복, 기대, 감탄, 벅찬, 질투]
+            emotionIntensity: { type: integer, minimum: 1, maximum: 10 }
+            currentStage: { type: string, maxLength: 32 }
+            turnCount: { type: integer, minimum: 0, maximum: 100 }
+            conversationSummary: { type: string, maxLength: 4000 }
+            previousUserAnswer: { type: [string, "null"], maxLength: 2000 }
+            previousAssistantQuestion: { type: [string, "null"], maxLength: 1000 }
+            verseAccepted: { type: [boolean, "null"] }
+            selectedVerse: { type: [string, "null"], maxLength: 100 }
+            riskLevel: { type: integer, minimum: 0, maximum: 3 }
         userMessage:
           type: string
           minLength: 1
@@ -39,6 +104,13 @@ components:
           items: { type: string }
         locale:
           type: string
+          enum: [ko-KR]
+        agentMode:
+          type: string
+          enum: [auto, bible_ko, bible_en, clinical_reflection, integrated]
+        verseLanguage:
+          type: string
+          enum: [korean, english, bilingual]
     ConversationResponse:
       type: object
       additionalProperties: false
@@ -58,9 +130,9 @@ components:
         message: { type: string }
         question: { type: [string, "null"] }
         stage:
-          enum: [emotion, situation, thought, need, verse_offer, verse_reflection, action, summary, crisis]
+          enum: [emotion, situation, thought, need, verse_offer, verse_reflection, action, summary, crisis, ended]
         detectedEmotion:
-          enum: [불안, 외로움, 지침, 분노, 슬픔, 복잡함, 감사, 기타]
+          enum: [불안, 외로움, 지침, 분노, 슬픔, 복잡함, 감사, 기쁨, 공포, 혐오, 놀람, 행복, 기대, 감탄, 벅찬, 질투]
         secondaryEmotion: { type: [string, "null"] }
         riskLevel: { type: integer, minimum: 0, maximum: 3 }
         shouldOfferVerse: { type: boolean }
@@ -72,3 +144,9 @@ components:
           items: { type: string }
         shouldEndConversation: { type: boolean }
         suggestedVerseId: { type: [string, "null"] }
+        agent:
+          type: string
+          enum: [bible_ko, bible_en, clinical_reflection, integrated]
+        memorySummary: { type: string, maxLength: 4000 }
+        clinicalReflection: { type: [string, "null"], maxLength: 800 }
+        integratedInsight: { type: [string, "null"], maxLength: 800 }

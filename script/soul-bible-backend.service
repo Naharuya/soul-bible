@@ -1,0 +1,16 @@
+[Unit]
+Description=Soul Bible backend
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/soul-bible/backend
+Environment=NODE_ENV=production
+EnvironmentFile=/opt/soul-bible/backend/.env
+ExecStart=/usr/local/bin/node /opt/soul-bible/backend/src/server.js
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

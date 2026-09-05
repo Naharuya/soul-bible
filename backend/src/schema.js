@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
-export const emotions = ['불안', '외로움', '지침', '분노', '슬픔', '복잡함', '감사', '기타'];
-export const stages = ['emotion', 'situation', 'thought', 'need', 'verse_offer', 'verse_reflection', 'action', 'summary', 'crisis'];
+export const emotions = ['불안', '외로움', '지침', '분노', '슬픔', '복잡함', '감사', '기쁨', '공포', '혐오', '놀람', '행복', '기대', '감탄', '벅찬', '질투'];
+export const stages = ['emotion', 'situation', 'thought', 'need', 'verse_offer', 'verse_reflection', 'action', 'summary', 'crisis', 'ended'];
+export const agentIds = ['auto', 'bible_ko', 'bible_en', 'clinical_reflection', 'integrated'];
 
 export const requestSchema = z.object({
   session: z.object({
@@ -21,6 +22,8 @@ export const requestSchema = z.object({
   systemPromptVersion: z.string().min(1).max(40),
   allowedVerseIds: z.array(z.string().min(1).max(100)).max(100),
   locale: z.literal('ko-KR').default('ko-KR'),
+  agentMode: z.enum(agentIds).default('auto'),
+  verseLanguage: z.enum(['korean', 'english', 'bilingual']).default('bilingual'),
 }).strict();
 
 export const responseSchema = z.object({
@@ -35,12 +38,16 @@ export const responseSchema = z.object({
   actionTags: z.array(z.string().max(40)).max(10),
   shouldEndConversation: z.boolean(),
   suggestedVerseId: z.string().max(100).nullable(),
+  agent: z.enum(['bible_ko', 'bible_en', 'clinical_reflection', 'integrated']),
+  memorySummary: z.string().max(4000),
+  clinicalReflection: z.string().max(800).nullable(),
+  integratedInsight: z.string().max(800).nullable(),
 }).strict();
 
 export const responseJsonSchema = {
   type: 'object',
   additionalProperties: false,
-  required: ['message', 'question', 'stage', 'detectedEmotion', 'secondaryEmotion', 'riskLevel', 'shouldOfferVerse', 'verseTags', 'actionTags', 'shouldEndConversation', 'suggestedVerseId'],
+  required: ['message', 'question', 'stage', 'detectedEmotion', 'secondaryEmotion', 'riskLevel', 'shouldOfferVerse', 'verseTags', 'actionTags', 'shouldEndConversation', 'suggestedVerseId', 'agent', 'memorySummary', 'clinicalReflection', 'integratedInsight'],
   properties: {
     message: { type: 'string' },
     question: { type: ['string', 'null'] },
@@ -53,5 +60,9 @@ export const responseJsonSchema = {
     actionTags: { type: 'array', items: { type: 'string' } },
     shouldEndConversation: { type: 'boolean' },
     suggestedVerseId: { type: ['string', 'null'] },
+    agent: { type: 'string', enum: ['bible_ko', 'bible_en', 'clinical_reflection', 'integrated'] },
+    memorySummary: { type: 'string' },
+    clinicalReflection: { type: ['string', 'null'] },
+    integratedInsight: { type: ['string', 'null'] },
   },
 };

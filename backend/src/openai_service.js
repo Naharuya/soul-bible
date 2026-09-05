@@ -6,11 +6,11 @@ export function createOpenAiService({ apiKey, model }) {
   if (!apiKey) throw new Error('OPENAI_API_KEY is required.');
   const client = new OpenAI({ apiKey, timeout: 20_000, maxRetries: 2 });
 
-  return async function generate(body) {
+  return async function generate(body, agent, memorySummary = '') {
     const response = await client.responses.create({
       model,
       instructions: SYSTEM_PROMPT,
-      input: buildInput(body),
+      input: buildInput(body, agent, memorySummary),
       text: {
         format: {
           type: 'json_schema',

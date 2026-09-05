@@ -39,5 +39,22 @@ void main() {
     final result = machine.applyLlmResponse(base, response);
     expect(result.uiAction, ConversationUiAction.showCrisisSupport);
     expect(result.session.riskLevel, 2);
+    expect(result.session.isEnded, isTrue);
+  });
+
+  test('서버 종료 응답은 종료 상태와 종료 액션으로 전환한다', () {
+    final response = LlmConversationResponse(
+      message: '오늘 대화를 마칠게요.',
+      stage: ConversationStage.summary,
+      detectedEmotion: EmotionType.anxiety,
+      riskLevel: 0,
+      shouldOfferVerse: false,
+      shouldEndConversation: true,
+    );
+
+    final result = machine.applyLlmResponse(base, response);
+    expect(result.session.stage, ConversationStage.ended);
+    expect(result.session.isEnded, isTrue);
+    expect(result.uiAction, ConversationUiAction.end);
   });
 }

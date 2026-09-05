@@ -7,6 +7,8 @@ class LlmConversationRequest {
     required this.systemPromptVersion,
     this.allowedVerseIds = const [],
     this.locale = 'ko-KR',
+    this.agentMode = 'auto',
+    this.verseLanguage = 'bilingual',
   });
 
   final ConversationSession session;
@@ -14,6 +16,8 @@ class LlmConversationRequest {
   final String systemPromptVersion;
   final List<String> allowedVerseIds;
   final String locale;
+  final String agentMode;
+  final String verseLanguage;
 
   Map<String, dynamic> toJson() => {
         'session': session.toJson(),
@@ -21,6 +25,8 @@ class LlmConversationRequest {
         'systemPromptVersion': systemPromptVersion,
         'allowedVerseIds': allowedVerseIds,
         'locale': locale,
+        'agentMode': agentMode,
+        'verseLanguage': verseLanguage,
       };
 }
 
@@ -37,6 +43,10 @@ class LlmConversationResponse {
     this.verseTags = const [],
     this.actionTags = const [],
     this.suggestedVerseId,
+    this.agent = 'integrated',
+    this.memorySummary = '',
+    this.clinicalReflection,
+    this.integratedInsight,
   });
 
   final String message;
@@ -50,6 +60,10 @@ class LlmConversationResponse {
   final List<String> actionTags;
   final bool shouldEndConversation;
   final String? suggestedVerseId;
+  final String agent;
+  final String memorySummary;
+  final String? clinicalReflection;
+  final String? integratedInsight;
 
   factory LlmConversationResponse.fromJson(Map<String, dynamic> json) {
     final risk = (json['riskLevel'] as num?)?.toInt() ?? 0;
@@ -73,6 +87,10 @@ class LlmConversationResponse {
       actionTags: _stringList(json['actionTags']),
       shouldEndConversation: json['shouldEndConversation'] == true,
       suggestedVerseId: _nullableString(json['suggestedVerseId']),
+      agent: _requiredString(json, 'agent'),
+      memorySummary: _stringOrEmpty(json['memorySummary']),
+      clinicalReflection: _nullableString(json['clinicalReflection']),
+      integratedInsight: _nullableString(json['integratedInsight']),
     );
   }
 
@@ -88,6 +106,10 @@ class LlmConversationResponse {
         'actionTags': actionTags,
         'shouldEndConversation': shouldEndConversation,
         'suggestedVerseId': suggestedVerseId,
+        'agent': agent,
+        'memorySummary': memorySummary,
+        'clinicalReflection': clinicalReflection,
+        'integratedInsight': integratedInsight,
       };
 
   static String _requiredString(Map<String, dynamic> json, String key) {
@@ -106,6 +128,8 @@ class LlmConversationResponse {
     final trimmed = value.trim();
     return trimmed.isEmpty ? null : trimmed;
   }
+
+  static String _stringOrEmpty(Object? value) => value is String ? value.trim() : '';
 
   static List<String> _stringList(Object? value) {
     if (value == null) return const [];

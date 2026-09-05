@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../features/check_in_page.dart';
 import 'app_theme.dart';
+import 'social_auth_config.dart';
 
 class SoulBibleApp extends StatelessWidget {
-  const SoulBibleApp({super.key});
+  const SoulBibleApp({super.key, this.authConfig = const SocialAuthConfig()});
+
+  final SocialAuthConfig authConfig;
 
   @override
   Widget build(BuildContext context) {

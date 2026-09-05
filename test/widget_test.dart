@@ -10,6 +10,7 @@ import 'package:shared_preferences_platform_interface/in_memory_shared_preferenc
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 
 import 'package:bible_mind_core/app/soul_bible_app.dart';
+import 'package:bible_mind_core/app/social_auth_config.dart';
 
 void main() {
   setUp(() {
@@ -20,8 +21,34 @@ void main() {
     SharedPreferencesAsyncPlatform.instance = null;
   });
 
-  testWidgets('check-in page renders', (WidgetTester tester) async {
+  testWidgets('check-in page is available without social provider setup', (WidgetTester tester) async {
     await tester.pumpWidget(const SoulBibleApp());
+
+    expect(find.text('오늘 마음은\n어떤가요?'), findsOneWidget);
+    expect(find.text('소울바이블 시작하기'), findsNothing);
+  });
+
+  testWidgets('check-in page remains the first screen when providers are configured', (WidgetTester tester) async {
+    await tester.pumpWidget(const SoulBibleApp(
+      authConfig: SocialAuthConfig(
+        naverClientId: 'test-naver',
+        kakaoClientId: 'test-kakao',
+        googleClientId: 'test-google',
+      ),
+    ));
+
+    expect(find.text('오늘 마음은\n어떤가요?'), findsOneWidget);
+  });
+
+  testWidgets('development override opens the main check-in page', (WidgetTester tester) async {
+    await tester.pumpWidget(const SoulBibleApp(
+      authConfig: SocialAuthConfig(
+        naverClientId: 'test-naver',
+        kakaoClientId: 'test-kakao',
+        googleClientId: 'test-google',
+        developmentOverride: true,
+      ),
+    ));
 
     expect(find.text('오늘 마음은\n어떤가요?'), findsOneWidget);
   });

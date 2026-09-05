@@ -19,6 +19,9 @@ class DemoLlmApiClient implements LlmApiClient {
         riskLevel: 0,
         shouldOfferVerse: false,
         shouldEndConversation: false,
+        agent: 'integrated',
+        memorySummary: '사용자는 현재 ${emotion.label}과 관련된 상황을 돌아보고 있습니다.',
+        integratedInsight: '감정을 알아차리고 말로 표현하는 것 자체가 마음을 돌보는 첫 단계가 될 수 있어요.',
       );
     }
     if (turn == 1) {
@@ -30,6 +33,9 @@ class DemoLlmApiClient implements LlmApiClient {
         riskLevel: 0,
         shouldOfferVerse: false,
         shouldEndConversation: false,
+        agent: 'clinical_reflection',
+        memorySummary: '사용자는 마음을 무겁게 만든 상황과 그때 떠오른 생각을 탐색하고 있습니다.',
+        clinicalReflection: '상황과 생각을 나누어 보면 감정의 흐름을 조금 더 선명하게 볼 수 있어요.',
       );
     }
     return LlmConversationResponse(
@@ -40,6 +46,9 @@ class DemoLlmApiClient implements LlmApiClient {
       riskLevel: 0,
       shouldOfferVerse: true,
       shouldEndConversation: false,
+      agent: 'bible_ko',
+      memorySummary: '사용자는 지금 마음에 머물 수 있는 말씀과 작은 실천을 준비하고 있습니다.',
+      integratedInsight: '말씀을 읽기 전에도 자신의 마음을 충분히 살피고 선택할 권리가 있어요.',
     );
   }
 }
