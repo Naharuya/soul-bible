@@ -6,6 +6,7 @@ class RamiCard {
     required this.intro,
     required this.recordPrompt,
     required this.realSoundLabel,
+    required this.realSoundAsset,
   });
 
   final String id;
@@ -14,6 +15,7 @@ class RamiCard {
   final String intro;
   final String recordPrompt;
   final String realSoundLabel;
+  final String realSoundAsset;
 
   static const elephant = RamiCard(
     id: 'RAMI:ELEPHANT:001',
@@ -22,6 +24,7 @@ class RamiCard {
     intro: '코끼리다! 뿌우우!',
     recordPrompt: '코끼리처럼 소리 내볼까?',
     realSoundLabel: '코끼리 소리 듣기',
+    realSoundAsset: 'assets/audio/elephant.ogg',
   );
 
   static const dog = RamiCard(
@@ -31,6 +34,7 @@ class RamiCard {
     intro: '강아지다! 멍멍!',
     recordPrompt: '강아지처럼 멍멍 해볼까?',
     realSoundLabel: '강아지 소리 듣기',
+    realSoundAsset: 'assets/audio/dog.ogg',
   );
 
   static const car = RamiCard(
@@ -40,6 +44,7 @@ class RamiCard {
     intro: '자동차다! 부릉부릉!',
     recordPrompt: '자동차처럼 부릉부릉 해볼까?',
     realSoundLabel: '자동차 소리 듣기',
+    realSoundAsset: 'assets/audio/car.wav',
   );
 
   static const all = <RamiCard>[elephant, dog, car];

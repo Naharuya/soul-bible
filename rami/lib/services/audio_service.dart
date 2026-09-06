@@ -21,6 +21,11 @@ class RamiAudioService {
     await _player.play();
   }
 
+  Future<void> playAsset(String assetPath) async {
+    await _player.setAsset(assetPath);
+    await _player.play();
+  }
+
   Future<void> dispose() async {
     await _recorder.dispose();
     await _player.dispose();
