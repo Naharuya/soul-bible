@@ -24,7 +24,7 @@ class _RecordScreenState extends State<RecordScreen> {
   Future<void> _toggleRecord() async {
     if (_busy) return;
     if (!_recording) {
-      final ok = await _audio.startRecording();
+      final ok = await _audio.startRecording(cardId: widget.card.id);
       if (!mounted) return;
       setState(() {
         _recording = ok;
@@ -48,7 +48,7 @@ class _RecordScreenState extends State<RecordScreen> {
   }
 
   Future<void> _play() async {
-    final path = RamiRepository.instance.lastRecordingPath;
+    final path = RamiRepository.instance.recordingPathFor(widget.card.id);
     if (path == null || _busy) return;
     setState(() => _busy = true);
     try {
@@ -74,7 +74,7 @@ class _RecordScreenState extends State<RecordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final hasRecording = RamiRepository.instance.hasRecording;
+    final hasRecording = RamiRepository.instance.hasRecordingFor(widget.card.id);
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.transparent),
       body: SafeArea(

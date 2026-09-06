@@ -6,10 +6,11 @@ class RamiAudioService {
   final AudioRecorder _recorder = AudioRecorder();
   final AudioPlayer _player = AudioPlayer();
 
-  Future<bool> startRecording() async {
+  Future<bool> startRecording({required String cardId}) async {
     if (!await _recorder.hasPermission()) return false;
     final dir = await getApplicationDocumentsDirectory();
-    final path = '${dir.path}/rami_elephant.m4a';
+    final safeCardId = cardId.replaceAll(RegExp(r'[^A-Za-z0-9_-]'), '_');
+    final path = '${dir.path}/rami_$safeCardId.m4a';
     await _recorder.start(const RecordConfig(encoder: AudioEncoder.aacLc), path: path);
     return true;
   }

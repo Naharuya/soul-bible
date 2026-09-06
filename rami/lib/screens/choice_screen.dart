@@ -60,7 +60,7 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final hasRecording = RamiRepository.instance.hasRecording;
+    final hasRecording = RamiRepository.instance.hasRecordingFor(widget.card.id);
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.transparent),
       body: SafeArea(
