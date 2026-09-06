@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app_links/app_links.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'core/rami_theme.dart';
 import 'models/rami_card.dart';
@@ -45,6 +46,7 @@ class RamiApp extends StatefulWidget {
 class _RamiAppState extends State<RamiApp> {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   StreamSubscription<Uri>? _linkSubscription;
+  MethodChannel? _nfcChannel;
   Uri? _pendingUri;
   bool _navigationScheduled = false;
 
@@ -55,6 +57,11 @@ class _RamiAppState extends State<RamiApp> {
   }
 
   Future<void> _initializeLinkHandling() async {
+    _nfcChannel = const MethodChannel('rami/nfc_intent')
+      ..setMethodCallHandler(_handleNativeNfcCall);
+    final initialNfcValue = await _nfcChannel!.invokeMethod<String>('getInitialValue');
+    if (initialNfcValue != null) _receiveValue(initialNfcValue);
+
     _linkSubscription = widget.appLinks.uriLinkStream.listen(
       _receiveUri,
       onError: (_) {},
@@ -68,8 +75,18 @@ class _RamiAppState extends State<RamiApp> {
     }
   }
 
+  Future<void> _handleNativeNfcCall(MethodCall call) async {
+    if (call.method == 'nfcValue' && call.arguments is String) {
+      _receiveValue(call.arguments as String);
+    }
+  }
+
   void _receiveUri(Uri uri) {
-    _pendingUri = uri;
+    _receiveValue(uri.toString());
+  }
+
+  void _receiveValue(String value) {
+    _pendingUri = Uri.tryParse(value);
     _schedulePendingNavigation();
   }
 
