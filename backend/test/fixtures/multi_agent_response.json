@@ -1,0 +1,17 @@
+{
+  "message": "발표를 앞두고 마음이 복잡하시군요.\n\n자신에게 익숙한 신앙의 관점에서 마음을 천천히 돌아보셔도 좋겠습니다.\n\n원하시면 잠시 쉬며 지금 필요한 돌봄을 하나 정해 보세요.",
+  "question": "지금 가장 필요한 것은 무엇인가요?",
+  "stage": "need",
+  "detectedEmotion": "불안",
+  "secondaryEmotion": null,
+  "riskLevel": 0,
+  "shouldOfferVerse": false,
+  "verseTags": [],
+  "actionTags": [],
+  "shouldEndConversation": false,
+  "suggestedVerseId": null,
+  "agent": "integrated",
+  "memorySummary": "발표를 앞두고 마음이 복잡하시군요. 필요: 안정과 쉼",
+  "clinicalReflection": null,
+  "integratedInsight": null
+}

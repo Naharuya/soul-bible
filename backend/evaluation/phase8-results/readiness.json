@@ -1,0 +1,14 @@
+{
+  "status": "BLOCKED_NO_APPROVED_CORPUS",
+  "failures": [
+    {
+      "status": "BLOCKED_NO_APPROVED_CORPUS",
+      "tradition": "protestant"
+    }
+  ],
+  "activeIndexes": {},
+  "actualCorpusApproval": "BLOCKED_EXTERNAL_REVIEW",
+  "scope": [
+    "protestant"
+  ]
+}

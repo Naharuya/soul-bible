@@ -1,0 +1,216 @@
+{
+  "common": [
+    {
+      "id": "distress",
+      "terms": [
+        "불안",
+        "걱정",
+        "두려움",
+        "anxiety",
+        "worry"
+      ],
+      "expansion": [
+        "불안",
+        "두려움",
+        "위로",
+        "신뢰"
+      ]
+    },
+    {
+      "id": "care",
+      "terms": [
+        "위로",
+        "격려",
+        "comfort"
+      ],
+      "expansion": [
+        "위로",
+        "돌봄"
+      ]
+    }
+  ],
+  "protestant": [
+    {
+      "id": "prayer",
+      "terms": [
+        "기도",
+        "prayer"
+      ],
+      "expansion": [
+        "기도"
+      ]
+    },
+    {
+      "id": "faith",
+      "terms": [
+        "믿음",
+        "faith",
+        "신뢰"
+      ],
+      "expansion": [
+        "믿음",
+        "신뢰"
+      ]
+    },
+    {
+      "id": "grace",
+      "terms": [
+        "은혜",
+        "grace"
+      ],
+      "expansion": [
+        "은혜"
+      ]
+    }
+  ],
+  "catholic": [
+    {
+      "id": "sacrament",
+      "terms": [
+        "성사",
+        "sacrament"
+      ],
+      "expansion": [
+        "성사"
+      ]
+    },
+    {
+      "id": "rosary",
+      "terms": [
+        "묵주",
+        "rosary"
+      ],
+      "expansion": [
+        "묵주"
+      ]
+    }
+  ],
+  "buddhist": [
+    {
+      "id": "compassion",
+      "terms": [
+        "자비",
+        "compassion"
+      ],
+      "expansion": [
+        "자비"
+      ]
+    },
+    {
+      "id": "suffering",
+      "terms": [
+        "괴로움",
+        "suffering",
+        "고통"
+      ],
+      "expansion": [
+        "고통",
+        "집착",
+        "중도"
+      ]
+    },
+    {
+      "id": "attachment",
+      "terms": [
+        "집착",
+        "attachment"
+      ],
+      "expansion": [
+        "집착"
+      ]
+    }
+  ],
+  "jewish": [
+    {
+      "id": "torah",
+      "terms": [
+        "토라",
+        "torah"
+      ],
+      "expansion": [
+        "토라"
+      ]
+    },
+    {
+      "id": "community",
+      "terms": [
+        "공동체",
+        "community"
+      ],
+      "expansion": [
+        "공동체"
+      ]
+    }
+  ],
+  "islamic": [
+    {
+      "id": "sabr",
+      "terms": [
+        "인내",
+        "sabr"
+      ],
+      "expansion": [
+        "인내",
+        "자비"
+      ]
+    },
+    {
+      "id": "tawakkul",
+      "terms": [
+        "신뢰",
+        "tawakkul"
+      ],
+      "expansion": [
+        "신뢰",
+        "기도"
+      ]
+    }
+  ],
+  "hindu": [
+    {
+      "id": "dharma",
+      "terms": [
+        "다르마",
+        "dharma"
+      ],
+      "expansion": [
+        "다르마"
+      ]
+    },
+    {
+      "id": "yoga",
+      "terms": [
+        "요가",
+        "yoga"
+      ],
+      "expansion": [
+        "요가",
+        "명상"
+      ]
+    }
+  ],
+  "confucian": [
+    {
+      "id": "filial",
+      "terms": [
+        "효",
+        "부모",
+        "filial"
+      ],
+      "expansion": [
+        "효",
+        "관계"
+      ]
+    },
+    {
+      "id": "cultivation",
+      "terms": [
+        "수양",
+        "cultivation"
+      ],
+      "expansion": [
+        "자기수양"
+      ]
+    }
+  ]
+}

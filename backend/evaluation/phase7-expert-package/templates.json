@@ -1,0 +1,310 @@
+[
+  {
+    "version": "expert-v1",
+    "tradition": "protestant",
+    "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+    "roles": {
+      "licenseReviewer": {
+        "checklist": [
+          "licenseEvidence",
+          "permittedUsage",
+          "sourceIdentity"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "contentReviewer": {
+        "checklist": [
+          "sourceAccuracy",
+          "quotationContext",
+          "chunkBoundaries"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "traditionExpert": {
+        "checklist": [
+          "doctrinalAccuracy",
+          "traditionConsistency",
+          "branchBiasDisclosed",
+          "noInterfaithMixing"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "safetyReviewer": {
+        "checklist": [
+          "noAbsolutistPromises",
+          "psychologicalSafety",
+          "noTreatmentReplacement"
+        ],
+        "decision": null,
+        "notes": ""
+      }
+    }
+  },
+  {
+    "version": "expert-v1",
+    "tradition": "catholic",
+    "focus": "가톨릭: 문헌의 권위와 교구·수도회 등 적용 범위를 확인",
+    "roles": {
+      "licenseReviewer": {
+        "checklist": [
+          "licenseEvidence",
+          "permittedUsage",
+          "sourceIdentity"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "contentReviewer": {
+        "checklist": [
+          "sourceAccuracy",
+          "quotationContext",
+          "chunkBoundaries"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "traditionExpert": {
+        "checklist": [
+          "doctrinalAccuracy",
+          "traditionConsistency",
+          "branchBiasDisclosed",
+          "noInterfaithMixing"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "safetyReviewer": {
+        "checklist": [
+          "noAbsolutistPromises",
+          "psychologicalSafety",
+          "noTreatmentReplacement"
+        ],
+        "decision": null,
+        "notes": ""
+      }
+    }
+  },
+  {
+    "version": "expert-v1",
+    "tradition": "buddhist",
+    "focus": "불교: 지정 종파·전승·번역 및 해설의 구분을 확인",
+    "roles": {
+      "licenseReviewer": {
+        "checklist": [
+          "licenseEvidence",
+          "permittedUsage",
+          "sourceIdentity"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "contentReviewer": {
+        "checklist": [
+          "sourceAccuracy",
+          "quotationContext",
+          "chunkBoundaries"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "traditionExpert": {
+        "checklist": [
+          "doctrinalAccuracy",
+          "traditionConsistency",
+          "branchBiasDisclosed",
+          "noInterfaithMixing"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "safetyReviewer": {
+        "checklist": [
+          "noAbsolutistPromises",
+          "psychologicalSafety",
+          "noTreatmentReplacement"
+        ],
+        "decision": null,
+        "notes": ""
+      }
+    }
+  },
+  {
+    "version": "expert-v1",
+    "tradition": "jewish",
+    "focus": "유대교: 지정 전통·학파 및 원문과 해설의 구분을 확인",
+    "roles": {
+      "licenseReviewer": {
+        "checklist": [
+          "licenseEvidence",
+          "permittedUsage",
+          "sourceIdentity"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "contentReviewer": {
+        "checklist": [
+          "sourceAccuracy",
+          "quotationContext",
+          "chunkBoundaries"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "traditionExpert": {
+        "checklist": [
+          "doctrinalAccuracy",
+          "traditionConsistency",
+          "branchBiasDisclosed",
+          "noInterfaithMixing"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "safetyReviewer": {
+        "checklist": [
+          "noAbsolutistPromises",
+          "psychologicalSafety",
+          "noTreatmentReplacement"
+        ],
+        "decision": null,
+        "notes": ""
+      }
+    }
+  },
+  {
+    "version": "expert-v1",
+    "tradition": "islamic",
+    "focus": "이슬람: 지정 전통·법학파 및 원문·번역·주석의 구분을 확인",
+    "roles": {
+      "licenseReviewer": {
+        "checklist": [
+          "licenseEvidence",
+          "permittedUsage",
+          "sourceIdentity"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "contentReviewer": {
+        "checklist": [
+          "sourceAccuracy",
+          "quotationContext",
+          "chunkBoundaries"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "traditionExpert": {
+        "checklist": [
+          "doctrinalAccuracy",
+          "traditionConsistency",
+          "branchBiasDisclosed",
+          "noInterfaithMixing"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "safetyReviewer": {
+        "checklist": [
+          "noAbsolutistPromises",
+          "psychologicalSafety",
+          "noTreatmentReplacement"
+        ],
+        "decision": null,
+        "notes": ""
+      }
+    }
+  },
+  {
+    "version": "expert-v1",
+    "tradition": "hindu",
+    "focus": "힌두교: 지정 전통·학파와 텍스트의 적용 범위를 확인",
+    "roles": {
+      "licenseReviewer": {
+        "checklist": [
+          "licenseEvidence",
+          "permittedUsage",
+          "sourceIdentity"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "contentReviewer": {
+        "checklist": [
+          "sourceAccuracy",
+          "quotationContext",
+          "chunkBoundaries"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "traditionExpert": {
+        "checklist": [
+          "doctrinalAccuracy",
+          "traditionConsistency",
+          "branchBiasDisclosed",
+          "noInterfaithMixing"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "safetyReviewer": {
+        "checklist": [
+          "noAbsolutistPromises",
+          "psychologicalSafety",
+          "noTreatmentReplacement"
+        ],
+        "decision": null,
+        "notes": ""
+      }
+    }
+  },
+  {
+    "version": "expert-v1",
+    "tradition": "confucian",
+    "focus": "유교: 지정 학파·시대 및 경전과 주석의 구분을 확인",
+    "roles": {
+      "licenseReviewer": {
+        "checklist": [
+          "licenseEvidence",
+          "permittedUsage",
+          "sourceIdentity"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "contentReviewer": {
+        "checklist": [
+          "sourceAccuracy",
+          "quotationContext",
+          "chunkBoundaries"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "traditionExpert": {
+        "checklist": [
+          "doctrinalAccuracy",
+          "traditionConsistency",
+          "branchBiasDisclosed",
+          "noInterfaithMixing"
+        ],
+        "decision": null,
+        "notes": ""
+      },
+      "safetyReviewer": {
+        "checklist": [
+          "noAbsolutistPromises",
+          "psychologicalSafety",
+          "noTreatmentReplacement"
+        ],
+        "decision": null,
+        "notes": ""
+      }
+    }
+  }
+]

@@ -29,6 +29,34 @@ class BibleVerse {
   final List<String> tags;
   final String reflectionQuestion;
 
+  /// Use spoken Korean units instead of asking TTS to interpret ':' and '-'.
+  String get koreanSpokenReference {
+    final chapterUnit = book == '시편' ? '편' : '장';
+    final start =
+        '$book ${_koreanNumber(chapter)}$chapterUnit ${_koreanNumber(verseStart)}절';
+    final end = verseEnd;
+    return end != null && end > verseStart
+        ? '$start부터 ${_koreanNumber(end)}절까지'
+        : start;
+  }
+
+  static String _koreanNumber(int number) {
+    if (number < 1 || number > 9999) return number.toString();
+    const digits = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
+    const units = ['', '십', '백', '천'];
+    final result = StringBuffer();
+    var divisor = 1000;
+    for (var position = 3; position >= 0; position--) {
+      final digit = number ~/ divisor % 10;
+      if (digit > 0) {
+        if (digit != 1 || position == 0) result.write(digits[digit]);
+        result.write(units[position]);
+      }
+      divisor ~/= 10;
+    }
+    return result.toString();
+  }
+
   factory BibleVerse.fromJson(Map<String, dynamic> json) {
     return BibleVerse(
       id: json['id'] as String,

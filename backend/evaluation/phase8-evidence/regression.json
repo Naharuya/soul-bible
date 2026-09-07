@@ -1,0 +1,11 @@
+{
+  "command": "npm.cmd test",
+  "total": 238,
+  "passed": 238,
+  "failed": 0,
+  "skipped": 0,
+  "existingBaseline": 211,
+  "additionalTests": 27,
+  "phase8Baseline": 231,
+  "phase8AddedTests": 7
+}

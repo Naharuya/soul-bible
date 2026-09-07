@@ -1,0 +1,9 @@
+{
+  "protestant": { "Reformed": ["Reformed", "개혁파"] },
+  "catholic": { "latin": ["latin", "라틴 전례"], "eastern": ["eastern catholic", "동방 가톨릭"] },
+  "buddhist": { "Zen": ["Zen", "선종"], "Theravada": ["Theravada", "테라와다"], "Mahayana": ["Mahayana", "대승"], "Tibetan": ["Tibetan", "티베트"] },
+  "jewish": { "Orthodox": ["Orthodox", "정통파"], "Reform": ["Reform", "개혁 유대교"], "Conservative": ["Conservative", "보수 유대교"] },
+  "islamic": { "Sunni": ["Sunni", "수니"], "Shia": ["Shia", "시아"] },
+  "hindu": { "Vedanta": ["Vedanta", "베단타"], "Yoga": ["Yoga", "요가 학파"], "Shaivism": ["Shaivism", "시바파"] },
+  "confucian": { "classical": ["classical", "고전 유교"], "Neo-Confucian": ["Neo-Confucian", "성리학"] }
+}

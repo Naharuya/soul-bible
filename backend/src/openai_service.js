@@ -2,27 +2,43 @@ import OpenAI from 'openai';
 import { SYSTEM_PROMPT, buildInput } from './prompt.js';
 import { responseJsonSchema, responseSchema } from './schema.js';
 
-export function createOpenAiService({ apiKey, model }) {
+export function createOpenAiService({ apiKey, model, client, timeout = 6_000, maxRetries = 1 }) {
   if (!apiKey) throw new Error('OPENAI_API_KEY is required.');
-  const client = new OpenAI({ apiKey, timeout: 20_000, maxRetries: 2 });
+  const api = client ?? new OpenAI({ apiKey, timeout, maxRetries });
 
-  return async function generate(body, agent, memorySummary = '') {
-    const response = await client.responses.create({
+  async function runStructured({ name, instructions, input, jsonSchema, schema, maxOutputTokens = 1800 }, { signal, onUsage } = {}) {
+    const response = await api.responses.create({
       model,
-      instructions: SYSTEM_PROMPT,
-      input: buildInput(body, agent, memorySummary),
+      instructions,
+      input: typeof input === 'string' ? input : JSON.stringify(input),
       text: {
         format: {
           type: 'json_schema',
-          name: 'soul_bible_turn',
+          name,
           strict: true,
-          schema: responseJsonSchema,
+          schema: jsonSchema,
         },
       },
-      max_output_tokens: 900,
+      max_output_tokens: maxOutputTokens,
       store: false,
-    });
+    }, { signal });
+    // Only numeric usage leaves this layer; never return raw provider metadata to logs.
+    try {
+      onUsage?.({ inputTokens: response.usage?.input_tokens, outputTokens: response.usage?.output_tokens });
+    } catch { /* Usage tracking cannot turn a successful response into an error. */ }
+    if (response.status && response.status !== 'completed') throw new Error('The model response did not complete.');
     if (!response.output_text) throw new Error('The model returned no output text.');
-    return responseSchema.parse(JSON.parse(response.output_text));
-  };
+    return schema.parse(JSON.parse(response.output_text));
+  }
+
+  // Preserve the existing callable service contract for any legacy consumers.
+  async function generate(body, agent, memorySummary = '', options = {}) {
+    return runStructured({
+      name: 'soul_bible_turn', instructions: SYSTEM_PROMPT,
+      input: buildInput(body, agent, memorySummary),
+      jsonSchema: responseJsonSchema, schema: responseSchema, maxOutputTokens: 900,
+    }, options);
+  }
+  generate.runStructured = runStructured;
+  return generate;
 }

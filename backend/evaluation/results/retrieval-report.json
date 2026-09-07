@@ -1,0 +1,1010 @@
+{
+  "scope": "self-authored synthetic evaluation; no LLM answers",
+  "baseline": {
+    "k": 3,
+    "queries": 70,
+    "relevantQueries": 35,
+    "recallAtK": 1,
+    "precisionAtK": 0.1666666666666667,
+    "mrr": 0.5,
+    "wrongTraditionRetrievalRate": 0,
+    "emptyRetrievalRate": 0.5
+  },
+  "hybrid": {
+    "k": 3,
+    "queries": 70,
+    "relevantQueries": 35,
+    "recallAtK": 1,
+    "precisionAtK": 0.1666666666666667,
+    "mrr": 0.4928571428571429,
+    "wrongTraditionRetrievalRate": 0,
+    "emptyRetrievalRate": 0.5
+  },
+  "rows": [
+    {
+      "questionId": "protestant-eval-1",
+      "question": "기독교에서 기도를 이야기할 때 무엇을 확인해야 하나요?",
+      "tradition": "protestant",
+      "expectedSourceIds": [
+        "protestant:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "protestant:sample:1",
+          "tradition": "protestant",
+          "reference": "SoulBible 자체 작성 샘플 1 (protestant)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "protestant-eval-2",
+      "question": "기독교의 묵상에 관한 일반적인 설명을 듣고 싶어요.",
+      "tradition": "protestant",
+      "expectedSourceIds": [
+        "protestant:sample:2"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "protestant:sample:2",
+          "tradition": "protestant",
+          "reference": "SoulBible 자체 작성 샘플 2 (protestant)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "protestant:sample:1",
+          "tradition": "protestant",
+          "reference": "SoulBible 자체 작성 샘플 1 (protestant)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "protestant:sample:3",
+          "tradition": "protestant",
+          "reference": "SoulBible 자체 작성 샘플 3 (protestant)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "protestant-eval-3",
+      "question": "기독교 관점에서 위로를 생각하며 마음을 돌보고 싶어요.",
+      "tradition": "protestant",
+      "expectedSourceIds": [
+        "protestant:sample:3"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "protestant:sample:3",
+          "tradition": "protestant",
+          "reference": "SoulBible 자체 작성 샘플 3 (protestant)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "protestant-eval-4",
+      "question": "기독교의 기도에 관한 실제 경전 문구를 인용할 수 있나요?",
+      "tradition": "protestant",
+      "expectedSourceIds": [
+        "protestant:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "protestant:sample:1",
+          "tradition": "protestant",
+          "reference": "SoulBible 자체 작성 샘플 1 (protestant)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "protestant:sample:2",
+          "tradition": "protestant",
+          "reference": "SoulBible 자체 작성 샘플 2 (protestant)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "protestant:sample:3",
+          "tradition": "protestant",
+          "reference": "SoulBible 자체 작성 샘플 3 (protestant)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "protestant-eval-5",
+      "question": "어떤 도움을 받을 수 있을까요?",
+      "tradition": "protestant",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "protestant-eval-6",
+      "question": "개신교 교단에서 기도의 해석이 같다고 단정해도 되나요?",
+      "tradition": "protestant",
+      "expectedSourceIds": [
+        "protestant:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "protestant:sample:1",
+          "tradition": "protestant",
+          "reference": "SoulBible 자체 작성 샘플 1 (protestant)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "protestant-eval-7",
+      "question": "기독교와 가톨릭에서는 불안을 어떻게 보나요?",
+      "tradition": "protestant",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "protestant-eval-7",
+      "question": "기독교와 가톨릭에서는 불안을 어떻게 보나요?",
+      "tradition": "catholic",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "protestant-eval-9",
+      "question": "기독교의 가상경전 제999장 999절을 정확히 인용하세요.",
+      "tradition": "protestant",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "protestant-eval-10",
+      "question": "기독교에서 zxqv927라는 생소한 용어가 무엇인가요?",
+      "tradition": "protestant",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "catholic-eval-1",
+      "question": "가톨릭에서 성사를 이야기할 때 무엇을 확인해야 하나요?",
+      "tradition": "catholic",
+      "expectedSourceIds": [
+        "catholic:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "catholic:sample:1",
+          "tradition": "catholic",
+          "reference": "SoulBible 자체 작성 샘플 1 (catholic)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "catholic-eval-2",
+      "question": "가톨릭의 묵주에 관한 일반적인 설명을 듣고 싶어요.",
+      "tradition": "catholic",
+      "expectedSourceIds": [
+        "catholic:sample:2"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "catholic:sample:2",
+          "tradition": "catholic",
+          "reference": "SoulBible 자체 작성 샘플 2 (catholic)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "catholic:sample:1",
+          "tradition": "catholic",
+          "reference": "SoulBible 자체 작성 샘플 1 (catholic)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "catholic:sample:3",
+          "tradition": "catholic",
+          "reference": "SoulBible 자체 작성 샘플 3 (catholic)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "catholic-eval-3",
+      "question": "가톨릭 관점에서 교리를 생각하며 마음을 돌보고 싶어요.",
+      "tradition": "catholic",
+      "expectedSourceIds": [
+        "catholic:sample:3"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "catholic:sample:3",
+          "tradition": "catholic",
+          "reference": "SoulBible 자체 작성 샘플 3 (catholic)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "catholic-eval-4",
+      "question": "가톨릭의 성사에 관한 실제 경전 문구를 인용할 수 있나요?",
+      "tradition": "catholic",
+      "expectedSourceIds": [
+        "catholic:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "catholic:sample:1",
+          "tradition": "catholic",
+          "reference": "SoulBible 자체 작성 샘플 1 (catholic)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "catholic:sample:2",
+          "tradition": "catholic",
+          "reference": "SoulBible 자체 작성 샘플 2 (catholic)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "catholic:sample:3",
+          "tradition": "catholic",
+          "reference": "SoulBible 자체 작성 샘플 3 (catholic)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "catholic-eval-5",
+      "question": "어떤 도움을 받을 수 있을까요?",
+      "tradition": "catholic",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "catholic-eval-6",
+      "question": "가톨릭 전례 전통에서 성사의 해석이 같다고 단정해도 되나요?",
+      "tradition": "catholic",
+      "expectedSourceIds": [
+        "catholic:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "catholic:sample:1",
+          "tradition": "catholic",
+          "reference": "SoulBible 자체 작성 샘플 1 (catholic)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "catholic-eval-7",
+      "question": "가톨릭와 기독교에서는 불안을 어떻게 보나요?",
+      "tradition": "catholic",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "catholic-eval-7",
+      "question": "가톨릭와 기독교에서는 불안을 어떻게 보나요?",
+      "tradition": "protestant",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "catholic-eval-9",
+      "question": "가톨릭의 가상경전 제999장 999절을 정확히 인용하세요.",
+      "tradition": "catholic",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "catholic-eval-10",
+      "question": "가톨릭에서 zxqv927라는 생소한 용어가 무엇인가요?",
+      "tradition": "catholic",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "buddhist-eval-1",
+      "question": "불교에서 연기를 이야기할 때 무엇을 확인해야 하나요?",
+      "tradition": "buddhist",
+      "expectedSourceIds": [
+        "buddhist:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "buddhist:sample:1",
+          "tradition": "buddhist",
+          "reference": "SoulBible 자체 작성 샘플 1 (buddhist)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "buddhist-eval-2",
+      "question": "불교의 자비에 관한 일반적인 설명을 듣고 싶어요.",
+      "tradition": "buddhist",
+      "expectedSourceIds": [
+        "buddhist:sample:2"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "buddhist:sample:2",
+          "tradition": "buddhist",
+          "reference": "SoulBible 자체 작성 샘플 2 (buddhist)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "buddhist:sample:1",
+          "tradition": "buddhist",
+          "reference": "SoulBible 자체 작성 샘플 1 (buddhist)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "buddhist:sample:3",
+          "tradition": "buddhist",
+          "reference": "SoulBible 자체 작성 샘플 3 (buddhist)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "buddhist-eval-3",
+      "question": "불교 관점에서 중도를 생각하며 마음을 돌보고 싶어요.",
+      "tradition": "buddhist",
+      "expectedSourceIds": [
+        "buddhist:sample:3"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "buddhist:sample:3",
+          "tradition": "buddhist",
+          "reference": "SoulBible 자체 작성 샘플 3 (buddhist)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "buddhist-eval-4",
+      "question": "불교의 연기에 관한 실제 경전 문구를 인용할 수 있나요?",
+      "tradition": "buddhist",
+      "expectedSourceIds": [
+        "buddhist:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "buddhist:sample:1",
+          "tradition": "buddhist",
+          "reference": "SoulBible 자체 작성 샘플 1 (buddhist)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "buddhist:sample:2",
+          "tradition": "buddhist",
+          "reference": "SoulBible 자체 작성 샘플 2 (buddhist)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "buddhist:sample:3",
+          "tradition": "buddhist",
+          "reference": "SoulBible 자체 작성 샘플 3 (buddhist)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "buddhist-eval-5",
+      "question": "어떤 도움을 받을 수 있을까요?",
+      "tradition": "buddhist",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "buddhist-eval-6",
+      "question": "선종과 테라와다에서 연기의 해석이 같다고 단정해도 되나요?",
+      "tradition": "buddhist",
+      "expectedSourceIds": [
+        "buddhist:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "buddhist:sample:1",
+          "tradition": "buddhist",
+          "reference": "SoulBible 자체 작성 샘플 1 (buddhist)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "buddhist-eval-7",
+      "question": "불교와 힌두교에서는 불안을 어떻게 보나요?",
+      "tradition": "buddhist",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "buddhist-eval-7",
+      "question": "불교와 힌두교에서는 불안을 어떻게 보나요?",
+      "tradition": "hindu",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "buddhist-eval-9",
+      "question": "불교의 가상경전 제999장 999절을 정확히 인용하세요.",
+      "tradition": "buddhist",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "buddhist-eval-10",
+      "question": "불교에서 zxqv927라는 생소한 용어가 무엇인가요?",
+      "tradition": "buddhist",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "jewish-eval-1",
+      "question": "유대교에서 토라를 이야기할 때 무엇을 확인해야 하나요?",
+      "tradition": "jewish",
+      "expectedSourceIds": [
+        "jewish:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "jewish:sample:1",
+          "tradition": "jewish",
+          "reference": "SoulBible 자체 작성 샘플 1 (jewish)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "jewish-eval-2",
+      "question": "유대교의 공동체에 관한 일반적인 설명을 듣고 싶어요.",
+      "tradition": "jewish",
+      "expectedSourceIds": [
+        "jewish:sample:2"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "jewish:sample:2",
+          "tradition": "jewish",
+          "reference": "SoulBible 자체 작성 샘플 2 (jewish)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "jewish:sample:1",
+          "tradition": "jewish",
+          "reference": "SoulBible 자체 작성 샘플 1 (jewish)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "jewish:sample:3",
+          "tradition": "jewish",
+          "reference": "SoulBible 자체 작성 샘플 3 (jewish)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "jewish-eval-3",
+      "question": "유대교 관점에서 성찰를 생각하며 마음을 돌보고 싶어요.",
+      "tradition": "jewish",
+      "expectedSourceIds": [
+        "jewish:sample:3"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "jewish:sample:3",
+          "tradition": "jewish",
+          "reference": "SoulBible 자체 작성 샘플 3 (jewish)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "jewish-eval-4",
+      "question": "유대교의 토라에 관한 실제 경전 문구를 인용할 수 있나요?",
+      "tradition": "jewish",
+      "expectedSourceIds": [
+        "jewish:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "jewish:sample:1",
+          "tradition": "jewish",
+          "reference": "SoulBible 자체 작성 샘플 1 (jewish)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "jewish:sample:2",
+          "tradition": "jewish",
+          "reference": "SoulBible 자체 작성 샘플 2 (jewish)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "jewish:sample:3",
+          "tradition": "jewish",
+          "reference": "SoulBible 자체 작성 샘플 3 (jewish)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "jewish-eval-5",
+      "question": "어떤 도움을 받을 수 있을까요?",
+      "tradition": "jewish",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "jewish-eval-6",
+      "question": "유대교 공동체에서 토라의 해석이 같다고 단정해도 되나요?",
+      "tradition": "jewish",
+      "expectedSourceIds": [
+        "jewish:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "jewish:sample:2",
+          "tradition": "jewish",
+          "reference": "SoulBible 자체 작성 샘플 2 (jewish)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "jewish:sample:1",
+          "tradition": "jewish",
+          "reference": "SoulBible 자체 작성 샘플 1 (jewish)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "jewish-eval-7",
+      "question": "유대교와 기독교에서는 불안을 어떻게 보나요?",
+      "tradition": "jewish",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "jewish-eval-7",
+      "question": "유대교와 기독교에서는 불안을 어떻게 보나요?",
+      "tradition": "protestant",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "jewish-eval-9",
+      "question": "유대교의 가상경전 제999장 999절을 정확히 인용하세요.",
+      "tradition": "jewish",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "jewish-eval-10",
+      "question": "유대교에서 zxqv927라는 생소한 용어가 무엇인가요?",
+      "tradition": "jewish",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "islamic-eval-1",
+      "question": "이슬람에서 꾸란를 이야기할 때 무엇을 확인해야 하나요?",
+      "tradition": "islamic",
+      "expectedSourceIds": [
+        "islamic:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "islamic:sample:1",
+          "tradition": "islamic",
+          "reference": "SoulBible 자체 작성 샘플 1 (islamic)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "islamic-eval-2",
+      "question": "이슬람의 기도에 관한 일반적인 설명을 듣고 싶어요.",
+      "tradition": "islamic",
+      "expectedSourceIds": [
+        "islamic:sample:2"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "islamic:sample:2",
+          "tradition": "islamic",
+          "reference": "SoulBible 자체 작성 샘플 2 (islamic)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "islamic:sample:1",
+          "tradition": "islamic",
+          "reference": "SoulBible 자체 작성 샘플 1 (islamic)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "islamic:sample:3",
+          "tradition": "islamic",
+          "reference": "SoulBible 자체 작성 샘플 3 (islamic)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "islamic-eval-3",
+      "question": "이슬람 관점에서 자비를 생각하며 마음을 돌보고 싶어요.",
+      "tradition": "islamic",
+      "expectedSourceIds": [
+        "islamic:sample:3"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "islamic:sample:3",
+          "tradition": "islamic",
+          "reference": "SoulBible 자체 작성 샘플 3 (islamic)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "islamic-eval-4",
+      "question": "이슬람의 꾸란에 관한 실제 경전 문구를 인용할 수 있나요?",
+      "tradition": "islamic",
+      "expectedSourceIds": [
+        "islamic:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "islamic:sample:1",
+          "tradition": "islamic",
+          "reference": "SoulBible 자체 작성 샘플 1 (islamic)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "islamic:sample:2",
+          "tradition": "islamic",
+          "reference": "SoulBible 자체 작성 샘플 2 (islamic)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "islamic:sample:3",
+          "tradition": "islamic",
+          "reference": "SoulBible 자체 작성 샘플 3 (islamic)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "islamic-eval-5",
+      "question": "어떤 도움을 받을 수 있을까요?",
+      "tradition": "islamic",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "islamic-eval-6",
+      "question": "수니와 시아에서 꾸란의 해석이 같다고 단정해도 되나요?",
+      "tradition": "islamic",
+      "expectedSourceIds": [
+        "islamic:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "islamic:sample:1",
+          "tradition": "islamic",
+          "reference": "SoulBible 자체 작성 샘플 1 (islamic)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "islamic-eval-7",
+      "question": "이슬람와 유대교에서는 불안을 어떻게 보나요?",
+      "tradition": "islamic",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "islamic-eval-7",
+      "question": "이슬람와 유대교에서는 불안을 어떻게 보나요?",
+      "tradition": "jewish",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "islamic-eval-9",
+      "question": "이슬람의 가상경전 제999장 999절을 정확히 인용하세요.",
+      "tradition": "islamic",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "islamic-eval-10",
+      "question": "이슬람에서 zxqv927라는 생소한 용어가 무엇인가요?",
+      "tradition": "islamic",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "hindu-eval-1",
+      "question": "힌두교에서 다르마를 이야기할 때 무엇을 확인해야 하나요?",
+      "tradition": "hindu",
+      "expectedSourceIds": [
+        "hindu:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "hindu:sample:1",
+          "tradition": "hindu",
+          "reference": "SoulBible 자체 작성 샘플 1 (hindu)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "hindu-eval-2",
+      "question": "힌두교의 요가에 관한 일반적인 설명을 듣고 싶어요.",
+      "tradition": "hindu",
+      "expectedSourceIds": [
+        "hindu:sample:2"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "hindu:sample:2",
+          "tradition": "hindu",
+          "reference": "SoulBible 자체 작성 샘플 2 (hindu)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "hindu:sample:1",
+          "tradition": "hindu",
+          "reference": "SoulBible 자체 작성 샘플 1 (hindu)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "hindu:sample:3",
+          "tradition": "hindu",
+          "reference": "SoulBible 자체 작성 샘플 3 (hindu)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "hindu-eval-3",
+      "question": "힌두교 관점에서 명상를 생각하며 마음을 돌보고 싶어요.",
+      "tradition": "hindu",
+      "expectedSourceIds": [
+        "hindu:sample:3"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "hindu:sample:3",
+          "tradition": "hindu",
+          "reference": "SoulBible 자체 작성 샘플 3 (hindu)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "hindu-eval-4",
+      "question": "힌두교의 다르마에 관한 실제 경전 문구를 인용할 수 있나요?",
+      "tradition": "hindu",
+      "expectedSourceIds": [
+        "hindu:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "hindu:sample:1",
+          "tradition": "hindu",
+          "reference": "SoulBible 자체 작성 샘플 1 (hindu)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "hindu:sample:2",
+          "tradition": "hindu",
+          "reference": "SoulBible 자체 작성 샘플 2 (hindu)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "hindu:sample:3",
+          "tradition": "hindu",
+          "reference": "SoulBible 자체 작성 샘플 3 (hindu)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "hindu-eval-5",
+      "question": "어떤 도움을 받을 수 있을까요?",
+      "tradition": "hindu",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "hindu-eval-6",
+      "question": "베단타와 요가에서 다르마의 해석이 같다고 단정해도 되나요?",
+      "tradition": "hindu",
+      "expectedSourceIds": [
+        "hindu:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "hindu:sample:1",
+          "tradition": "hindu",
+          "reference": "SoulBible 자체 작성 샘플 1 (hindu)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "hindu:sample:2",
+          "tradition": "hindu",
+          "reference": "SoulBible 자체 작성 샘플 2 (hindu)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "hindu-eval-7",
+      "question": "힌두교와 불교에서는 불안을 어떻게 보나요?",
+      "tradition": "hindu",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "hindu-eval-7",
+      "question": "힌두교와 불교에서는 불안을 어떻게 보나요?",
+      "tradition": "buddhist",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "hindu-eval-9",
+      "question": "힌두교의 가상경전 제999장 999절을 정확히 인용하세요.",
+      "tradition": "hindu",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "hindu-eval-10",
+      "question": "힌두교에서 zxqv927라는 생소한 용어가 무엇인가요?",
+      "tradition": "hindu",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "confucian-eval-1",
+      "question": "유교에서 효를 이야기할 때 무엇을 확인해야 하나요?",
+      "tradition": "confucian",
+      "expectedSourceIds": [
+        "confucian:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "confucian:sample:1",
+          "tradition": "confucian",
+          "reference": "SoulBible 자체 작성 샘플 1 (confucian)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "confucian-eval-2",
+      "question": "유교의 자기수양에 관한 일반적인 설명을 듣고 싶어요.",
+      "tradition": "confucian",
+      "expectedSourceIds": [
+        "confucian:sample:2"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "confucian:sample:2",
+          "tradition": "confucian",
+          "reference": "SoulBible 자체 작성 샘플 2 (confucian)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "confucian:sample:1",
+          "tradition": "confucian",
+          "reference": "SoulBible 자체 작성 샘플 1 (confucian)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "confucian:sample:3",
+          "tradition": "confucian",
+          "reference": "SoulBible 자체 작성 샘플 3 (confucian)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "confucian-eval-3",
+      "question": "유교 관점에서 관계를 생각하며 마음을 돌보고 싶어요.",
+      "tradition": "confucian",
+      "expectedSourceIds": [
+        "confucian:sample:3"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "confucian:sample:3",
+          "tradition": "confucian",
+          "reference": "SoulBible 자체 작성 샘플 3 (confucian)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "confucian-eval-4",
+      "question": "유교의 효에 관한 실제 경전 문구를 인용할 수 있나요?",
+      "tradition": "confucian",
+      "expectedSourceIds": [
+        "confucian:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "confucian:sample:1",
+          "tradition": "confucian",
+          "reference": "SoulBible 자체 작성 샘플 1 (confucian)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "confucian:sample:2",
+          "tradition": "confucian",
+          "reference": "SoulBible 자체 작성 샘플 2 (confucian)",
+          "authorityLevel": "secondary"
+        },
+        {
+          "sourceId": "confucian:sample:3",
+          "tradition": "confucian",
+          "reference": "SoulBible 자체 작성 샘플 3 (confucian)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "confucian-eval-5",
+      "question": "어떤 도움을 받을 수 있을까요?",
+      "tradition": "confucian",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "confucian-eval-6",
+      "question": "유교 학파에서 효의 해석이 같다고 단정해도 되나요?",
+      "tradition": "confucian",
+      "expectedSourceIds": [
+        "confucian:sample:1"
+      ],
+      "retrievedSources": [
+        {
+          "sourceId": "confucian:sample:1",
+          "tradition": "confucian",
+          "reference": "SoulBible 자체 작성 샘플 1 (confucian)",
+          "authorityLevel": "secondary"
+        }
+      ]
+    },
+    {
+      "questionId": "confucian-eval-7",
+      "question": "유교와 불교에서는 불안을 어떻게 보나요?",
+      "tradition": "confucian",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "confucian-eval-7",
+      "question": "유교와 불교에서는 불안을 어떻게 보나요?",
+      "tradition": "buddhist",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "confucian-eval-9",
+      "question": "유교의 가상경전 제999장 999절을 정확히 인용하세요.",
+      "tradition": "confucian",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    },
+    {
+      "questionId": "confucian-eval-10",
+      "question": "유교에서 zxqv927라는 생소한 용어가 무엇인가요?",
+      "tradition": "confucian",
+      "expectedSourceIds": [],
+      "retrievedSources": []
+    }
+  ]
+}

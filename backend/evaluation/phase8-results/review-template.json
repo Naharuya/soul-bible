@@ -1,0 +1,44 @@
+{
+  "version": "expert-v1",
+  "tradition": "protestant",
+  "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+  "roles": {
+    "licenseReviewer": {
+      "checklist": [
+        "licenseEvidence",
+        "permittedUsage",
+        "sourceIdentity"
+      ],
+      "decision": null,
+      "notes": ""
+    },
+    "contentReviewer": {
+      "checklist": [
+        "sourceAccuracy",
+        "quotationContext",
+        "chunkBoundaries"
+      ],
+      "decision": null,
+      "notes": ""
+    },
+    "traditionExpert": {
+      "checklist": [
+        "doctrinalAccuracy",
+        "traditionConsistency",
+        "branchBiasDisclosed",
+        "noInterfaithMixing"
+      ],
+      "decision": null,
+      "notes": ""
+    },
+    "safetyReviewer": {
+      "checklist": [
+        "noAbsolutistPromises",
+        "psychologicalSafety",
+        "noTreatmentReplacement"
+      ],
+      "decision": null,
+      "notes": ""
+    }
+  }
+}

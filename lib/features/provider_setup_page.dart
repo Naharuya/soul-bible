@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app/app_theme.dart';
+import '../app/space_scaffold.dart';
 import '../app/social_auth_config.dart';
 
 class ProviderSetupPage extends StatelessWidget {
@@ -10,7 +11,7 @@ class ProviderSetupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SpaceScaffold(
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
@@ -21,11 +22,11 @@ class ProviderSetupPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Icon(Icons.lock_outline_rounded, color: AppTheme.green, size: 42),
+                  Icon(Icons.lock_outline_rounded, color: AppTheme.of(context).green, size: 42),
                   const SizedBox(height: 20),
                   Text('소셜 로그인 설정이 필요해요', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
                   const SizedBox(height: 10),
-                  const Text('네이버, 카카오, 구글 클라이언트 ID를 등록한 뒤 회원가입을 시작할 수 있어요.', style: TextStyle(color: AppTheme.muted, height: 1.5)),
+                  Text('네이버, 카카오, 구글 클라이언트 ID를 등록한 뒤 회원가입을 시작할 수 있어요.', style: TextStyle(color: AppTheme.of(context).muted, height: 1.5)),
                   const SizedBox(height: 24),
                   Card(
                     child: Padding(
@@ -38,7 +39,7 @@ class ProviderSetupPage extends StatelessWidget {
                           ...config.missingProviders.map((provider) => Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
                                 child: Row(children: [
-                                  const Icon(Icons.error_outline, color: AppTheme.coral, size: 20),
+                                  Icon(Icons.error_outline, color: AppTheme.of(context).coral, size: 20),
                                   const SizedBox(width: 8),
                                   Text(provider),
                                 ]),
@@ -48,7 +49,7 @@ class ProviderSetupPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text('설정값은 앱 코드나 저장소에 비밀 키로 커밋하지 마세요.', textAlign: TextAlign.center, style: TextStyle(fontSize: 12, color: AppTheme.subtle)),
+                  Text('설정값은 앱 코드나 저장소에 비밀 키로 커밋하지 마세요.', textAlign: TextAlign.center, style: TextStyle(fontSize: 12, color: AppTheme.of(context).subtle)),
                 ],
               ),
             ),

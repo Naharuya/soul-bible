@@ -1,0 +1,9 @@
+{
+  "command": "npm.cmd test",
+  "total": 231,
+  "passed": 231,
+  "failed": 0,
+  "skipped": 0,
+  "existingBaseline": 211,
+  "additionalTests": 20
+}

@@ -6,7 +6,16 @@
   "scripts": {
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
-    "test": "node --test"
+    "test": "node --test",
+    "eval:retrieval": "node src/evaluation/run_evaluation.js",
+    "eval:gold": "node src/evaluation/gold_benchmark.js",
+    "corpus:review": "node src/knowledge/corpus_review_cli.js",
+    "corpus:index": "node src/knowledge/production_cli.js",
+    "production:readiness": "node src/knowledge/production_cli.js readiness",
+    "validate:production": "node --test test/production_deployment.test.js",
+    "corpus:expert": "node src/knowledge/expert_cli.js",
+    "eval:pilot": "node src/knowledge/expert_cli.js evaluate",
+    "pilot:christianity": "node src/knowledge/christianity_pilot.js"
   },
   "engines": { "node": ">=20" },
   "dependencies": {

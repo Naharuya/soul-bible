@@ -82,6 +82,7 @@ class ConversationSession {
     required this.sessionId,
     required this.selectedEmotion,
     required this.emotionIntensity,
+    this.customEmotion,
     this.stage = ConversationStage.emotion,
     this.turnCount = 0,
     this.summary = '',
@@ -97,6 +98,7 @@ class ConversationSession {
   final String sessionId;
   final EmotionType selectedEmotion;
   final int emotionIntensity;
+  final String? customEmotion;
   final ConversationStage stage;
   final int turnCount;
   final String summary;
@@ -124,6 +126,7 @@ class ConversationSession {
       sessionId: sessionId,
       selectedEmotion: selectedEmotion,
       emotionIntensity: emotionIntensity,
+      customEmotion: customEmotion,
       stage: stage ?? this.stage,
       turnCount: turnCount ?? this.turnCount,
       summary: summary ?? this.summary,
@@ -141,6 +144,7 @@ class ConversationSession {
   Map<String, dynamic> toJson() => {
         'sessionId': sessionId,
         'selectedEmotion': selectedEmotion.label,
+        if (customEmotion != null) 'customEmotion': customEmotion,
         'emotionIntensity': emotionIntensity,
         'currentStage': stage.wireName,
         'turnCount': turnCount,

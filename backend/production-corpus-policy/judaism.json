@@ -1,0 +1,63 @@
+{
+  "version": "1",
+  "tradition": "jewish",
+  "namespace": "judaism",
+  "allowedSourceTypes": [
+    "torah",
+    "tanakh",
+    "rabbinic_tradition",
+    "commentary"
+  ],
+  "preferredAuthority": [
+    "primary",
+    "official",
+    "scholarly",
+    "secondary"
+  ],
+  "licenseRequirements": {
+    "allowed": [
+      "public_domain",
+      "official_permission",
+      "licensed",
+      "self_authored"
+    ],
+    "noteRequired": true
+  },
+  "provenanceRequirements": [
+    "publisherOrInstitution",
+    "sourceUrl",
+    "originalLanguage",
+    "contentLanguage",
+    "importedAt",
+    "checksum",
+    "sourceVersion"
+  ],
+  "branchMetadata": {
+    "required": true,
+    "examples": [
+      "general",
+      "Orthodox",
+      "Conservative",
+      "Reform"
+    ],
+    "allowGeneralForSpecificBranch": false
+  },
+  "languageMetadata": {
+    "originalRequired": true,
+    "contentMustMatchRecord": true
+  },
+  "exclusionCriteria": [
+    "sample",
+    "unknown_license",
+    "unapproved",
+    "untraceable",
+    "changed_after_review",
+    "other_tradition"
+  ],
+  "reviewRequirement": {
+    "productionStatus": "approved",
+    "reviewerRequired": true,
+    "timestampRequired": true,
+    "approvalFingerprintRequired": true
+  }
+}

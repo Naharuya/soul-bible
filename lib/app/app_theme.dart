@@ -1,75 +1,102 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+enum ThemeColor {
+  forest('포레스트', Color(0xFF91D8AA), Color(0xFF0D1B14)),
+  rose('로즈', Color(0xFFF3B0BC), Color(0xFF251417)),
+  amber('앰버', Color(0xFFF0C477), Color(0xFF211A0F)),
+  silver('실버', Color(0xFFD5D8DC), Color(0xFF17191B));
+
+  const ThemeColor(this.label, this.accent, this.background);
+  final String label;
+  final Color accent;
+  final Color background;
+}
+
+class AppPalette {
+  const AppPalette(this.scheme);
+  final ColorScheme scheme;
+  Color get ink => scheme.onSurface;
+  Color get green => scheme.primary;
+  Color get sage => scheme.primaryContainer;
+  Color get cream => scheme.surface;
+  Color get coral => scheme.error;
+  Color get gold => scheme.secondary;
+  Color get muted => scheme.onSurfaceVariant;
+  Color get subtle => scheme.onSurfaceVariant;
+  Color get border => scheme.outlineVariant;
+  Color get panel => scheme.surfaceContainer;
+  Color get accentFill => scheme.inversePrimary;
+}
 
 class AppTheme {
-  static const ink = Color(0xFF1F2D3D);
-  static const green = Color(0xFF466B62);
-  static const sage = Color(0xFFDCE6DF);
-  static const cream = Color(0xFFF6F1E8);
-  static const coral = Color(0xFFA96F5F);
-  static const gold = Color(0xFFB18A4A);
-  static const muted = Color(0xFF66716F);
-  static const subtle = Color(0xFF89908B);
-  static const border = Color(0xFFE2D8C8);
-  static const panel = Color(0xFFFBF8F1);
-  static const radius = 12.0;
+  static const radius = 20.0;
+  static AppPalette of(BuildContext context) =>
+      AppPalette(Theme.of(context).colorScheme);
+  static ThemeData get light => forColor(ThemeColor.forest);
+  static ThemeData get cosmic => light;
 
-  static ThemeData get light {
+  static ThemeData forColor(ThemeColor color) {
+    Color blend(double opacity) => Color.alphaBlend(
+        color.accent.withValues(alpha: opacity), color.background);
     final scheme = ColorScheme.fromSeed(
-      seedColor: ink,
-      brightness: Brightness.light,
-      surface: cream,
+            seedColor: color.accent, brightness: Brightness.dark)
+        .copyWith(
+      primary: color.accent,
+      onPrimary: color.background,
+      primaryContainer: blend(0.20),
+      onPrimaryContainer: const Color(0xFFF7F7F2),
+      secondary: color.accent,
+      onSecondary: color.background,
+      surface: color.background,
+      surfaceContainer: blend(0.06),
+      surfaceContainerLow: blend(0.04),
+      surfaceContainerHigh: blend(0.10),
+      surfaceContainerHighest: blend(0.14),
+      onSurface: const Color(0xFFF7F7F2),
+      onSurfaceVariant: Color.lerp(color.accent, Colors.white, 0.55),
+      outlineVariant: blend(0.30),
+      inversePrimary: Color.lerp(color.background, color.accent, 0.35),
     );
+    final shape =
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius));
     return ThemeData(
       useMaterial3: true,
-      colorScheme: scheme.copyWith(
-        primary: green,
-        secondary: gold,
-        tertiary: coral,
-        surface: cream,
-        onSurface: ink,
-        outline: border,
-      ),
-      scaffoldBackgroundColor: cream,
-      fontFamily: 'serif',
-      appBarTheme: const AppBarTheme(
+      colorScheme: scheme,
+      scaffoldBackgroundColor: scheme.surface,
+      fontFamily: 'sans-serif',
+      appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
-        foregroundColor: ink,
+        foregroundColor: scheme.onSurface,
         elevation: 0,
+        scrolledUnderElevation: 0,
         centerTitle: false,
-        titleTextStyle: TextStyle(fontFamily: 'serif', color: ink, fontSize: 20, fontWeight: FontWeight.w700),
-      ),
-      textTheme: const TextTheme(
-        headlineMedium: TextStyle(fontFamily: 'serif', color: ink, fontWeight: FontWeight.w700, height: 1.15),
-        titleLarge: TextStyle(fontFamily: 'serif', color: ink, fontWeight: FontWeight.w700),
-        bodyLarge: TextStyle(fontFamily: 'serif', color: ink, height: 1.5),
-        bodyMedium: TextStyle(fontFamily: 'serif', color: ink, height: 1.45),
+        systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(radius),
-          borderSide: BorderSide.none,
-        ),
+        fillColor: scheme.surfaceContainer,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(radius)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(radius),
-          borderSide: const BorderSide(color: border),
-        ),
+            borderRadius: BorderRadius.circular(radius),
+            borderSide: BorderSide(color: scheme.outlineVariant)),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(radius),
+            borderSide: BorderSide(color: scheme.primary, width: 2)),
       ),
       filledButtonTheme: FilledButtonThemeData(
-        style: FilledButton.styleFrom(
-          minimumSize: const Size.fromHeight(54),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius)),
-          backgroundColor: green,
-          foregroundColor: Colors.white,
-          textStyle: const TextStyle(fontFamily: 'serif', fontSize: 16, fontWeight: FontWeight.w700),
-        ),
-      ),
+          style: FilledButton.styleFrom(
+        minimumSize: const Size.fromHeight(54),
+        shape: shape,
+        backgroundColor: scheme.primary,
+        foregroundColor: scheme.onPrimary,
+        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+      )),
       cardTheme: CardThemeData(
-        color: Colors.white,
+        color: scheme.surfaceContainer,
         elevation: 0,
         margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius), side: const BorderSide(color: border)),
+        shape: shape.copyWith(side: BorderSide(color: scheme.outlineVariant)),
       ),
     );
   }

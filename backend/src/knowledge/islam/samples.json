@@ -1,0 +1,74 @@
+[
+  {
+    "sourceId": "islamic:sample:1",
+    "tradition": "islamic",
+    "sourceType": "authored_sample",
+    "title": "꾸란 대화용 자체 작성 샘플",
+    "reference": "SoulBible 자체 작성 샘플 1 (islamic)",
+    "text": "꾸란에 관한 대화에서는 먼저 지금 필요한 돌봄을 살펴볼 수 있습니다. 이 문장은 검색 연결을 확인하기 위해 직접 작성한 예시이며 경전 인용이나 공식 교리 설명이 아닙니다.",
+    "language": "ko-KR",
+    "authorityLevel": "secondary",
+    "metadata": {
+      "traditionBranch": "general",
+      "sect": "unspecified",
+      "school": "unspecified",
+      "license": "Project-authored sample; no third-party text",
+      "sample": true,
+      "keywords": [
+        "꾸란"
+      ],
+      "reviewStatus": "development",
+      "concepts": [
+        "islamic:quran"
+      ]
+    }
+  },
+  {
+    "sourceId": "islamic:sample:2",
+    "tradition": "islamic",
+    "sourceType": "authored_sample",
+    "title": "기도 대화용 자체 작성 샘플",
+    "reference": "SoulBible 자체 작성 샘플 2 (islamic)",
+    "text": "기도에 관한 대화에서는 먼저 지금 필요한 돌봄을 살펴볼 수 있습니다. 이 문장은 검색 연결을 확인하기 위해 직접 작성한 예시이며 경전 인용이나 공식 교리 설명이 아닙니다.",
+    "language": "ko-KR",
+    "authorityLevel": "secondary",
+    "metadata": {
+      "traditionBranch": "general",
+      "sect": "unspecified",
+      "school": "unspecified",
+      "license": "Project-authored sample; no third-party text",
+      "sample": true,
+      "keywords": [
+        "기도"
+      ],
+      "reviewStatus": "development",
+      "concepts": [
+        "islamic:prayer"
+      ]
+    }
+  },
+  {
+    "sourceId": "islamic:sample:3",
+    "tradition": "islamic",
+    "sourceType": "authored_sample",
+    "title": "자비 대화용 자체 작성 샘플",
+    "reference": "SoulBible 자체 작성 샘플 3 (islamic)",
+    "text": "자비에 관한 대화에서는 먼저 지금 필요한 돌봄을 살펴볼 수 있습니다. 이 문장은 검색 연결을 확인하기 위해 직접 작성한 예시이며 경전 인용이나 공식 교리 설명이 아닙니다.",
+    "language": "ko-KR",
+    "authorityLevel": "secondary",
+    "metadata": {
+      "traditionBranch": "general",
+      "sect": "unspecified",
+      "school": "unspecified",
+      "license": "Project-authored sample; no third-party text",
+      "sample": true,
+      "keywords": [
+        "자비"
+      ],
+      "reviewStatus": "development",
+      "concepts": [
+        "islamic:compassion"
+      ]
+    }
+  }
+]

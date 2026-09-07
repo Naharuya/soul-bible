@@ -7,7 +7,9 @@ const safeResult = { message: '많이 버거우셨겠어요.', question: '그때
 let server; let baseUrl; let calls = 0;
 let lastAgent;
 before(async () => {
-  const app = createApp({ generate: async (_body, agent) => { calls += 1; lastAgent = agent.id; return structuredClone(safeResult); }, logger: { error() {} } });
+  // These tests cover HTTP behavior, not SQLite persistence. Never open the real member DB.
+  const memberStore = { getAdminOverview: () => ({ total: 0, recent: [] }) };
+  const app = createApp({ generate: async (_body, agent) => { calls += 1; lastAgent = agent.id; return structuredClone(safeResult); }, memberStore, adminToken: 'test-admin-token', logger: { error() {} } });
   await new Promise((resolve) => { server = app.listen(0, '127.0.0.1', resolve); });
   baseUrl = `http://127.0.0.1:${server.address().port}`;
 });
@@ -17,6 +19,14 @@ function body(message = '요즘 마음이 무겁습니다') {
   return { session: { sessionId: 's1', selectedEmotion: '불안', emotionIntensity: 7, turnCount: 1 }, userMessage: message, systemPromptVersion: 'ko-v1', allowedVerseIds: [], locale: 'ko-KR' };
 }
 test('health endpoint', async () => assert.equal((await fetch(`${baseUrl}/health`)).status, 200));
+test('protects admin overview and returns operational metrics', async () => {
+  assert.equal((await fetch(`${baseUrl}/v1/admin/overview`)).status, 401);
+  const res = await fetch(`${baseUrl}/v1/admin/overview`, { headers: { authorization: 'Bearer test-admin-token' } });
+  const json = await res.json();
+  assert.equal(res.status, 200);
+  assert.equal(json.service.status, 'operational');
+  assert.equal(typeof json.metrics.requests, 'number');
+});
 test('returns validated model response', async () => {
   const res = await fetch(`${baseUrl}/v1/mind/chat`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body()) });
   assert.equal(res.status, 200); assert.equal((await res.json()).stage, 'thought'); assert.equal(calls, 1);

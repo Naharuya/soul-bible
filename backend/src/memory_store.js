@@ -11,6 +11,7 @@ export function createMemoryStore({ maxEntries = 1000 } = {}) {
       }
       memories.set(sessionId, summary.slice(0, 4000));
     },
+    size() { return memories.size; },
     clear(sessionId) { memories.delete(sessionId); },
   };
 }

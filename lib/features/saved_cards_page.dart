@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../app/mind_card_store.dart';
 import '../app/app_theme.dart';
+import '../app/space_scaffold.dart';
 
 class SavedCardsPage extends StatelessWidget {
   const SavedCardsPage({super.key});
@@ -9,7 +10,7 @@ class SavedCardsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = MindCardStore();
 
-    return Scaffold(
+    return SpaceScaffold(
       appBar: AppBar(
         title: const Text('저장된 마음 카드', style: TextStyle(fontWeight: FontWeight.w800)),
       ),
@@ -20,8 +21,8 @@ class SavedCardsPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(
-              child: Text('아직 저장된 카드가 없어요.', style: TextStyle(color: Colors.grey)),
+            return Center(
+              child: Text('아직 저장된 카드가 없어요.', style: TextStyle(color: AppTheme.of(context).muted)),
             );
           }
 
@@ -37,8 +38,8 @@ class SavedCardsPage extends StatelessWidget {
                 background: Container(
                   alignment: Alignment.centerRight,
                   padding: const EdgeInsets.only(right: 24),
-                  color: Colors.red.shade100,
-                  child: const Icon(Icons.delete_outline, color: Colors.red),
+                  color: const Color(0xFF452338),
+                  child: Icon(Icons.delete_outline, color: AppTheme.of(context).coral),
                 ),
                 confirmDismiss: (_) => _confirmDelete(context, store, card),
                 child: Card(
@@ -54,14 +55,14 @@ class SavedCardsPage extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('${card.dateLabel} · ${_agentLabel(card.agent)}', style: const TextStyle(fontSize: 13, color: AppTheme.green, fontWeight: FontWeight.w700)),
-                            const Icon(Icons.chevron_right, size: 20, color: Colors.grey),
+                            Text('${card.dateLabel} · ${_agentLabel(card.agent)}', style: TextStyle(fontSize: 13, color: AppTheme.of(context).green, fontWeight: FontWeight.w700)),
+                            Icon(Icons.chevron_right, size: 20, color: AppTheme.of(context).muted),
                           ],
                         ),
                         const SizedBox(height: 8),
                         Text('${card.emotion} · ${card.intensity}/10', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
                         const SizedBox(height: 4),
-                        Text(card.verseReference, style: const TextStyle(color: AppTheme.muted)),
+                        Text(card.verseReference, style: TextStyle(color: AppTheme.of(context).muted)),
                       ],
                     ),
                   ),

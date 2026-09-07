@@ -1,5 +1,44 @@
 # 소울바이블 v0.4.0 테스트 안내
 
+## 휴대폰 무선 테스트 (Windows / Android 11 이상)
+
+PC와 휴대폰을 같은 Wi-Fi에 연결합니다. 휴대폰 설정에서 빌드 번호를 7번 눌러
+개발자 옵션을 활성화한 다음, 개발자 옵션 → 무선 디버깅을 켭니다.
+‘페어링 코드로 기기 페어링’을 열고 표시된 IP와 페어링 포트를 확인합니다.
+무선 디버깅 기본 화면의 연결 포트는 페어링 포트와 다릅니다.
+
+프로젝트 폴더의 PowerShell에서 아래 주소를 휴대폰에 표시된 값으로 바꿔 실행합니다.
+6자리 페어링 코드는 실행 중 ADB가 요청할 때 입력합니다.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\script\test-wireless.ps1 -PairAddress 192.168.0.10:37001 -DeviceAddress 192.168.0.10:40001
+```
+
+최초 페어링 이후, 연결된 휴대폰이 하나이면 아래 명령으로 최신 소스를 빌드하고
+무선 설치·실행합니다. 개발 중에는 터미널에서 `r`로 핫 리로드할 수 있습니다.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\script\test-wireless.ps1
+```
+
+개발 완료 후 릴리스 모드로 확인하려면:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\script\test-wireless.ps1 -Release
+```
+
+재연결이 필요하면 현재 무선 디버깅 화면의 주소를 `-DeviceAddress IP:PORT`로
+전달합니다. Wi-Fi 변경이나 재부팅 후 포트가 바뀔 수 있습니다.
+`-ListDevices`로 연결 상태만 확인할 수 있습니다.
+기본 백엔드는 `http://lightshare8.mycafe24.com`이며, 다른 서버는
+`-ApiBaseUrl https://your-server.example`로 지정합니다.
+휴대폰에서 PC의 로컬 서버에 접속할 때는 localhost 대신 PC의 LAN IP를 사용해야 합니다.
+
+연결이 안 되면 같은 Wi-Fi인지, 게스트 네트워크의 기기 간 통신 차단 여부와
+PC 방화벽의 ADB 허용 여부를 확인합니다. Android 10 이하는 이 페어링 방식을 지원하지 않습니다.
+
+공식 안내: https://developer.android.com/tools/adb#connect-to-a-device-over-wi-fi
+
 이 패키지는 Flutter 테스트 소스입니다. Android 휴대전화에 설치하려면 Flutter와
 Android Studio가 설치된 PC에서 아래 명령을 실행해 테스트 APK를 생성합니다.
 

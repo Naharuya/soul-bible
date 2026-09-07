@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../app/app_theme.dart';
+import '../app/space_scaffold.dart';
 import '../app/api_config.dart';
 import '../src/api/member_api_client.dart';
 import 'check_in_page.dart';
@@ -18,7 +19,7 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _busy = false;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) => SpaceScaffold(
         body: SafeArea(
           child: Center(
             child: ConstrainedBox(
@@ -26,16 +27,16 @@ class _SignUpPageState extends State<SignUpPage> {
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(24, 42, 24, 24),
                 children: [
-                  const Icon(Icons.auto_awesome, color: AppTheme.green, size: 38),
+                  Icon(Icons.auto_awesome, color: AppTheme.of(context).green, size: 38),
                   const SizedBox(height: 18),
                   Text('소울바이블 시작하기', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
                   const SizedBox(height: 8),
-                  const Text('이름과 휴대폰 번호를 등록하면 마음 기록을 안전하게 이어갈 수 있어요.', style: TextStyle(color: AppTheme.muted)),
+                  Text('이름과 휴대폰 번호를 등록하면 마음 기록을 안전하게 이어갈 수 있어요.', style: TextStyle(color: AppTheme.of(context).muted)),
                   const SizedBox(height: 28),
                   Form(
                     key: _formKey,
                     child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                      const Text('회원 정보', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: AppTheme.ink)),
+                      Text('회원 정보', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: AppTheme.of(context).ink)),
                       const SizedBox(height: 10),
                       TextFormField(
                         controller: _name,
@@ -63,7 +64,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       const SizedBox(height: 8),
                       _SocialButton(icon: const Icon(Icons.chat_bubble, size: 20), label: '카카오 로그인 (준비 중)', color: const Color(0xFFFEE500), foreground: const Color(0xFF191919), onPressed: _showSocialLoginUnavailable),
                       const SizedBox(height: 8),
-                      _SocialButton(icon: const Text('G', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900)), label: 'Google 로그인 (준비 중)', color: Colors.white, foreground: AppTheme.ink, onPressed: _showSocialLoginUnavailable, outlined: true),
+                      _SocialButton(icon: const Text('G', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900)), label: 'Google 로그인 (준비 중)', color: AppTheme.of(context).panel, foreground: AppTheme.of(context).ink, onPressed: _showSocialLoginUnavailable, outlined: true),
                       const SizedBox(height: 80),
                       FilledButton.icon(onPressed: _busy ? null : _submit, icon: const Icon(Icons.check), label: Text(_busy ? '가입 중...' : '회원가입')),
                     ]),

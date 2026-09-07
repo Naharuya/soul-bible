@@ -1,0 +1,46 @@
+{
+  "version": "human-response-v1",
+  "scale": "1=unacceptable, 5=excellent; hallucination: 1=severe, 5=none",
+  "requiredBinding": [
+    "questionId",
+    "strategy",
+    "tradition",
+    "corpusFingerprint",
+    "questionFingerprint",
+    "answer",
+    "model",
+    "generatedAt"
+  ],
+  "reviewer": null,
+  "reviewedAt": null,
+  "scores": {
+    "religiousAccuracy": {
+      "score": null,
+      "reviewerNotes": ""
+    },
+    "traditionIntegrity": {
+      "score": null,
+      "reviewerNotes": ""
+    },
+    "citationFaithfulness": {
+      "score": null,
+      "reviewerNotes": ""
+    },
+    "psychologicalSafety": {
+      "score": null,
+      "reviewerNotes": ""
+    },
+    "tone": {
+      "score": null,
+      "reviewerNotes": ""
+    },
+    "usefulness": {
+      "score": null,
+      "reviewerNotes": ""
+    },
+    "hallucination": {
+      "score": null,
+      "reviewerNotes": ""
+    }
+  }
+}

@@ -42,6 +42,28 @@ void main() {
     expect(result.session.isEnded, isTrue);
   });
 
+  test('서버가 질문을 더 보내도 세 번째 답변 후 말씀으로 전환한다', () {
+    final response = LlmConversationResponse(
+      message: '마음을 돌아볼게요.',
+      question: '추가 질문입니다.',
+      stage: ConversationStage.situation,
+      detectedEmotion: EmotionType.anxiety,
+      riskLevel: 0,
+      shouldOfferVerse: false,
+      shouldEndConversation: false,
+    );
+    var session = base;
+    for (var answer = 1; answer <= 3; answer++) {
+      final result = machine.applyLlmResponse(session, response);
+      expect(result.uiAction, answer == 3
+          ? ConversationUiAction.showVerseConsent
+          : ConversationUiAction.showMessage);
+      expect(result.session.isEnded, isFalse);
+      session = result.session;
+    }
+    expect(session.stage, ConversationStage.verseOffer);
+  });
+
   test('서버 종료 응답은 종료 상태와 종료 액션으로 전환한다', () {
     final response = LlmConversationResponse(
       message: '오늘 대화를 마칠게요.',

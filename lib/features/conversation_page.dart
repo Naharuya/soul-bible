@@ -5,6 +5,7 @@ import 'package:speech_to_text/speech_to_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../app/app_theme.dart';
+import '../app/space_scaffold.dart';
 import '../app/api_config.dart';
 import '../app/asset_loader.dart';
 import '../app/demo_llm_client.dart';
@@ -12,13 +13,15 @@ import '../app/mind_card_store.dart';
 import '../bible_mind_core.dart';
 
 class _ChatItem {
-  const _ChatItem(this.text, {this.fromUser = false});
+  const _ChatItem(this.text, {this.fromUser = false, this.question});
+  final String? question;
   final String text;
   final bool fromUser;
 }
 
 class ConversationPage extends StatefulWidget {
-  const ConversationPage({super.key, required this.emotion, required this.intensity});
+  const ConversationPage({super.key, required this.emotion, required this.intensity, this.customEmotion});
+  final String? customEmotion;
   final EmotionType emotion;
   final int intensity;
 
@@ -133,7 +136,111 @@ class _ConversationPageState extends State<ConversationPage> {
     EmotionType.anticipation: ['기대되는 일을 위해 차분히 준비하기', '좋은 결과가 있기를 기도하기', '설레는 마음을 긍정적인 에너지로 쓰기'],
   };
 
+  static const _clinicalActions = <String>[
+    '숨을 4초간 들이마시고 6초간 내쉬는 호흡을 5번 해보기',
+    '발바닥이 바닥에 닿는 감각을 1분 동안 느껴보기',
+    '눈에 보이는 것 5가지와 들리는 소리 3가지를 찾아보기',
+    '어깨와 턱의 힘을 풀고 가볍게 스트레칭하기',
+    '지금 느끼는 감정에 이름을 붙여 한 문장으로 적어보기',
+    '떠오른 생각 앞에 “나는 지금 …라고 생각하고 있다”를 붙여보기',
+    '지금 바꿀 수 있는 일과 바꿀 수 없는 일을 나눠 적어보기',
+    '걱정되는 일 중 오늘 할 수 있는 가장 작은 부분 하나 정하기',
+    '해야 할 일을 5분만 시작하고 계속할지는 그때 다시 정하기',
+    '지금 필요한 것이 쉼·위로·도움·거리두기 중 무엇인지 골라보기',
+    '10분 동안 알림을 끄고 조용한 곳에서 쉬어보기',
+    '물 한 잔을 천천히 마시고 간단한 간식을 챙겨보기',
+    '오늘 잠들 시간을 정하고 편안한 취침 준비 하나 해보기',
+    '집 안이나 바깥에서 5분 동안 천천히 걸어보기',
+    '믿을 수 있는 사람에게 “잠깐 이야기할 수 있어?”라고 보내보기',
+    '도움이 필요한 일을 한 문장으로 구체적으로 부탁해보기',
+    '오늘 해낸 아주 작은 일 한 가지를 찾아 스스로 인정해보기',
+    '나에게 친한 사람에게 하듯 따뜻한 말을 한 문장 건네보기',
+  ];
+
+  List<String> get _currentActions {
+    if (_agentMode == 'clinical_reflection') return _clinicalActions;
+    return _emotionSpecificActions[widget.emotion] ??
+        ['1분간 천천히 호흡하기', '믿을 수 있는 사람에게 안부 보내기', '짧게 기도하고 마음 한 줄 적기'];
+  }
+
+  static const _clinicalExamplePrompts = <ConversationStage, List<String>>{
+    ConversationStage.emotion: [
+      '오늘 아침부터 별일이 없는데도 마음이 무거웠어요.',
+      '가족과 이야기한 뒤부터 감정이 더 크게 느껴졌어요.',
+      '직장에서 실수한 일이 계속 마음에 남아 있어요.',
+      '혼자 집에 돌아왔을 때 감정이 갑자기 올라왔어요.',
+      '누군가의 말을 듣고 존중받지 못한다는 느낌이 들었어요.',
+      '해야 할 일이 한꺼번에 겹치면서 마음이 버거워졌어요.',
+      '기대했던 일이 계획대로 되지 않아 힘들었어요.',
+      '다른 사람과 나를 비교한 뒤 마음이 불편해졌어요.',
+      '잠을 충분히 자지 못한 날에 감정이 더 심해졌어요.',
+      '중요한 결정을 앞두고 마음이 흔들리고 있어요.',
+      '오래 참아 온 일이 오늘 작은 계기로 터진 것 같아요.',
+      '정확한 이유는 모르지만 특정 순간부터 힘들어졌어요.',
+    ],
+    ConversationStage.situation: [
+      '오늘 아침부터 별일이 없는데도 마음이 무거웠어요.',
+      '가족과 이야기한 뒤부터 감정이 더 크게 느껴졌어요.',
+      '직장에서 실수한 일이 계속 마음에 남아 있어요.',
+      '혼자 집에 돌아왔을 때 감정이 갑자기 올라왔어요.',
+      '누군가의 말을 듣고 존중받지 못한다는 느낌이 들었어요.',
+      '해야 할 일이 한꺼번에 겹치면서 마음이 버거워졌어요.',
+      '기대했던 일이 계획대로 되지 않아 힘들었어요.',
+      '다른 사람과 나를 비교한 뒤 마음이 불편해졌어요.',
+      '잠을 충분히 자지 못한 날에 감정이 더 심해졌어요.',
+      '중요한 결정을 앞두고 마음이 흔들리고 있어요.',
+      '오래 참아 온 일이 오늘 작은 계기로 터진 것 같아요.',
+      '정확한 이유는 모르지만 특정 순간부터 힘들어졌어요.',
+    ],
+    ConversationStage.thought: [
+      '내가 또 잘못했다는 생각이 가장 먼저 들었어요.',
+      '앞으로도 계속 이렇게 힘들 것 같다고 생각했어요.',
+      '다른 사람들이 나를 부족하게 볼까 봐 걱정됐어요.',
+      '아무리 노력해도 달라지지 않을 것 같았어요.',
+      '내가 모두 책임져야 한다는 생각이 들었어요.',
+      '왜 나만 이런 일을 겪는지 억울하다고 생각했어요.',
+      '상대가 나를 일부러 무시했다고 느꼈어요.',
+      '실수하면 모든 기회를 잃을 것 같았어요.',
+      '누구도 내 마음을 이해하지 못할 것 같았어요.',
+      '지금 당장 답을 찾아야 한다는 압박이 들었어요.',
+      '감정을 드러내면 약해 보일 것 같았어요.',
+      '무슨 생각인지 선명하지 않고 머릿속이 복잡했어요.',
+    ],
+    ConversationStage.need: [
+      '누군가 판단하지 않고 제 이야기를 들어주면 좋겠어요.',
+      '지금은 아무것도 하지 않고 충분히 쉬고 싶어요.',
+      '괜찮다고 안심할 수 있는 말이 필요해요.',
+      '혼자가 아니라는 느낌과 따뜻한 위로가 필요해요.',
+      '상황을 차분하게 정리할 시간과 여유가 필요해요.',
+      '내 선택을 믿고 한 걸음 내딛을 용기가 필요해요.',
+      '상대에게 존중받고 제 마음을 이해받고 싶어요.',
+      '도움을 요청해도 괜찮다는 확신이 필요해요.',
+      '무엇부터 해야 할지 정할 수 있는 기준이 필요해요.',
+      '제 감정을 있는 그대로 인정하고 싶어요.',
+      '몸과 마음이 안전하다고 느낄 공간이 필요해요.',
+      '지금은 무엇이 필요한지 조금 더 생각할 시간이 필요해요.',
+    ],
+    ConversationStage.action: [
+      '5분 동안 천천히 호흡하며 몸의 긴장을 살펴볼게요.',
+      '믿을 수 있는 사람에게 짧게 안부를 보내볼게요.',
+      '오늘 해야 할 일 중 가장 작은 것 하나만 해볼게요.',
+      '지금 느끼는 감정을 종이에 한 줄 적어볼게요.',
+      '10분 동안 휴대폰을 내려놓고 조용히 쉬어볼게요.',
+      '따뜻한 물을 마시고 몸을 천천히 풀어볼게요.',
+      '도움이 필요한 일을 한 가지 구체적으로 요청해볼게요.',
+      '스스로에게 괜찮다고 말하며 잠시 기다려볼게요.',
+      '오늘은 평소보다 조금 일찍 잠자리에 들어볼게요.',
+      '감정이 커진 장소에서 잠시 벗어나 걸어볼게요.',
+      '지금 바꿀 수 있는 일과 없는 일을 나눠 적어볼게요.',
+      '마음에 남은 말씀을 천천히 한 번 읽어볼게요.',
+    ],
+  };
+
   List<String> get _currentExamplePrompts {
+    if (_agentMode == 'clinical_reflection') {
+      return _clinicalExamplePrompts[_session.stage] ??
+          _clinicalExamplePrompts[ConversationStage.emotion]!;
+    }
     return _emotionSpecificPrompts[widget.emotion] ??
         [
           '오늘 마음을 편하게 들려주세요.',
@@ -183,7 +290,7 @@ class _ConversationPageState extends State<ConversationPage> {
       selectedEmotion: widget.emotion,
       emotionIntensity: widget.intensity,
     );
-    _items.add(_ChatItem('${widget.emotion.naturalFeelingPhrase}이 오늘 ${widget.intensity}/10 정도로 느껴지는군요.\n\n무슨 일이 있었는지 편한 만큼만 들려주세요.'));
+    _items.add(_ChatItem('${widget.emotion.naturalFeelingPhrase}이 오늘 ${widget.intensity}/10 정도로 느껴지는군요.', question: '무슨 일이 있었는지 편한 만큼만 들려주세요.'));
     _configureTts();
   }
 
@@ -239,17 +346,15 @@ class _ConversationPageState extends State<ConversationPage> {
       final suggestedVerse = response.suggestedVerseId == null
           ? null
           : await _verseRepository.getById(response.suggestedVerseId!);
-      final shouldAutoShowVerse = response.shouldOfferVerse &&
+      final shouldAutoShowVerse = transition.uiAction == ConversationUiAction.showVerseConsent &&
           !_session.isEnded &&
           _session.riskLevel == 0 &&
-          suggestedVerse != null;
-      _suggestedVerse = suggestedVerse;
+          (suggestedVerse != null || allowedVerses.isNotEmpty);
+      _suggestedVerse = suggestedVerse ?? allowedVerses.firstOrNull;
       setState(() {
         final replyParts = <String>[response.message];
         if (shouldAutoShowVerse) {
           replyParts.add('세 가지 마음 이야기를 나누었으니, 지금 마음에 머물 수 있는 말씀 한 구절을 함께 볼게요.');
-        } else if (response.question != null) {
-          replyParts.add(response.question!);
         }
         if (transition.uiAction == ConversationUiAction.end) {
           replyParts.add('오늘 대화를 여기서 마칠게요.');
@@ -260,9 +365,11 @@ class _ConversationPageState extends State<ConversationPage> {
         if (response.integratedInsight != null) {
           replyParts.add('통합 인사이트: ${response.integratedInsight!}');
         }
-        _items.add(_ChatItem(replyParts.join('\n\n')));
+        _items.add(_ChatItem(
+          replyParts.join('\n\n'),
+          question: shouldAutoShowVerse ? null : response.question,
+        ));
         _showVerseOffer = !shouldAutoShowVerse &&
-          response.shouldOfferVerse &&
           transition.uiAction == ConversationUiAction.showVerseConsent;
         _busy = false;
       });
@@ -385,7 +492,7 @@ class _ConversationPageState extends State<ConversationPage> {
     await _tts.setPitch(1.0);
     await _tts.setVolume(1.0);
     await _tts.awaitSpeakCompletion(true);
-    final korean = '${verse.reference}. ${verse.text}. 묵상 질문입니다. ${verse.reflectionQuestion}';
+    final korean = '${verse.koreanSpokenReference}. ${verse.text}.';
     final english = verse.englishText.isEmpty ? '' : '${verse.reference}. ${verse.englishText}.';
     if (_verseLanguage == 'english' && english.isNotEmpty) {
       await _tts.setLanguage('en-US');
@@ -517,7 +624,7 @@ class _ConversationPageState extends State<ConversationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SpaceScaffold(
       appBar: AppBar(
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const Text('마음 대화', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
@@ -559,7 +666,7 @@ class _ConversationPageState extends State<ConversationPage> {
                   controller: _scrollController,
                   padding: const EdgeInsets.fromLTRB(18, 18, 18, 22),
                   children: [
-                    const Center(child: Padding(padding: EdgeInsets.only(bottom: 22), child: Text('마음을 살피는 조용한 대화', style: TextStyle(fontSize: 12, color: AppTheme.gold, fontWeight: FontWeight.w700, letterSpacing: 0.5)))),
+                    Center(child: Padding(padding: EdgeInsets.only(bottom: 22), child: Text('마음을 살피는 조용한 대화', style: TextStyle(fontSize: 12, color: AppTheme.of(context).gold, fontWeight: FontWeight.w700, letterSpacing: 0.5)))),
                     ..._items.map(_bubble),
                     if (_busy) _typing(),
                     if (_showVerseOffer) _verseOffer(),
@@ -572,34 +679,47 @@ class _ConversationPageState extends State<ConversationPage> {
               if (!_session.isEnded && !_showSummary && !_showActions && _verse == null && !_showVerseOffer)
                 Container(
                   padding: const EdgeInsets.fromLTRB(16, 12, 16, 14),
-                  decoration: const BoxDecoration(color: Colors.white, border: Border(top: BorderSide(color: AppTheme.border))),
+                  decoration: BoxDecoration(color: AppTheme.of(context).panel, border: Border(top: BorderSide(color: AppTheme.of(context).border))),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                    const Text('이렇게 시작해 보세요', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppTheme.muted)),
+                    Text('이렇게 시작해 보세요', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppTheme.of(context).muted)),
                     const SizedBox(height: 8),
-                    ..._currentExamplePrompts.map((prompt) => Padding(
-                      padding: const EdgeInsets.only(bottom: 7),
-                      child: OutlinedButton.icon(
-                        onPressed: _busy || _session.isEnded ? null : () => _selectExample(prompt),
-                        icon: const Icon(Icons.touch_app_outlined, size: 18),
-                        label: Text(prompt, maxLines: 2, overflow: TextOverflow.ellipsis),
-                        style: OutlinedButton.styleFrom(
-                          minimumSize: const Size.fromHeight(44),
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                          alignment: Alignment.centerLeft,
-                          foregroundColor: AppTheme.green,
-                          side: const BorderSide(color: Color(0xFFD5DED3)),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppTheme.radius)),
+                    LayoutBuilder(
+                      builder: (context, constraints) => SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            for (final prompt in _currentExamplePrompts)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: SizedBox(
+                                  width: (constraints.maxWidth - 16).clamp(160.0, 320.0),
+                                  child: OutlinedButton.icon(
+                                    onPressed: _busy || _session.isEnded ? null : () => _selectExample(prompt),
+                                    icon: const Icon(Icons.touch_app_outlined, size: 18),
+                                    label: Text(prompt, softWrap: true),
+                                    style: OutlinedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                                      alignment: Alignment.centerLeft,
+                                      foregroundColor: AppTheme.of(context).green,
+                                      side: BorderSide(color: AppTheme.of(context).border),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppTheme.radius)),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
                       ),
-                    )),
+                    ),
                     const SizedBox(height: 3),
                     if (_isListening)
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(bottom: 8),
                         child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                          SizedBox(width: 12, height: 12, child: CircularProgressIndicator(strokeWidth: 2, color: AppTheme.coral)),
+                          SizedBox(width: 12, height: 12, child: CircularProgressIndicator(strokeWidth: 2, color: AppTheme.of(context).coral)),
                           SizedBox(width: 7),
-                          Text('듣고 있어요 · 다시 누르면 멈춰요', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppTheme.coral)),
+                          Text('듣고 있어요 · 다시 누르면 멈춰요', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppTheme.of(context).coral)),
                         ]),
                       ),
                     Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
@@ -616,9 +736,9 @@ class _ConversationPageState extends State<ConversationPage> {
                         button: true,
                         label: '음성으로 마음 말하기',
                         child: Material(
-                          color: _isListening ? AppTheme.coral : AppTheme.green,
+                          color: _isListening ? AppTheme.of(context).coral : AppTheme.of(context).accentFill,
                           elevation: 5,
-                          shadowColor: _isListening ? AppTheme.coral : AppTheme.green,
+                          shadowColor: _isListening ? AppTheme.of(context).coral : AppTheme.of(context).green,
                           shape: const CircleBorder(),
                           child: InkWell(
                             onTap: _busy || _session.isEnded ? null : _toggleVoiceInput,
@@ -647,19 +767,33 @@ class _ConversationPageState extends State<ConversationPage> {
       constraints: const BoxConstraints(maxWidth: 520),
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
-      decoration: BoxDecoration(color: item.fromUser ? AppTheme.green : AppTheme.panel, border: item.fromUser ? null : Border.all(color: AppTheme.border), borderRadius: BorderRadius.only(topLeft: const Radius.circular(18), topRight: const Radius.circular(18), bottomLeft: Radius.circular(item.fromUser ? 18 : 5), bottomRight: Radius.circular(item.fromUser ? 5 : 18))),
-      child: Row(
+      decoration: BoxDecoration(color: item.fromUser ? AppTheme.of(context).accentFill : AppTheme.of(context).panel, border: item.fromUser ? null : Border.all(color: AppTheme.of(context).border), borderRadius: BorderRadius.only(topLeft: const Radius.circular(18), topRight: const Radius.circular(18), bottomLeft: Radius.circular(item.fromUser ? 18 : 5), bottomRight: Radius.circular(item.fromUser ? 5 : 18))),
+      child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Flexible(child: Text(item.text, style: TextStyle(color: item.fromUser ? Colors.white : AppTheme.ink, height: 1.5))),
-          if (!item.fromUser) ...[
-            const SizedBox(width: 8),
-            IconButton(
-              visualDensity: VisualDensity.compact,
-              onPressed: () => _speakText(item.text),
-              icon: Icon(_isSpeaking ? Icons.stop_rounded : Icons.volume_up_outlined, size: 18, color: AppTheme.green),
-              tooltip: '답변 듣기',
+          Text(item.text, style: TextStyle(color: item.fromUser ? Colors.white : AppTheme.of(context).muted, height: 1.5)),
+          if (item.question case final question?) ...[
+            const SizedBox(height: 18),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppTheme.of(context).sage,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: AppTheme.of(context).green, width: 1.5),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(children: [
+                    Icon(Icons.help_outline_rounded, size: 20, color: AppTheme.of(context).gold),
+                    SizedBox(width: 8),
+                    Expanded(child: Text('질문', style: TextStyle(color: AppTheme.of(context).gold, fontSize: 13, fontWeight: FontWeight.w800))),
+                  ]),
+                  const SizedBox(height: 10),
+                  Text(question, style: TextStyle(color: AppTheme.of(context).ink, fontSize: 17, fontWeight: FontWeight.w700, height: 1.5)),
+                ],
+              ),
             ),
           ],
         ],
@@ -669,21 +803,9 @@ class _ConversationPageState extends State<ConversationPage> {
 
   Widget _typing() => const Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.all(16), child: SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2))));
 
-  Future<void> _speakText(String text) async {
-    if (_isSpeaking) {
-      await _tts.stop();
-      if (mounted) setState(() => _isSpeaking = false);
-      return;
-    }
-    await _tts.setLanguage('ko-KR');
-    await _tts.setSpeechRate(0.44);
-    await _tts.awaitSpeakCompletion(true);
-    await _tts.speak(text);
-  }
-
   Widget _verseOffer() => _panel(
     children: [
-      const Icon(Icons.menu_book_rounded, color: AppTheme.green, size: 30),
+      Icon(Icons.menu_book_rounded, color: AppTheme.of(context).green, size: 30),
       const SizedBox(height: 12),
       const Text('지금 마음을 위한 말씀을\n함께 읽어볼까요?', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, height: 1.35), textAlign: TextAlign.center),
       const SizedBox(height: 18),
@@ -693,20 +815,20 @@ class _ConversationPageState extends State<ConversationPage> {
   );
 
   Widget _verseCard(BibleVerse verse) => _panel(children: [
-    const Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.menu_book_outlined, size: 18, color: AppTheme.gold), SizedBox(width: 8), Text('오늘의 말씀', style: TextStyle(color: AppTheme.gold, fontWeight: FontWeight.w800, letterSpacing: 0.5))]),
+    Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.menu_book_outlined, size: 18, color: AppTheme.of(context).gold), SizedBox(width: 8), Text('오늘의 말씀', style: TextStyle(color: AppTheme.of(context).gold, fontWeight: FontWeight.w800, letterSpacing: 0.5))]),
     const SizedBox(height: 14),
-    Text(verse.reference, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: AppTheme.ink)),
+    Text(verse.reference, style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: AppTheme.of(context).ink)),
     const SizedBox(height: 12),
     Text('“${verse.text}”', style: const TextStyle(fontSize: 17, height: 1.8, fontStyle: FontStyle.italic), textAlign: TextAlign.center),
     if (verse.englishText.isNotEmpty) ...[
       const SizedBox(height: 16),
-      const Text('English (NIV)', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFF9EACA3))),
+      Text('English (NIV)', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppTheme.of(context).muted)),
       const SizedBox(height: 6),
-      Text(verse.englishText, style: const TextStyle(fontSize: 15, height: 1.6, color: AppTheme.muted, fontStyle: FontStyle.italic), textAlign: TextAlign.center),
+      Text(verse.englishText, style: TextStyle(fontSize: 15, height: 1.6, color: AppTheme.of(context).muted, fontStyle: FontStyle.italic), textAlign: TextAlign.center),
     ],
     if (verse.reflectionQuestion.isNotEmpty) ...[
       const SizedBox(height: 14),
-      Text(verse.reflectionQuestion, style: const TextStyle(color: AppTheme.muted, height: 1.5, fontWeight: FontWeight.w600), textAlign: TextAlign.center),
+      Text(verse.reflectionQuestion, style: TextStyle(color: AppTheme.of(context).muted, height: 1.5, fontWeight: FontWeight.w600), textAlign: TextAlign.center),
     ],
     const SizedBox(height: 16),
     OutlinedButton.icon(
@@ -715,13 +837,13 @@ class _ConversationPageState extends State<ConversationPage> {
       label: Text(_isSpeaking ? '말씀 낭독 멈추기' : '오늘의 말씀 음성으로 듣기'),
       style: OutlinedButton.styleFrom(
         minimumSize: const Size.fromHeight(52),
-        foregroundColor: _isSpeaking ? AppTheme.coral : AppTheme.green,
-        side: BorderSide(color: _isSpeaking ? AppTheme.coral : AppTheme.green),
+        foregroundColor: _isSpeaking ? AppTheme.of(context).coral : AppTheme.of(context).green,
+        side: BorderSide(color: _isSpeaking ? AppTheme.of(context).coral : AppTheme.of(context).green),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppTheme.radius)),
       ),
     ),
     const SizedBox(height: 8),
-    const Text('※ 개발용 요약 문구이며 정식 성경 본문이 아닙니다.', style: TextStyle(fontSize: 10, color: Color(0xFF8A8F8C))),
+    Text('※ 개발용 요약 문구이며 정식 성경 본문이 아닙니다.', style: TextStyle(fontSize: 10, color: AppTheme.of(context).muted)),
     const SizedBox(height: 20),
     FilledButton(onPressed: _continueAfterVerse, child: const Text('작은 실천 정하기')),
   ]);
@@ -729,7 +851,7 @@ class _ConversationPageState extends State<ConversationPage> {
   Widget _actionCard() => _panel(children: [
     const Text('지금 할 수 있는\n아주 작은 한 걸음', style: TextStyle(fontSize: 21, fontWeight: FontWeight.w800, height: 1.35), textAlign: TextAlign.center),
     const SizedBox(height: 16),
-    ...(_emotionSpecificActions[widget.emotion] ?? ['1분간 천천히 호흡하기', '믿을 수 있는 사람에게 안부 보내기', '짧게 기도하고 마음 한 줄 적기']).map(
+    ..._currentActions.map(
       (action) => Padding(
         padding: const EdgeInsets.only(bottom: 9),
         child: OutlinedButton(
@@ -746,7 +868,7 @@ class _ConversationPageState extends State<ConversationPage> {
   ]);
 
   Widget _summaryCard() => _panel(children: [
-    const Icon(Icons.favorite_outline_rounded, color: AppTheme.coral, size: 34),
+    Icon(Icons.favorite_outline_rounded, color: AppTheme.of(context).coral, size: 34),
     const SizedBox(height: 12),
     const Text(_cardTitle, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
     const SizedBox(height: 20),
@@ -754,7 +876,7 @@ class _ConversationPageState extends State<ConversationPage> {
     if (_verse != null) _summaryRow('함께한 말씀', _verse!.reference),
     _summaryRow('작은 실천', _chosenAction ?? ''),
     const SizedBox(height: 20),
-    const Text(_cardClosingMessage, textAlign: TextAlign.center, style: TextStyle(height: 1.6, color: AppTheme.muted)),
+    Text(_cardClosingMessage, textAlign: TextAlign.center, style: TextStyle(height: 1.6, color: AppTheme.of(context).muted)),
     const SizedBox(height: 18),
     FilledButton.icon(
       onPressed: _savingCard ? null : _saveMindCard,
@@ -771,7 +893,7 @@ class _ConversationPageState extends State<ConversationPage> {
     ),
   ]);
 
-  Widget _summaryRow(String label, String value) => Padding(padding: const EdgeInsets.only(bottom: 13), child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [SizedBox(width: 100, child: Text(label, style: const TextStyle(color: Color(0xFF6E7873)))), Expanded(child: Text(value, style: const TextStyle(fontWeight: FontWeight.w700)))]));
+  Widget _summaryRow(String label, String value) => Padding(padding: const EdgeInsets.only(bottom: 13), child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [SizedBox(width: 100, child: Text(label, style: TextStyle(color: AppTheme.of(context).muted))), Expanded(child: Text(value, style: const TextStyle(fontWeight: FontWeight.w700)))]));
 
   Widget _panel({required List<Widget> children}) => Card(margin: const EdgeInsets.only(top: 12, bottom: 16), child: Padding(padding: const EdgeInsets.all(24), child: Column(children: children)));
 }

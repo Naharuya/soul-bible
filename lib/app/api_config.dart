@@ -5,6 +5,7 @@ class ApiConfig {
 
   static const _configuredBaseUrl = String.fromEnvironment(
     'SOUL_BIBLE_API_BASE_URL',
+    defaultValue: 'http://lightshare8.mycafe24.com',
   );
   static const appToken = String.fromEnvironment('SOUL_BIBLE_APP_TOKEN');
 

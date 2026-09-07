@@ -1,0 +1,68 @@
+[
+  {
+    "sourceId": "catholic:sample:1",
+    "tradition": "catholic",
+    "sourceType": "authored_sample",
+    "title": "성사 대화용 자체 작성 샘플",
+    "reference": "SoulBible 자체 작성 샘플 1 (catholic)",
+    "text": "성사에 관한 대화에서는 먼저 지금 필요한 돌봄을 살펴볼 수 있습니다. 이 문장은 검색 연결을 확인하기 위해 직접 작성한 예시이며 경전 인용이나 공식 교리 설명이 아닙니다.",
+    "language": "ko-KR",
+    "authorityLevel": "secondary",
+    "metadata": {
+      "traditionBranch": "general",
+      "license": "Project-authored sample; no third-party text",
+      "sample": true,
+      "keywords": [
+        "성사"
+      ],
+      "reviewStatus": "development",
+      "concepts": [
+        "catholic:sacrament"
+      ]
+    }
+  },
+  {
+    "sourceId": "catholic:sample:2",
+    "tradition": "catholic",
+    "sourceType": "authored_sample",
+    "title": "묵주 대화용 자체 작성 샘플",
+    "reference": "SoulBible 자체 작성 샘플 2 (catholic)",
+    "text": "묵주에 관한 대화에서는 먼저 지금 필요한 돌봄을 살펴볼 수 있습니다. 이 문장은 검색 연결을 확인하기 위해 직접 작성한 예시이며 경전 인용이나 공식 교리 설명이 아닙니다.",
+    "language": "ko-KR",
+    "authorityLevel": "secondary",
+    "metadata": {
+      "traditionBranch": "general",
+      "license": "Project-authored sample; no third-party text",
+      "sample": true,
+      "keywords": [
+        "묵주"
+      ],
+      "reviewStatus": "development",
+      "concepts": [
+        "catholic:rosary"
+      ]
+    }
+  },
+  {
+    "sourceId": "catholic:sample:3",
+    "tradition": "catholic",
+    "sourceType": "authored_sample",
+    "title": "교리 대화용 자체 작성 샘플",
+    "reference": "SoulBible 자체 작성 샘플 3 (catholic)",
+    "text": "교리에 관한 대화에서는 먼저 지금 필요한 돌봄을 살펴볼 수 있습니다. 이 문장은 검색 연결을 확인하기 위해 직접 작성한 예시이며 경전 인용이나 공식 교리 설명이 아닙니다.",
+    "language": "ko-KR",
+    "authorityLevel": "secondary",
+    "metadata": {
+      "traditionBranch": "general",
+      "license": "Project-authored sample; no third-party text",
+      "sample": true,
+      "keywords": [
+        "교리"
+      ],
+      "reviewStatus": "development",
+      "concepts": [
+        "catholic:doctrine"
+      ]
+    }
+  }
+]

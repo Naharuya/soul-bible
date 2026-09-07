@@ -25,7 +25,7 @@ enum ConversationUiAction {
 
 class ConversationMachine {
   const ConversationMachine({
-    this.maxCoreTurns = 5,
+    this.maxCoreTurns = 3,
     this.maxExtraTurns = 2,
   });
 
@@ -96,7 +96,7 @@ class ConversationMachine {
       ),
       uiAction: shouldEnd
           ? ConversationUiAction.end
-          : _uiActionFor(nextStage, response.shouldOfferVerse),
+          : _uiActionFor(nextStage, nextStage == ConversationStage.verseOffer),
     );
   }
 
@@ -135,6 +135,19 @@ class ConversationMachine {
     ConversationSession session,
     LlmConversationResponse response,
   ) {
+    // Count the opening question as the first of the three core questions.
+    if (session.turnCount + 1 >= maxCoreTurns &&
+        session.selectedVerseId == null &&
+        session.verseAccepted == null &&
+        !session.isEnded &&
+        const {
+          ConversationStage.emotion,
+          ConversationStage.situation,
+          ConversationStage.thought,
+          ConversationStage.need,
+        }.contains(session.stage)) {
+      return ConversationStage.verseOffer;
+    }
     if (response.shouldOfferVerse && session.turnCount >= 2) {
       return ConversationStage.verseOffer;
     }

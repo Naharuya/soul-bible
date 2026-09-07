@@ -13,8 +13,8 @@ class DemoLlmApiClient implements LlmApiClient {
     if (turn == 0) {
       return LlmConversationResponse(
         message: '${emotion.naturalFeelingPhrase}을 혼자 견디고 계셨군요. 여기서는 서두르지 않아도 괜찮아요.',
-        question: '그 마음이 가장 크게 느껴진 순간에는 어떤 일이 있었나요?',
-        stage: ConversationStage.situation,
+        question: '그때 마음속에서 반복되던 생각은 무엇이었나요?',
+        stage: ConversationStage.thought,
         detectedEmotion: emotion,
         riskLevel: 0,
         shouldOfferVerse: false,
@@ -27,8 +27,8 @@ class DemoLlmApiClient implements LlmApiClient {
     if (turn == 1) {
       return LlmConversationResponse(
         message: '그 상황이라면 마음이 무거워지는 것이 자연스러워요. 말씀해 주셔서 고마워요.',
-        question: '그때 마음속에서 반복되던 생각은 무엇이었나요?',
-        stage: ConversationStage.thought,
+        question: '지금 가장 필요하다고 느끼는 것은 무엇인가요?',
+        stage: ConversationStage.need,
         detectedEmotion: emotion,
         riskLevel: 0,
         shouldOfferVerse: false,

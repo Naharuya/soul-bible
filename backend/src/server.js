@@ -1,13 +1,14 @@
 import 'dotenv/config';
 import { createApp } from './app.js';
-import { createOpenAiService } from './openai_service.js';
+import { createConversationService } from './conversation_service.js';
 
 const port = Number(process.env.PORT || 8787);
-const model = process.env.OPENAI_MODEL || 'gpt-5.6';
-const generate = createOpenAiService({ apiKey: process.env.OPENAI_API_KEY, model });
+// Defaults to local; only all three explicit OpenAI settings enable the provider.
+const generate = createConversationService();
 const app = createApp({
   generate,
   allowedOrigins: (process.env.ALLOWED_ORIGINS || '').split(',').map((x) => x.trim()).filter(Boolean),
   appToken: process.env.APP_BEARER_TOKEN || '',
+  adminToken: process.env.ADMIN_TOKEN || '',
 });
-app.listen(port, () => console.log(`Soul Bible backend listening on :${port} (${model})`));
+app.listen(port, () => console.log(`Soul Bible backend listening on :${port} (${generate.mode})`));

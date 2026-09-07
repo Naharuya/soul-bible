@@ -1,0 +1,120 @@
+{
+  "environment": "production",
+  "actualCorpusApproval": "BLOCKED_EXTERNAL_REVIEW",
+  "modelExecution": "NOT_RUN_BY_THIS_EVALUATOR",
+  "traditions": {
+    "protestant": {
+      "tradition": "protestant",
+      "targetChunks": {
+        "min": 20,
+        "max": 50
+      },
+      "approvedSources": 0,
+      "status": "BLOCKED_EXTERNAL_REVIEW",
+      "approvedChunks": 0,
+      "metrics": null,
+      "strategies": {
+        "keyword": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    "catholic": {
+      "tradition": "catholic",
+      "targetChunks": {
+        "min": 20,
+        "max": 50
+      },
+      "approvedSources": 0,
+      "status": "BLOCKED_EXTERNAL_REVIEW",
+      "approvedChunks": 0,
+      "metrics": null,
+      "strategies": {
+        "keyword": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    "buddhist": {
+      "tradition": "buddhist",
+      "targetChunks": {
+        "min": 20,
+        "max": 50
+      },
+      "approvedSources": 0,
+      "status": "BLOCKED_EXTERNAL_REVIEW",
+      "approvedChunks": 0,
+      "metrics": null,
+      "strategies": {
+        "keyword": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    "jewish": {
+      "tradition": "jewish",
+      "targetChunks": {
+        "min": 20,
+        "max": 50
+      },
+      "approvedSources": 0,
+      "status": "BLOCKED_EXTERNAL_REVIEW",
+      "approvedChunks": 0,
+      "metrics": null,
+      "strategies": {
+        "keyword": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    "islamic": {
+      "tradition": "islamic",
+      "targetChunks": {
+        "min": 20,
+        "max": 50
+      },
+      "approvedSources": 0,
+      "status": "BLOCKED_EXTERNAL_REVIEW",
+      "approvedChunks": 0,
+      "metrics": null,
+      "strategies": {
+        "keyword": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    "hindu": {
+      "tradition": "hindu",
+      "targetChunks": {
+        "min": 20,
+        "max": 50
+      },
+      "approvedSources": 0,
+      "status": "BLOCKED_EXTERNAL_REVIEW",
+      "approvedChunks": 0,
+      "metrics": null,
+      "strategies": {
+        "keyword": null,
+        "vector": null,
+        "hybrid": null
+      }
+    },
+    "confucian": {
+      "tradition": "confucian",
+      "targetChunks": {
+        "min": 20,
+        "max": 50
+      },
+      "approvedSources": 0,
+      "status": "BLOCKED_EXTERNAL_REVIEW",
+      "approvedChunks": 0,
+      "metrics": null,
+      "strategies": {
+        "keyword": null,
+        "vector": null,
+        "hybrid": null
+      }
+    }
+  },
+  "humanReviews": []
+}

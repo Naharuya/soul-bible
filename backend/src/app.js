@@ -1,5 +1,6 @@
 import cors from 'cors';
 import express from 'express';
+import { fileURLToPath } from 'node:url';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import { ZodError } from 'zod';
@@ -10,15 +11,45 @@ import { createMemberStore } from './member_store.js';
 import { routeAgent } from './ai_router.js';
 import { createMemoryStore } from './memory_store.js';
 
-export function createApp({ generate, allowedOrigins = [], appToken = '', logger = console, memberStore = createMemberStore(), memoryStore = createMemoryStore() }) {
+export function createApp({ generate, allowedOrigins = [], appToken = '', adminToken = '', logger = console, memberStore = createMemberStore(), memoryStore = createMemoryStore() }) {
   const app = express();
+  const startedAt = new Date();
+  const metrics = { requests: 0, chats: 0, crises: 0, errors: 0, statusCodes: {} };
   app.disable('x-powered-by');
   app.use(helmet());
   app.use(cors({ origin(origin, cb) { cb(null, !origin || allowedOrigins.includes(origin)); } }));
   app.use(express.json({ limit: '16kb' }));
-  app.use(rateLimit({ windowMs: 60_000, limit: 20, standardHeaders: 'draft-8', legacyHeaders: false }));
+  app.use('/v1', rateLimit({ windowMs: 60_000, limit: 20, standardHeaders: 'draft-8', legacyHeaders: false }));
+  app.use((req, res, next) => {
+    metrics.requests += 1;
+    res.on('finish', () => {
+      const key = String(res.statusCode);
+      metrics.statusCodes[key] = (metrics.statusCodes[key] || 0) + 1;
+      if (res.statusCode >= 500) metrics.errors += 1;
+    });
+    next();
+  });
 
   app.get('/health', (_req, res) => res.json({ status: 'ok' }));
+  app.use('/admin', express.static(fileURLToPath(new URL('../public', import.meta.url)), { index: 'admin.html', maxAge: 0 }));
+  app.get('/v1/admin/overview', (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    if (!adminToken || req.get('authorization') !== `Bearer ${adminToken}`) {
+      return res.status(401).json({ message: '관리자 인증이 필요합니다.' });
+    }
+    const members = memberStore.getAdminOverview?.() ?? { total: 0, recent: [] };
+    return res.json({
+      generatedAt: new Date().toISOString(),
+      service: {
+        status: 'operational',
+        mode: 'local conversation',
+        startedAt: startedAt.toISOString(),
+        uptimeSeconds: Math.floor(process.uptime()),
+      },
+      metrics: { ...metrics, activeSessions: memoryStore.size?.() ?? 0 },
+      members,
+    });
+  });
   app.post('/v1/auth/signup', (req, res, next) => {
     try {
       const member = memberStore.create(memberSchema.parse(req.body));
@@ -30,12 +61,16 @@ export function createApp({ generate, allowedOrigins = [], appToken = '', logger
   });
   app.post('/v1/mind/chat', async (req, res, next) => {
     try {
+      metrics.chats += 1;
       if (appToken && req.get('authorization') !== `Bearer ${appToken}`) {
         return res.status(401).json({ message: '인증이 필요합니다.' });
       }
       const body = requestSchema.parse(req.body);
       const assessment = assessCrisis(body.userMessage);
-      if (assessment.level > 0) return res.json(crisisResponse(body.session.selectedEmotion, assessment));
+      if (assessment.level > 0) {
+        metrics.crises += 1;
+        return res.json(crisisResponse(body.session.selectedEmotion, assessment));
+      }
 
       const agent = routeAgent({ requestedAgent: body.agentMode, userMessage: body.userMessage, verseLanguage: body.verseLanguage });
       const memorySummary = memoryStore.get(body.session.sessionId) || body.session.conversationSummary || '';

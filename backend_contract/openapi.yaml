@@ -111,6 +111,11 @@ components:
         verseLanguage:
           type: string
           enum: [korean, english, bilingual]
+        religion:
+          type: string
+          description: Optional; omitted values use protestant for legacy Flutter clients. Multi-agent v1 does not generate scripture quotations.
+          enum: [protestant, catholic, buddhist, jewish, islamic, hindu, confucian]
+          default: protestant
     ConversationResponse:
       type: object
       additionalProperties: false

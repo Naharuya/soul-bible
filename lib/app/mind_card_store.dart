@@ -183,8 +183,6 @@ class DailyUsageStore {
   final SharedPreferencesAsync _preferences;
   final MembershipTier tier;
 
-  int get maxUsesPerDay => tier == MembershipTier.premium ? 1 << 30 : 3;
-
   bool get isPremium => tier == MembershipTier.premium;
 
   Future<int> getCount() async {
@@ -196,7 +194,6 @@ class DailyUsageStore {
 
   Future<bool> tryConsume() async {
     final count = await getCount();
-    if (count >= maxUsesPerDay) return false;
     await _preferences.setString(_dateKey, _todayKey());
     await _preferences.setInt(_countKey, count + 1);
     return true;

@@ -1,0 +1,68 @@
+[
+  {
+    "sourceId": "buddhist:sample:1",
+    "tradition": "buddhist",
+    "sourceType": "authored_sample",
+    "title": "연기 대화용 자체 작성 샘플",
+    "reference": "SoulBible 자체 작성 샘플 1 (buddhist)",
+    "text": "연기에 관한 대화에서는 먼저 지금 필요한 돌봄을 살펴볼 수 있습니다. 이 문장은 검색 연결을 확인하기 위해 직접 작성한 예시이며 경전 인용이나 공식 교리 설명이 아닙니다.",
+    "language": "ko-KR",
+    "authorityLevel": "secondary",
+    "metadata": {
+      "traditionBranch": "general",
+      "license": "Project-authored sample; no third-party text",
+      "sample": true,
+      "keywords": [
+        "연기"
+      ],
+      "reviewStatus": "development",
+      "concepts": [
+        "buddhist:interdependence"
+      ]
+    }
+  },
+  {
+    "sourceId": "buddhist:sample:2",
+    "tradition": "buddhist",
+    "sourceType": "authored_sample",
+    "title": "자비 대화용 자체 작성 샘플",
+    "reference": "SoulBible 자체 작성 샘플 2 (buddhist)",
+    "text": "자비에 관한 대화에서는 먼저 지금 필요한 돌봄을 살펴볼 수 있습니다. 이 문장은 검색 연결을 확인하기 위해 직접 작성한 예시이며 경전 인용이나 공식 교리 설명이 아닙니다.",
+    "language": "ko-KR",
+    "authorityLevel": "secondary",
+    "metadata": {
+      "traditionBranch": "general",
+      "license": "Project-authored sample; no third-party text",
+      "sample": true,
+      "keywords": [
+        "자비"
+      ],
+      "reviewStatus": "development",
+      "concepts": [
+        "buddhist:compassion"
+      ]
+    }
+  },
+  {
+    "sourceId": "buddhist:sample:3",
+    "tradition": "buddhist",
+    "sourceType": "authored_sample",
+    "title": "중도 대화용 자체 작성 샘플",
+    "reference": "SoulBible 자체 작성 샘플 3 (buddhist)",
+    "text": "중도에 관한 대화에서는 먼저 지금 필요한 돌봄을 살펴볼 수 있습니다. 이 문장은 검색 연결을 확인하기 위해 직접 작성한 예시이며 경전 인용이나 공식 교리 설명이 아닙니다.",
+    "language": "ko-KR",
+    "authorityLevel": "secondary",
+    "metadata": {
+      "traditionBranch": "general",
+      "license": "Project-authored sample; no third-party text",
+      "sample": true,
+      "keywords": [
+        "중도"
+      ],
+      "reviewStatus": "development",
+      "concepts": [
+        "buddhist:middle_way"
+      ]
+    }
+  }
+]

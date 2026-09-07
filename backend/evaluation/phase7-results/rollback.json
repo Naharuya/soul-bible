@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "scope": "isolated_automated_tests",
+  "productionExercise": "NOT_RUN",
+  "evidence": "production_deployment.test.js and expert_corpus.test.js rollback cases passed in full regression"
+}

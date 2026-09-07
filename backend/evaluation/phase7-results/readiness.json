@@ -1,0 +1,44 @@
+{
+  "status": "BLOCKED_NO_APPROVED_CORPUS",
+  "failures": [
+    {
+      "status": "BLOCKED_NO_APPROVED_CORPUS",
+      "tradition": "protestant"
+    },
+    {
+      "status": "BLOCKED_NO_APPROVED_CORPUS",
+      "tradition": "catholic"
+    },
+    {
+      "status": "BLOCKED_NO_APPROVED_CORPUS",
+      "tradition": "buddhist"
+    },
+    {
+      "status": "BLOCKED_NO_APPROVED_CORPUS",
+      "tradition": "jewish"
+    },
+    {
+      "status": "BLOCKED_NO_APPROVED_CORPUS",
+      "tradition": "islamic"
+    },
+    {
+      "status": "BLOCKED_NO_APPROVED_CORPUS",
+      "tradition": "hindu"
+    },
+    {
+      "status": "BLOCKED_NO_APPROVED_CORPUS",
+      "tradition": "confucian"
+    }
+  ],
+  "activeIndexes": {},
+  "actualCorpusApproval": "BLOCKED_EXTERNAL_REVIEW",
+  "scope": [
+    "protestant",
+    "catholic",
+    "buddhist",
+    "jewish",
+    "islamic",
+    "hindu",
+    "confucian"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "pilotTradition": "Christianity",
+  "tradition": "protestant",
+  "namespace": "christianity",
+  "registeredSources": 0,
+  "approvedSources": 0,
+  "blockedSources": 0,
+  "reviewStates": [],
+  "actualCorpusApproval": "BLOCKED_EXTERNAL_REVIEW",
+  "evaluationStatus": "BLOCKED_EXTERNAL_REVIEW",
+  "corpusVersion": null,
+  "indexVersion": null,
+  "indexVersions": [],
+  "retrievalBenchmark": {
+    "keyword": null,
+    "vector": null,
+    "hybrid": null
+  },
+  "citationStatus": "NOT_RUN",
+  "crisis": {
+    "status": "PASS",
+    "passed": 7,
+    "total": 7
+  },
+  "tests": {
+    "command": "npm.cmd test",
+    "total": 238,
+    "passed": 238,
+    "failed": 0,
+    "skipped": 0,
+    "existingBaseline": 211,
+    "additionalTests": 27,
+    "phase8Baseline": 231,
+    "phase8AddedTests": 7
+  },
+  "rollback": {
+    "passed": true,
+    "scope": "isolated_automated_tests",
+    "productionExercise": "NOT_RUN",
+    "evidence": "christianity_pilot.test.js plus existing phase 6/7 rollback regression tests"
+  },
+  "release": "BLOCKED_RELEASE",
+  "externalApiCalls": 0,
+  "productionDefault": "keyword",
+  "hybrid": "experimental"
+}

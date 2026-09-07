@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { religionSchema } from './agents/agent_contracts.js';
 
 export const emotions = ['불안', '외로움', '지침', '분노', '슬픔', '복잡함', '감사', '기쁨', '공포', '혐오', '놀람', '행복', '기대', '감탄', '벅찬', '질투'];
 export const stages = ['emotion', 'situation', 'thought', 'need', 'verse_offer', 'verse_reflection', 'action', 'summary', 'crisis', 'ended'];
@@ -24,6 +25,7 @@ export const requestSchema = z.object({
   locale: z.literal('ko-KR').default('ko-KR'),
   agentMode: z.enum(agentIds).default('auto'),
   verseLanguage: z.enum(['korean', 'english', 'bilingual']).default('bilingual'),
+  religion: religionSchema.optional(),
 }).strict();
 
 export const responseSchema = z.object({

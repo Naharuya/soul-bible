@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "scope": "isolated_automated_tests",
+  "productionExercise": "NOT_RUN",
+  "evidence": "christianity_pilot.test.js plus existing phase 6/7 rollback regression tests"
+}
