@@ -1,0 +1,307 @@
+[
+  {
+    "book": "PHP",
+    "chapter": 4,
+    "verseStart": 6,
+    "verseEnd": 7,
+    "emotionTags": [
+      "anxiety"
+    ],
+    "conceptTags": [
+      "prayer",
+      "peace"
+    ]
+  },
+  {
+    "book": "MAT",
+    "chapter": 6,
+    "verseStart": 34,
+    "verseEnd": 34,
+    "emotionTags": [
+      "anxiety"
+    ],
+    "conceptTags": [
+      "trust"
+    ]
+  },
+  {
+    "book": "1PE",
+    "chapter": 5,
+    "verseStart": 7,
+    "verseEnd": 7,
+    "emotionTags": [
+      "anxiety"
+    ],
+    "conceptTags": [
+      "comfort",
+      "love"
+    ]
+  },
+  {
+    "book": "PSA",
+    "chapter": 56,
+    "verseStart": 3,
+    "verseEnd": 3,
+    "emotionTags": [
+      "fear"
+    ],
+    "conceptTags": [
+      "trust"
+    ]
+  },
+  {
+    "book": "ISA",
+    "chapter": 41,
+    "verseStart": 10,
+    "verseEnd": 10,
+    "emotionTags": [
+      "fear"
+    ],
+    "conceptTags": [
+      "courage",
+      "comfort"
+    ]
+  },
+  {
+    "book": "DEU",
+    "chapter": 31,
+    "verseStart": 6,
+    "verseEnd": 6,
+    "emotionTags": [
+      "fear",
+      "loneliness"
+    ],
+    "conceptTags": [
+      "courage",
+      "trust"
+    ]
+  },
+  {
+    "book": "PSA",
+    "chapter": 25,
+    "verseStart": 16,
+    "verseEnd": 16,
+    "emotionTags": [
+      "loneliness"
+    ],
+    "conceptTags": [
+      "grace",
+      "comfort"
+    ]
+  },
+  {
+    "book": "JHN",
+    "chapter": 14,
+    "verseStart": 18,
+    "verseEnd": 18,
+    "emotionTags": [
+      "loneliness"
+    ],
+    "conceptTags": [
+      "comfort",
+      "love"
+    ]
+  },
+  {
+    "book": "PSA",
+    "chapter": 34,
+    "verseStart": 18,
+    "verseEnd": 18,
+    "emotionTags": [
+      "sadness"
+    ],
+    "conceptTags": [
+      "comfort"
+    ]
+  },
+  {
+    "book": "MAT",
+    "chapter": 5,
+    "verseStart": 4,
+    "verseEnd": 4,
+    "emotionTags": [
+      "sadness"
+    ],
+    "conceptTags": [
+      "comfort"
+    ]
+  },
+  {
+    "book": "JAS",
+    "chapter": 1,
+    "verseStart": 19,
+    "verseEnd": 20,
+    "emotionTags": [
+      "anger"
+    ],
+    "conceptTags": [
+      "peace"
+    ]
+  },
+  {
+    "book": "EPH",
+    "chapter": 4,
+    "verseStart": 26,
+    "verseEnd": 26,
+    "emotionTags": [
+      "anger"
+    ],
+    "conceptTags": [
+      "peace"
+    ]
+  },
+  {
+    "book": "1JN",
+    "chapter": 1,
+    "verseStart": 9,
+    "verseEnd": 9,
+    "emotionTags": [
+      "guilt"
+    ],
+    "conceptTags": [
+      "forgiveness",
+      "grace"
+    ]
+  },
+  {
+    "book": "PSA",
+    "chapter": 32,
+    "verseStart": 5,
+    "verseEnd": 5,
+    "emotionTags": [
+      "guilt"
+    ],
+    "conceptTags": [
+      "forgiveness"
+    ]
+  },
+  {
+    "book": "ROM",
+    "chapter": 15,
+    "verseStart": 13,
+    "verseEnd": 13,
+    "emotionTags": [
+      "hope"
+    ],
+    "conceptTags": [
+      "peace",
+      "trust"
+    ]
+  },
+  {
+    "book": "PSA",
+    "chapter": 42,
+    "verseStart": 11,
+    "verseEnd": 11,
+    "emotionTags": [
+      "hope",
+      "sadness"
+    ],
+    "conceptTags": [
+      "trust"
+    ]
+  },
+  {
+    "book": "LAM",
+    "chapter": 3,
+    "verseStart": 22,
+    "verseEnd": 23,
+    "emotionTags": [
+      "hope"
+    ],
+    "conceptTags": [
+      "love",
+      "grace"
+    ]
+  },
+  {
+    "book": "1TH",
+    "chapter": 5,
+    "verseStart": 18,
+    "verseEnd": 18,
+    "emotionTags": [
+      "gratitude"
+    ],
+    "conceptTags": [
+      "prayer"
+    ]
+  },
+  {
+    "book": "PSA",
+    "chapter": 107,
+    "verseStart": 1,
+    "verseEnd": 1,
+    "emotionTags": [
+      "gratitude"
+    ],
+    "conceptTags": [
+      "love"
+    ]
+  },
+  {
+    "book": "EPH",
+    "chapter": 4,
+    "verseStart": 32,
+    "verseEnd": 32,
+    "emotionTags": [
+      "anger",
+      "guilt"
+    ],
+    "conceptTags": [
+      "forgiveness",
+      "love"
+    ]
+  },
+  {
+    "book": "COL",
+    "chapter": 3,
+    "verseStart": 13,
+    "verseEnd": 13,
+    "emotionTags": [
+      "anger"
+    ],
+    "conceptTags": [
+      "forgiveness"
+    ]
+  },
+  {
+    "book": "MAT",
+    "chapter": 11,
+    "verseStart": 28,
+    "verseEnd": 30,
+    "emotionTags": [
+      "sadness",
+      "anxiety"
+    ],
+    "conceptTags": [
+      "rest",
+      "comfort"
+    ]
+  },
+  {
+    "book": "PSA",
+    "chapter": 23,
+    "verseStart": 1,
+    "verseEnd": 3,
+    "emotionTags": [
+      "anxiety"
+    ],
+    "conceptTags": [
+      "rest",
+      "peace"
+    ]
+  },
+  {
+    "book": "JOS",
+    "chapter": 1,
+    "verseStart": 9,
+    "verseEnd": 9,
+    "emotionTags": [
+      "fear"
+    ],
+    "conceptTags": [
+      "courage",
+      "trust"
+    ]
+  }
+]

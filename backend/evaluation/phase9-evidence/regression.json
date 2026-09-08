@@ -1,0 +1,14 @@
+{
+  "existingBaseline": 211,
+  "additionalTests": 58,
+  "phase8Baseline": 231,
+  "phase8AddedTests": 38,
+  "phase9Baseline": 238,
+  "phase9AddedTests": 31,
+  "total": 269,
+  "passed": 269,
+  "failed": 0,
+  "skipped": 0,
+  "command": "npm.cmd test",
+  "scope": "local backend automated regression; real experts and release not implied"
+}

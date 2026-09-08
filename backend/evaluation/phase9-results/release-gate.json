@@ -1,0 +1,16 @@
+{
+  "status": "BLOCKED_RELEASE",
+  "productionDefault": "keyword",
+  "checks": {
+    "regressions": true,
+    "readiness": false,
+    "rollback": true,
+    "criticalSafety": true,
+    "productionEvidence": true,
+    "corpus": false,
+    "retrieval": false,
+    "citations": false,
+    "humanReview": false,
+    "phase8Regression": true
+  }
+}

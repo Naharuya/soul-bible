@@ -2,6 +2,7 @@ import { sourceContextSchema } from './agent_contracts.js';
 import { toLegacyReligion, specialistResultSchema } from './specialist_result.js';
 import { scriptureAttribution, scriptureReference } from './prompts/religious_integrity_prompt.js';
 import { exactCitationEvaluator, referenceMatches } from './citation_grounding.js';
+import { bibleReferencesIn, assertBiblePassage } from '../knowledge/bible_passage.js';
 
 const normalize = text => text.normalize('NFKC').replace(/[\u200B-\u200D\uFEFF]/g, '').replace(/\s+/g, ' ').trim();
 const strongClaim = /(?:교리|경전|성경|꾸란|토라|하나님|하느님|알라|부처|구원|윤회|업보).{0,45}(?:반드시|절대|유일|확실|명령|보장|이다|입니다|가르칩니다)|(?:반드시|절대|유일).{0,45}(?:구원|윤회|교리)|(?:scripture|god|quran|torah).{0,40}(?:must|always|only|commands|guarantees)/iu;
@@ -17,6 +18,7 @@ function reject(category) {
 export function validateCitations(output, { tradition, sourceContext = [], evaluator = exactCitationEvaluator }) {
   const draft = toLegacyReligion(output);
   const sources = sourceContextSchema.parse(sourceContext);
+  try { sources.forEach(assertBiblePassage); } catch { reject('invalid_bible_metadata'); }
   if (sources.some(source => source.religion !== tradition)) reject('interfaith_source');
   if (new Set(sources.map(source => source.id)).size !== sources.length) reject('fabricated_source_ref');
   const byId = new Map(sources.map(source => [source.id, source]));
@@ -27,13 +29,20 @@ export function validateCitations(output, { tradition, sourceContext = [], evalu
   let repair = false;
   for (const field of fields) {
     const text = normalize(field);
-    const attributed = scriptureAttribution.test(text) || scriptureReference.test(text);
+    const bibleReferences = bibleReferencesIn(text);
+    const attributed = scriptureAttribution.test(text) || scriptureReference.test(text) || bibleReferences.length > 0;
     if (attributed && !cited.length) reject('unsupported_scripture_quote');
-    const references = [...text.matchAll(referencePattern)].map(match => match[0]);
+    const remainder = bibleReferences.reduce((rest, reference) => rest.replace(reference, ''), text);
+    const references = [...bibleReferences, ...remainder.matchAll(referencePattern)].map(match => typeof match === 'string' ? match : match[0]);
     if (references.some(reference => !cited.some(source => referenceMatches(reference, source)))) repair = true;
     // Exact evidence for strong statements is intentionally conservative in this first retriever.
     if (strongClaim.test(text) || attributed) {
-      const verdict = evaluator.evaluate({ claim: text, sources: cited });
+      // For structured Bible passages, reference labels are verified separately from quoted text.
+      const structuredBible = bibleReferences.length > 0 && cited.every(source => source.metadata?.book)
+        && references.every(reference => cited.some(source => referenceMatches(reference, source)));
+      const claim = structuredBible ? remainder.replace(/^[\s:—–\-“”"「」『』]+|[\s“”"「」『』]+$/gu, '').trim() : text;
+      const verdict = structuredBible && !claim ? { supported: true, exceedsEvidence: false }
+        : evaluator.evaluate({ claim, sources: cited });
       if (!verdict || verdict.supported !== true || verdict.exceedsEvidence !== false) repair = true;
     }
   }

@@ -50,13 +50,22 @@ export async function evaluatePilot({ registry: input, roster, questions, answer
       expertGoldApproved: evaluation.every(q => q.labelStatus === 'expert_approved'), strategies: {} };
     for (const strategy of ['keyword', 'vector', 'hybrid']) {
       const provider = createReligionKnowledgeProvider({ mode: 'production', store: { load: async () => records }, retriever: createRetrievalStrategy({ strategy }) });
-      const rows = []; let answered = 0, citations = 0, citationPasses = 0, abstentions = 0, integrityPasses = 0, citationCompliant = 0;
+      const rows = [], emotionalQueries = []; let answered = 0, citations = 0, citationPasses = 0, abstentions = 0, integrityPasses = 0, citationCompliant = 0;
       for (const question of evaluation) {
         const request = { tradition, query: question.question, language: question.expectedSourceCriteria.language ?? 'ko-KR',
           ...(question.expectedSourceCriteria.traditionBranch ? { traditionBranch: question.expectedSourceCriteria.traditionBranch } : {}), limit: 5 };
         const retrieved = await provider.search(request);
         const row = { questionId: question.id, expectedSourceIds: question.expectedSourceCriteria.ids, tradition, retrievedSources: retrieved.results };
         rows.push(row);
+        if (question.expectedEmotionTags?.length || question.expectedConceptTags?.length) {
+          const top = retrieved.results.slice(0, 3);
+          const matching = top.filter(source => (question.expectedEmotionTags ?? []).some(tag => source.metadata.emotionTags?.includes(tag))
+            || (question.expectedConceptTags ?? []).some(tag => source.metadata.conceptTags?.includes(tag)));
+          emotionalQueries.push({ questionId: question.id, question: question.question,
+            expectedEmotionTags: question.expectedEmotionTags ?? [], expectedConceptTags: question.expectedConceptTags ?? [],
+            retrievedSourceIds: top.map(source => source.sourceId), tagAlignedAt3: matching.length / 3,
+            empty: top.length === 0 });
+        }
         const answer = parsedAnswers.find(value => value.questionId === question.id && value.strategy === strategy);
         let citationResult = 'not_run', integrityResult = 'not_run', payload = [];
         if (answer) {
@@ -88,6 +97,8 @@ export async function evaluatePilot({ registry: input, roster, questions, answer
       }
       const at1 = retrievalMetrics(rows, 1), at3 = retrievalMetrics(rows, 3), at5 = retrievalMetrics(rows, 5);
       result.strategies[strategy] = { recallAt1: at1.recallAtK, recallAt3: at3.recallAtK, recallAt5: at5.recallAtK,
+        precisionAt3: at3.precisionAtK,
+        emotionalQueries,
         mrr: at5.mrr, wrongTraditionRate: at5.wrongTraditionRetrievalRate, emptyRetrievalRate: at5.emptyRetrievalRate,
         citationPassRate: citations ? citationPasses / citations : null, noAnswerRate: answered ? abstentions / answered : null,
         citationAttempts: citations, answered, queries: rows.length, integrityPassRate: answered ? integrityPasses / answered : null,

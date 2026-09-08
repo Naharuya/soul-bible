@@ -1,0 +1,23 @@
+{
+  "upstreamSources": 1,
+  "registeredPassageSources": 24,
+  "candidateChunks": 24,
+  "approvedChunks": 0,
+  "actualCorpusApproval": "BLOCKED_EXTERNAL_REVIEW",
+  "corpusVersion": null,
+  "indexVersion": null,
+  "release": "BLOCKED_RELEASE",
+  "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+  "sourceChecksum": "c4c4fef423406dd9bb97f3196476fae3e7042fb4f25a03357045ba2c15474eba",
+  "licenseStatus": "public_domain",
+  "licenseReview": "pending",
+  "provenanceStatus": "snapshot_hashes_verified",
+  "sourceLanguage": "en-US",
+  "queryLanguage": "ko-KR",
+  "textTranslation": "none",
+  "externalModelApiCalls": 0,
+  "externalEmbeddingApiCalls": 0,
+  "commandNetworkCalls": 0,
+  "productionDefault": "keyword",
+  "hybrid": "experimental"
+}

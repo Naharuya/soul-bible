@@ -3,6 +3,7 @@ import { religionIds, religionSchema } from '../agents/agent_contracts.js';
 import { contentChecksum, corpusPolicy } from './production_guard.js';
 import { normalizeSource } from './ingestion/normalization.js';
 import { reviewRoles, fieldsByRole } from './expert_roles.js';
+import { biblePassageSchema, assertBiblePassage } from './bible_passage.js';
 export { reviewRoles } from './expert_roles.js';
 
 const focus = {
@@ -23,6 +24,7 @@ const text = z.string().trim().min(1);
 const timestamp = z.string().datetime().refine(value => Date.parse(value) <= Date.now(), 'Future timestamp');
 const environment = z.enum(['production', 'test_fixture']);
 export const intakeSourceSchema = z.object({
+  passage: biblePassageSchema.optional(),
   sourceId: z.string().regex(/^[a-z0-9][a-z0-9:._-]{0,127}$/), tradition: religionSchema,
   traditionBranch: text.max(100), title: text.max(200), publisher: text.max(200), institution: z.string().max(200),
   sourceType: text.max(80), sourceUrl: z.string().url().refine(value => /^https?:\/\//.test(value)),
@@ -57,6 +59,7 @@ export const emptyRegistry = (scope = 'production') => sourceRegistrySchema.pars
 export function registerSource(registry, input) {
   const result = sourceRegistrySchema.parse(registry);
   const source = intakeSourceSchema.parse(normalizeSource(input));
+  assertBiblePassage(source);
   if (source.checksum !== contentChecksum(source.text)) throw new Error('Checksum must match normalized source text.');
   if (result.sources.some(entry => entry.sourceId === source.sourceId)) throw new Error('Source ID already registered; revise explicitly.');
   result.sources.push({ ...source, reviewStatus: 'candidate', reviewedBy: null, reviewedAt: null, reviewNotes: '', reviews: [] });
@@ -93,6 +96,7 @@ export function validateExpertRegistry(input, rosterInput) {
   if (registry.environment !== roster.environment || new Set(roster.reviewers.map(row => row.id)).size !== roster.reviewers.length) throw new Error('Invalid reviewer roster scope/duplicates.');
   if (new Set(registry.sources.map(row => row.sourceId)).size !== registry.sources.length) throw new Error('Duplicate registry source.');
   for (const entry of registry.sources) {
+    assertBiblePassage(entry);
     if (entry.checksum !== contentChecksum(entry.text)) throw new Error('Changed source checksum.');
     let replay = { ...entry, reviews: [], reviewStatus: 'candidate', reviewedBy: null, reviewedAt: null, reviewNotes: '' };
     for (const decision of entry.reviews) replay = applyDecision(replay, decision, registry.environment, roster);

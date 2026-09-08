@@ -8,6 +8,7 @@ export function expertPackage(input) {
     branch: source.traditionBranch, title: source.title, publisher: source.publisher, institution: source.institution,
     sourceUrl: source.sourceUrl, sourceType: source.sourceType, language: source.language, originalLanguage: source.originalLanguage,
     sourceVersion: source.sourceVersion, checksum: source.checksum, licenseStatus: source.licenseStatus,
+    ...(source.passage ? { passage: source.passage } : {}),
     licenseEvidence: source.licenseEvidence, provenance: source.provenance, expectedUsage: source.expectedUsage,
     sourceText: source.text, chunks: chunkSource(source), reviewStatus: source.reviewStatus,
     sourceFingerprint: intakeFingerprint(source, registry.environment), reviewChecklist: reviewTemplate(source.tradition),
@@ -22,7 +23,7 @@ export function expertPackage(input) {
 }
 export function packageCsv(pack) {
   const columns = ['sourceId', 'tradition', 'branch', 'title', 'publisher', 'institution', 'sourceUrl', 'sourceType', 'language', 'originalLanguage',
-    'sourceVersion', 'checksum', 'licenseStatus', 'licenseEvidence', 'provenance', 'expectedUsage', 'sourceText', 'chunks',
+    'sourceVersion', 'checksum', 'licenseStatus', 'licenseEvidence', 'provenance', 'expectedUsage', 'sourceText', 'chunks', 'passage',
     'sourceFingerprint', 'reviewStatus', 'reviewChecklist', 'completedReviews', 'nextReview', 'reviewDecision', 'reviewNotes'];
   const cell = value => {
     let data = value == null ? '' : typeof value === 'object' ? JSON.stringify(value) : String(value);

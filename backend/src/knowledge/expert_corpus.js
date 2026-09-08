@@ -15,6 +15,7 @@ export function approvedCorpus(input, roster, tradition) {
     const base = { sourceId: source.sourceId, tradition: source.tradition, sourceType: source.sourceType,
       title: source.title, reference: source.reference, text: source.text, language: source.language, authorityLevel: source.authorityLevel,
       metadata: { sample: false, license: source.licenseStatus, licenseStatus: source.licenseStatus,
+        ...(source.passage ? { ...source.passage, licenseEvidence: source.licenseEvidence } : {}),
         licenseNote: source.licenseEvidence.slice(0, 500), publisher: source.publisher,
         ...(source.institution ? { institution: source.institution } : {}), sourceUrl: source.sourceUrl,
         provenance: source.provenance, importedAt: source.reviews[0].reviewedAt,
@@ -25,7 +26,8 @@ export function approvedCorpus(input, roster, tradition) {
           registryFingerprint: registryFingerprint(registry), sourceFingerprint: intakeFingerprint(source, registry.environment),
           templateVersion: 'expert-v1', reviews: source.reviews },
       } };
-    return enrichChunks(base, chunkSource(source)).map(record => {
+    const chunks = source.passage ? [{ text: source.text, location: { unit: 'passage', index: 0, start: 0, end: source.text.length } }] : chunkSource(source);
+    return enrichChunks(base, chunks).map(record => {
       record.metadata.checksum = contentChecksum(record.text);
       // These transitions attest the imported, complete four-role decision, never invent a reviewer.
       const reviewer = source.reviewedBy, at = source.reviewedAt, notes = source.reviewNotes;

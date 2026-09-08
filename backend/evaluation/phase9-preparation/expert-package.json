@@ -1,0 +1,2544 @@
+{
+  "schemaVersion": 1,
+  "environment": "production",
+  "registryFingerprint": "d8148ce8ee87e36a02124fbe77c8019adc748053a8a2b4915ac51048b0b05963",
+  "rows": [
+    {
+      "sourceId": "protestant:webp-a-track-v1:php:4:6-7",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Philippians 4:6-7",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "115a2e3b23c98432283aeaff9c7698d1e7ffd888d89d1b701a4d553736875985",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Philippians",
+        "chapter": 4,
+        "verseStart": 6,
+        "verseEnd": 7,
+        "emotionTags": [
+          "anxiety"
+        ],
+        "conceptTags": [
+          "prayer",
+          "peace"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "In nothing be anxious, but in everything, by prayer and petition with thanksgiving, let your requests be made known to God. And the peace of God, which surpasses all understanding, will guard your hearts and your thoughts in Christ Jesus.",
+      "chunks": [
+        {
+          "text": "In nothing be anxious, but in everything, by prayer and petition with thanksgiving, let your requests be made known to God. And the peace of God, which surpasses all understanding, will guard your hearts and your thoughts in Christ Jesus.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 238
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "dd046b217f6922f9fe2c10757d912b6a0eb019b8f021ea34365763f853494148",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:php:4:6-7",
+        "sourceFingerprint": "dd046b217f6922f9fe2c10757d912b6a0eb019b8f021ea34365763f853494148",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:mat:6:34-34",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Matthew 6:34",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "bc31be84e3eec5e06e68a280d01c85524bf6bc50cd8e09e0082d741730e8d594",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Matthew",
+        "chapter": 6,
+        "verseStart": 34,
+        "verseEnd": 34,
+        "emotionTags": [
+          "anxiety"
+        ],
+        "conceptTags": [
+          "trust"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "Therefore don’t be anxious for tomorrow, for tomorrow will be anxious for itself. Each day’s own evil is sufficient.",
+      "chunks": [
+        {
+          "text": "Therefore don’t be anxious for tomorrow, for tomorrow will be anxious for itself. Each day’s own evil is sufficient.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 116
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "89bc58e2b08ab0746afe18bc2740db18f32a449cf783df43cef8f39188dd4b8a",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:mat:6:34-34",
+        "sourceFingerprint": "89bc58e2b08ab0746afe18bc2740db18f32a449cf783df43cef8f39188dd4b8a",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:1pe:5:7-7",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — 1 Peter 5:7",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "7e56c3b97871b3dc176251bd61365ef85b5088feebd5b18b34205fc511a17930",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "1 Peter",
+        "chapter": 5,
+        "verseStart": 7,
+        "verseEnd": 7,
+        "emotionTags": [
+          "anxiety"
+        ],
+        "conceptTags": [
+          "comfort",
+          "love"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "casting all your worries on him, because he cares for you.",
+      "chunks": [
+        {
+          "text": "casting all your worries on him, because he cares for you.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 58
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "9cb30e0ed4b57ad7d1292f826555730ab65e322fe54ea7f367c6de6d69b8d6ef",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:1pe:5:7-7",
+        "sourceFingerprint": "9cb30e0ed4b57ad7d1292f826555730ab65e322fe54ea7f367c6de6d69b8d6ef",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:psa:56:3-3",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Psalms 56:3",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "b356c9da9a017f840dfffb49fc03b47aa464a034bf6670da340de29f16e050e9",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Psalms",
+        "chapter": 56,
+        "verseStart": 3,
+        "verseEnd": 3,
+        "emotionTags": [
+          "fear"
+        ],
+        "conceptTags": [
+          "trust"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "When I am afraid, I will put my trust in you.",
+      "chunks": [
+        {
+          "text": "When I am afraid, I will put my trust in you.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 45
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "196c9e5a481cdaa1916aca49484907c8fb0b2e1e5c19672aecd474db08430dc5",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:psa:56:3-3",
+        "sourceFingerprint": "196c9e5a481cdaa1916aca49484907c8fb0b2e1e5c19672aecd474db08430dc5",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:isa:41:10-10",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Isaiah 41:10",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "7b2c36abd4800c29b409567168a8ff8ab5646328a3886fcd3617efe3a12658c6",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Isaiah",
+        "chapter": 41,
+        "verseStart": 10,
+        "verseEnd": 10,
+        "emotionTags": [
+          "fear"
+        ],
+        "conceptTags": [
+          "courage",
+          "comfort"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "Don’t you be afraid, for I am with you. Don’t be dismayed, for I am your God. I will strengthen you. Yes, I will help you. Yes, I will uphold you with the right hand of my righteousness.",
+      "chunks": [
+        {
+          "text": "Don’t you be afraid, for I am with you. Don’t be dismayed, for I am your God. I will strengthen you. Yes, I will help you. Yes, I will uphold you with the right hand of my righteousness.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 186
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "77f107913afe38893d58dd903c68e7975b2a5fa9e262c8acd80e018fb71a2326",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:isa:41:10-10",
+        "sourceFingerprint": "77f107913afe38893d58dd903c68e7975b2a5fa9e262c8acd80e018fb71a2326",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:deu:31:6-6",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Deuteronomy 31:6",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "30a8c4ffdd349225f86c19d025c7e27dd7b3d9e0d326c37be971d9b83218571e",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Deuteronomy",
+        "chapter": 31,
+        "verseStart": 6,
+        "verseEnd": 6,
+        "emotionTags": [
+          "fear",
+          "loneliness"
+        ],
+        "conceptTags": [
+          "courage",
+          "trust"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "Be strong and courageous. Don’t be afraid or scared of them, for the LORD your God himself is who goes with you. He will not fail you nor forsake you.”",
+      "chunks": [
+        {
+          "text": "Be strong and courageous. Don’t be afraid or scared of them, for the LORD your God himself is who goes with you. He will not fail you nor forsake you.”",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 151
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "afc98696755a8c2036059bb7cba898080c5804e5e313b824c6c4f99ff5ffaeb8",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:deu:31:6-6",
+        "sourceFingerprint": "afc98696755a8c2036059bb7cba898080c5804e5e313b824c6c4f99ff5ffaeb8",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:psa:25:16-16",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Psalms 25:16",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "e3c73b64e1e6109b829b32f7a305c9055ee7ff4ba887e9ac6494f9cd99f642e1",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Psalms",
+        "chapter": 25,
+        "verseStart": 16,
+        "verseEnd": 16,
+        "emotionTags": [
+          "loneliness"
+        ],
+        "conceptTags": [
+          "grace",
+          "comfort"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "Turn to me, and have mercy on me, for I am desolate and afflicted.",
+      "chunks": [
+        {
+          "text": "Turn to me, and have mercy on me, for I am desolate and afflicted.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 66
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "f8c4901f009ab24a49e183de2120a49f7f3604da6881720e1bcd60638cd2a59a",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:psa:25:16-16",
+        "sourceFingerprint": "f8c4901f009ab24a49e183de2120a49f7f3604da6881720e1bcd60638cd2a59a",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:jhn:14:18-18",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — John 14:18",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "daaf7ebcb780eb45130db261094107a21e0a7f9e454d839ff3e18715553f9406",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "John",
+        "chapter": 14,
+        "verseStart": 18,
+        "verseEnd": 18,
+        "emotionTags": [
+          "loneliness"
+        ],
+        "conceptTags": [
+          "comfort",
+          "love"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "I will not leave you orphans. I will come to you.",
+      "chunks": [
+        {
+          "text": "I will not leave you orphans. I will come to you.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 49
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "b6e6e7d6c7011092f5fec3087c10bd7760bd1d819c0c4d0a3ad3a2a1681b6ed4",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:jhn:14:18-18",
+        "sourceFingerprint": "b6e6e7d6c7011092f5fec3087c10bd7760bd1d819c0c4d0a3ad3a2a1681b6ed4",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:psa:34:18-18",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Psalms 34:18",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "456a6d43e625cbad25e6c6a4bfba037e4e22a79480b68dff6388117029028cb7",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Psalms",
+        "chapter": 34,
+        "verseStart": 18,
+        "verseEnd": 18,
+        "emotionTags": [
+          "sadness"
+        ],
+        "conceptTags": [
+          "comfort"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "The LORD is near to those who have a broken heart, and saves those who have a crushed spirit.",
+      "chunks": [
+        {
+          "text": "The LORD is near to those who have a broken heart, and saves those who have a crushed spirit.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 93
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "9fc449655a24849bcf5bdce50ccba5cfb32ee44fe69f95c947991a92f49ce306",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:psa:34:18-18",
+        "sourceFingerprint": "9fc449655a24849bcf5bdce50ccba5cfb32ee44fe69f95c947991a92f49ce306",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:mat:5:4-4",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Matthew 5:4",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "3b9218930d4aa632e3b97a11dc34e92dff505fdc223e34cd56cee14246af8990",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Matthew",
+        "chapter": 5,
+        "verseStart": 4,
+        "verseEnd": 4,
+        "emotionTags": [
+          "sadness"
+        ],
+        "conceptTags": [
+          "comfort"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "Blessed are those who mourn, for they shall be comforted.",
+      "chunks": [
+        {
+          "text": "Blessed are those who mourn, for they shall be comforted.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 57
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "41b9c5cdab5052427918fdc3032960fe2eb1f3c3c34ac8f472ebc68a11ec338f",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:mat:5:4-4",
+        "sourceFingerprint": "41b9c5cdab5052427918fdc3032960fe2eb1f3c3c34ac8f472ebc68a11ec338f",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:jas:1:19-20",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — James 1:19-20",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "70a514e148d9015f1f2222db5c638f118cdfd74f347fb2e613793a5aa3dd81a4",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "James",
+        "chapter": 1,
+        "verseStart": 19,
+        "verseEnd": 20,
+        "emotionTags": [
+          "anger"
+        ],
+        "conceptTags": [
+          "peace"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "So, then, my beloved brothers, let every man be swift to hear, slow to speak, and slow to anger; for the anger of man doesn’t produce the righteousness of God.",
+      "chunks": [
+        {
+          "text": "So, then, my beloved brothers, let every man be swift to hear, slow to speak, and slow to anger; for the anger of man doesn’t produce the righteousness of God.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 159
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "e6d79fc9428386f0dfabca33bae0cea286c590f409a7759ffbc57a41cfd6ff63",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:jas:1:19-20",
+        "sourceFingerprint": "e6d79fc9428386f0dfabca33bae0cea286c590f409a7759ffbc57a41cfd6ff63",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:eph:4:26-26",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Ephesians 4:26",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "e81b349f094fc90f99b7263292fe3152f8770579389057a576bf8fcdc57b9178",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Ephesians",
+        "chapter": 4,
+        "verseStart": 26,
+        "verseEnd": 26,
+        "emotionTags": [
+          "anger"
+        ],
+        "conceptTags": [
+          "peace"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "“Be angry, and don’t sin.” Don’t let the sun go down on your wrath,",
+      "chunks": [
+        {
+          "text": "“Be angry, and don’t sin.” Don’t let the sun go down on your wrath,",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 67
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "c38af0807668a2e55de52cfe0374bcadf30efd1798eaea46ecd2e364b32f0dc8",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:eph:4:26-26",
+        "sourceFingerprint": "c38af0807668a2e55de52cfe0374bcadf30efd1798eaea46ecd2e364b32f0dc8",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:1jn:1:9-9",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — 1 John 1:9",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "959f76f911e5f76f21128ca83b4c83626aff27c440bbff41bb0cb3bebbea6f48",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "1 John",
+        "chapter": 1,
+        "verseStart": 9,
+        "verseEnd": 9,
+        "emotionTags": [
+          "guilt"
+        ],
+        "conceptTags": [
+          "forgiveness",
+          "grace"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "If we confess our sins, he is faithful and righteous to forgive us the sins and to cleanse us from all unrighteousness.",
+      "chunks": [
+        {
+          "text": "If we confess our sins, he is faithful and righteous to forgive us the sins and to cleanse us from all unrighteousness.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 119
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "457722a502c23eacad9b486d21daf6b233ee8c05c0f9958e66fe753f2bc3a10b",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:1jn:1:9-9",
+        "sourceFingerprint": "457722a502c23eacad9b486d21daf6b233ee8c05c0f9958e66fe753f2bc3a10b",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:psa:32:5-5",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Psalms 32:5",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "de401db7e3988ab0976a7ad7a27ddeda8fd5882c85307b1c3a4a5ed2f56b6915",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Psalms",
+        "chapter": 32,
+        "verseStart": 5,
+        "verseEnd": 5,
+        "emotionTags": [
+          "guilt"
+        ],
+        "conceptTags": [
+          "forgiveness"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "I acknowledged my sin to you. I didn’t hide my iniquity. I said, I will confess my transgressions to the LORD, and you forgave the iniquity of my sin. Selah.",
+      "chunks": [
+        {
+          "text": "I acknowledged my sin to you. I didn’t hide my iniquity. I said, I will confess my transgressions to the LORD, and you forgave the iniquity of my sin. Selah.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 157
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "d5681eec8e8640c9204718e4a24d0e05350b51042240f851dcf1c4cf4f4b422e",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:psa:32:5-5",
+        "sourceFingerprint": "d5681eec8e8640c9204718e4a24d0e05350b51042240f851dcf1c4cf4f4b422e",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:rom:15:13-13",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Romans 15:13",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "91405f0c907c910c8720350d065f8db7838f673e4ffc8304a920a5742a98697e",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Romans",
+        "chapter": 15,
+        "verseStart": 13,
+        "verseEnd": 13,
+        "emotionTags": [
+          "hope"
+        ],
+        "conceptTags": [
+          "peace",
+          "trust"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "Now may the God of hope fill you with all joy and peace in believing, that you may abound in hope in the power of the Holy Spirit.",
+      "chunks": [
+        {
+          "text": "Now may the God of hope fill you with all joy and peace in believing, that you may abound in hope in the power of the Holy Spirit.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 130
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "b234c9b7d7552a0c0b1853ec8c64354d82d6928fafb7e5a8152ba8687dba31b2",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:rom:15:13-13",
+        "sourceFingerprint": "b234c9b7d7552a0c0b1853ec8c64354d82d6928fafb7e5a8152ba8687dba31b2",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:psa:42:11-11",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Psalms 42:11",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "22d52851adb908085c23a790f0b36f4b86fccbcdfe886a25ca48a7368369fb11",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Psalms",
+        "chapter": 42,
+        "verseStart": 11,
+        "verseEnd": 11,
+        "emotionTags": [
+          "hope",
+          "sadness"
+        ],
+        "conceptTags": [
+          "trust"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "Why are you in despair, my soul? Why are you disturbed within me? Hope in God! For I shall still praise him, the saving help of my countenance, and my God.",
+      "chunks": [
+        {
+          "text": "Why are you in despair, my soul? Why are you disturbed within me? Hope in God! For I shall still praise him, the saving help of my countenance, and my God.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 155
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "25b6723857106ae25966520fb827b10d02c732ac6c6a681b489e9e33f8994c60",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:psa:42:11-11",
+        "sourceFingerprint": "25b6723857106ae25966520fb827b10d02c732ac6c6a681b489e9e33f8994c60",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:lam:3:22-23",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Lamentations 3:22-23",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "3256e06fe5c2d1f9593262b14b30737e8a9f3f8bcf8c46de85e928f5bd75c2d8",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Lamentations",
+        "chapter": 3,
+        "verseStart": 22,
+        "verseEnd": 23,
+        "emotionTags": [
+          "hope"
+        ],
+        "conceptTags": [
+          "love",
+          "grace"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "It is because of the LORD’s loving kindnesses that we are not consumed, because his mercies don’t fail. They are new every morning. Great is your faithfulness.",
+      "chunks": [
+        {
+          "text": "It is because of the LORD’s loving kindnesses that we are not consumed, because his mercies don’t fail. They are new every morning. Great is your faithfulness.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 159
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "2034101370d51da975342f59d42df63b37589459ad9ce23b7f431c2bf2b5c987",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:lam:3:22-23",
+        "sourceFingerprint": "2034101370d51da975342f59d42df63b37589459ad9ce23b7f431c2bf2b5c987",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:1th:5:18-18",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — 1 Thessalonians 5:18",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "65be8065405d7829d40f8df92794ff74390ce1e83f7160ec6f3eb0489b0f3d01",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "1 Thessalonians",
+        "chapter": 5,
+        "verseStart": 18,
+        "verseEnd": 18,
+        "emotionTags": [
+          "gratitude"
+        ],
+        "conceptTags": [
+          "prayer"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "In everything give thanks, for this is the will of God in Christ Jesus toward you.",
+      "chunks": [
+        {
+          "text": "In everything give thanks, for this is the will of God in Christ Jesus toward you.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 82
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "3ac55cd1d3007a9f1bf64ca69dec4fb54f1ea105bbb8118cabae8e76628d379f",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:1th:5:18-18",
+        "sourceFingerprint": "3ac55cd1d3007a9f1bf64ca69dec4fb54f1ea105bbb8118cabae8e76628d379f",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:psa:107:1-1",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Psalms 107:1",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "5952864712492c7c4000fb1ee544c2bd85ba0d5c398afae1e166342fe07a5263",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Psalms",
+        "chapter": 107,
+        "verseStart": 1,
+        "verseEnd": 1,
+        "emotionTags": [
+          "gratitude"
+        ],
+        "conceptTags": [
+          "love"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "Give thanks to the LORD, for he is good, for his loving kindness endures forever.",
+      "chunks": [
+        {
+          "text": "Give thanks to the LORD, for he is good, for his loving kindness endures forever.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 81
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "f53960a48f7b3d2f796cfc1222942155c28f437af6ede925cec8b8abf03e60b6",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:psa:107:1-1",
+        "sourceFingerprint": "f53960a48f7b3d2f796cfc1222942155c28f437af6ede925cec8b8abf03e60b6",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:eph:4:32-32",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Ephesians 4:32",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "248a74c2c71046fa6cc89ddeb6df1bb97c3fcef00486648c3b0da0d6ae3cf210",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Ephesians",
+        "chapter": 4,
+        "verseStart": 32,
+        "verseEnd": 32,
+        "emotionTags": [
+          "anger",
+          "guilt"
+        ],
+        "conceptTags": [
+          "forgiveness",
+          "love"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "And be kind to one another, tender hearted, forgiving each other, just as God also in Christ forgave you.",
+      "chunks": [
+        {
+          "text": "And be kind to one another, tender hearted, forgiving each other, just as God also in Christ forgave you.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 105
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "6e00c7c2a333322295db7d4ffc935c53222b697883aebdc98436895a585b90eb",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:eph:4:32-32",
+        "sourceFingerprint": "6e00c7c2a333322295db7d4ffc935c53222b697883aebdc98436895a585b90eb",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:col:3:13-13",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Colossians 3:13",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "51494ccda2b439b670e4e210c918f43b7d029c15a76fbd0effb9c599b5911d1a",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Colossians",
+        "chapter": 3,
+        "verseStart": 13,
+        "verseEnd": 13,
+        "emotionTags": [
+          "anger"
+        ],
+        "conceptTags": [
+          "forgiveness"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "bearing with one another, and forgiving each other, if any man has a complaint against any; even as Christ forgave you, so you also do.",
+      "chunks": [
+        {
+          "text": "bearing with one another, and forgiving each other, if any man has a complaint against any; even as Christ forgave you, so you also do.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 135
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "cad5630696e865768dc3189aa3fd778ebc6ab155480f1a5a0e32dfc42f352d36",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:col:3:13-13",
+        "sourceFingerprint": "cad5630696e865768dc3189aa3fd778ebc6ab155480f1a5a0e32dfc42f352d36",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:mat:11:28-30",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Matthew 11:28-30",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "cfd4fd6b8d471a750ebbe0c011e0ffaf9be0ad25320d3beb2bd9fc3f15450829",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Matthew",
+        "chapter": 11,
+        "verseStart": 28,
+        "verseEnd": 30,
+        "emotionTags": [
+          "sadness",
+          "anxiety"
+        ],
+        "conceptTags": [
+          "rest",
+          "comfort"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "“Come to me, all you who labor and are heavily burdened, and I will give you rest. Take my yoke upon you and learn from me, for I am gentle and humble in heart; and you will find rest for your souls. For my yoke is easy, and my burden is light.”",
+      "chunks": [
+        {
+          "text": "“Come to me, all you who labor and are heavily burdened, and I will give you rest. Take my yoke upon you and learn from me, for I am gentle and humble in heart; and you will find rest for your souls. For my yoke is easy, and my burden is light.”",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 245
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "01092b82e5a57cb0608ff76e81c0cc808eefb31663ef3a2245cae1946f9ba3a8",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:mat:11:28-30",
+        "sourceFingerprint": "01092b82e5a57cb0608ff76e81c0cc808eefb31663ef3a2245cae1946f9ba3a8",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:psa:23:1-3",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Psalms 23:1-3",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "67f19f37569677b31f7510eb45561f0e88651724b9a7585bdb795f8ca85cd5b5",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Psalms",
+        "chapter": 23,
+        "verseStart": 1,
+        "verseEnd": 3,
+        "emotionTags": [
+          "anxiety"
+        ],
+        "conceptTags": [
+          "rest",
+          "peace"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "A Psalm by David. The LORD is my shepherd; I shall lack nothing. He makes me lie down in green pastures. He leads me beside still waters. He restores my soul. He guides me in the paths of righteousness for his name’s sake.",
+      "chunks": [
+        {
+          "text": "A Psalm by David. The LORD is my shepherd; I shall lack nothing. He makes me lie down in green pastures. He leads me beside still waters. He restores my soul. He guides me in the paths of righteousness for his name’s sake.",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 222
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "55c470fe5f85eeeceac4d609a29e6a22fdf14772682f08b390bb0ab799e57218",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:psa:23:1-3",
+        "sourceFingerprint": "55c470fe5f85eeeceac4d609a29e6a22fdf14772682f08b390bb0ab799e57218",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:jos:1:9-9",
+      "tradition": "protestant",
+      "branch": "general",
+      "title": "World English Bible — Joshua 1:9",
+      "publisher": "eBible.org",
+      "institution": "eBible.org",
+      "sourceUrl": "https://ebible.org/Scriptures/engwebp_vpl.zip",
+      "sourceType": "bible",
+      "language": "en-US",
+      "originalLanguage": "he/el",
+      "sourceVersion": "engwebp-vpl-sha256-f08d13b4f0701108",
+      "checksum": "b260c75dbf1a97a829ea707f7007a33a982ff37cc530da41ef0d27758909691e",
+      "licenseStatus": "public_domain",
+      "passage": {
+        "book": "Joshua",
+        "chapter": 1,
+        "verseStart": 9,
+        "verseEnd": 9,
+        "emotionTags": [
+          "fear"
+        ],
+        "conceptTags": [
+          "courage",
+          "trust"
+        ]
+      },
+      "licenseEvidence": "Publisher public-domain dedication: https://ebible.org/engwebp/copyright.htm ; archived engwebp_about.htm. Preserve original wording when using the World English Bible name. Human license review is pending.",
+      "provenance": "Official eBible.org engwebp Protestant edition VPL. Archive SHA256=f08d13b4f0701108f7b9f95d57c201649f37c36359f707c8cf1876538a84d750; entry engwebp_vpl.txt SHA256=71ea1ce60dac8780a16d908f6035fa3595ecc9459acf636de5d1c5023214f240. Exact selected VPL lines; only LF line endings normalized. No Korean translation.",
+      "expectedUsage": "A-track English passage pilot; Korean manual discovery tags only. Context, tradition and safety review required; no clinical promises.",
+      "sourceText": "Haven’t I commanded you? Be strong and courageous. Don’t be afraid. Don’t be dismayed, for the LORD your God is with you wherever you go.”",
+      "chunks": [
+        {
+          "text": "Haven’t I commanded you? Be strong and courageous. Don’t be afraid. Don’t be dismayed, for the LORD your God is with you wherever you go.”",
+          "location": {
+            "unit": "paragraph",
+            "index": 0,
+            "start": 0,
+            "end": 138
+          }
+        }
+      ],
+      "reviewStatus": "candidate",
+      "sourceFingerprint": "03b61914db7c84daa424bb201c406b4dd9c13ee88210087d10309e52f83a6657",
+      "reviewChecklist": {
+        "version": "expert-v1",
+        "tradition": "protestant",
+        "focus": "개신교: 지정 교단·번역본·목회적 해석의 범위를 확인",
+        "roles": {
+          "licenseReviewer": {
+            "checklist": [
+              "licenseEvidence",
+              "permittedUsage",
+              "sourceIdentity"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "contentReviewer": {
+            "checklist": [
+              "sourceAccuracy",
+              "quotationContext",
+              "chunkBoundaries"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "traditionExpert": {
+            "checklist": [
+              "doctrinalAccuracy",
+              "traditionConsistency",
+              "branchBiasDisclosed",
+              "noInterfaithMixing"
+            ],
+            "decision": null,
+            "notes": ""
+          },
+          "safetyReviewer": {
+            "checklist": [
+              "noAbsolutistPromises",
+              "psychologicalSafety",
+              "noTreatmentReplacement"
+            ],
+            "decision": null,
+            "notes": ""
+          }
+        }
+      },
+      "completedReviews": [],
+      "reviewDecision": null,
+      "reviewNotes": "",
+      "nextReview": {
+        "sourceId": "protestant:webp-a-track-v1:jos:1:9-9",
+        "sourceFingerprint": "03b61914db7c84daa424bb201c406b4dd9c13ee88210087d10309e52f83a6657",
+        "role": "licenseReviewer",
+        "reviewer": "",
+        "reviewedAt": null,
+        "decision": null,
+        "notes": "",
+        "checklist": {
+          "licenseEvidence": false,
+          "permittedUsage": false,
+          "sourceIdentity": false
+        }
+      }
+    }
+  ]
+}

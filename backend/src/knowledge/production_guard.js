@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { knowledgeNamespaces } from './namespaces.js';
 import { requireProductionLicense } from './source_quality.js';
 import { reviewRoles, fieldsByRole } from './expert_roles.js';
+import { assertBiblePassage } from './bible_passage.js';
 
 const policies = new Map();
 export function corpusPolicy(tradition) {
@@ -20,6 +21,7 @@ export function approvalFingerprint(record) {
   return contentChecksum(JSON.stringify(stable({ ...record, metadata: provenance })));
 }
 export function validateCandidate(record) {
+  assertBiblePassage(record);
   const policy = corpusPolicy(record.tradition);
   requireProductionLicense(record);
   const m = record.metadata;

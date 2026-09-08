@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "scope": "isolated automated test with in-memory mock expert decisions",
+  "operationalRollback": "NOT_RUN",
+  "test": "A-track failed replacement preserves active snapshot and rollback restores previous corpus",
+  "restoredCorpusVersion": "c1",
+  "productionIndexModified": false
+}

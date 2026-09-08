@@ -1,0 +1,2 @@
+# Snapshot checksums are over UTF-8 bytes; keep transport line endings stable on Windows.
+* text eol=lf

@@ -2,6 +2,11 @@ import { z } from 'zod';
 
 export const licenseStatusSchema = z.enum(['public_domain', 'official_permission', 'licensed', 'self_authored', 'unknown']);
 export const provenanceFields = {
+  book: z.string().min(1).max(40).optional(), chapter: z.number().int().positive().optional(),
+  verseStart: z.number().int().positive().optional(), verseEnd: z.number().int().positive().optional(),
+  emotionTags: z.array(z.string().min(1).max(40)).max(12).optional(),
+  conceptTags: z.array(z.string().min(1).max(40)).max(12).optional(),
+  licenseEvidence: z.string().trim().min(1).max(4000).optional(),
   expertReview: z.object({
     environment: z.enum(['production', 'test_fixture']), registryFingerprint: z.string().length(64),
     sourceFingerprint: z.string().length(64), templateVersion: z.literal('expert-v1'),

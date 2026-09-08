@@ -1,3 +1,4 @@
+import { bibleReferenceMatches } from '../knowledge/bible_passage.js';
 export const normalizeEvidence = text => text.normalize('NFKC').replace(/[\u200B-\u200D\uFEFF]/g, '').replace(/\s+/g, ' ').trim();
 const stronger = /반드시|무조건|절대|유일|보장|always|guaranteed|only/iu;
 
@@ -12,6 +13,7 @@ export const exactCitationEvaluator = Object.freeze({
 });
 
 export function referenceMatches(reference, source) {
+  if (source.metadata?.book) return bibleReferenceMatches(reference, source);
   // Compare complete reference tokens; 1:1 must never authorize 1:10 or 1:11.
   const normalized = normalizeEvidence(reference);
   const candidate = normalizeEvidence(source.reference);

@@ -1,3 +1,4 @@
+import { bibleTagOverlap } from './bible_tags.js';
 const normalize = text => text.normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim();
 export function keywordOverlap(query, record) {
   const words = [...new Set(normalize(query).match(/[\p{L}\p{N}]+/gu) ?? [])];
@@ -5,7 +6,7 @@ export function keywordOverlap(query, record) {
   if (!words.length) return 0;
   const overlap = words.filter(word => text.includes(word)).length / words.length;
   const keyMatch = record.metadata.keywords.some(word => normalize(query).includes(normalize(word))) ? 0.5 : 0;
-  return Math.min(1, overlap + keyMatch);
+  return Math.max(bibleTagOverlap(query, record), Math.min(1, overlap + keyMatch));
 }
 export const defaultWeights = Object.freeze({ keyword: 0.25, vector: 0.4, authority: 0.1, reference: 0.15, branch: 0.05, quality: 0.05, duplicate: 0.25 });
 export function createReRanker(weights = defaultWeights, { strictBranch = false } = {}) {

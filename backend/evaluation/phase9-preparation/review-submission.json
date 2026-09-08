@@ -1,0 +1,342 @@
+{
+  "environment": "production",
+  "registryFingerprint": "d8148ce8ee87e36a02124fbe77c8019adc748053a8a2b4915ac51048b0b05963",
+  "decisions": [
+    {
+      "sourceId": "protestant:webp-a-track-v1:php:4:6-7",
+      "sourceFingerprint": "dd046b217f6922f9fe2c10757d912b6a0eb019b8f021ea34365763f853494148",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:mat:6:34-34",
+      "sourceFingerprint": "89bc58e2b08ab0746afe18bc2740db18f32a449cf783df43cef8f39188dd4b8a",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:1pe:5:7-7",
+      "sourceFingerprint": "9cb30e0ed4b57ad7d1292f826555730ab65e322fe54ea7f367c6de6d69b8d6ef",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:psa:56:3-3",
+      "sourceFingerprint": "196c9e5a481cdaa1916aca49484907c8fb0b2e1e5c19672aecd474db08430dc5",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:isa:41:10-10",
+      "sourceFingerprint": "77f107913afe38893d58dd903c68e7975b2a5fa9e262c8acd80e018fb71a2326",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:deu:31:6-6",
+      "sourceFingerprint": "afc98696755a8c2036059bb7cba898080c5804e5e313b824c6c4f99ff5ffaeb8",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:psa:25:16-16",
+      "sourceFingerprint": "f8c4901f009ab24a49e183de2120a49f7f3604da6881720e1bcd60638cd2a59a",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:jhn:14:18-18",
+      "sourceFingerprint": "b6e6e7d6c7011092f5fec3087c10bd7760bd1d819c0c4d0a3ad3a2a1681b6ed4",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:psa:34:18-18",
+      "sourceFingerprint": "9fc449655a24849bcf5bdce50ccba5cfb32ee44fe69f95c947991a92f49ce306",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:mat:5:4-4",
+      "sourceFingerprint": "41b9c5cdab5052427918fdc3032960fe2eb1f3c3c34ac8f472ebc68a11ec338f",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:jas:1:19-20",
+      "sourceFingerprint": "e6d79fc9428386f0dfabca33bae0cea286c590f409a7759ffbc57a41cfd6ff63",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:eph:4:26-26",
+      "sourceFingerprint": "c38af0807668a2e55de52cfe0374bcadf30efd1798eaea46ecd2e364b32f0dc8",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:1jn:1:9-9",
+      "sourceFingerprint": "457722a502c23eacad9b486d21daf6b233ee8c05c0f9958e66fe753f2bc3a10b",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:psa:32:5-5",
+      "sourceFingerprint": "d5681eec8e8640c9204718e4a24d0e05350b51042240f851dcf1c4cf4f4b422e",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:rom:15:13-13",
+      "sourceFingerprint": "b234c9b7d7552a0c0b1853ec8c64354d82d6928fafb7e5a8152ba8687dba31b2",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:psa:42:11-11",
+      "sourceFingerprint": "25b6723857106ae25966520fb827b10d02c732ac6c6a681b489e9e33f8994c60",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:lam:3:22-23",
+      "sourceFingerprint": "2034101370d51da975342f59d42df63b37589459ad9ce23b7f431c2bf2b5c987",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:1th:5:18-18",
+      "sourceFingerprint": "3ac55cd1d3007a9f1bf64ca69dec4fb54f1ea105bbb8118cabae8e76628d379f",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:psa:107:1-1",
+      "sourceFingerprint": "f53960a48f7b3d2f796cfc1222942155c28f437af6ede925cec8b8abf03e60b6",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:eph:4:32-32",
+      "sourceFingerprint": "6e00c7c2a333322295db7d4ffc935c53222b697883aebdc98436895a585b90eb",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:col:3:13-13",
+      "sourceFingerprint": "cad5630696e865768dc3189aa3fd778ebc6ab155480f1a5a0e32dfc42f352d36",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:mat:11:28-30",
+      "sourceFingerprint": "01092b82e5a57cb0608ff76e81c0cc808eefb31663ef3a2245cae1946f9ba3a8",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:psa:23:1-3",
+      "sourceFingerprint": "55c470fe5f85eeeceac4d609a29e6a22fdf14772682f08b390bb0ab799e57218",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    },
+    {
+      "sourceId": "protestant:webp-a-track-v1:jos:1:9-9",
+      "sourceFingerprint": "03b61914db7c84daa424bb201c406b4dd9c13ee88210087d10309e52f83a6657",
+      "role": "licenseReviewer",
+      "reviewer": "",
+      "reviewedAt": null,
+      "decision": null,
+      "notes": "",
+      "checklist": {
+        "licenseEvidence": false,
+        "permittedUsage": false,
+        "sourceIdentity": false
+      }
+    }
+  ]
+}
