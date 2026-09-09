@@ -1,4 +1,4 @@
-# SoulBible 5단계: Vector RAG, 품질 관리, 평가
+# onaria 5단계: Vector RAG, 품질 관리, 평가
 
 ## 구현 결과와 유지한 계약
 

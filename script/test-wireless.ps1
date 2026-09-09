@@ -59,7 +59,7 @@ if ($DeviceAddress) {
 $flutter = Get-Command flutter -ErrorAction Stop
 Push-Location $projectRoot
 try {
-    $runArgs = @('run', '-d', $device, "--dart-define=SOUL_BIBLE_API_BASE_URL=$ApiBaseUrl")
+    $runArgs = @('run', '-d', $device, "--dart-define=ONARIA_API_BASE_URL=$ApiBaseUrl")
     if ($Release) { $runArgs += '--release' }
     & $flutter.Source @runArgs
     if ($LASTEXITCODE -ne 0) { throw 'Flutter build or device launch failed.' }

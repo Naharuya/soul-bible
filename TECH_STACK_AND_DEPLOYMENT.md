@@ -1,4 +1,4 @@
-# 소울바이블 기술스택 및 배포 가이드
+# onaria 기술스택 및 배포 가이드
 
 작성 기준: 2026-09-04, 저장소 현재 구현
 
@@ -163,10 +163,10 @@ flutter build apk --debug
 
 ```bash
 flutter build apk --release \
-  --dart-define=SOUL_BIBLE_API_BASE_URL=https://api.example.com
+  --dart-define=ONARIA_API_BASE_URL=https://api.example.com
 ```
 
-`APP_BEARER_TOKEN`을 활성화한 개발 환경에서는 `SOUL_BIBLE_APP_TOKEN`을 같은
+`APP_BEARER_TOKEN`을 활성화한 개발 환경에서는 `ONARIA_APP_TOKEN`을 같은
 빌드에 전달할 수 있습니다. 공개 모바일 앱에 정적 Bearer 토큰을 넣는 방식은
 완전한 비밀 보장이 아니므로, 운영에서는 사용자 인증 또는 API Gateway 정책을
 권장합니다.
@@ -183,7 +183,7 @@ release 빌드는 `android/key.properties`에 지정한 별도 release 키로 �
 
 ```bash
 flutter build appbundle --release \
-  --dart-define=SOUL_BIBLE_API_BASE_URL=https://api.example.com
+  --dart-define=ONARIA_API_BASE_URL=https://api.example.com
 ```
 
 산출물: `build/app/outputs/bundle/release/app-release.aab`

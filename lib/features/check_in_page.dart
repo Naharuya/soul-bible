@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import '../app/onaria_emblem.dart';
 import '../app/app_theme.dart';
 import '../app/space_scaffold.dart';
-import '../bible_mind_core.dart';
+import '../onaria.dart';
 import '../app/mind_card_store.dart';
 import 'conversation_page.dart';
 import 'saved_cards_page.dart';
@@ -65,7 +66,7 @@ class _CheckInPageState extends State<CheckInPage> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  const Text('소울바이블', style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800, letterSpacing: 0.4)),
+                  const Text('onaria', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, letterSpacing: 4)),
                   const Spacer(),
                   PopupMenuButton<String>(
                     icon: Icon(Icons.menu, color: AppTheme.of(context).green, size: 24),
@@ -97,7 +98,14 @@ class _CheckInPageState extends State<CheckInPage> {
                     ],
                   ),
                 ]),
-                const SizedBox(height: 32),
+                const SizedBox(height: 16),
+                const Center(child: OnariaEmblem()),
+                Text('모든 마음은 저마다의 길이 있습니다', textAlign: TextAlign.center,
+                  style: TextStyle(color: AppTheme.of(context).ink, fontSize: 14, letterSpacing: 1.2, height: 1.6)),
+                const SizedBox(height: 6),
+                Text('EVERY HEART HAS ITS OWN WAY', textAlign: TextAlign.center,
+                  style: TextStyle(color: AppTheme.of(context).green, fontSize: 9, letterSpacing: 2)),
+                const SizedBox(height: 24),
                 Container(
                   padding: const EdgeInsets.fromLTRB(22, 22, 22, 24),
                   decoration: BoxDecoration(

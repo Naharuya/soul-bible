@@ -1,10 +1,10 @@
-const CACHE = 'soul-bible-admin-shell-v1';
+const CACHE = 'onaria-admin-shell-v2';
 const SHELL = ['/admin/', '/admin/admin.css', '/admin/admin.js', '/admin/install.js', '/admin/manifest.webmanifest', '/admin/icons/icon-192.png', '/admin/icons/icon-512.png', '/admin/icons/icon-maskable.png'];
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)));
 });
 self.addEventListener('activate', (event) => {
-  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((key) => key.startsWith('soul-bible-admin-shell-') && key !== CACHE).map((key) => caches.delete(key)))).then(() => self.clients.claim()));
+  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((key) => (key.startsWith('onaria-admin-shell-') || key.startsWith('soul-bible-admin-shell-')) && key !== CACHE).map((key) => caches.delete(key)))).then(() => self.clients.claim()));
 });
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);

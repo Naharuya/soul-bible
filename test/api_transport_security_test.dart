@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
-import 'package:bible_mind_core/app/api_config.dart';
-import 'package:bible_mind_core/src/api/member_api_client.dart';
+import 'package:onaria/app/api_config.dart';
+import 'package:onaria/src/api/member_api_client.dart';
 
 void main() {
   test('release requires HTTPS, including localhost and configured overrides', () {

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bible_mind_core/bible_mind_core.dart';
+import 'package:onaria/onaria.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

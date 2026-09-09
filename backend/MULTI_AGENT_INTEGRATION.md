@@ -1,4 +1,4 @@
-# SoulBible Multi-Agent Integration v1 적용 보고
+# onaria Multi-Agent Integration v1 적용 보고
 
 > 현재 상태: **2단계 기능 플래그 연결**을 완료했다. 기본값은 local이며 세 가지 설정이 모두 충족될 때만 OpenAI를 사용한다.
 > 최신 검증 결과는 [PHASE_2_INTEGRATION.md](PHASE_2_INTEGRATION.md)를 참조한다.

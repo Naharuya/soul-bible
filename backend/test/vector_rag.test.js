@@ -26,7 +26,7 @@ import { psychologyOutput, religionOutput } from './fixtures/agent_outputs.js';
 const record = (overrides = {}) => ({ sourceId: 'protestant:test:1', tradition: 'protestant', title: '위로', reference: '테스트 문서 1:1',
   text: '위로에 관한 자체 작성 테스트 문장입니다.', language: 'ko-KR', sourceType: 'authored_sample', authorityLevel: 'secondary',
   metadata: { sample: true, license: 'Original fixture', keywords: ['위로'], traditionBranch: 'general', qualityScore: 0.5,
-    licenseStatus: 'self_authored', licenseNote: 'Written for this test', provenance: 'SoulBible test fixture', importedAt: '2026-09-07T00:00:00.000Z' }, ...overrides });
+    licenseStatus: 'self_authored', licenseNote: 'Written for this test', provenance: 'onaria test fixture', importedAt: '2026-09-07T00:00:00.000Z' }, ...overrides });
 const input = (records = [record()], overrides = {}) => ({ records, query: '위로', tradition: 'protestant', language: 'ko-KR', limit: 3, ...overrides });
 const body = (userMessage = '위로', religion) => ({ session: { sessionId: 'vector-rag', selectedEmotion: '불안', emotionIntensity: 6, turnCount: 1 },
   userMessage, religion, systemPromptVersion: 'ko-v1', allowedVerseIds: [] });

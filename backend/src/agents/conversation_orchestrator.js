@@ -20,6 +20,7 @@ export function normalizeContext(request, memorySummary) {
     // TODO: Replace the legacy default when Flutter exposes religion selection.
     religion: body.religion ?? 'protestant',
     emotion: body.session.selectedEmotion, intensity: body.session.emotionIntensity,
+    ...(body.session.customEmotion ? { customEmotion: body.session.customEmotion } : {}),
     userMessage: body.userMessage, allowedVerseIds: body.allowedVerseIds,
     conversationState: body.session,
     memorySummary: memorySummary || body.session.conversationSummary || '',

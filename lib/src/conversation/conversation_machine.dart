@@ -135,17 +135,11 @@ class ConversationMachine {
     ConversationSession session,
     LlmConversationResponse response,
   ) {
-    // Count the opening question as the first of the three core questions.
+    // Advance after three completed user/assistant exchanges.
     if (session.turnCount + 1 >= maxCoreTurns &&
         session.selectedVerseId == null &&
         session.verseAccepted == null &&
-        !session.isEnded &&
-        const {
-          ConversationStage.emotion,
-          ConversationStage.situation,
-          ConversationStage.thought,
-          ConversationStage.need,
-        }.contains(session.stage)) {
+        !session.isEnded) {
       return ConversationStage.verseOffer;
     }
     if (response.shouldOfferVerse && session.turnCount >= 2) {

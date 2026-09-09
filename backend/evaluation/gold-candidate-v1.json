@@ -86,7 +86,7 @@
   {
     "id": "gold-v1-protestant-3",
     "split": "development",
-    "question": "SoulBible 자체 작성 샘플 2 (protestant)에 무슨 내용이 있나요?",
+    "question": "onaria 자체 작성 샘플 2 (protestant)에 무슨 내용이 있나요?",
     "tradition": "protestant",
     "category": "scripture/reference",
     "expectedSourceCriteria": {
@@ -99,7 +99,7 @@
         "secondary"
       ],
       "allowEmpty": false,
-      "reference": "SoulBible 자체 작성 샘플 2 (protestant)"
+      "reference": "onaria 자체 작성 샘플 2 (protestant)"
     },
     "expectedConcepts": [
       "protestant:reflection"
@@ -496,7 +496,7 @@
   {
     "id": "gold-v1-protestant-13",
     "split": "evaluation",
-    "question": "SoulBible 자체 작성 샘플 1 (protestant)를 확인하고 한계를 알려주세요.",
+    "question": "onaria 자체 작성 샘플 1 (protestant)를 확인하고 한계를 알려주세요.",
     "tradition": "protestant",
     "category": "scripture/reference",
     "expectedSourceCriteria": {
@@ -509,7 +509,7 @@
         "secondary"
       ],
       "allowEmpty": false,
-      "reference": "SoulBible 자체 작성 샘플 1 (protestant)"
+      "reference": "onaria 자체 작성 샘플 1 (protestant)"
     },
     "expectedConcepts": [
       "protestant:prayer"
@@ -906,7 +906,7 @@
   {
     "id": "gold-v1-catholic-3",
     "split": "development",
-    "question": "SoulBible 자체 작성 샘플 2 (catholic)에 무슨 내용이 있나요?",
+    "question": "onaria 자체 작성 샘플 2 (catholic)에 무슨 내용이 있나요?",
     "tradition": "catholic",
     "category": "scripture/reference",
     "expectedSourceCriteria": {
@@ -919,7 +919,7 @@
         "secondary"
       ],
       "allowEmpty": false,
-      "reference": "SoulBible 자체 작성 샘플 2 (catholic)"
+      "reference": "onaria 자체 작성 샘플 2 (catholic)"
     },
     "expectedConcepts": [
       "catholic:rosary"
@@ -1312,7 +1312,7 @@
   {
     "id": "gold-v1-catholic-13",
     "split": "evaluation",
-    "question": "SoulBible 자체 작성 샘플 1 (catholic)를 확인하고 한계를 알려주세요.",
+    "question": "onaria 자체 작성 샘플 1 (catholic)를 확인하고 한계를 알려주세요.",
     "tradition": "catholic",
     "category": "scripture/reference",
     "expectedSourceCriteria": {
@@ -1325,7 +1325,7 @@
         "secondary"
       ],
       "allowEmpty": false,
-      "reference": "SoulBible 자체 작성 샘플 1 (catholic)"
+      "reference": "onaria 자체 작성 샘플 1 (catholic)"
     },
     "expectedConcepts": [
       "catholic:sacrament"
@@ -1722,7 +1722,7 @@
   {
     "id": "gold-v1-buddhist-3",
     "split": "development",
-    "question": "SoulBible 자체 작성 샘플 2 (buddhist)에 무슨 내용이 있나요?",
+    "question": "onaria 자체 작성 샘플 2 (buddhist)에 무슨 내용이 있나요?",
     "tradition": "buddhist",
     "category": "scripture/reference",
     "expectedSourceCriteria": {
@@ -1735,7 +1735,7 @@
         "secondary"
       ],
       "allowEmpty": false,
-      "reference": "SoulBible 자체 작성 샘플 2 (buddhist)"
+      "reference": "onaria 자체 작성 샘플 2 (buddhist)"
     },
     "expectedConcepts": [
       "buddhist:compassion"
@@ -2128,7 +2128,7 @@
   {
     "id": "gold-v1-buddhist-13",
     "split": "evaluation",
-    "question": "SoulBible 자체 작성 샘플 1 (buddhist)를 확인하고 한계를 알려주세요.",
+    "question": "onaria 자체 작성 샘플 1 (buddhist)를 확인하고 한계를 알려주세요.",
     "tradition": "buddhist",
     "category": "scripture/reference",
     "expectedSourceCriteria": {
@@ -2141,7 +2141,7 @@
         "secondary"
       ],
       "allowEmpty": false,
-      "reference": "SoulBible 자체 작성 샘플 1 (buddhist)"
+      "reference": "onaria 자체 작성 샘플 1 (buddhist)"
     },
     "expectedConcepts": [
       "buddhist:interdependence"
@@ -2538,7 +2538,7 @@
   {
     "id": "gold-v1-jewish-3",
     "split": "development",
-    "question": "SoulBible 자체 작성 샘플 2 (jewish)에 무슨 내용이 있나요?",
+    "question": "onaria 자체 작성 샘플 2 (jewish)에 무슨 내용이 있나요?",
     "tradition": "jewish",
     "category": "scripture/reference",
     "expectedSourceCriteria": {
@@ -2551,7 +2551,7 @@
         "secondary"
       ],
       "allowEmpty": false,
-      "reference": "SoulBible 자체 작성 샘플 2 (jewish)"
+      "reference": "onaria 자체 작성 샘플 2 (jewish)"
     },
     "expectedConcepts": [
       "jewish:community"
@@ -2944,7 +2944,7 @@
   {
     "id": "gold-v1-jewish-13",
     "split": "evaluation",
-    "question": "SoulBible 자체 작성 샘플 1 (jewish)를 확인하고 한계를 알려주세요.",
+    "question": "onaria 자체 작성 샘플 1 (jewish)를 확인하고 한계를 알려주세요.",
     "tradition": "jewish",
     "category": "scripture/reference",
     "expectedSourceCriteria": {
@@ -2957,7 +2957,7 @@
         "secondary"
       ],
       "allowEmpty": false,
-      "reference": "SoulBible 자체 작성 샘플 1 (jewish)"
+      "reference": "onaria 자체 작성 샘플 1 (jewish)"
     },
     "expectedConcepts": [
       "jewish:torah"
@@ -3354,7 +3354,7 @@
   {
     "id": "gold-v1-islamic-3",
     "split": "development",
-    "question": "SoulBible 자체 작성 샘플 2 (islamic)에 무슨 내용이 있나요?",
+    "question": "onaria 자체 작성 샘플 2 (islamic)에 무슨 내용이 있나요?",
     "tradition": "islamic",
     "category": "scripture/reference",
     "expectedSourceCriteria": {
@@ -3367,7 +3367,7 @@
         "secondary"
       ],
       "allowEmpty": false,
-      "reference": "SoulBible 자체 작성 샘플 2 (islamic)"
+      "reference": "onaria 자체 작성 샘플 2 (islamic)"
     },
     "expectedConcepts": [
       "islamic:prayer"
@@ -3760,7 +3760,7 @@
   {
     "id": "gold-v1-islamic-13",
     "split": "evaluation",
-    "question": "SoulBible 자체 작성 샘플 1 (islamic)를 확인하고 한계를 알려주세요.",
+    "question": "onaria 자체 작성 샘플 1 (islamic)를 확인하고 한계를 알려주세요.",
     "tradition": "islamic",
     "category": "scripture/reference",
     "expectedSourceCriteria": {
@@ -3773,7 +3773,7 @@
         "secondary"
       ],
       "allowEmpty": false,
-      "reference": "SoulBible 자체 작성 샘플 1 (islamic)"
+      "reference": "onaria 자체 작성 샘플 1 (islamic)"
     },
     "expectedConcepts": [
       "islamic:quran"
@@ -4170,7 +4170,7 @@
   {
     "id": "gold-v1-hindu-3",
     "split": "development",
-    "question": "SoulBible 자체 작성 샘플 2 (hindu)에 무슨 내용이 있나요?",
+    "question": "onaria 자체 작성 샘플 2 (hindu)에 무슨 내용이 있나요?",
     "tradition": "hindu",
     "category": "scripture/reference",
     "expectedSourceCriteria": {
@@ -4183,7 +4183,7 @@
         "secondary"
       ],
       "allowEmpty": false,
-      "reference": "SoulBible 자체 작성 샘플 2 (hindu)"
+      "reference": "onaria 자체 작성 샘플 2 (hindu)"
     },
     "expectedConcepts": [
       "hindu:yoga"
@@ -4576,7 +4576,7 @@
   {
     "id": "gold-v1-hindu-13",
     "split": "evaluation",
-    "question": "SoulBible 자체 작성 샘플 1 (hindu)를 확인하고 한계를 알려주세요.",
+    "question": "onaria 자체 작성 샘플 1 (hindu)를 확인하고 한계를 알려주세요.",
     "tradition": "hindu",
     "category": "scripture/reference",
     "expectedSourceCriteria": {
@@ -4589,7 +4589,7 @@
         "secondary"
       ],
       "allowEmpty": false,
-      "reference": "SoulBible 자체 작성 샘플 1 (hindu)"
+      "reference": "onaria 자체 작성 샘플 1 (hindu)"
     },
     "expectedConcepts": [
       "hindu:dharma"
@@ -4986,7 +4986,7 @@
   {
     "id": "gold-v1-confucian-3",
     "split": "development",
-    "question": "SoulBible 자체 작성 샘플 2 (confucian)에 무슨 내용이 있나요?",
+    "question": "onaria 자체 작성 샘플 2 (confucian)에 무슨 내용이 있나요?",
     "tradition": "confucian",
     "category": "scripture/reference",
     "expectedSourceCriteria": {
@@ -4999,7 +4999,7 @@
         "secondary"
       ],
       "allowEmpty": false,
-      "reference": "SoulBible 자체 작성 샘플 2 (confucian)"
+      "reference": "onaria 자체 작성 샘플 2 (confucian)"
     },
     "expectedConcepts": [
       "confucian:cultivation"
@@ -5392,7 +5392,7 @@
   {
     "id": "gold-v1-confucian-13",
     "split": "evaluation",
-    "question": "SoulBible 자체 작성 샘플 1 (confucian)를 확인하고 한계를 알려주세요.",
+    "question": "onaria 자체 작성 샘플 1 (confucian)를 확인하고 한계를 알려주세요.",
     "tradition": "confucian",
     "category": "scripture/reference",
     "expectedSourceCriteria": {
@@ -5405,7 +5405,7 @@
         "secondary"
       ],
       "allowEmpty": false,
-      "reference": "SoulBible 자체 작성 샘플 1 (confucian)"
+      "reference": "onaria 자체 작성 샘플 1 (confucian)"
     },
     "expectedConcepts": [
       "confucian:filial"

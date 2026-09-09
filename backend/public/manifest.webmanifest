@@ -1,8 +1,8 @@
 {
   "id": "/admin/",
-  "name": "소울바이블 관리자",
-  "short_name": "소울 관리자",
-  "description": "소울바이블 회원과 서비스 현황 관리",
+  "name": "onaria 관리자",
+  "short_name": "onaria 관리자",
+  "description": "onaria 회원과 서비스 현황 관리",
   "lang": "ko",
   "start_url": "/admin/",
   "scope": "/admin/",

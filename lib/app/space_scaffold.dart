@@ -56,7 +56,12 @@ class _SpacePainter extends CustomPainter {
             ],
           ).createShader(rect));
     final random = math.Random(27);
-    for (var i = 0; i < 95; i++) {
+    // Fine stars and a lavender nebula echo the reference without bitmap scaling.
+    canvas.drawRect(rect, Paint()..shader = RadialGradient(
+      center: const Alignment(.65, -.35), radius: .85,
+      colors: [palette.gold.withValues(alpha: .13), palette.cream.withValues(alpha: 0)],
+    ).createShader(rect));
+    for (var i = 0; i < 180; i++) {
       final point = Offset(
           random.nextDouble() * size.width, random.nextDouble() * size.height);
       final radius = i % 9 == 0 ? 1.5 : 0.65;
@@ -81,6 +86,14 @@ class _SpacePainter extends CustomPainter {
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1);
     canvas.restore();
+    final horizon = Rect.fromLTWH(-size.width * .35, size.height * .92,
+        size.width * 1.7, size.height * .45);
+    canvas.drawOval(horizon, Paint()..shader = LinearGradient(
+      begin: Alignment.topCenter, end: Alignment.bottomCenter,
+      colors: [palette.gold.withValues(alpha: .14), palette.cream],
+    ).createShader(horizon));
+    canvas.drawOval(horizon, Paint()..color = palette.green.withValues(alpha: .22)
+      ..style = PaintingStyle.stroke..strokeWidth = 1.2);
   }
 
   @override

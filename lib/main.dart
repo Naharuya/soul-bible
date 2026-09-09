@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'app/soul_bible_app.dart';
+import 'app/onaria_app.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const SoulBibleApp());
+  runApp(const OnariaApp());
 }

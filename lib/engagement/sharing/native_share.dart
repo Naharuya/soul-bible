@@ -12,8 +12,8 @@ class NativeCardShare implements CardShareGateway {
   @override
   Future<CardShareResult> share(Uint8List png, Rect origin) async {
     final result = await SharePlus.instance.share(ShareParams(
-      files: [XFile.fromData(png, mimeType: 'image/png')], fileNameOverrides: ['soulbible-card.png'],
-      title: '소울바이블 이미지 카드', sharePositionOrigin: origin));
+      files: [XFile.fromData(png, mimeType: 'image/png')], fileNameOverrides: ['onaria-card.png'],
+      title: 'onaria 이미지 카드', sharePositionOrigin: origin));
     return switch (result.status) {
       ShareResultStatus.success => CardShareResult.completed,
       ShareResultStatus.dismissed => CardShareResult.dismissed,

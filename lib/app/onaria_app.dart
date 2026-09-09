@@ -5,16 +5,16 @@ import 'app_theme.dart';
 import 'social_auth_config.dart';
 import 'theme_controller.dart';
 
-class SoulBibleApp extends StatefulWidget {
-  const SoulBibleApp({super.key, this.authConfig = const SocialAuthConfig()});
+class OnariaApp extends StatefulWidget {
+  const OnariaApp({super.key, this.authConfig = const SocialAuthConfig()});
 
   final SocialAuthConfig authConfig;
 
   @override
-  State<SoulBibleApp> createState() => _SoulBibleAppState();
+  State<OnariaApp> createState() => _OnariaAppState();
 }
 
-class _SoulBibleAppState extends State<SoulBibleApp> {
+class _OnariaAppState extends State<OnariaApp> {
   final _theme = ThemeController();
 
   @override
@@ -34,7 +34,7 @@ class _SoulBibleAppState extends State<SoulBibleApp> {
     return ValueListenableBuilder<ThemeColor>(
         valueListenable: _theme,
         builder: (context, color, child) => MaterialApp(
-              title: '소울바이블',
+              title: 'onaria',
               debugShowCheckedModeBanner: false,
               theme: AppTheme.forColor(color),
               home: const CheckInPage(),

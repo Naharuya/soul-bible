@@ -1,4 +1,4 @@
-# 소울바이블 관리자 웹앱
+# onaria 관리자 웹앱
 
 주소: https://lightshare8.mycafe24.com/admin/
 

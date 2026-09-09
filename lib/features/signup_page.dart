@@ -29,7 +29,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   const Align(alignment: Alignment.centerLeft, child: BackButton()),
                   Icon(Icons.auto_awesome, color: AppTheme.of(context).green, size: 38),
                   const SizedBox(height: 18),
-                  Text('소울바이블 시작하기', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
+                  Text('onaria 시작하기', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
                   const SizedBox(height: 8),
                   Text('이름과 휴대폰 번호를 등록하면 마음 기록을 안전하게 이어갈 수 있어요.', style: TextStyle(color: AppTheme.of(context).muted)),
                   const SizedBox(height: 28),

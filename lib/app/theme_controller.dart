@@ -5,7 +5,7 @@ import 'app_theme.dart';
 
 /// Advances once per app launch, never on rebuilds or background resumes.
 class ThemeController extends ValueNotifier<ThemeColor> {
-  ThemeController() : super(ThemeColor.forest);
+  ThemeController() : super(ThemeColor.onaria);
   static const storageKey = 'appearance_theme';
   final _preferences = SharedPreferencesAsync();
   bool _disposed = false;

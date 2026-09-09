@@ -1,4 +1,8 @@
-# 소울바이블 MVP v0.4.0 테스트 버전
+# onaria MVP v0.4.0 테스트 버전
+
+앱의 공식 표기는 소문자 `onaria`입니다. Flutter 패키지는 `onaria`, 앱 진입 위젯은 `OnariaApp`이며, 공용 라이브러리는 `lib/onaria.dart`입니다.
+
+빌드 설정은 `ONARIA_API_BASE_URL`, `ONARIA_APP_TOKEN`, `ONARIA_PREMIUM_MEMBER`를 사용합니다. 기존 `SOUL_BIBLE_*` 설정도 호환되며, 두 설정이 있으면 `ONARIA_*`가 우선합니다. 기존 설치 앱과 저장 데이터를 이어 쓰도록 Android/iOS 앱 식별자, 로컬 저장 키, 관리자 세션 키는 유지합니다. 실제 저장소 주소·작업 폴더·서버 경로·SSH 별칭·서비스 및 Docker 볼륨 이름 역시 기존 운영 연결과 데이터를 보존하기 위해 유지합니다.
 
 감정적으로 공감하고 질문을 건네며, 사용자의 동의를 받은 뒤 마음에 맞는
 말씀과 작은 실천을 제안하는 Flutter 앱입니다. AI Router가 한국어 성경,
@@ -95,12 +99,12 @@ API 키는 Flutter나 Git에 넣지 말고 백엔드의 `.env` 또는 배포 서
 
 ```bash
 flutter run \
-  --dart-define=SOUL_BIBLE_API_BASE_URL=http://10.0.2.2:8787
+  --dart-define=ONARIA_API_BASE_URL=http://10.0.2.2:8787
 ```
 
 Android 에뮬레이터에서는 호스트의 `localhost` 대신 `10.0.2.2`를 사용합니다.
 iOS 시뮬레이터와 Web은 보통 `http://localhost:8787`을 사용합니다.
-운영 토큰을 사용하는 경우 `--dart-define=SOUL_BIBLE_APP_TOKEN=...`도 함께
+운영 토큰을 사용하는 경우 `--dart-define=ONARIA_APP_TOKEN=...`도 함께
 전달해야 합니다. 정적 토큰을 공개 앱에 포함하는 방식은 운영 비밀 보장이 되지
 않으므로 사용자 인증으로 대체해야 합니다.
 

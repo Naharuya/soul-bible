@@ -19,12 +19,12 @@ class ShareCardContent {
       canonical?.text ?? '오늘, 나를 위해 잠시 쉬어 가는 시간을 가졌어요.', canonical?.reference ?? '');
   }
   factory ShareCardContent.prayer() => const ShareCardContent._(ShareCardKind.prayer, '잠시 머무는 기도',
-    '오늘의 작은 순간을 소중히 여기게 해 주세요.\n나와 이웃에게 다정한 마음을 건네고,\n필요할 때 쉬어 갈 용기를 갖게 해 주세요.', 'SoulBible 창작 기도문');
+    '오늘의 작은 순간을 소중히 여기게 해 주세요.\n나와 이웃에게 다정한 마음을 건네고,\n필요할 때 쉬어 갈 용기를 갖게 해 주세요.', 'onaria 창작 기도문');
   factory ShareCardContent.journey(Iterable<BibleVerse> encountered) => ShareCardContent._(ShareCardKind.journey, '7일 마음의 여정',
     '일곱 번, 나를 돌보는 시간을 가졌어요.\n잠시 쉬어도 괜찮고, 천천히 이어가도 괜찮아요.\n작은 돌봄이 일상에 머물기를.',
     encountered.map((v) => v.reference).toSet().take(7).join(' · '));
   ShareCardContent withDate(DateTime? value) => ShareCardContent._(kind, title, text, reference, date: value);
-  String get accessibleText => [title, text, reference, 'SoulBible', if (date != null) '${date!.year}.${date!.month}.${date!.day}'].join('\n');
+  String get accessibleText => [title, text, reference, 'onaria', if (date != null) '${date!.year}.${date!.month}.${date!.day}'].join('\n');
 }
 
 class ShareCardRenderer {
@@ -37,7 +37,7 @@ class ShareCardRenderer {
     final title = paragraph(content.title, 44, const Color(0xFFDFCA91), weight: FontWeight.w600);
     final body = paragraph(content.text, 54, const Color(0xFFF6F4EC));
     final reference = paragraph(content.reference, 31, const Color(0xFFCCDCCF));
-    final branding = paragraph('SoulBible  ·  소울바이블', 30, const Color(0xFFDFCA91));
+    final branding = paragraph('onaria', 30, const Color(0xFFDFCA91));
     final date = paragraph(content.date == null ? '' : '${content.date!.year}.${content.date!.month.toString().padLeft(2, '0')}.${content.date!.day.toString().padLeft(2, '0')}', 26, const Color(0xFFCCDCCF));
     final height = 370 + title.height + body.height + reference.height + branding.height + date.height;
     final recorder = ui.PictureRecorder(), canvas = Canvas(recorder);

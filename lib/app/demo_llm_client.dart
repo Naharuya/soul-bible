@@ -1,4 +1,4 @@
-import '../bible_mind_core.dart';
+import '../onaria.dart';
 
 /// 서버 연결 전 제품 흐름을 검증하기 위한 결정적 데모 응답입니다.
 class DemoLlmApiClient implements LlmApiClient {

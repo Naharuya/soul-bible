@@ -1,4 +1,4 @@
-# SoulBible AI Cost Gate v1 완료 보고
+# onaria AI Cost Gate v1 완료 보고
 
 > 2026-09-09 후속: 런타임 기본 원장은 별도 SQLite 저장소로 확장되었다. 아래 v1의 프로세스 메모리 한계와 보관 범위 설명은 [영구 원장 후속 보고서](AI_COST_GATE_PERSISTENCE_REPORT.md)의 최신 내용을 따른다.
 

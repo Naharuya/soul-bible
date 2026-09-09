@@ -1,4 +1,4 @@
-library bible_mind_core;
+library onaria;
 
 export 'src/api/llm_api_client.dart';
 export 'src/api/llm_models.dart';

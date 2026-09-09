@@ -35,7 +35,7 @@ class PlannedReminder {
   final ReminderKind kind;
   final DateTime at;
   final bool repeats;
-  String get title => '소울바이블';
+  String get title => 'onaria';
   String get body => kind.message;
   String get payload => 'engagement:${kind.name}';
 }

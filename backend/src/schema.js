@@ -9,6 +9,7 @@ export const requestSchema = z.object({
   session: z.object({
     sessionId: z.string().min(1).max(128),
     selectedEmotion: z.enum(emotions),
+    customEmotion: z.string().trim().max(100).optional(),
     emotionIntensity: z.number().int().min(1).max(10),
     currentStage: z.string().max(32).optional(),
     turnCount: z.number().int().min(0).max(100).optional(),

@@ -1,4 +1,4 @@
-# ONARIA 앱 프로세스별 코드 안내
+# onaria 앱 프로세스별 코드 안내
 
 작성일: 2026-09-09. 프로젝트: `C:\Users\SJ\AndroidStudioProjects\soul-bible`, 브랜치: `main`.
 
@@ -8,7 +8,7 @@
 
 ```mermaid
 flowchart TD
-    A[main.dart] --> B[SoulBibleApp]
+    A[main.dart] --> B[OnariaApp]
     B --> C[CheckInPage: 감정과 강도 선택]
     C --> D[ConversationPage: 대화 입력]
     D --> E[로컬 위기 감지]
@@ -38,7 +38,7 @@ flowchart TD
 | 파일 | 진입점·함수 | 역할 |
 | --- | --- | --- |
 | [lib/main.dart](lib/main.dart) | `main()` | Flutter 초기화 후 앱 실행 |
-| [lib/app/soul_bible_app.dart](lib/app/soul_bible_app.dart) | `SoulBibleApp`, `initState()`, `build()` | 테마 로드, MaterialApp 구성, 첫 화면 지정 |
+| [lib/app/onaria_app.dart](lib/app/onaria_app.dart) | `OnariaApp`, `initState()`, `build()` | 테마 로드, MaterialApp 구성, 첫 화면 지정 |
 | [lib/app/theme_controller.dart](lib/app/theme_controller.dart) | `ThemeController` | 테마 상태 관리 |
 | [lib/app/app_theme.dart](lib/app/app_theme.dart) | `AppTheme` | 공통 색상과 스타일 |
 | [lib/app/space_scaffold.dart](lib/app/space_scaffold.dart) | `SpaceScaffold` | 공통 화면 배경·레이아웃 |

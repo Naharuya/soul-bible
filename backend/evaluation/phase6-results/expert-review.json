@@ -10,7 +10,7 @@
     "retrievedSources": [
       {
         "sourceId": "protestant:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (protestant)",
+        "reference": "onaria 자체 작성 샘플 3 (protestant)",
         "tradition": "protestant"
       }
     ],
@@ -37,17 +37,17 @@
     "retrievedSources": [
       {
         "sourceId": "protestant:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (protestant)",
+        "reference": "onaria 자체 작성 샘플 3 (protestant)",
         "tradition": "protestant"
       },
       {
         "sourceId": "protestant:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (protestant)",
+        "reference": "onaria 자체 작성 샘플 1 (protestant)",
         "tradition": "protestant"
       },
       {
         "sourceId": "protestant:sample:2",
-        "reference": "SoulBible 자체 작성 샘플 2 (protestant)",
+        "reference": "onaria 자체 작성 샘플 2 (protestant)",
         "tradition": "protestant"
       }
     ],
@@ -70,21 +70,21 @@
     "sourceTitle": "기도 대화용 자체 작성 샘플",
     "licenseStatus": "self_authored",
     "reviewStatus": "development",
-    "question": "SoulBible 자체 작성 샘플 1 (protestant)를 확인하고 한계를 알려주세요.",
+    "question": "onaria 자체 작성 샘플 1 (protestant)를 확인하고 한계를 알려주세요.",
     "retrievedSources": [
       {
         "sourceId": "protestant:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (protestant)",
+        "reference": "onaria 자체 작성 샘플 1 (protestant)",
         "tradition": "protestant"
       },
       {
         "sourceId": "protestant:sample:2",
-        "reference": "SoulBible 자체 작성 샘플 2 (protestant)",
+        "reference": "onaria 자체 작성 샘플 2 (protestant)",
         "tradition": "protestant"
       },
       {
         "sourceId": "protestant:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (protestant)",
+        "reference": "onaria 자체 작성 샘플 3 (protestant)",
         "tradition": "protestant"
       }
     ],
@@ -153,7 +153,7 @@
     "retrievedSources": [
       {
         "sourceId": "protestant:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (protestant)",
+        "reference": "onaria 자체 작성 샘플 1 (protestant)",
         "tradition": "protestant"
       }
     ],
@@ -261,17 +261,17 @@
     "retrievedSources": [
       {
         "sourceId": "protestant:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (protestant)",
+        "reference": "onaria 자체 작성 샘플 3 (protestant)",
         "tradition": "protestant"
       },
       {
         "sourceId": "protestant:sample:2",
-        "reference": "SoulBible 자체 작성 샘플 2 (protestant)",
+        "reference": "onaria 자체 작성 샘플 2 (protestant)",
         "tradition": "protestant"
       },
       {
         "sourceId": "protestant:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (protestant)",
+        "reference": "onaria 자체 작성 샘플 1 (protestant)",
         "tradition": "protestant"
       }
     ],
@@ -319,7 +319,7 @@
     "retrievedSources": [
       {
         "sourceId": "catholic:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (catholic)",
+        "reference": "onaria 자체 작성 샘플 3 (catholic)",
         "tradition": "catholic"
       }
     ],
@@ -342,21 +342,21 @@
     "sourceTitle": "성사 대화용 자체 작성 샘플",
     "licenseStatus": "self_authored",
     "reviewStatus": "development",
-    "question": "SoulBible 자체 작성 샘플 1 (catholic)를 확인하고 한계를 알려주세요.",
+    "question": "onaria 자체 작성 샘플 1 (catholic)를 확인하고 한계를 알려주세요.",
     "retrievedSources": [
       {
         "sourceId": "catholic:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (catholic)",
+        "reference": "onaria 자체 작성 샘플 1 (catholic)",
         "tradition": "catholic"
       },
       {
         "sourceId": "catholic:sample:2",
-        "reference": "SoulBible 자체 작성 샘플 2 (catholic)",
+        "reference": "onaria 자체 작성 샘플 2 (catholic)",
         "tradition": "catholic"
       },
       {
         "sourceId": "catholic:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (catholic)",
+        "reference": "onaria 자체 작성 샘플 3 (catholic)",
         "tradition": "catholic"
       }
     ],
@@ -425,7 +425,7 @@
     "retrievedSources": [
       {
         "sourceId": "catholic:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (catholic)",
+        "reference": "onaria 자체 작성 샘플 1 (catholic)",
         "tradition": "catholic"
       }
     ],
@@ -533,12 +533,12 @@
     "retrievedSources": [
       {
         "sourceId": "catholic:sample:2",
-        "reference": "SoulBible 자체 작성 샘플 2 (catholic)",
+        "reference": "onaria 자체 작성 샘플 2 (catholic)",
         "tradition": "catholic"
       },
       {
         "sourceId": "catholic:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (catholic)",
+        "reference": "onaria 자체 작성 샘플 3 (catholic)",
         "tradition": "catholic"
       }
     ],
@@ -586,7 +586,7 @@
     "retrievedSources": [
       {
         "sourceId": "buddhist:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (buddhist)",
+        "reference": "onaria 자체 작성 샘플 3 (buddhist)",
         "tradition": "buddhist"
       }
     ],
@@ -609,21 +609,21 @@
     "sourceTitle": "연기 대화용 자체 작성 샘플",
     "licenseStatus": "self_authored",
     "reviewStatus": "development",
-    "question": "SoulBible 자체 작성 샘플 1 (buddhist)를 확인하고 한계를 알려주세요.",
+    "question": "onaria 자체 작성 샘플 1 (buddhist)를 확인하고 한계를 알려주세요.",
     "retrievedSources": [
       {
         "sourceId": "buddhist:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (buddhist)",
+        "reference": "onaria 자체 작성 샘플 1 (buddhist)",
         "tradition": "buddhist"
       },
       {
         "sourceId": "buddhist:sample:2",
-        "reference": "SoulBible 자체 작성 샘플 2 (buddhist)",
+        "reference": "onaria 자체 작성 샘플 2 (buddhist)",
         "tradition": "buddhist"
       },
       {
         "sourceId": "buddhist:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (buddhist)",
+        "reference": "onaria 자체 작성 샘플 3 (buddhist)",
         "tradition": "buddhist"
       }
     ],
@@ -692,7 +692,7 @@
     "retrievedSources": [
       {
         "sourceId": "buddhist:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (buddhist)",
+        "reference": "onaria 자체 작성 샘플 1 (buddhist)",
         "tradition": "buddhist"
       }
     ],
@@ -800,12 +800,12 @@
     "retrievedSources": [
       {
         "sourceId": "buddhist:sample:2",
-        "reference": "SoulBible 자체 작성 샘플 2 (buddhist)",
+        "reference": "onaria 자체 작성 샘플 2 (buddhist)",
         "tradition": "buddhist"
       },
       {
         "sourceId": "buddhist:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (buddhist)",
+        "reference": "onaria 자체 작성 샘플 3 (buddhist)",
         "tradition": "buddhist"
       }
     ],
@@ -853,7 +853,7 @@
     "retrievedSources": [
       {
         "sourceId": "jewish:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (jewish)",
+        "reference": "onaria 자체 작성 샘플 3 (jewish)",
         "tradition": "jewish"
       }
     ],
@@ -876,21 +876,21 @@
     "sourceTitle": "토라 대화용 자체 작성 샘플",
     "licenseStatus": "self_authored",
     "reviewStatus": "development",
-    "question": "SoulBible 자체 작성 샘플 1 (jewish)를 확인하고 한계를 알려주세요.",
+    "question": "onaria 자체 작성 샘플 1 (jewish)를 확인하고 한계를 알려주세요.",
     "retrievedSources": [
       {
         "sourceId": "jewish:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (jewish)",
+        "reference": "onaria 자체 작성 샘플 1 (jewish)",
         "tradition": "jewish"
       },
       {
         "sourceId": "jewish:sample:2",
-        "reference": "SoulBible 자체 작성 샘플 2 (jewish)",
+        "reference": "onaria 자체 작성 샘플 2 (jewish)",
         "tradition": "jewish"
       },
       {
         "sourceId": "jewish:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (jewish)",
+        "reference": "onaria 자체 작성 샘플 3 (jewish)",
         "tradition": "jewish"
       }
     ],
@@ -959,7 +959,7 @@
     "retrievedSources": [
       {
         "sourceId": "jewish:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (jewish)",
+        "reference": "onaria 자체 작성 샘플 1 (jewish)",
         "tradition": "jewish"
       }
     ],
@@ -1067,12 +1067,12 @@
     "retrievedSources": [
       {
         "sourceId": "jewish:sample:2",
-        "reference": "SoulBible 자체 작성 샘플 2 (jewish)",
+        "reference": "onaria 자체 작성 샘플 2 (jewish)",
         "tradition": "jewish"
       },
       {
         "sourceId": "jewish:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (jewish)",
+        "reference": "onaria 자체 작성 샘플 3 (jewish)",
         "tradition": "jewish"
       }
     ],
@@ -1120,7 +1120,7 @@
     "retrievedSources": [
       {
         "sourceId": "islamic:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (islamic)",
+        "reference": "onaria 자체 작성 샘플 3 (islamic)",
         "tradition": "islamic"
       }
     ],
@@ -1143,21 +1143,21 @@
     "sourceTitle": "꾸란 대화용 자체 작성 샘플",
     "licenseStatus": "self_authored",
     "reviewStatus": "development",
-    "question": "SoulBible 자체 작성 샘플 1 (islamic)를 확인하고 한계를 알려주세요.",
+    "question": "onaria 자체 작성 샘플 1 (islamic)를 확인하고 한계를 알려주세요.",
     "retrievedSources": [
       {
         "sourceId": "islamic:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (islamic)",
+        "reference": "onaria 자체 작성 샘플 1 (islamic)",
         "tradition": "islamic"
       },
       {
         "sourceId": "islamic:sample:2",
-        "reference": "SoulBible 자체 작성 샘플 2 (islamic)",
+        "reference": "onaria 자체 작성 샘플 2 (islamic)",
         "tradition": "islamic"
       },
       {
         "sourceId": "islamic:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (islamic)",
+        "reference": "onaria 자체 작성 샘플 3 (islamic)",
         "tradition": "islamic"
       }
     ],
@@ -1226,7 +1226,7 @@
     "retrievedSources": [
       {
         "sourceId": "islamic:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (islamic)",
+        "reference": "onaria 자체 작성 샘플 1 (islamic)",
         "tradition": "islamic"
       }
     ],
@@ -1334,12 +1334,12 @@
     "retrievedSources": [
       {
         "sourceId": "islamic:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (islamic)",
+        "reference": "onaria 자체 작성 샘플 3 (islamic)",
         "tradition": "islamic"
       },
       {
         "sourceId": "islamic:sample:2",
-        "reference": "SoulBible 자체 작성 샘플 2 (islamic)",
+        "reference": "onaria 자체 작성 샘플 2 (islamic)",
         "tradition": "islamic"
       }
     ],
@@ -1387,7 +1387,7 @@
     "retrievedSources": [
       {
         "sourceId": "hindu:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (hindu)",
+        "reference": "onaria 자체 작성 샘플 3 (hindu)",
         "tradition": "hindu"
       }
     ],
@@ -1410,21 +1410,21 @@
     "sourceTitle": "다르마 대화용 자체 작성 샘플",
     "licenseStatus": "self_authored",
     "reviewStatus": "development",
-    "question": "SoulBible 자체 작성 샘플 1 (hindu)를 확인하고 한계를 알려주세요.",
+    "question": "onaria 자체 작성 샘플 1 (hindu)를 확인하고 한계를 알려주세요.",
     "retrievedSources": [
       {
         "sourceId": "hindu:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (hindu)",
+        "reference": "onaria 자체 작성 샘플 1 (hindu)",
         "tradition": "hindu"
       },
       {
         "sourceId": "hindu:sample:2",
-        "reference": "SoulBible 자체 작성 샘플 2 (hindu)",
+        "reference": "onaria 자체 작성 샘플 2 (hindu)",
         "tradition": "hindu"
       },
       {
         "sourceId": "hindu:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (hindu)",
+        "reference": "onaria 자체 작성 샘플 3 (hindu)",
         "tradition": "hindu"
       }
     ],
@@ -1493,7 +1493,7 @@
     "retrievedSources": [
       {
         "sourceId": "hindu:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (hindu)",
+        "reference": "onaria 자체 작성 샘플 1 (hindu)",
         "tradition": "hindu"
       }
     ],
@@ -1601,12 +1601,12 @@
     "retrievedSources": [
       {
         "sourceId": "hindu:sample:2",
-        "reference": "SoulBible 자체 작성 샘플 2 (hindu)",
+        "reference": "onaria 자체 작성 샘플 2 (hindu)",
         "tradition": "hindu"
       },
       {
         "sourceId": "hindu:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (hindu)",
+        "reference": "onaria 자체 작성 샘플 3 (hindu)",
         "tradition": "hindu"
       }
     ],
@@ -1654,7 +1654,7 @@
     "retrievedSources": [
       {
         "sourceId": "confucian:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (confucian)",
+        "reference": "onaria 자체 작성 샘플 3 (confucian)",
         "tradition": "confucian"
       }
     ],
@@ -1677,21 +1677,21 @@
     "sourceTitle": "효 대화용 자체 작성 샘플",
     "licenseStatus": "self_authored",
     "reviewStatus": "development",
-    "question": "SoulBible 자체 작성 샘플 1 (confucian)를 확인하고 한계를 알려주세요.",
+    "question": "onaria 자체 작성 샘플 1 (confucian)를 확인하고 한계를 알려주세요.",
     "retrievedSources": [
       {
         "sourceId": "confucian:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (confucian)",
+        "reference": "onaria 자체 작성 샘플 1 (confucian)",
         "tradition": "confucian"
       },
       {
         "sourceId": "confucian:sample:2",
-        "reference": "SoulBible 자체 작성 샘플 2 (confucian)",
+        "reference": "onaria 자체 작성 샘플 2 (confucian)",
         "tradition": "confucian"
       },
       {
         "sourceId": "confucian:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (confucian)",
+        "reference": "onaria 자체 작성 샘플 3 (confucian)",
         "tradition": "confucian"
       }
     ],
@@ -1760,12 +1760,12 @@
     "retrievedSources": [
       {
         "sourceId": "confucian:sample:1",
-        "reference": "SoulBible 자체 작성 샘플 1 (confucian)",
+        "reference": "onaria 자체 작성 샘플 1 (confucian)",
         "tradition": "confucian"
       },
       {
         "sourceId": "confucian:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (confucian)",
+        "reference": "onaria 자체 작성 샘플 3 (confucian)",
         "tradition": "confucian"
       }
     ],
@@ -1873,12 +1873,12 @@
     "retrievedSources": [
       {
         "sourceId": "confucian:sample:2",
-        "reference": "SoulBible 자체 작성 샘플 2 (confucian)",
+        "reference": "onaria 자체 작성 샘플 2 (confucian)",
         "tradition": "confucian"
       },
       {
         "sourceId": "confucian:sample:3",
-        "reference": "SoulBible 자체 작성 샘플 3 (confucian)",
+        "reference": "onaria 자체 작성 샘플 3 (confucian)",
         "tradition": "confucian"
       }
     ],

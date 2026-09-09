@@ -32,7 +32,7 @@
         {
           "sourceId": "protestant:sample:1",
           "tradition": "protestant",
-          "reference": "SoulBible 자체 작성 샘플 1 (protestant)",
+          "reference": "onaria 자체 작성 샘플 1 (protestant)",
           "authorityLevel": "secondary"
         }
       ]
@@ -48,19 +48,19 @@
         {
           "sourceId": "protestant:sample:2",
           "tradition": "protestant",
-          "reference": "SoulBible 자체 작성 샘플 2 (protestant)",
+          "reference": "onaria 자체 작성 샘플 2 (protestant)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "protestant:sample:1",
           "tradition": "protestant",
-          "reference": "SoulBible 자체 작성 샘플 1 (protestant)",
+          "reference": "onaria 자체 작성 샘플 1 (protestant)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "protestant:sample:3",
           "tradition": "protestant",
-          "reference": "SoulBible 자체 작성 샘플 3 (protestant)",
+          "reference": "onaria 자체 작성 샘플 3 (protestant)",
           "authorityLevel": "secondary"
         }
       ]
@@ -76,7 +76,7 @@
         {
           "sourceId": "protestant:sample:3",
           "tradition": "protestant",
-          "reference": "SoulBible 자체 작성 샘플 3 (protestant)",
+          "reference": "onaria 자체 작성 샘플 3 (protestant)",
           "authorityLevel": "secondary"
         }
       ]
@@ -92,19 +92,19 @@
         {
           "sourceId": "protestant:sample:1",
           "tradition": "protestant",
-          "reference": "SoulBible 자체 작성 샘플 1 (protestant)",
+          "reference": "onaria 자체 작성 샘플 1 (protestant)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "protestant:sample:2",
           "tradition": "protestant",
-          "reference": "SoulBible 자체 작성 샘플 2 (protestant)",
+          "reference": "onaria 자체 작성 샘플 2 (protestant)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "protestant:sample:3",
           "tradition": "protestant",
-          "reference": "SoulBible 자체 작성 샘플 3 (protestant)",
+          "reference": "onaria 자체 작성 샘플 3 (protestant)",
           "authorityLevel": "secondary"
         }
       ]
@@ -127,7 +127,7 @@
         {
           "sourceId": "protestant:sample:1",
           "tradition": "protestant",
-          "reference": "SoulBible 자체 작성 샘플 1 (protestant)",
+          "reference": "onaria 자체 작성 샘플 1 (protestant)",
           "authorityLevel": "secondary"
         }
       ]
@@ -171,7 +171,7 @@
         {
           "sourceId": "catholic:sample:1",
           "tradition": "catholic",
-          "reference": "SoulBible 자체 작성 샘플 1 (catholic)",
+          "reference": "onaria 자체 작성 샘플 1 (catholic)",
           "authorityLevel": "secondary"
         }
       ]
@@ -187,19 +187,19 @@
         {
           "sourceId": "catholic:sample:2",
           "tradition": "catholic",
-          "reference": "SoulBible 자체 작성 샘플 2 (catholic)",
+          "reference": "onaria 자체 작성 샘플 2 (catholic)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "catholic:sample:1",
           "tradition": "catholic",
-          "reference": "SoulBible 자체 작성 샘플 1 (catholic)",
+          "reference": "onaria 자체 작성 샘플 1 (catholic)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "catholic:sample:3",
           "tradition": "catholic",
-          "reference": "SoulBible 자체 작성 샘플 3 (catholic)",
+          "reference": "onaria 자체 작성 샘플 3 (catholic)",
           "authorityLevel": "secondary"
         }
       ]
@@ -215,7 +215,7 @@
         {
           "sourceId": "catholic:sample:3",
           "tradition": "catholic",
-          "reference": "SoulBible 자체 작성 샘플 3 (catholic)",
+          "reference": "onaria 자체 작성 샘플 3 (catholic)",
           "authorityLevel": "secondary"
         }
       ]
@@ -231,19 +231,19 @@
         {
           "sourceId": "catholic:sample:1",
           "tradition": "catholic",
-          "reference": "SoulBible 자체 작성 샘플 1 (catholic)",
+          "reference": "onaria 자체 작성 샘플 1 (catholic)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "catholic:sample:2",
           "tradition": "catholic",
-          "reference": "SoulBible 자체 작성 샘플 2 (catholic)",
+          "reference": "onaria 자체 작성 샘플 2 (catholic)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "catholic:sample:3",
           "tradition": "catholic",
-          "reference": "SoulBible 자체 작성 샘플 3 (catholic)",
+          "reference": "onaria 자체 작성 샘플 3 (catholic)",
           "authorityLevel": "secondary"
         }
       ]
@@ -266,7 +266,7 @@
         {
           "sourceId": "catholic:sample:1",
           "tradition": "catholic",
-          "reference": "SoulBible 자체 작성 샘플 1 (catholic)",
+          "reference": "onaria 자체 작성 샘플 1 (catholic)",
           "authorityLevel": "secondary"
         }
       ]
@@ -310,7 +310,7 @@
         {
           "sourceId": "buddhist:sample:1",
           "tradition": "buddhist",
-          "reference": "SoulBible 자체 작성 샘플 1 (buddhist)",
+          "reference": "onaria 자체 작성 샘플 1 (buddhist)",
           "authorityLevel": "secondary"
         }
       ]
@@ -326,19 +326,19 @@
         {
           "sourceId": "buddhist:sample:2",
           "tradition": "buddhist",
-          "reference": "SoulBible 자체 작성 샘플 2 (buddhist)",
+          "reference": "onaria 자체 작성 샘플 2 (buddhist)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "buddhist:sample:1",
           "tradition": "buddhist",
-          "reference": "SoulBible 자체 작성 샘플 1 (buddhist)",
+          "reference": "onaria 자체 작성 샘플 1 (buddhist)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "buddhist:sample:3",
           "tradition": "buddhist",
-          "reference": "SoulBible 자체 작성 샘플 3 (buddhist)",
+          "reference": "onaria 자체 작성 샘플 3 (buddhist)",
           "authorityLevel": "secondary"
         }
       ]
@@ -354,7 +354,7 @@
         {
           "sourceId": "buddhist:sample:3",
           "tradition": "buddhist",
-          "reference": "SoulBible 자체 작성 샘플 3 (buddhist)",
+          "reference": "onaria 자체 작성 샘플 3 (buddhist)",
           "authorityLevel": "secondary"
         }
       ]
@@ -370,19 +370,19 @@
         {
           "sourceId": "buddhist:sample:1",
           "tradition": "buddhist",
-          "reference": "SoulBible 자체 작성 샘플 1 (buddhist)",
+          "reference": "onaria 자체 작성 샘플 1 (buddhist)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "buddhist:sample:2",
           "tradition": "buddhist",
-          "reference": "SoulBible 자체 작성 샘플 2 (buddhist)",
+          "reference": "onaria 자체 작성 샘플 2 (buddhist)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "buddhist:sample:3",
           "tradition": "buddhist",
-          "reference": "SoulBible 자체 작성 샘플 3 (buddhist)",
+          "reference": "onaria 자체 작성 샘플 3 (buddhist)",
           "authorityLevel": "secondary"
         }
       ]
@@ -405,7 +405,7 @@
         {
           "sourceId": "buddhist:sample:1",
           "tradition": "buddhist",
-          "reference": "SoulBible 자체 작성 샘플 1 (buddhist)",
+          "reference": "onaria 자체 작성 샘플 1 (buddhist)",
           "authorityLevel": "secondary"
         }
       ]
@@ -449,7 +449,7 @@
         {
           "sourceId": "jewish:sample:1",
           "tradition": "jewish",
-          "reference": "SoulBible 자체 작성 샘플 1 (jewish)",
+          "reference": "onaria 자체 작성 샘플 1 (jewish)",
           "authorityLevel": "secondary"
         }
       ]
@@ -465,19 +465,19 @@
         {
           "sourceId": "jewish:sample:2",
           "tradition": "jewish",
-          "reference": "SoulBible 자체 작성 샘플 2 (jewish)",
+          "reference": "onaria 자체 작성 샘플 2 (jewish)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "jewish:sample:1",
           "tradition": "jewish",
-          "reference": "SoulBible 자체 작성 샘플 1 (jewish)",
+          "reference": "onaria 자체 작성 샘플 1 (jewish)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "jewish:sample:3",
           "tradition": "jewish",
-          "reference": "SoulBible 자체 작성 샘플 3 (jewish)",
+          "reference": "onaria 자체 작성 샘플 3 (jewish)",
           "authorityLevel": "secondary"
         }
       ]
@@ -493,7 +493,7 @@
         {
           "sourceId": "jewish:sample:3",
           "tradition": "jewish",
-          "reference": "SoulBible 자체 작성 샘플 3 (jewish)",
+          "reference": "onaria 자체 작성 샘플 3 (jewish)",
           "authorityLevel": "secondary"
         }
       ]
@@ -509,19 +509,19 @@
         {
           "sourceId": "jewish:sample:1",
           "tradition": "jewish",
-          "reference": "SoulBible 자체 작성 샘플 1 (jewish)",
+          "reference": "onaria 자체 작성 샘플 1 (jewish)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "jewish:sample:2",
           "tradition": "jewish",
-          "reference": "SoulBible 자체 작성 샘플 2 (jewish)",
+          "reference": "onaria 자체 작성 샘플 2 (jewish)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "jewish:sample:3",
           "tradition": "jewish",
-          "reference": "SoulBible 자체 작성 샘플 3 (jewish)",
+          "reference": "onaria 자체 작성 샘플 3 (jewish)",
           "authorityLevel": "secondary"
         }
       ]
@@ -544,13 +544,13 @@
         {
           "sourceId": "jewish:sample:2",
           "tradition": "jewish",
-          "reference": "SoulBible 자체 작성 샘플 2 (jewish)",
+          "reference": "onaria 자체 작성 샘플 2 (jewish)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "jewish:sample:1",
           "tradition": "jewish",
-          "reference": "SoulBible 자체 작성 샘플 1 (jewish)",
+          "reference": "onaria 자체 작성 샘플 1 (jewish)",
           "authorityLevel": "secondary"
         }
       ]
@@ -594,7 +594,7 @@
         {
           "sourceId": "islamic:sample:1",
           "tradition": "islamic",
-          "reference": "SoulBible 자체 작성 샘플 1 (islamic)",
+          "reference": "onaria 자체 작성 샘플 1 (islamic)",
           "authorityLevel": "secondary"
         }
       ]
@@ -610,19 +610,19 @@
         {
           "sourceId": "islamic:sample:2",
           "tradition": "islamic",
-          "reference": "SoulBible 자체 작성 샘플 2 (islamic)",
+          "reference": "onaria 자체 작성 샘플 2 (islamic)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "islamic:sample:1",
           "tradition": "islamic",
-          "reference": "SoulBible 자체 작성 샘플 1 (islamic)",
+          "reference": "onaria 자체 작성 샘플 1 (islamic)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "islamic:sample:3",
           "tradition": "islamic",
-          "reference": "SoulBible 자체 작성 샘플 3 (islamic)",
+          "reference": "onaria 자체 작성 샘플 3 (islamic)",
           "authorityLevel": "secondary"
         }
       ]
@@ -638,7 +638,7 @@
         {
           "sourceId": "islamic:sample:3",
           "tradition": "islamic",
-          "reference": "SoulBible 자체 작성 샘플 3 (islamic)",
+          "reference": "onaria 자체 작성 샘플 3 (islamic)",
           "authorityLevel": "secondary"
         }
       ]
@@ -654,19 +654,19 @@
         {
           "sourceId": "islamic:sample:1",
           "tradition": "islamic",
-          "reference": "SoulBible 자체 작성 샘플 1 (islamic)",
+          "reference": "onaria 자체 작성 샘플 1 (islamic)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "islamic:sample:2",
           "tradition": "islamic",
-          "reference": "SoulBible 자체 작성 샘플 2 (islamic)",
+          "reference": "onaria 자체 작성 샘플 2 (islamic)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "islamic:sample:3",
           "tradition": "islamic",
-          "reference": "SoulBible 자체 작성 샘플 3 (islamic)",
+          "reference": "onaria 자체 작성 샘플 3 (islamic)",
           "authorityLevel": "secondary"
         }
       ]
@@ -689,7 +689,7 @@
         {
           "sourceId": "islamic:sample:1",
           "tradition": "islamic",
-          "reference": "SoulBible 자체 작성 샘플 1 (islamic)",
+          "reference": "onaria 자체 작성 샘플 1 (islamic)",
           "authorityLevel": "secondary"
         }
       ]
@@ -733,7 +733,7 @@
         {
           "sourceId": "hindu:sample:1",
           "tradition": "hindu",
-          "reference": "SoulBible 자체 작성 샘플 1 (hindu)",
+          "reference": "onaria 자체 작성 샘플 1 (hindu)",
           "authorityLevel": "secondary"
         }
       ]
@@ -749,19 +749,19 @@
         {
           "sourceId": "hindu:sample:2",
           "tradition": "hindu",
-          "reference": "SoulBible 자체 작성 샘플 2 (hindu)",
+          "reference": "onaria 자체 작성 샘플 2 (hindu)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "hindu:sample:1",
           "tradition": "hindu",
-          "reference": "SoulBible 자체 작성 샘플 1 (hindu)",
+          "reference": "onaria 자체 작성 샘플 1 (hindu)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "hindu:sample:3",
           "tradition": "hindu",
-          "reference": "SoulBible 자체 작성 샘플 3 (hindu)",
+          "reference": "onaria 자체 작성 샘플 3 (hindu)",
           "authorityLevel": "secondary"
         }
       ]
@@ -777,7 +777,7 @@
         {
           "sourceId": "hindu:sample:3",
           "tradition": "hindu",
-          "reference": "SoulBible 자체 작성 샘플 3 (hindu)",
+          "reference": "onaria 자체 작성 샘플 3 (hindu)",
           "authorityLevel": "secondary"
         }
       ]
@@ -793,19 +793,19 @@
         {
           "sourceId": "hindu:sample:1",
           "tradition": "hindu",
-          "reference": "SoulBible 자체 작성 샘플 1 (hindu)",
+          "reference": "onaria 자체 작성 샘플 1 (hindu)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "hindu:sample:2",
           "tradition": "hindu",
-          "reference": "SoulBible 자체 작성 샘플 2 (hindu)",
+          "reference": "onaria 자체 작성 샘플 2 (hindu)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "hindu:sample:3",
           "tradition": "hindu",
-          "reference": "SoulBible 자체 작성 샘플 3 (hindu)",
+          "reference": "onaria 자체 작성 샘플 3 (hindu)",
           "authorityLevel": "secondary"
         }
       ]
@@ -828,13 +828,13 @@
         {
           "sourceId": "hindu:sample:1",
           "tradition": "hindu",
-          "reference": "SoulBible 자체 작성 샘플 1 (hindu)",
+          "reference": "onaria 자체 작성 샘플 1 (hindu)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "hindu:sample:2",
           "tradition": "hindu",
-          "reference": "SoulBible 자체 작성 샘플 2 (hindu)",
+          "reference": "onaria 자체 작성 샘플 2 (hindu)",
           "authorityLevel": "secondary"
         }
       ]
@@ -878,7 +878,7 @@
         {
           "sourceId": "confucian:sample:1",
           "tradition": "confucian",
-          "reference": "SoulBible 자체 작성 샘플 1 (confucian)",
+          "reference": "onaria 자체 작성 샘플 1 (confucian)",
           "authorityLevel": "secondary"
         }
       ]
@@ -894,19 +894,19 @@
         {
           "sourceId": "confucian:sample:2",
           "tradition": "confucian",
-          "reference": "SoulBible 자체 작성 샘플 2 (confucian)",
+          "reference": "onaria 자체 작성 샘플 2 (confucian)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "confucian:sample:1",
           "tradition": "confucian",
-          "reference": "SoulBible 자체 작성 샘플 1 (confucian)",
+          "reference": "onaria 자체 작성 샘플 1 (confucian)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "confucian:sample:3",
           "tradition": "confucian",
-          "reference": "SoulBible 자체 작성 샘플 3 (confucian)",
+          "reference": "onaria 자체 작성 샘플 3 (confucian)",
           "authorityLevel": "secondary"
         }
       ]
@@ -922,7 +922,7 @@
         {
           "sourceId": "confucian:sample:3",
           "tradition": "confucian",
-          "reference": "SoulBible 자체 작성 샘플 3 (confucian)",
+          "reference": "onaria 자체 작성 샘플 3 (confucian)",
           "authorityLevel": "secondary"
         }
       ]
@@ -938,19 +938,19 @@
         {
           "sourceId": "confucian:sample:1",
           "tradition": "confucian",
-          "reference": "SoulBible 자체 작성 샘플 1 (confucian)",
+          "reference": "onaria 자체 작성 샘플 1 (confucian)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "confucian:sample:2",
           "tradition": "confucian",
-          "reference": "SoulBible 자체 작성 샘플 2 (confucian)",
+          "reference": "onaria 자체 작성 샘플 2 (confucian)",
           "authorityLevel": "secondary"
         },
         {
           "sourceId": "confucian:sample:3",
           "tradition": "confucian",
-          "reference": "SoulBible 자체 작성 샘플 3 (confucian)",
+          "reference": "onaria 자체 작성 샘플 3 (confucian)",
           "authorityLevel": "secondary"
         }
       ]
@@ -973,7 +973,7 @@
         {
           "sourceId": "confucian:sample:1",
           "tradition": "confucian",
-          "reference": "SoulBible 자체 작성 샘플 1 (confucian)",
+          "reference": "onaria 자체 작성 샘플 1 (confucian)",
           "authorityLevel": "secondary"
         }
       ]

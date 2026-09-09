@@ -1,4 +1,4 @@
-# SoulBible 4단계 RAG 구현 보고
+# onaria 4단계 RAG 구현 보고
 
 ## 범위와 호환성
 

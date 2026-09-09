@@ -1,4 +1,4 @@
-import 'package:bible_mind_core/bible_mind_core.dart';
+import 'package:onaria/onaria.dart';
 
 Future<void> main() async {
   const detector = CrisisDetector();

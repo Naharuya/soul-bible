@@ -1,5 +1,5 @@
 [Unit]
-Description=Soul Bible backend
+Description=onaria backend
 After=network.target
 
 [Service]

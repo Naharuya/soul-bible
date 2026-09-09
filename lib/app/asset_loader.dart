@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-import '../bible_mind_core.dart';
+import '../onaria.dart';
 
 class FlutterVerseAssetLoader implements VerseAssetLoader {
   const FlutterVerseAssetLoader();

@@ -161,8 +161,8 @@ class MembershipConfig {
   const MembershipConfig._();
 
   static const _premiumMember = String.fromEnvironment(
-    'SOUL_BIBLE_PREMIUM_MEMBER',
-    defaultValue: 'false',
+    'ONARIA_PREMIUM_MEMBER',
+    defaultValue: String.fromEnvironment('SOUL_BIBLE_PREMIUM_MEMBER', defaultValue: 'false'),
   );
 
   static MembershipTier get current =>

@@ -15,6 +15,6 @@ const app = createApp({
   adminToken: process.env.ADMIN_TOKEN || '',
   identity: createRuntimeIdentity(),
 });
-const server = app.listen(port, () => console.log(`Soul Bible backend listening on :${port} (${generate.mode})`));
+const server = app.listen(port, () => console.log(`onaria backend listening on :${port} (${generate.mode})`));
 server.on('close', () => usageLedger.close?.());
 for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, () => server.close());

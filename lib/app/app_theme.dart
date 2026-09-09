@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 enum ThemeColor {
+  onaria('onaria', Color(0xFFF1D4A6), Color(0xFF0B1023)),
   forest('포레스트', Color(0xFF91D8AA), Color(0xFF0D1B14)),
   rose('로즈', Color(0xFFF3B0BC), Color(0xFF251417)),
   amber('앰버', Color(0xFFF0C477), Color(0xFF211A0F)),
-  silver('실버', Color(0xFFD5D8DC), Color(0xFF17191B));
+  silver('실버', Color(0xFFD5D8DC), Color(0xFF17191B)),
+  lavender('라벤더', Color(0xFFC7B1EB), Color(0xFF191329)),
+  ocean('오션', Color(0xFF9FCBE9), Color(0xFF0C1A2B)),
+  aurora('오로라', Color(0xFFA7DDD3), Color(0xFF102324));
 
   const ThemeColor(this.label, this.accent, this.background);
   final String label;
@@ -33,7 +37,7 @@ class AppTheme {
   static const radius = 20.0;
   static AppPalette of(BuildContext context) =>
       AppPalette(Theme.of(context).colorScheme);
-  static ThemeData get light => forColor(ThemeColor.forest);
+  static ThemeData get light => forColor(ThemeColor.onaria);
   static ThemeData get cosmic => light;
 
   static ThemeData forColor(ThemeColor color) {
@@ -44,12 +48,12 @@ class AppTheme {
         .copyWith(
       primary: color.accent,
       onPrimary: color.background,
-      primaryContainer: blend(0.20),
+      primaryContainer: blend(0.14),
       onPrimaryContainer: const Color(0xFFF7F7F2),
-      secondary: color.accent,
+      secondary: color == ThemeColor.onaria ? const Color(0xFFB9B0E5) : Color.lerp(color.accent, const Color(0xFFF5DEB9), 0.35),
       onSecondary: color.background,
       surface: color.background,
-      surfaceContainer: blend(0.06),
+      surfaceContainer: blend(0.08),
       surfaceContainerLow: blend(0.04),
       surfaceContainerHigh: blend(0.10),
       surfaceContainerHighest: blend(0.14),

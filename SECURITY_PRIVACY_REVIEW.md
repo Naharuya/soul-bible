@@ -1,4 +1,4 @@
-# SoulBible 릴리즈 전 개인정보·보안 점검
+# onaria 릴리즈 전 개인정보·보안 점검
 
 ## 2026-09-09 비용 원장 후속 점검
 
@@ -35,7 +35,7 @@
 | M1 HIGH | `backend/src/member_store.js`는 SQLite에 이름·전화·교회명·provider·provider ID·시각 저장. 준비된 SQL 사용. 현재 관리자 이름 마스킹, 교회 비공개, 기존 전화 마스킹 유지(`member_schema.js: adminMember`). | 교회 가입 정보와 식별정보의 결합, 관리자 과다 노출. | 관리자 응답 최소화 완료 | 필수 | 교회명 필수 수집과 이름·전화 수집 목적을 재검토. 필요성 확정 전 임의 DB migration은 하지 않음. |
 | M2 HIGH | DB/keystore/.env의 현재 tracked 파일 없음. `.gitignore`에 DB/WAL/SHM, data·backup 경로 및 env 예외 규칙 보완. DB는 기본 `process.cwd()/data/members.sqlite`, Docker는 `/app/data`, systemd는 `/opt/soul-bible/backend/data`. | 원문 DB/백업 유출 및 복구 데이터에 삭제 정보 잔존. 실제 운영 파일/ACL 미확인. | Git 방어 수정 | 필수 | 운영 권한·암호화·백업/삭제 정책 아래 절차로 확정. 다른 이름/확장자의 export도 검토. |
 | A1 CRITICAL | `/v1/mind/chat`은 appToken이 비어 있으면 무인증. 설정돼도 모든 사용자에게 공통 bearer. 세션 ID는 클라이언트 timestamp이며 `memory_store.js` Map 조회에 사용자 소유권 검증 없음. | APK에서 추출 가능한 공통 token으로 API 남용, 타인의 세션 ID를 알거나 추측하면 요약이 다음 응답에 사용될 수 있음. | 구조 유지, 미수정 | 필수 | 사용자/세션 인증, 서버 발급 예측 불가 ID, 사용자 소유권 검증, 만료·회전·폐기 도입. 무인증 anonymous 모드도 독립 session credential 필요. |
-| A2 HIGH | signup endpoint는 전화 검증/OTP 및 provider 증명 없이 입력을 받음. 앱 소셜 버튼은 준비 중. `SoulBibleApp` 시작은 CheckInPage이며 현재 SignUpPage 참조 경로가 없음. | 허위 가입·번호 존재 추론(409)·미검증 provider ID. 회원 가입이 현재 대화 인증을 제공하지 않음. | 미수정 | 실제 회원 수집 전 필수 | 수집 기능 공개 범위를 정하고 검증된 identity 흐름 도입. signup을 인증된 로그인으로 표시하지 않음. |
+| A2 HIGH | signup endpoint는 전화 검증/OTP 및 provider 증명 없이 입력을 받음. 앱 소셜 버튼은 준비 중. `OnariaApp` 시작은 CheckInPage이며 현재 SignUpPage 참조 경로가 없음. | 허위 가입·번호 존재 추론(409)·미검증 provider ID. 회원 가입이 현재 대화 인증을 제공하지 않음. | 미수정 | 실제 회원 수집 전 필수 | 수집 기능 공개 범위를 정하고 검증된 identity 흐름 도입. signup을 인증된 로그인으로 표시하지 않음. |
 | A3 HIGH | `APP_BEARER_TOKEN`과 Flutter `SOUL_BIBLE_APP_TOKEN`은 APK에 넣으면 추출 가능. OpenAI key/admin token은 서버 설정이며 Flutter API key 저장 코드는 확인되지 않음. | 공통 app token을 진짜 비밀키/사용자 인증으로 오인. | 문서화, AI SDK 제한 | 필수 | 앱에는 OpenAI/admin secret 절대 포함 금지. user/session 인증 전환. 과거 APK의 공통 token은 비밀성에 의존하지 말 것. |
 | A4 MEDIUM | 관리자 API는 admin bearer 없으면 항상 거부, no-store·rate limit 유지. 관리자 정적 shell은 공개. admin.js는 sessionStorage에 token을 보관하며 이제 비로컬 HTTP에서는 요청 차단. | 공개 관리자 공격 표면, 브라우저 XSS 시 sessionStorage token 노출. JS 차단은 악성 HTTP 페이지 자체를 막지 못함. | HTTPS 요청 가드 보완 | 운영 제한 필수 | proxy에서 `/admin/`, `/v1/admin/` 모두 VPN/IP allowlist, CSP 유지, token 교체/로그아웃 정책. 실제 운영 인터넷 노출 범위 미확인. |
 | A5 MEDIUM | Git secret 검사: 현재 tracked 365개, 로컬 전체 참조 16커밋·448 blob 검사. 실제 secret으로 확인된 후보 및 로컬 secret 4개와의 일치 없음. | 패턴 검사는 유출 부재 증명이 아님. | 검사 완료 | 배포/CI에서 지속 필수 | 아래 범위·한계 참조. 노출 발견 시 값 출력 없이 폐기/교체부터 시행, 이력 삭제만으로 해결하지 않음. |

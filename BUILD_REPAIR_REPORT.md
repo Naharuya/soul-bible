@@ -1,4 +1,60 @@
-# SoulBible 빌드 복구 보고서
+# onaria 빌드 복구 보고서
+
+## 2026-09-10 앱 명칭 onaria 통일
+
+- Android 설치 이름, iOS 표시 이름, 웹 제목·manifest, 앱 화면·가입·알림·공유 카드, 관리자 PWA, 샘플 출처 및 문서의 브랜드 표기를 소문자 `onaria`로 통일했다.
+- Flutter 패키지 `onaria`, `OnariaApp`, `lib/onaria.dart`, backend 패키지 `onaria-backend`로 변경하고 import와 테스트 참조를 갱신했다. `ONARIA_*` 빌드 설정을 추가했으며 기존 설정도 fallback으로 지원한다.
+- 기존 onaria 벡터 심볼과 실제 글꼴로 관리자 아이콘 3종을 생성했다. `script/export_admin_icons.dart`로 재생성할 수 있다. 서비스워커 캐시 버전을 변경하고 이전 브랜드 캐시 정리를 유지했다.
+- 앱 식별자·저장 키·관리자 세션 키 및 실제 운영 경로·서비스·볼륨·저장소 주소는 기존 설치/데이터/운영 호환성을 위해 유지한다.
+- Flutter 테스트 35개 통과, 기존 skip 1개. backend 테스트 315개 통과. 정적 분석 error/warning 0, info 8개. Release APK 빌드 성공 및 aapt로 `application-label:'onaria'` 확인. iOS 빌드는 Windows 환경에서 검증하지 않았다.
+- USB 연결 SM-S908N에 데이터 유지 업데이트 설치 성공(`adb install -r`: Success), 앱 실행 확인(`Status: ok`). 관리자 웹 변경은 로컬에 반영했으며 운영 서버 배포와 GitHub 업로드는 수행하지 않았다.
+
+## 2026-09-10 후속 검증 및 Release APK 생성
+
+- 미커밋 상태였던 onaria 8종 테마, 기타 감정 입력 반영, 3회 대화 후 단계 전환 변경을 재검증했다.
+- backend 전체 테스트 315개 통과. Flutter 전체 테스트 35개 통과, 기존 조건부 skip 1개. 정적 분석 error/warning 0, info 8개(분석 명령 종료 코드 1).
+- Release APK 빌드 성공: `build/app/outputs/flutter-apk/app-release.apk` (52,607,966 bytes). 기본 API 주소는 `https://api.onaria.ai.kr`이다. 빌드 중 KGP 플러그인 및 SDK XML 버전 안내가 있었으나 빌드는 성공했다.
+- 샌드박스 밖에서 ADB 연결 기기 0개로 확인되어 휴대폰 설치는 대기 중이다.
+- 운영 `/health` HTTPS 요청은 약 10초 후 연결 시간 초과(curl 28). `soul-bible-server` SSH 별칭은 현재 환경에서 해석되지 않아 운영 서버 배포는 수행하지 않았다. 서버 접속 주소/사용자명 또는 SSH 설정 위치가 필요하다.
+- 루트의 `,env`는 빈 파일이며 이번 변경에 포함하지 않는다.
+
+## 2026-09-09 onaria 메인 디자인 및 8가지 테마
+
+- 제공된 레퍼런스의 밤하늘, 일곱 행성과 중심빛, 금빛·라벤더 조합을 Flutter 벡터 심볼과 공통 배경으로 구현했다. 메인 화면에 onaria 워드마크와 브랜드 문구를 적용했다. 별도 이미지 다운로드나 외부 폰트 의존성은 추가하지 않았다.
+- 총 8종: onaria(기본), 포레스트, 로즈, 앰버, 실버, 라벤더, 오션, 오로라. 기존 실행당 순환 방식과 저장 키를 유지한다. 새 설치/알 수 없는 저장값은 onaria로 시작하며, 기존 저장값은 이어서 순환한다.
+- 전체 Flutter 테스트 35개 통과, 기존 조건부 skip 1개. 정적 분석 error/warning 0, info 8개. 미리보기는 `build/previews/onaria-eight-themes.png`에 생성했다(실제 테마·심볼을 조합한 팔레트 미리보기).
+- 앱 런처 아이콘 변경, 휴대폰 재설치, GitHub 업로드는 이번 단계에서 수행하지 않았다.
+
+## 2026-09-09 기타 입력에 맞춘 질문
+
+- 전달만 되고 사용되지 않던 `customEmotion`을 대화 세션, 첫 질문, 연결 실패 후 로컬 질문에 연결했다. 서버 AI 맥락과 로컬 응답에도 반영하고 100자 문자열로 검증한다.
+- 예: ‘설레지만 조금 걱정돼요’ → ‘“설레지만 조금 걱정돼요”라고 적어 주셨는데, 어떤 순간에 이런 마음이 들었나요?’
+- 첫 질문을 세션에 보관해 다음 요청에서 같은 질문을 반복하지 않도록 맥락을 전달한다. 기본 감정만 선택한 경우 기존 질문을 유지한다.
+- 관련 Flutter 테스트 7개 및 backend 전체 315개 통과. 이번 변경 후 휴대폰 재설치와 운영 서버 배포는 수행하지 않았다.
+
+## 2026-09-09 서버 연결 실패 원인 점검
+
+- 현재 앱 기본 요청 주소: `https://api.onaria.ai.kr/v1/mind/chat`. 클라이언트 대기 제한은 25초이며 Android INTERNET 권한은 존재한다.
+- 샌드박스 밖에서 인증정보 없이 `/health`에 HTTPS 연결: curl 오류 28, 약 10초 연결 시간 초과. HTTP 000, TCP 연결 시간과 TLS 완료 시간 모두 0으로 HTTP 응답을 받기 전 연결 단계에서 실패했다.
+- 같은 환경의 비교 요청 `https://github.com`: HTTP 200, TCP 약 0.053초, TLS 약 0.080초. 일반 HTTPS 연결은 가능했다.
+- 시스템 DNS와 1.1.1.1 조회 모두 `api.onaria.ai.kr → 104.105.128.84`. 휴대폰도 같은 IP로 해석했다. 휴대폰 ping 무응답은 ICMP 차단 가능성이 있어 HTTPS 장애의 독립 증거로 사용하지 않는다.
+- 기존 `lightshare8.mycafe24.com`도 같은 IP를 가리킨다. 저장소의 HTTPS 설정 스크립트는 기존 도메인용이며 새 도메인의 운영 vhost/인증서 적용 여부는 확인할 수 없다.
+- 확인된 직접 문제는 현재 도메인의 HTTPS 연결 불가다. DNS 대상 IP 오류, 서버/443 리스너 중단, 방화벽 또는 네트워크 경로 차단 중 어느 원인인지는 운영 호스트와 DNS 관리 설정을 확인해야 확정할 수 있다. API key·quota·회원 인증 실패를 입증하는 HTTP 응답은 확보되지 않았다.
+- 화면의 오류 문구는 모든 예외를 하나로 표시하던 catch 처리였다. 실패 시 횟수 미증가 때문에 입력이 반복되던 문제는 별도 수정했으며 서버 연결을 복구한 것은 아니다. 이번 점검에서 운영 설정 변경이나 실제 유료 AI 호출은 하지 않았다.
+
+## 2026-09-09 연결 실패 반복 후 전환 보완
+
+- 휴대폰 화면에서 연결 실패 메시지가 반복되는 것을 확인했다. 성공한 서버 응답만 세던 구현 때문에 실패 시 3회 전환 조건에 도달하지 못했다.
+- 연결 실패도 사용자 제출 1회로 세고, AI 답변을 받지 못했다는 안내와 로컬 질문으로 진행한다. 세 번째 입력 후 앱에 포함된 말씀 화면으로 이동하며 추가 답변을 요구하지 않는다. 정상 응답 후 후속 처리 실패가 나도 횟수를 중복 증가시키지 않는다.
+- 성공만 발생, 3회 연속 실패, 성공·실패 혼합을 포함한 관련 Flutter 테스트 12개 통과, 기존 조건부 skip 1개. 서버 연결 장애 자체의 복구를 의미하지 않는다.
+- 수정 Release APK 빌드 및 SM-S908N 업데이트 설치 성공, 앱 실행 확인. 휴대폰에서 실제 3회 입력 검증은 아직 수행하지 않았다.
+
+## 2026-09-09 마음대화 3회 이후 화면 전환
+
+- 사용자 답변과 서버 응답이 3회 완료되면 추가 입력을 차단하고 말씀 화면으로 전환한다. 말씀을 채팅 목록 아래에 붙이던 UI를 단계별 화면으로 변경했다.
+- 말씀 → 작은 실천 → 마음 카드 순서로 각 화면을 표시하며 전환 후 맨 위에서 보여 준다. 위기 응답 처리는 유지한다.
+- 대화 상태·실제 화면 전환·글자 배율·화면 종료 관련 Flutter 테스트 10개 통과, 기존 환경 조건에 따른 skip 1개.
+- Release APK 빌드 성공. 연결된 SM-S908N에 데이터 유지 업데이트 설치(`adb install -r`: Success) 및 앱 실행(`Status: ok`) 확인. 실제 휴대폰에서 3회 대화를 통한 전환 확인은 별도이며 화면 전환은 widget 테스트로 검증했다.
 
 ## 2026-09-09 회원 인증 연결 후속 검증
 
@@ -107,7 +163,7 @@ APK 실제 절대 경로: `C:\Users\SJ\AndroidStudioProjects\soul-bible\build\ap
 요청에 따라 아래 15개 info를 수정하지 않았다.
 
 - `avoid_print`: `example/main.dart` 23, 42, 43, 44행 — 4개.
-- `unnecessary_library_name`: `lib/bible_mind_core.dart` 1행 — 1개.
+- `unnecessary_library_name`: `lib/onaria.dart` 1행 — 1개.
 - `unnecessary_import`: `lib/engagement/sharing/native_share.dart` 1, 3행 — 2개.
 - `depend_on_referenced_packages`: `shared_preferences_platform_interface` 관련 테스트 import — 8개 (`test/conversation_examples_test.dart` 8, 9행; `test/daily_usage_store_test.dart` 3, 4행; `test/theme_selection_test.dart` 7, 8행; `test/widget_test.dart` 9, 10행).
 

@@ -46,7 +46,9 @@ export function createLocalConversationService() {
 
     return {
       message: reply.message(emotion),
-      question: reply.question,
+      question: body.session.customEmotion && reply.question
+        ? `“${body.session.customEmotion}”라고 적어 주신 마음을 떠올려 볼게요. ${reply.question}`
+        : reply.question,
       stage,
       detectedEmotion: emotion,
       secondaryEmotion: null,

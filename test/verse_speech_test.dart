@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bible_mind_core/src/verses/verse_models.dart';
+import 'package:onaria/src/verses/verse_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 BibleVerse verse(String book, int chapter, int start, [int? end]) => BibleVerse(

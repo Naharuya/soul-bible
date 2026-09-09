@@ -48,7 +48,7 @@ class _CrossLightPageState extends State<CrossLightPage> {
         if (!_game.started) FilledButton(onPressed: _start, child: const Text('조용히 시작하기'))
         else if (_game.complete) ...[
           const Text('작은 빛이 모였어요.', textAlign: TextAlign.center, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 16), const Text('잠시 멈춰 숨 쉬고, 나와 이웃에게 다정함을 건네 보세요.\n— SoulBible 묵상 문구', textAlign: TextAlign.center),
+          const SizedBox(height: 16), const Text('잠시 멈춰 숨 쉬고, 나와 이웃에게 다정함을 건네 보세요.\n— onaria 묵상 문구', textAlign: TextAlign.center),
           const SizedBox(height: 20), FilledButton(onPressed: () => Navigator.pop(context), child: const Text('편안히 돌아가기')),
         ] else ...[
           Text(_game.ready ? '마음에 머무는 단어를 골라보세요.' : '잠시 천천히 숨 쉬어 보세요.', textAlign: TextAlign.center),

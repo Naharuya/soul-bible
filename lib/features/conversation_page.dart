@@ -9,7 +9,7 @@ import '../app/space_scaffold.dart';
 import '../app/api_config.dart';
 import '../app/asset_loader.dart';
 import '../app/mind_card_store.dart';
-import '../bible_mind_core.dart';
+import '../onaria.dart';
 
 class _ChatItem {
   const _ChatItem(this.text, {this.fromUser = false, this.question});
@@ -30,6 +30,22 @@ class ConversationPage extends StatefulWidget {
 }
 
 class _ConversationPageState extends State<ConversationPage> {
+  String? get _customFeeling {
+    final text = widget.customEmotion?.trim();
+    return text == null || text.isEmpty ? null : text;
+  }
+
+  String _feelingQuestion(int turn) {
+    final feeling = _customFeeling;
+    if (feeling == null) {
+      return turn == 0 ? '무슨 일이 있었는지 편한 만큼 이야기해 주실래요?'
+          : turn == 1 ? '그때 어떤 마음이 가장 크게 느껴졌나요?'
+          : '지금 나에게 필요한 위로는 무엇인가요?';
+    }
+    return turn == 0 ? '“$feeling”라고 적어 주셨는데, 어떤 순간에 이런 마음이 들었나요?'
+        : turn == 1 ? '“$feeling”라는 마음과 관련해, 방금 이야기한 상황에서 가장 마음에 남는 것은 무엇인가요?'
+        : '“$feeling”라는 마음을 돌보기 위해 지금 어떤 도움이나 위로가 필요하신가요?';
+  }
   static const _cardTitle = '오늘의 마음 카드';
   static const _cardClosingMessage =
       '오늘 마음을 외면하지 않고 바라본 것만으로도 충분히 의미 있는 시간이었어요.';
@@ -291,8 +307,12 @@ class _ConversationPageState extends State<ConversationPage> {
       sessionId: DateTime.now().microsecondsSinceEpoch.toString(),
       selectedEmotion: widget.emotion,
       emotionIntensity: widget.intensity,
+      customEmotion: _customFeeling,
+      lastAssistantQuestion: _feelingQuestion(0),
     );
-    _items.add(_ChatItem('${widget.emotion.naturalFeelingPhrase}이 오늘 ${widget.intensity}/10 정도로 느껴지는군요.', question: '무슨 일이 있었는지 편한 만큼 이야기해 주실래요?'));
+    _items.add(_ChatItem(_customFeeling == null
+        ? '${widget.emotion.naturalFeelingPhrase}이 오늘 ${widget.intensity}/10 정도로 느껴지는군요.'
+        : '직접 적어 주신 마음을 함께 살펴볼게요.', question: _feelingQuestion(0)));
     _configureTts();
   }
 
@@ -310,7 +330,8 @@ class _ConversationPageState extends State<ConversationPage> {
 
   Future<void> _send() async {
     final text = _controller.text.trim();
-    if (text.isEmpty || _busy) return;
+    if (text.isEmpty || _busy || _session.isEnded ||
+        _session.turnCount >= _machine.maxCoreTurns) return;
     _controller.clear();
     setState(() {
       _items.add(_ChatItem(text, fromUser: true));
@@ -327,13 +348,11 @@ class _ConversationPageState extends State<ConversationPage> {
       return;
     }
 
+    final turnBeforeRequest = _session.turnCount;
     try {
       final client = _client;
       if (client == null) {
-        setState(() {
-          _items.add(const _ChatItem('서버 설정을 확인할 수 없어요. 앱 설정을 확인한 뒤 다시 시도해 주세요.'));
-          _busy = false;
-        });
+        await _continueWithoutServer(turnBeforeRequest);
         return;
       }
       final allowedVerses = await _verseRepository.findForEmotion(
@@ -396,10 +415,7 @@ class _ConversationPageState extends State<ConversationPage> {
       }
     } catch (_) {
       if (!mounted) return;
-      setState(() {
-        _items.add(const _ChatItem('잠시 연결이 고르지 않아요. 마음을 한 번 더 천천히 적어 주세요.'));
-        _busy = false;
-      });
+      await _continueWithoutServer(turnBeforeRequest);
     }
     _scrollDown();
   }
@@ -412,7 +428,42 @@ class _ConversationPageState extends State<ConversationPage> {
     await _send();
   }
 
-  String _questionText(String question) => '${question.trim().replaceFirst(RegExp(r'[.。!！?？\s]+$'), '')}?';
+  Future<void> _continueWithoutServer(int previousTurn) async {
+    if (!mounted || _session.isEnded || _session.riskLevel > 0) return;
+    // Count each submitted answer once, including a failed network request.
+    final turn = _session.turnCount > previousTurn
+        ? _session.turnCount : previousTurn + 1;
+    final complete = turn >= _machine.maxCoreTurns;
+    setState(() {
+      _session = _session.copyWith(
+        turnCount: turn,
+        stage: complete ? ConversationStage.verseOffer : ConversationStage.need,
+        lastAssistantQuestion: complete ? '' : _feelingQuestion(turn),
+      );
+      _busy = false;
+      _showVerseOffer = complete;
+      _items.add(_ChatItem(
+        '서버에 연결하지 못해 AI 답변을 받지 못했어요. 적어 주신 내용으로 다음 단계를 이어갈게요.',
+        question: complete ? null : _feelingQuestion(turn),
+      ));
+    });
+    if (complete) {
+      FocusScope.of(context).unfocus();
+      try {
+        await _showVerseAutomatically();
+      } catch (_) {
+        if (!mounted) return;
+        // Asset failure must not reopen chat or force another answer.
+        _declineVerse();
+      }
+    }
+    _scrollDown();
+  }
+
+  String _questionText(String question) {
+    final text = question.trim().replaceFirst(RegExp(r'[.。!！?？…\s]+$'), '');
+    return text.isEmpty ? '' : '$text?';
+  }
 
   Future<void> _toggleVoiceInput() async {
     if (_isSpeaking) {
@@ -588,7 +639,7 @@ class _ConversationPageState extends State<ConversationPage> {
         verseReference: _verse!.reference,
         verseText: _verse!.text,
         englishVerseText: _verse!.englishText,
-        reflectionQuestion: _verse!.reflectionQuestion,
+        reflectionQuestion: _questionText(_verse!.reflectionQuestion),
         action: _chosenAction!,
         closingMessage: _cardClosingMessage,
         agent: _lastAgent,
@@ -610,7 +661,8 @@ class _ConversationPageState extends State<ConversationPage> {
   void _scrollDown() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted && _scrollController.hasClients) {
-        _scrollController.animateTo(_scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 350), curve: Curves.easeOut);
+        final nextPage = _verse != null || _showVerseOffer || _showActions || _showSummary;
+        _scrollController.animateTo(nextPage ? 0 : _scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 350), curve: Curves.easeOut);
       }
     });
   }
@@ -644,7 +696,9 @@ class _ConversationPageState extends State<ConversationPage> {
     return SpaceScaffold(
       appBar: AppBar(
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Text('마음 대화', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
+          Text(_showSummary ? '마음 카드' : _showActions ? '작은 실천' :
+              _verse != null || _showVerseOffer ? '오늘의 말씀' : '마음 대화',
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
           Text('${widget.emotion.label} · ${widget.intensity}/10', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400)),
         ]),
         actions: [
@@ -683,13 +737,19 @@ class _ConversationPageState extends State<ConversationPage> {
                   controller: _scrollController,
                   padding: const EdgeInsets.fromLTRB(18, 18, 18, 22),
                   children: [
-                    Center(child: Padding(padding: EdgeInsets.only(bottom: 22), child: Text('마음을 살피는 조용한 대화', style: TextStyle(fontSize: 12, color: AppTheme.of(context).gold, fontWeight: FontWeight.w700, letterSpacing: 0.5)))),
-                    ..._items.map(_bubble),
-                    if (_busy) _typing(),
-                    if (_showVerseOffer) _verseOffer(),
-                    if (_verse != null) _verseCard(_verse!),
-                    if (_showActions) _actionCard(),
-                    if (_showSummary) _summaryCard(),
+                    if (_showSummary)
+                      _summaryCard()
+                    else if (_showActions)
+                      _actionCard()
+                    else if (_verse != null)
+                      _verseCard(_verse!)
+                    else if (_showVerseOffer)
+                      _verseOffer()
+                    else ...[
+                      Center(child: Padding(padding: const EdgeInsets.only(bottom: 22), child: Text('마음을 살피는 조용한 대화 · ${_session.turnCount}/3', style: TextStyle(fontSize: 12, color: AppTheme.of(context).gold, fontWeight: FontWeight.w700, letterSpacing: 0.5)))),
+                      ..._items.map(_bubble),
+                      if (_busy) _typing(),
+                    ],
                   ],
                 ),
               ),
@@ -845,7 +905,7 @@ class _ConversationPageState extends State<ConversationPage> {
     ],
     if (verse.reflectionQuestion.isNotEmpty) ...[
       const SizedBox(height: 14),
-      Text(verse.reflectionQuestion, style: TextStyle(color: AppTheme.of(context).muted, height: 1.5, fontWeight: FontWeight.w600), textAlign: TextAlign.center),
+      Text(_questionText(verse.reflectionQuestion), style: TextStyle(color: AppTheme.of(context).muted, height: 1.5, fontWeight: FontWeight.w600), textAlign: TextAlign.center),
     ],
     const SizedBox(height: 16),
     OutlinedButton.icon(

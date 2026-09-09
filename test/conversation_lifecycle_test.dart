@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:bible_mind_core/app/api_config.dart';
-import 'package:bible_mind_core/app/app_theme.dart';
-import 'package:bible_mind_core/bible_mind_core.dart';
-import 'package:bible_mind_core/features/conversation_page.dart';
+import 'package:onaria/app/api_config.dart';
+import 'package:onaria/app/app_theme.dart';
+import 'package:onaria/onaria.dart';
+import 'package:onaria/features/conversation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -68,7 +68,7 @@ void main() {
     });
   }
 
-  testWidgets('invalid API configuration reports setup failure without demo response', (tester) async {
+  testWidgets('invalid API configuration explains unavailable AI and continues locally', (tester) async {
     await tester.pumpWidget(MaterialApp(
       theme: AppTheme.light,
       home: const ConversationPage(emotion: EmotionType.anxiety, intensity: 5),
@@ -77,7 +77,7 @@ void main() {
     await tester.enterText(find.byType(TextField), '내일 발표가 걱정돼요.');
     await tester.tap(find.byTooltip('보내기'));
     await tester.pumpAndSettle();
-    expect(find.text('서버 설정을 확인할 수 없어요. 앱 설정을 확인한 뒤 다시 시도해 주세요.'), findsOneWidget);
+    expect(find.textContaining('서버에 연결하지 못해 AI 답변을 받지 못했어요.'), findsOneWidget);
     expect(find.textContaining('혼자 견디고 계셨군요'), findsNothing);
     expect(tester.takeException(), isNull);
   }, skip: ApiConfig.baseUrl != null);
