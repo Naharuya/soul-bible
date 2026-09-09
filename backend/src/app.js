@@ -18,6 +18,10 @@ export function createApp({ generate, allowedOrigins = [], appToken = '', adminT
   app.disable('x-powered-by');
   app.use(helmet());
   app.use(cors({ origin(origin, cb) { cb(null, !origin || allowedOrigins.includes(origin)); } }));
+  app.use('/v1', (_req, res, next) => {
+    res.set('Cache-Control', 'no-store');
+    next();
+  });
   app.use(express.json({ limit: '16kb' }));
   app.use('/v1', rateLimit({ windowMs: 60_000, limit: 20, standardHeaders: 'draft-8', legacyHeaders: false }));
   app.use((req, res, next) => {
@@ -93,10 +97,7 @@ export function createApp({ generate, allowedOrigins = [], appToken = '', adminT
     const upstreamStatus = Number.isInteger(error?.status) ? error.status : 502;
     const status = [401, 403, 429].includes(upstreamStatus) ? upstreamStatus : 502;
     logger.error?.('request_failed', {
-      name: error?.name,
       status: upstreamStatus,
-      code: error?.code,
-      message: error?.message,
     });
     const message = status === 429
       ? 'AI 사용량 또는 크레딧이 부족합니다.'

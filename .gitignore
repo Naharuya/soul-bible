@@ -11,8 +11,25 @@ android/*.jks
 android/*.keystore
 ios/Pods/
 ios/.symlinks/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/ephemeral/
 *.iml
 # Widget Preview related
 .widget_preview/
 
 dist/
+
+# Private runtime data and backups; never commit member databases.
+backend/data/
+data/
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+backend/backups/
+.env
+.env.*
+!.env.example

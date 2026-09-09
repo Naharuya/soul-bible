@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../../app/api_config.dart';
 
 class MemberApiClient {
   MemberApiClient({required this.baseUrl, http.Client? httpClient, this.timeout = const Duration(seconds: 15)}) : _httpClient = httpClient ?? http.Client();
@@ -8,11 +9,12 @@ class MemberApiClient {
   final Duration timeout;
 
   Future<void> signUp({required String name, required String phone, required String churchName, String loginProvider = 'phone'}) async {
-    final response = await _httpClient.post(
-      baseUrl.resolve('/v1/auth/signup'),
-      headers: const {'Content-Type': 'application/json', 'Accept': 'application/json'},
-      body: jsonEncode({'name': name, 'phone': phone, 'churchName': churchName, 'loginProvider': loginProvider}),
-    ).timeout(timeout);
+    ApiConfig.requireSecureEndpoint(baseUrl);
+    final request = http.Request('POST', baseUrl.resolve('/v1/auth/signup'))
+      ..followRedirects = false
+      ..headers.addAll(const {'Content-Type': 'application/json', 'Accept': 'application/json'})
+      ..body = jsonEncode({'name': name, 'phone': phone, 'churchName': churchName, 'loginProvider': loginProvider});
+    final response = await _httpClient.send(request).then(http.Response.fromStream).timeout(timeout);
     if (response.statusCode < 200 || response.statusCode >= 300) throw MemberApiException(_readError(response.body));
   }
 

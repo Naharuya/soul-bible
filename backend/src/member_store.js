@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import Database from 'better-sqlite3';
+import { adminMember } from './member_schema.js';
 
 export function createMemberStore({ filename = path.resolve('data', 'members.sqlite') } = {}) {
   fs.mkdirSync(path.dirname(filename), { recursive: true });
@@ -40,16 +41,7 @@ export function createMemberStore({ filename = path.resolve('data', 'members.sql
     getAdminOverview({ limit = 8 } = {}) {
       return {
         total: countMembers.get().count,
-        recent: recentMembers.all(limit).map((member) => ({
-          id: member.id,
-          name: member.name,
-          phone: member.phone.length >= 7
-            ? `${member.phone.slice(0, 3)}****${member.phone.slice(-4)}`
-            : '****',
-          churchName: member.church_name,
-          provider: member.login_provider,
-          createdAt: member.created_at,
-        })),
+        recent: recentMembers.all(limit).map(adminMember),
       };
     },
     close() { db.close(); },

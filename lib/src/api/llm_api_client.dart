@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import '../../app/api_config.dart';
 
 import 'llm_models.dart';
 
@@ -26,19 +27,18 @@ class ProxyLlmApiClient implements LlmApiClient {
   Future<LlmConversationResponse> send(
     LlmConversationRequest request,
   ) async {
+    ApiConfig.requireSecureEndpoint(endpoint);
     final token = await appTokenProvider();
-    final response = await _httpClient
-        .post(
-          endpoint,
-          headers: {
+    final outbound = http.Request('POST', endpoint)
+      ..followRedirects = false
+      ..headers.addAll({
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             if (token != null && token.isNotEmpty)
               'Authorization': 'Bearer $token',
-          },
-          body: jsonEncode(request.toJson()),
-        )
-        .timeout(timeout);
+          })
+      ..body = jsonEncode(request.toJson());
+    final response = await _httpClient.send(outbound).then(http.Response.fromStream).timeout(timeout);
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
       throw LlmApiException(
@@ -61,7 +61,7 @@ class ProxyLlmApiClient implements LlmApiClient {
         return decoded['message'] as String;
       }
     } catch (_) {}
-    return body.isEmpty ? 'Unknown server error.' : body;
+    return '서버 연결을 처리하지 못했습니다. 잠시 후 다시 시도해 주세요.';
   }
 
   void close() => _httpClient.close();

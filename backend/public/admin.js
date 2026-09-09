@@ -29,6 +29,11 @@ function escapeHtml(value) {
 
 async function loadDashboard() {
   if (!token) return;
+  if (location.protocol !== 'https:' && !['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)) {
+    logout();
+    $('loginError').textContent = '관리자 연결에는 HTTPS가 필요합니다.';
+    return;
+  }
   const currentRequest = ++requestVersion;
   $('refreshButton').disabled = true;
   try {

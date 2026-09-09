@@ -5,6 +5,7 @@ import '../bible_mind_core.dart';
 import '../app/mind_card_store.dart';
 import 'conversation_page.dart';
 import 'saved_cards_page.dart';
+import 'signup_page.dart';
 
 class CheckInPage extends StatefulWidget {
   const CheckInPage({super.key});
@@ -72,9 +73,19 @@ class _CheckInPageState extends State<CheckInPage> {
                     onSelected: (value) {
                       if (value == 'saved_cards') {
                         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SavedCardsPage()));
+                      } else if (value == 'signup') {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SignUpPage()));
                       }
                     },
                     itemBuilder: (_) => const [
+                      PopupMenuItem<String>(
+                        value: 'signup',
+                        child: Row(children: [
+                          Icon(Icons.person_add_outlined),
+                          SizedBox(width: 12),
+                          Text('회원가입'),
+                        ]),
+                      ),
                       PopupMenuItem<String>(
                         value: 'saved_cards',
                         child: Row(children: [

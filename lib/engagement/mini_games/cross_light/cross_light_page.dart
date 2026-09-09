@@ -44,7 +44,7 @@ class _CrossLightPageState extends State<CrossLightPage> {
               child: Stack(alignment: Alignment.center, children: [
                 Container(width: 34, height: 210, decoration: BoxDecoration(color: const Color(0xFFF1D798), borderRadius: BorderRadius.circular(12))),
                 Positioned(top: 56, child: Container(width: 150, height: 34, decoration: BoxDecoration(color: const Color(0xFFF1D798), borderRadius: BorderRadius.circular(12)))),
-              ])))))),
+              ]))))))),
         if (!_game.started) FilledButton(onPressed: _start, child: const Text('조용히 시작하기'))
         else if (_game.complete) ...[
           const Text('작은 빛이 모였어요.', textAlign: TextAlign.center, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),

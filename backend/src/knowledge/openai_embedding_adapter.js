@@ -16,7 +16,8 @@ export function createOpenAiEmbeddingAdapter({ env = {}, clientFactory, timeoutM
       return withEmbeddingDeadline(async activeSignal => {
         if (!client) {
           const factory = clientFactory ?? (async options => { const { default: OpenAI } = await import('openai'); return new OpenAI(options); });
-          client = await factory({ apiKey: env.OPENAI_API_KEY, maxRetries: 0, timeout: timeoutMs });
+          client = await factory({ apiKey: env.OPENAI_API_KEY, maxRetries: 0, timeout: timeoutMs,
+            baseURL: 'https://api.openai.com/v1', logLevel: 'off' });
         }
         activeSignal.throwIfAborted();
         const response = await client.embeddings.create({ model: env.OPENAI_EMBEDDING_MODEL, input: texts, encoding_format: 'float' }, { signal: activeSignal, timeout: timeoutMs, maxRetries: 0 });

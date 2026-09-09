@@ -8,7 +8,6 @@ import '../app/app_theme.dart';
 import '../app/space_scaffold.dart';
 import '../app/api_config.dart';
 import '../app/asset_loader.dart';
-import '../app/demo_llm_client.dart';
 import '../app/mind_card_store.dart';
 import '../bible_mind_core.dart';
 
@@ -20,7 +19,8 @@ class _ChatItem {
 }
 
 class ConversationPage extends StatefulWidget {
-  const ConversationPage({super.key, required this.emotion, required this.intensity, this.customEmotion});
+  const ConversationPage({super.key, required this.emotion, required this.intensity, this.customEmotion, this.apiClient});
+  final LlmApiClient? apiClient;
   final String? customEmotion;
   final EmotionType emotion;
   final int intensity;
@@ -237,17 +237,19 @@ class _ConversationPageState extends State<ConversationPage> {
   };
 
   List<String> get _currentExamplePrompts {
-    if (_agentMode == 'clinical_reflection') {
-      return _clinicalExamplePrompts[_session.stage] ??
-          _clinicalExamplePrompts[ConversationStage.emotion]!;
-    }
-    return _emotionSpecificPrompts[widget.emotion] ??
-        [
-          '오늘 마음을 편하게 들려주세요.',
-          '무슨 일이 있었는지 궁금해요.',
-          '지금 떠오르는 생각을 적어주세요.'
-        ];
+    final primary = _agentMode == 'clinical_reflection'
+        ? _clinicalExamplePrompts[_session.stage] ?? _clinicalExamplePrompts[ConversationStage.emotion]!
+        : _emotionSpecificPrompts[widget.emotion] ?? _clinicalExamplePrompts[ConversationStage.emotion]!;
+    final candidates = <String>{
+      ...primary,
+      ...?_clinicalExamplePrompts[_session.stage],
+      '지금 마음을 조금 더 천천히 살펴보고 싶어요.',
+      '어떤 말부터 해야 할지 아직 잘 모르겠어요.',
+      '말로 표현하기 어렵지만 조금 더 이야기해 보고 싶어요.',
+    };
+    return candidates.where((prompt) => !_selectedExamples.contains(prompt)).take(primary.length).toList();
   }
+  final _selectedExamples = <String>{};
   final _controller = TextEditingController();
   final _scrollController = ScrollController();
   final _speech = SpeechToText();
@@ -255,7 +257,7 @@ class _ConversationPageState extends State<ConversationPage> {
   final _mindCardStore = MindCardStore();
   final _detector = const CrisisDetector();
   final _machine = const ConversationMachine();
-  late final LlmApiClient _client;
+  late final LlmApiClient? _client;
   final _verseRepository = VerseRepository(loader: const FlutterVerseAssetLoader());
   final _items = <_ChatItem>[];
   late ConversationSession _session;
@@ -279,18 +281,18 @@ class _ConversationPageState extends State<ConversationPage> {
   @override
   void initState() {
     super.initState();
-    _client = ApiConfig.chatUrl == null
-        ? const DemoLlmApiClient()
+    _client = widget.apiClient ?? (ApiConfig.chatUrl == null
+        ? null
         : ProxyLlmApiClient(
         endpoint: ApiConfig.chatUrl!,
             appTokenProvider: () async => ApiConfig.appToken,
-          );
+          ));
     _session = ConversationSession(
       sessionId: DateTime.now().microsecondsSinceEpoch.toString(),
       selectedEmotion: widget.emotion,
       emotionIntensity: widget.intensity,
     );
-    _items.add(_ChatItem('${widget.emotion.naturalFeelingPhrase}이 오늘 ${widget.intensity}/10 정도로 느껴지는군요.', question: '무슨 일이 있었는지 편한 만큼만 들려주세요.'));
+    _items.add(_ChatItem('${widget.emotion.naturalFeelingPhrase}이 오늘 ${widget.intensity}/10 정도로 느껴지는군요.', question: '무슨 일이 있었는지 편한 만큼 이야기해 주실래요?'));
     _configureTts();
   }
 
@@ -299,7 +301,7 @@ class _ConversationPageState extends State<ConversationPage> {
     _speech.cancel();
     _tts.stop();
     if (_client case final ProxyLlmApiClient proxy) {
-      proxy.close();
+      if (widget.apiClient == null) proxy.close();
     }
     _controller.dispose();
     _scrollController.dispose();
@@ -326,11 +328,20 @@ class _ConversationPageState extends State<ConversationPage> {
     }
 
     try {
+      final client = _client;
+      if (client == null) {
+        setState(() {
+          _items.add(const _ChatItem('서버 설정을 확인할 수 없어요. 앱 설정을 확인한 뒤 다시 시도해 주세요.'));
+          _busy = false;
+        });
+        return;
+      }
       final allowedVerses = await _verseRepository.findForEmotion(
         widget.emotion,
         limit: 100,
       );
-      final response = await _client.send(LlmConversationRequest(
+      if (!mounted) return;
+      final response = await client.send(LlmConversationRequest(
         session: _session,
         userMessage: text,
         systemPromptVersion: 'ko-v1',
@@ -338,6 +349,7 @@ class _ConversationPageState extends State<ConversationPage> {
         agentMode: _agentMode,
         verseLanguage: _verseLanguage,
       ));
+      if (!mounted) return;
       final transition = _machine.applyLlmResponse(_session, response);
       _session = transition.session.copyWith(agentMemory: response.memorySummary);
       _lastAgent = response.agent;
@@ -346,6 +358,7 @@ class _ConversationPageState extends State<ConversationPage> {
       final suggestedVerse = response.suggestedVerseId == null
           ? null
           : await _verseRepository.getById(response.suggestedVerseId!);
+      if (!mounted) return;
       final shouldAutoShowVerse = transition.uiAction == ConversationUiAction.showVerseConsent &&
           !_session.isEnded &&
           _session.riskLevel == 0 &&
@@ -382,6 +395,7 @@ class _ConversationPageState extends State<ConversationPage> {
         await _showVerseAutomatically();
       }
     } catch (_) {
+      if (!mounted) return;
       setState(() {
         _items.add(const _ChatItem('잠시 연결이 고르지 않아요. 마음을 한 번 더 천천히 적어 주세요.'));
         _busy = false;
@@ -390,12 +404,15 @@ class _ConversationPageState extends State<ConversationPage> {
     _scrollDown();
   }
 
-  void _selectExample(String prompt) {
-    _controller
-      ..text = prompt
-      ..selection = TextSelection.collapsed(offset: prompt.length);
-    setState(() {});
+  Future<void> _selectExample(String prompt) async {
+    if (_busy || _session.isEnded) return;
+    _selectedExamples.add(prompt);
+    _controller.text = prompt;
+    FocusScope.of(context).unfocus();
+    await _send();
   }
+
+  String _questionText(String question) => '${question.trim().replaceFirst(RegExp(r'[.。!！?？\s]+$'), '')}?';
 
   Future<void> _toggleVoiceInput() async {
     if (_isSpeaking) {
@@ -581,7 +598,7 @@ class _ConversationPageState extends State<ConversationPage> {
         verseLanguage: _verseLanguage,
       ));
       if (!mounted) return;
-      _showVoiceMessage('오늘의 마음 카드 문구를 모두 저장했어요.');
+      _showVoiceMessage('마음 카드와 감정·대화 요약을 이 기기에 저장했어요. 저장된 카드에서 삭제할 수 있어요.');
       Navigator.of(context).pop();
     } catch (_) {
       if (!mounted) return;
@@ -592,7 +609,7 @@ class _ConversationPageState extends State<ConversationPage> {
 
   void _scrollDown() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
+      if (mounted && _scrollController.hasClients) {
         _scrollController.animateTo(_scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 350), curve: Curves.easeOut);
       }
     });
@@ -791,7 +808,7 @@ class _ConversationPageState extends State<ConversationPage> {
                     Expanded(child: Text('질문', style: TextStyle(color: AppTheme.of(context).gold, fontSize: 13, fontWeight: FontWeight.w800))),
                   ]),
                   const SizedBox(height: 10),
-                  Text(question, style: TextStyle(color: AppTheme.of(context).ink, fontSize: 17, fontWeight: FontWeight.w700, height: 1.5)),
+                  Text(_questionText(question), style: TextStyle(color: AppTheme.of(context).ink, fontSize: 17, fontWeight: FontWeight.w700, height: 1.5)),
                 ],
               ),
             ),

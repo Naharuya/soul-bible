@@ -28,6 +28,19 @@ void main() {
     expect(find.text('소울바이블 시작하기'), findsNothing);
   });
 
+  testWidgets('signup opens from the menu and back returns to check-in', (tester) async {
+    await tester.pumpWidget(const SoulBibleApp());
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('메뉴'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('회원가입'));
+    await tester.pumpAndSettle();
+    expect(find.text('소울바이블 시작하기'), findsOneWidget);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.text('오늘 마음은\n어떤가요?'), findsOneWidget);
+  });
+
   testWidgets('check-in page remains the first screen when providers are configured', (WidgetTester tester) async {
     await tester.pumpWidget(const SoulBibleApp(
       authConfig: SocialAuthConfig(

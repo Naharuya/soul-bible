@@ -18,9 +18,11 @@
     "pilot:christianity": "node src/knowledge/christianity_pilot.js",
     "pilot:a-track": "node src/knowledge/a_track_pilot.js"
   },
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
-    "better-sqlite3": "^11.10.0",
+    "better-sqlite3": "12.11.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",

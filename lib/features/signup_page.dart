@@ -3,7 +3,6 @@ import '../app/app_theme.dart';
 import '../app/space_scaffold.dart';
 import '../app/api_config.dart';
 import '../src/api/member_api_client.dart';
-import 'check_in_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -27,6 +26,7 @@ class _SignUpPageState extends State<SignUpPage> {
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(24, 42, 24, 24),
                 children: [
+                  const Align(alignment: Alignment.centerLeft, child: BackButton()),
                   Icon(Icons.auto_awesome, color: AppTheme.of(context).green, size: 38),
                   const SizedBox(height: 18),
                   Text('소울바이블 시작하기', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
@@ -97,9 +97,14 @@ class _SignUpPageState extends State<SignUpPage> {
     try {
       await client.signUp(name: _name.text.trim(), phone: _phone.text.trim(), churchName: _church.text.trim());
       if (!mounted) return;
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const CheckInPage()));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('회원가입이 완료되었어요.')));
+      Navigator.of(context).pop();
     } catch (error) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.toString())));
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(
+          error is MemberApiException ? error.message : '서버에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.',
+        )));
+      }
     } finally {
       client.close();
       if (mounted) setState(() => _busy = false);

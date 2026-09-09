@@ -4,7 +4,8 @@ import { responseJsonSchema, responseSchema } from './schema.js';
 
 export function createOpenAiService({ apiKey, model, client, timeout = 6_000, maxRetries = 1 }) {
   if (!apiKey) throw new Error('OPENAI_API_KEY is required.');
-  const api = client ?? new OpenAI({ apiKey, timeout, maxRetries });
+  const api = client ?? new OpenAI({ apiKey, timeout, maxRetries,
+    baseURL: 'https://api.openai.com/v1', logLevel: 'off' });
 
   async function runStructured({ name, instructions, input, jsonSchema, schema, maxOutputTokens = 1800 }, { signal, onUsage } = {}) {
     const response = await api.responses.create({

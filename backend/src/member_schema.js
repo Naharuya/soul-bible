@@ -13,3 +13,16 @@ export const memberSchema = z.object({
 export function publicMember(member) {
   return { id: member.id, name: member.name, phone: member.phone, churchName: member.church_name, loginProvider: member.login_provider, createdAt: member.created_at };
 }
+
+export function adminMember(member) {
+  return {
+    id: member.id,
+    name: `${member.name.slice(0, 1)}***`,
+    phone: member.phone.length >= 7
+      ? `${member.phone.slice(0, 3)}****${member.phone.slice(-4)}`
+      : '****',
+    churchName: '비공개',
+    provider: member.login_provider,
+    createdAt: member.created_at,
+  };
+}
