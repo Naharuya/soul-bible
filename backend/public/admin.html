@@ -55,6 +55,21 @@
           <article class="metric-card accent-coral"><div class="metric-top"><span>안전 감지</span><b>◇</b></div><strong id="crisisCount">—</strong><small>서버 시작 이후</small></article>
         </section>
 
+        <section class="panel" id="aiUsage">
+          <div class="panel-head"><div><p class="eyebrow">AI USAGE · UTC</p><h2>오늘 AI 사용량</h2></div><span id="aiUsageStatus" class="privacy">집계 대기 중</span></div>
+          <div class="metric-grid">
+            <article class="metric-card"><div class="metric-top"><span>AI 호출</span></div><strong id="aiCalls">—</strong><small>모델 호출 시도 수</small></article>
+            <article class="metric-card"><div class="metric-top"><span>입력 토큰</span></div><strong id="aiInputTokens">—</strong></article>
+            <article class="metric-card"><div class="metric-top"><span>캐시 입력 토큰</span></div><strong id="aiCachedTokens">—</strong></article>
+            <article class="metric-card"><div class="metric-top"><span>출력 토큰</span></div><strong id="aiOutputTokens">—</strong></article>
+            <article class="metric-card"><div class="metric-top"><span>예상 비용 (USD)</span></div><strong id="aiCost">—</strong><small>미확인 비용이 있으면 금액 미표시</small></article>
+            <article class="metric-card"><div class="metric-top"><span>AI 세션당 평균 (USD)</span></div><strong id="aiSessionCost">—</strong></article>
+            <article class="metric-card"><div class="metric-top"><span>인증 회원당 평균 (USD)</span></div><strong id="aiMemberCost">—</strong><small>익명 사용 제외</small></article>
+            <article class="metric-card"><div class="metric-top"><span>캐시 토큰 비율</span></div><strong id="aiCacheRate">—</strong><small id="aiCacheSavings">예상 절감액 —</small></article>
+          </div>
+          <p id="aiRouting" class="sub">처리 경로 집계 대기 중</p>
+        </section>
+
         <section class="content-grid" id="conversations">
           <article class="panel performance">
             <div class="panel-head"><div><p class="eyebrow">LIVE HEALTH</p><h2>서비스 성능</h2></div><span class="status-pill"><i></i> Healthy</span></div>

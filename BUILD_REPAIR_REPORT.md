@@ -1,5 +1,33 @@
 # SoulBible 빌드 복구 보고서
 
+## 2026-09-09 회원 인증 연결 후속 검증
+
+- 작성 중이던 JWT 회원 인증 연결에 테스트와 비활성 기본 설정 예시를 추가했다.
+- Backend 314개 테스트 통과. 회원별 quota 분리, 토큰/권한 위조 거부와 위기 응답 유지를 확인했다.
+- 실제 로그인 제공자 및 결제 연결은 남아 있다. 범위와 설정은 [IDENTITY_INTEGRATION_REPORT.md](IDENTITY_INTEGRATION_REPORT.md)를 따른다.
+
+## 2026-09-09 AI Cost Gate 영구 원장 후속
+
+- 비용 quota·예약·사용량을 별도 SQLite DB에 저장하도록 런타임을 연결했다. 같은 호스트의 여러 Node 프로세스가 원자적으로 예산을 공유한다.
+- 재시작/강제 종료 복구, 지연 usage 정산, DB 장애 시 로컬 응답, Docker 전용 volume 설정을 추가했다.
+- Backend 테스트 310개 통과. 8개 독립 프로세스 동시 예약과 실제 localhost HTTP 재시작 smoke 통과.
+- 설정·범위·미해결 항목은 [AI_COST_GATE_PERSISTENCE_REPORT.md](AI_COST_GATE_PERSISTENCE_REPORT.md)를 따른다. 운영 배포나 유료 API 호출은 수행하지 않았다.
+
+## 2026-09-09 AI Cost Gate v1
+
+- Cost Gate, Model Router, Usage Ledger, 가격 계산, 캐시 토큰 계측 및 관리자 통계를 구현했다.
+- Backend 테스트 296개 통과. 실제 localhost HTTP mock smoke 통과. Flutter 테스트 31개 통과/기존 조건부 skip 1개.
+- 익명 공통 quota, UTC 단일 프로세스 집계, 미등록 가격 null 처리 등 범위와 설정은 [AI_COST_GATE_REPORT.md](AI_COST_GATE_REPORT.md)를 따른다.
+- 기존 Crisis/Safety, API schema, stateless Memory Summary 유지. 운영 배포/유료 AI 호출/APK·AAB 재빌드는 수행하지 않았다.
+
+## 2026-09-09 보안 후속 작업
+
+- 익명 chat의 서버 메모리 저장·조회를 제거했다. 클라이언트 sessionId가 같더라도 이전 요청의 요약을 불러오지 않는다.
+- Flutter가 이미 전송하는 `conversationMemory`를 요청별로 사용하며, 없는 경우 기존 `conversationSummary`를 사용한다. memory는 문자열/최대 4000자로 검증한다.
+- 백엔드 `npm.cmd test`: 273개 통과, 실패 0. 동일 ID 재사용 시 요약 비노출, 클라이언트 요약으로 연속 대화, 잘못된 memory 거부를 검증했다.
+- 백엔드만 변경했으며 운영 배포 및 APK/AAB 재빌드는 하지 않았다. 변경 적용에는 백엔드 재시작이 필요하고 기존 프로세스의 메모리는 종료 시 소멸한다.
+- 사용자 인증, 회원 본인확인·삭제, 개인정보 정책, 운영 HTTPS/DB 및 실기기 검증은 남아 있다. 상세 상태는 보안 보고서의 최신 후속 기록을 따른다.
+
 ## 2026-09-08 개인정보·보안 후속 점검
 
 아래 과거 빌드 기록 이후 HTTPS only, redirect 차단, 로그 최소화, 관리자 개인정보 마스킹 및 배포 예시의 평문 차단을 적용했다. 상세 내용과 미해결 출시 차단 항목은 [SECURITY_PRIVACY_REVIEW.md](SECURITY_PRIVACY_REVIEW.md)를 따른다. 운영 HTTPS 연결은 timeout으로 검증하지 못했으며, 빌드 성공은 출시 보안 승인을 뜻하지 않는다.

@@ -43,15 +43,32 @@ test('stage 9: HTTP response matches a fixture parsed by the real Flutter client
   });
 });
 
-test('stage 9: summary is stored after validation, reused, and isolated per session', async () => {
+test('anonymous chat reuses only supplied memory and never retrieves context by session ID', async () => {
   const calls = []; const memoryStore = createMemoryStore();
   const generate = createConversationService({ env, openAiFactory: () => ({ runStructured: fakeStructured(calls) }) });
   await withServer(generate, async (post) => {
-    for (const id of ['first', 'first', 'second']) assert.equal((await post(body(id))).status, 200);
+    const first = await post(body('first'));
+    assert.equal(first.status, 200);
+    const summary = (await first.json()).memorySummary;
+    const continued = body('first');
+    continued.session.conversationMemory = summary;
+    assert.equal((await post(continued)).status, 200);
+    // Another client can forge the same ID, but has no access to prior context.
+    assert.equal((await post(body('first'))).status, 200);
     const memories = calls.filter((call) => call.name === 'psychology_reflection').map((call) => call.input.memorySummary);
     assert.deepEqual(memories, ['', '발표를 앞두고 마음이 복잡하시군요. 필요: 안정과 쉼', '']);
-    assert.equal(memoryStore.size(), 2);
+    assert.equal(memoryStore.size(), 0);
   }, { memoryStore });
+});
+
+test('client memory is bounded and validated before generation', async () => {
+  await withServer(() => assert.fail('must not generate'), async (post) => {
+    for (const memory of ['x'.repeat(4001), { private: 'invalid' }]) {
+      const payload = body();
+      payload.session.conversationMemory = memory;
+      assert.equal((await post(payload)).status, 400);
+    }
+  });
 });
 
 test('stage 9: invalid input, unknown religion, and forged source context remain HTTP 400', async () => {

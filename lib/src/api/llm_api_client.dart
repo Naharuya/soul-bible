@@ -14,12 +14,15 @@ class ProxyLlmApiClient implements LlmApiClient {
   ProxyLlmApiClient({
     required this.endpoint,
     required this.appTokenProvider,
+    this.identityTokenProvider,
     http.Client? httpClient,
     this.timeout = const Duration(seconds: 25),
   }) : _httpClient = httpClient ?? http.Client();
 
   final Uri endpoint;
   final Future<String?> Function() appTokenProvider;
+  /// Supply a fresh token from the configured login SDK. Never persist it here.
+  final Future<String?> Function()? identityTokenProvider;
   final http.Client _httpClient;
   final Duration timeout;
 
@@ -29,6 +32,12 @@ class ProxyLlmApiClient implements LlmApiClient {
   ) async {
     ApiConfig.requireSecureEndpoint(endpoint);
     final token = await appTokenProvider();
+    final identityToken = await identityTokenProvider?.call();
+    if (identityToken != null && identityToken.isNotEmpty &&
+        (identityToken.length > 8192 ||
+         !RegExp(r'^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$').hasMatch(identityToken))) {
+      throw const FormatException('회원 인증 정보를 확인해 주세요.');
+    }
     final outbound = http.Request('POST', endpoint)
       ..followRedirects = false
       ..headers.addAll({
@@ -36,6 +45,8 @@ class ProxyLlmApiClient implements LlmApiClient {
             'Accept': 'application/json',
             if (token != null && token.isNotEmpty)
               'Authorization': 'Bearer $token',
+            if (identityToken != null && identityToken.isNotEmpty)
+              'X-Soul-Identity-Token': identityToken,
           })
       ..body = jsonEncode(request.toJson());
     final response = await _httpClient.send(outbound).then(http.Response.fromStream).timeout(timeout);

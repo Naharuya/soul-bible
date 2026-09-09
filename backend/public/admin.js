@@ -16,6 +16,23 @@ function logout() {
 }
 
 function formatNumber(value) { return new Intl.NumberFormat('ko-KR').format(value || 0); }
+function formatUsd(value) { return typeof value === 'number' && Number.isFinite(value) ? `$${value.toFixed(6)}` : '—'; }
+function renderAiUsage(usage) {
+  const available = usage?.available === true;
+  const today = available ? usage.today : {};
+  $('aiUsageStatus').textContent = available ? (usage.scope === 'sqlite' ? '저장된 사용량 · UTC 날짜 기준' : '현재 서버 프로세스 · UTC 날짜 기준') : '집계 사용 불가';
+  for (const [id, key] of Object.entries({ aiCalls: 'modelCalls', aiInputTokens: 'inputTokens', aiCachedTokens: 'cachedInputTokens', aiOutputTokens: 'outputTokens' })) {
+    $(id).textContent = available ? formatNumber(today[key]) : '—';
+  }
+  $('aiCost').textContent = formatUsd(today.estimatedCostUsd);
+  $('aiSessionCost').textContent = formatUsd(usage?.averageCostPerAiSession);
+  $('aiMemberCost').textContent = formatUsd(usage?.averageCostPerMember);
+  $('aiCacheRate').textContent = available ? `${(usage.cacheHitRate * 100).toFixed(1)}%` : '—';
+  $('aiCacheSavings').textContent = `예상 절감액 ${formatUsd(usage?.estimatedCacheSavings)}`;
+  const total = Object.values(usage?.routing ?? {}).reduce((sum, count) => sum + count, 0);
+  $('aiRouting').textContent = available ? ['local', 'rag', 'cheap', 'standard', 'premium']
+    .map(tier => `${tier.toUpperCase()} ${total ? (100 * usage.routing[tier] / total).toFixed(1) : '0.0'}%`).join(' · ') : '처리 경로 집계 사용 불가';
+}
 function formatDate(value) { return value ? new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value)) : '—'; }
 function formatUptime(seconds) {
   const days = Math.floor(seconds / 86400);
@@ -52,6 +69,7 @@ async function loadDashboard() {
     $('memberCount').textContent = formatNumber(data.members.total);
     $('sessionCount').textContent = formatNumber(data.metrics.activeSessions);
     $('crisisCount').textContent = formatNumber(data.metrics.crises);
+    renderAiUsage(data.aiUsage);
     $('requestCount').textContent = formatNumber(data.metrics.requests);
     $('errorCount').textContent = formatNumber(data.metrics.errors);
     $('successCount').textContent = formatNumber(Object.entries(data.metrics.statusCodes).filter(([key]) => key.startsWith('2')).reduce((sum, [, value]) => sum + value, 0));

@@ -25,7 +25,10 @@ export function createOpenAiService({ apiKey, model, client, timeout = 6_000, ma
     }, { signal });
     // Only numeric usage leaves this layer; never return raw provider metadata to logs.
     try {
-      onUsage?.({ inputTokens: response.usage?.input_tokens, outputTokens: response.usage?.output_tokens });
+      onUsage?.({ inputTokens: response.usage?.input_tokens,
+        ...(Number.isSafeInteger(response.usage?.input_tokens_details?.cached_tokens)
+          ? { cachedInputTokens: response.usage.input_tokens_details.cached_tokens } : {}),
+        outputTokens: response.usage?.output_tokens });
     } catch { /* Usage tracking cannot turn a successful response into an error. */ }
     if (response.status && response.status !== 'completed') throw new Error('The model response did not complete.');
     if (!response.output_text) throw new Error('The model returned no output text.');

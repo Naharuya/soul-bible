@@ -13,6 +13,7 @@ export const requestSchema = z.object({
     currentStage: z.string().max(32).optional(),
     turnCount: z.number().int().min(0).max(100).optional(),
     conversationSummary: z.string().max(4000).optional(),
+    conversationMemory: z.string().max(4000).optional(),
     previousUserAnswer: z.string().max(2000).nullable().optional(),
     previousAssistantQuestion: z.string().max(1000).nullable().optional(),
     verseAccepted: z.boolean().nullable().optional(),

@@ -4,6 +4,11 @@ services:
       context: ./backend
     env_file:
       - ./backend/.env
+    environment:
+      SOUL_USAGE_LEDGER: sqlite
+      SOUL_USAGE_DB_PATH: /app/cost-data/ai_usage.sqlite
+    volumes:
+      - soul-bible-cost-data:/app/cost-data
     ports:
       - "127.0.0.1:8787:8787"
     restart: unless-stopped
@@ -13,3 +18,6 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
+
+volumes:
+  soul-bible-cost-data:

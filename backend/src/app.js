@@ -9,9 +9,9 @@ import { requestSchema, responseSchema } from './schema.js';
 import { memberSchema, publicMember } from './member_schema.js';
 import { createMemberStore } from './member_store.js';
 import { routeAgent } from './ai_router.js';
-import { createMemoryStore } from './memory_store.js';
+import { IdentityError } from './auth/identity_verifier.js';
 
-export function createApp({ generate, allowedOrigins = [], appToken = '', adminToken = '', logger = console, memberStore = createMemberStore(), memoryStore = createMemoryStore() }) {
+export function createApp({ generate, allowedOrigins = [], appToken = '', adminToken = '', logger = console, memberStore = createMemberStore(), identity = { required: false, verify: null } }) {
   const app = express();
   const startedAt = new Date();
   const metrics = { requests: 0, chats: 0, crises: 0, errors: 0, statusCodes: {} };
@@ -42,6 +42,8 @@ export function createApp({ generate, allowedOrigins = [], appToken = '', adminT
       return res.status(401).json({ message: '관리자 인증이 필요합니다.' });
     }
     const members = memberStore.getAdminOverview?.() ?? { total: 0, recent: [] };
+    let aiUsage = { available: false };
+    try { aiUsage = generate.usageLedger?.overview() ?? aiUsage; } catch { /* Existing overview stays available. */ }
     return res.json({
       generatedAt: new Date().toISOString(),
       service: {
@@ -50,8 +52,9 @@ export function createApp({ generate, allowedOrigins = [], appToken = '', adminT
         startedAt: startedAt.toISOString(),
         uptimeSeconds: Math.floor(process.uptime()),
       },
-      metrics: { ...metrics, activeSessions: memoryStore.size?.() ?? 0 },
+      metrics: { ...metrics, activeSessions: 0 },
       members,
+      aiUsage,
     });
   });
   app.post('/v1/auth/signup', (req, res, next) => {
@@ -73,24 +76,38 @@ export function createApp({ generate, allowedOrigins = [], appToken = '', adminT
       const assessment = assessCrisis(body.userMessage);
       if (assessment.level > 0) {
         metrics.crises += 1;
+        try { generate.usageLedger?.reserve({ sessionId: body.session.sessionId, taskType: 'crisis' }).finish({ provider: 'safety', tier: 'local' }); } catch { /* Never gate safety. */ }
         return res.json(crisisResponse(body.session.selectedEmotion, assessment));
       }
 
+      // Shared app authentication above is unchanged. Per-member identity uses
+      // a separate credential and is never inferred from body/session fields.
+      const identityToken = req.get('x-soul-identity-token');
+      let trustedIdentity = {};
+      if (identityToken !== undefined) {
+        if (!identity.verify) throw new IdentityError();
+        trustedIdentity = await identity.verify(identityToken);
+        if (!trustedIdentity || typeof trustedIdentity.userId !== 'string' || !trustedIdentity.userId
+          || !['free', 'premium'].includes(trustedIdentity.plan)) throw new IdentityError();
+      } else if (identity.required) throw new IdentityError();
+
       const agent = routeAgent({ requestedAgent: body.agentMode, userMessage: body.userMessage, verseLanguage: body.verseLanguage });
-      const memorySummary = memoryStore.get(body.session.sessionId) || body.session.conversationSummary || '';
-      const result = responseSchema.parse(await generate(body, agent, memorySummary));
+      // Client session IDs are not credentials. Keep anonymous chat stateless so
+      // reusing another client's ID cannot retrieve their private context.
+      const memorySummary = body.session.conversationMemory || body.session.conversationSummary || '';
+      const result = responseSchema.parse(await generate(body, agent, memorySummary, trustedIdentity));
       result.agent = agent.id;
       if (result.suggestedVerseId && !body.allowedVerseIds.includes(result.suggestedVerseId)) {
         result.suggestedVerseId = null;
         result.shouldOfferVerse = false;
       }
       if ((body.session.turnCount ?? 0) < 2) result.shouldOfferVerse = false;
-      if (result.memorySummary) memoryStore.set(body.session.sessionId, result.memorySummary);
       return res.json(result);
     } catch (error) { return next(error); }
   });
 
   app.use((error, _req, res, _next) => {
+    if (error instanceof IdentityError) return res.status(error.status).json({ message: error.message });
     if (error instanceof ZodError || error instanceof SyntaxError) {
       return res.status(400).json({ message: '요청 형식이 올바르지 않습니다.' });
     }
