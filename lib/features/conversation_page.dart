@@ -339,7 +339,10 @@ class _ConversationPageState extends State<ConversationPage> {
     });
     _scrollDown();
 
-    final assessment = _detector.assess(text);
+    final typedAssessment = _detector.assess(text);
+    final customAssessment = _detector.assess(_customFeeling ?? '');
+    final assessment = customAssessment.level > typedAssessment.level
+        ? customAssessment : typedAssessment;
     final local = _machine.applyLocalCrisis(_session, assessment, text);
     _session = local.session;
     if (assessment.isCrisis) {
@@ -370,6 +373,18 @@ class _ConversationPageState extends State<ConversationPage> {
       ));
       if (!mounted) return;
       final transition = _machine.applyLlmResponse(_session, response);
+      if (transition.uiAction == ConversationUiAction.showCrisisSupport ||
+          transition.uiAction == ConversationUiAction.showEmergencySupport) {
+        _session = transition.session;
+        setState(() {
+          _busy = false;
+          _showVerseOffer = false;
+        });
+        await _showCrisisSupport(
+          transition.uiAction == ConversationUiAction.showEmergencySupport,
+        );
+        return;
+      }
       _session = transition.session.copyWith(agentMemory: response.memorySummary);
       _lastAgent = response.agent;
       _clinicalReflection = response.clinicalReflection;
@@ -405,12 +420,7 @@ class _ConversationPageState extends State<ConversationPage> {
           transition.uiAction == ConversationUiAction.showVerseConsent;
         _busy = false;
       });
-        if (transition.uiAction == ConversationUiAction.showCrisisSupport ||
-          transition.uiAction == ConversationUiAction.showEmergencySupport) {
-        await _showCrisisSupport(
-          transition.uiAction == ConversationUiAction.showEmergencySupport,
-        );
-      } else if (shouldAutoShowVerse) {
+      if (shouldAutoShowVerse) {
         await _showVerseAutomatically();
       }
     } catch (_) {
@@ -669,17 +679,24 @@ class _ConversationPageState extends State<ConversationPage> {
 
   Future<void> _showCrisisSupport(bool immediate) async {
     if (!mounted) return;
+    FocusScope.of(context).unfocus();
     await showModalBottomSheet<void>(
       context: context,
       isDismissible: !immediate,
       enableDrag: !immediate,
       showDragHandle: true,
-      builder: (context) => Padding(
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (context) => SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(24, 8, 24, 36),
         child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(immediate ? '지금은 안전이 가장 중요해요' : '혼자 견디지 않아도 괜찮아요', style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w800)),
           const SizedBox(height: 12),
-          const Text('저는 긴급 구조를 제공할 수 없어요. 지금 자신이나 다른 사람을 해칠 가능성이 있다면 위험한 물건에서 멀어지고, 믿을 수 있는 사람과 함께 있어 주세요.', style: TextStyle(height: 1.55)),
+          const Text('지금 안전한 곳에 계신가요?', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+          const SizedBox(height: 12),
+          const Text('가능하다면 위험한 물건에서 멀어지고, 믿을 수 있는 주변 사람에게 곁에 있어 달라고 부탁해 주세요. 상담 전문가나 의료진의 도움을 받아도 괜찮아요. 저는 직접 출동하거나 구조를 요청할 수 없어요.', style: TextStyle(height: 1.55)),
+          const SizedBox(height: 12),
+          const Text('다쳤거나 자신 또는 다른 사람을 곧 해칠 위험이 있다면 현지 응급 서비스에 바로 연락해 주세요. 아래 번호는 한국 기준입니다. 한국 밖에서는 현재 지역의 응급 번호를 이용해 주세요.', style: TextStyle(height: 1.55)),
           const SizedBox(height: 20),
           FilledButton.icon(onPressed: () => launchUrl(Uri.parse('tel:109')), icon: const Icon(Icons.call), label: const Text('자살예방상담전화 109')),
           const SizedBox(height: 10),

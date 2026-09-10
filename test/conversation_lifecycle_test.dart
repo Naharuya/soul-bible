@@ -33,6 +33,49 @@ void main() {
     SharedPreferencesAsyncPlatform.instance = null;
   });
 
+  testWidgets('local high risk stops before the client and never shows fallback', (tester) async {
+    final client = _PendingClient();
+    await tester.pumpWidget(MaterialApp(theme: AppTheme.light,
+      home: ConversationPage(emotion: EmotionType.anxiety, intensity: 5, apiClient: client)));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), '죽고싶어요');
+    await tester.tap(find.byTooltip('보내기'));
+    await tester.pumpAndSettle();
+    expect(client.called, isFalse);
+    expect(find.text('지금 안전한 곳에 계신가요?'), findsOneWidget);
+    expect(find.textContaining('아래 번호는 한국 기준'), findsOneWidget);
+    expect(find.text('자살예방상담전화 109'), findsOneWidget);
+    expect(find.textContaining('AI 답변을 받지 못했어요'), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('server risk opens fixed support before raw model text or verse lookup', (tester) async {
+    rootBundle.clear();
+    await tester.runAsync(() => rootBundle.loadString('assets/data/bible_verses_ko.json'));
+    final client = _PendingClient();
+    await tester.pumpWidget(MaterialApp(theme: AppTheme.light,
+      home: ConversationPage(emotion: EmotionType.anxiety, intensity: 5, apiClient: client)));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), '마음이 힘들어요');
+    await tester.tap(find.byTooltip('보내기'));
+    for (var i = 0; i < 50 && !client.called; i++) {
+      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 10)));
+      await tester.pump();
+    }
+    expect(client.called, isTrue);
+    client.result.complete(const LlmConversationResponse(
+      message: 'PRIVATE_RAW_MODEL', question: 'PRIVATE_RAW_MODEL',
+      stage: ConversationStage.crisis, detectedEmotion: EmotionType.anxiety,
+      riskLevel: 3, shouldOfferVerse: true, suggestedVerseId: 'invalid-verse', shouldEndConversation: true,
+      clinicalReflection: 'PRIVATE_RAW_MODEL',
+    ));
+    await tester.pumpAndSettle();
+    expect(find.text('자살예방상담전화 109'), findsOneWidget);
+    expect(find.textContaining('PRIVATE_RAW_MODEL'), findsNothing);
+    expect(find.textContaining('AI 답변을 받지 못했어요'), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
   for (final fail in [false, true]) {
     testWidgets('leaving chat before ${fail ? 'failure' : 'response'} is safe', (tester) async {
       rootBundle.clear();

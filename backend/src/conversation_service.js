@@ -31,7 +31,8 @@ function fallbackReason(error) {
   if (error?.code === 'RELIGION_ROUTING') return 'religion_routing';
   if (error?.status === 429) return 'rate_limit';
   if (error?.status >= 500 && error?.status <= 599) return 'provider_5xx';
-  if (error?.status === 401 || error?.status === 403) return 'provider_auth';
+  if (error?.status === 401) return 'provider_auth';
+  if (error?.status === 403) return 'provider_403';
   if (error?.name === 'APIConnectionError' || ['ECONNRESET', 'ECONNREFUSED', 'ENOTFOUND'].includes(error?.code)) return 'connection_failure';
   if (error instanceof SyntaxError) return 'malformed_json';
   if (error instanceof ZodError) return 'schema_validation';
@@ -97,6 +98,7 @@ export function createConversationService({ env = process.env, logger = console,
 
   async function fallback(body, agent, memorySummary, neutral = false) {
     const result = await local(body, agent, memorySummary);
+    if (result.riskLevel > 0 || result.stage === 'crisis') return responseSchema.parse(result);
     if (neutral || (body.religion && body.religion !== 'protestant')) {
       // Preserve legacy requests exactly, but never route another religion to Bible content.
       result.suggestedVerseId = null;
@@ -133,13 +135,13 @@ export function createConversationService({ env = process.env, logger = console,
     }
     // Request errors must still reach app.js as HTTP 400, not be swallowed by fallback.
     const body = requestSchema.parse(request);
-    const agent = suppliedAgent ?? routeAgent({ requestedAgent: body.agentMode, userMessage: body.userMessage, verseLanguage: body.verseLanguage });
-    const safety = assessSafety(normalizeContext(body, memorySummary));
+    const safety = assessSafety({ userMessage: body.userMessage, emotion: body.session.selectedEmotion, conversationState: body.session });
     if (safety) {
-      try { lease = usageLedger.reserve({ sessionId: body.session.sessionId, taskType: 'crisis', agent: agent.id }); } catch { /* Safety bypass. */ }
+      try { lease = usageLedger.reserve({ sessionId: body.session.sessionId, taskType: 'crisis', agent: 'integrated' }); } catch { /* Safety bypass. */ }
       record('safety');
       return responseSchema.parse(safety);
     }
+    const agent = suppliedAgent ?? routeAgent({ requestedAgent: body.agentMode, userMessage: body.userMessage, verseLanguage: body.verseLanguage });
     const taskType = classifyTask(body);
     if (!enabled && !['bible_search', 'religion_search'].includes(taskType)) {
       try { lease = usageLedger.reserve({ sessionId: body.session.sessionId, taskType: 'rule', agent: agent.id }); } catch { /* Local remains available. */ }

@@ -1,4 +1,4 @@
-const CACHE = 'onaria-admin-shell-v2';
+const CACHE = 'onaria-admin-shell-v3';
 const SHELL = ['/admin/', '/admin/admin.css', '/admin/admin.js', '/admin/install.js', '/admin/manifest.webmanifest', '/admin/icons/icon-192.png', '/admin/icons/icon-512.png', '/admin/icons/icon-maskable.png'];
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)));

@@ -47,6 +47,17 @@ test('stage 8: the installed SDK serializes the structured task through its real
   assert.equal(sent.text.format.name, task.name);
 });
 
+test('provider output containing its configured secret is rejected without echoing it', async () => {
+  const apiKey = 'sk-private-fixture-only';
+  const service = createOpenAiService({ apiKey, model: 'test-model',
+    client: { responses: { create: async () => ({ output_text: JSON.stringify({ ok: apiKey }) }) } } });
+  await assert.rejects(service.runStructured(task), (error) => {
+    assert.equal(error.message, 'Provider output rejected.');
+    assert.equal(error.message.includes(apiKey), false);
+    return true;
+  });
+});
+
 test('stage 8: legacy callable OpenAI service retains its request and response contract', async () => {
   const fixture = JSON.parse(await readFile(new URL('./fixtures/multi_agent_response.json', import.meta.url), 'utf8'));
   let sent;

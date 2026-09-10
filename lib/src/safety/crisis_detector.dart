@@ -70,13 +70,12 @@ class CrisisDetector {
 
   static String _normalize(String text) => text
       .toLowerCase()
-      .replaceAll(RegExp(r'\s+'), ' ')
-      .replaceAll(RegExp(r'[^\w가-힣 ]'), '')
+      .replaceAll(RegExp(r'[^\w가-힣]'), '')
       .trim();
 
   static List<String> _matchesAny(String text, List<RegExp> patterns) {
     return patterns
-        .where((pattern) => pattern.hasMatch(text))
+        .where((pattern) => RegExp(pattern.pattern.replaceAll(' ', '')).hasMatch(text))
         .map((pattern) => pattern.pattern)
         .toList(growable: false);
   }

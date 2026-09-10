@@ -9,6 +9,7 @@ services:
       SOUL_USAGE_DB_PATH: /app/cost-data/ai_usage.sqlite
     volumes:
       - soul-bible-cost-data:/app/cost-data
+      - onaria-admin-secrets:/app/data/admin-secrets
     ports:
       - "127.0.0.1:8787:8787"
     restart: unless-stopped
@@ -21,3 +22,4 @@ services:
 
 volumes:
   soul-bible-cost-data:
+  onaria-admin-secrets:

@@ -4,6 +4,33 @@ import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 import { createApp } from '../src/app.js';
 
+test('API key form sends authenticated write, clears secret and ignores response after logout', async () => {
+  const elements = new Map();
+  const element = id => {
+    if (!elements.has(id)) elements.set(id, { value: '', textContent: '', disabled: false, handlers: {},
+      classList: { add() {}, remove() {} }, replaceChildren() {}, addEventListener(name, fn) { this.handlers[name] = fn; } });
+    return elements.get(id);
+  };
+  let resolveResponse;
+  let request;
+  const context = vm.createContext({ document: { getElementById: element },
+    sessionStorage: { getItem: () => '', removeItem() {}, setItem: () => assert.fail('API key must not be persisted in browser storage') },
+    window: { confirm: () => true }, Intl,
+    fetch: (url, options) => { request = { url, options }; return new Promise(resolve => { resolveResponse = resolve; }); },
+  });
+  vm.runInContext(await readFile(new URL('../public/admin.js', import.meta.url), 'utf8'), context);
+  vm.runInContext("token = 'test-admin'", context);
+  element('apiKeyInput').value = 'sk-test-private-value';
+  const saving = vm.runInContext("changeKey('PUT')", context);
+  assert.equal(element('apiKeyInput').value, '');
+  assert.equal(request.options.headers.Authorization, 'Bearer test-admin');
+  assert.equal(JSON.parse(request.options.body).apiKey, 'sk-test-private-value');
+  element('logoutButton').handlers.click();
+  resolveResponse({ ok: true, status: 200, json: () => assert.fail('Stale settings must not render') });
+  await saving;
+  assert.equal(element('keyMessage').textContent, '');
+});
+
 test('serves installable admin shell and protects live data from caching', async () => {
   const app = createApp({ generate: async () => ({}), adminToken: 'test-admin', memberStore: { getAdminOverview: () => ({ total: 0, recent: [] }) } });
   const server = await new Promise((resolve) => { const listener = app.listen(0, '127.0.0.1', () => resolve(listener)); });

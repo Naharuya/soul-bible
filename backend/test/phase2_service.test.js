@@ -58,6 +58,8 @@ for (const [name, fail, reason] of [
   ['SDK timeout', () => { throw Object.assign(Error('private'), { name: 'APIConnectionTimeoutError' }); }, 'timeout'],
   ['connection', () => { throw Object.assign(Error('private'), { name: 'APIConnectionError' }); }, 'connection_failure'],
   ['429', () => { throw Object.assign(Error('private'), { status: 429 }); }, 'rate_limit'],
+  ['401', () => { throw Object.assign(Error('private'), { status: 401 }); }, 'provider_auth'],
+  ['403', () => { throw Object.assign(Error('private'), { status: 403 }); }, 'provider_403'],
   ['503', () => { throw Object.assign(Error('private'), { status: 503 }); }, 'provider_5xx'],
   ['malformed JSON', () => JSON.parse('not-json'), 'malformed_json'],
   ['schema failure', () => ({ reflection: 42 }), 'schema_validation'],

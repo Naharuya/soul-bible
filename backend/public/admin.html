@@ -23,8 +23,9 @@
         <a href="#conversations"><span>◎</span> Conversations</a>
         <a href="#members"><span>♙</span> Members</a>
         <a href="#crisisCount"><span>◇</span> Safety</a>
+        <a href="#settings"><span>⚙</span> API 설정</a>
       </nav>
-      <div class="sidebar-foot"><span class="live-dot"></span> Production server</div>
+      <div class="sidebar-foot">onaria 운영 관리</div>
     </aside>
 
     <main>
@@ -47,7 +48,19 @@
       </section>
 
       <div id="dashboard" class="hidden">
-        <section class="status-strip"><span class="status-pill"><i></i> All systems operational</span><span>Local conversation mode</span><span id="uptime">Uptime —</span></section>
+        <section class="status-strip"><span class="status-pill"><i></i> 서버 연결됨</span><a href="#settings">API 설정 관리 →</a><span id="uptime">Uptime —</span></section>
+        <section class="panel settings-panel" id="settings" aria-labelledby="settingsTitle">
+          <div class="panel-head"><div><p class="eyebrow">AI CONNECTION</p><h2 id="settingsTitle">OpenAI API 설정</h2></div><span id="keyStatus" class="privacy">확인 중</span></div>
+          <p class="sub">키를 등록하거나 새 키로 교체하세요. 저장한 키는 다시 표시되지 않습니다.</p>
+          <dl class="settings-summary"><div><dt>응답 모드</dt><dd id="keyMode">—</dd></div><div><dt>마지막 변경</dt><dd id="keyUpdated">—</dd></div></dl>
+          <form id="apiKeyForm" class="settings-form">
+            <label for="apiKeyInput">새 API 키</label>
+            <input id="apiKeyInput" type="password" autocomplete="new-password" spellcheck="false" placeholder="sk-…" minlength="13" maxlength="503" required aria-describedby="keyHelp">
+            <p id="keyHelp" class="sub">서버에 암호화하여 저장합니다. 키 저장은 연결 성공을 의미하지 않으며, 유료 AI 사용은 서버의 활성화 설정을 따릅니다.</p>
+            <div class="settings-actions"><button id="saveKeyButton" type="submit" class="text-button">키 저장</button><button id="deleteKeyButton" type="button" class="secondary-button">키 삭제</button><button id="reloadKeyButton" type="button" class="secondary-button">상태 새로고침</button></div>
+          </form>
+          <p id="keyMessage" role="status" aria-live="polite"></p>
+        </section>
         <section class="metric-grid" id="overview">
           <article class="metric-card accent-green"><div class="metric-top"><span>대화 요청</span><b>↗</b></div><strong id="chatCount">—</strong><small>서버 시작 이후</small></article>
           <article class="metric-card accent-gold"><div class="metric-top"><span>가입 회원</span><b>♙</b></div><strong id="memberCount">—</strong><small>누적 회원</small></article>

@@ -7,6 +7,8 @@ function logout() {
   token = '';
   sessionStorage.removeItem('soulBibleAdminToken');
   $('tokenInput').value = '';
+  $('apiKeyInput').value = '';
+  $('keyMessage').textContent = '';
   $('dashboard').classList.add('hidden');
   $('logoutButton').classList.add('hidden');
   $('loginPanel').classList.remove('hidden');
@@ -65,6 +67,8 @@ async function loadDashboard() {
     $('logoutButton').classList.remove('hidden');
     $('tokenInput').value = '';
     $('loginError').textContent = '';
+    await loadSettings();
+    if (currentRequest !== requestVersion) return;
     $('chatCount').textContent = formatNumber(data.metrics.chats);
     $('memberCount').textContent = formatNumber(data.members.total);
     $('sessionCount').textContent = formatNumber(data.metrics.activeSessions);
@@ -96,3 +100,45 @@ $('loginForm').addEventListener('submit', (event) => { event.preventDefault(); t
 $('refreshButton').addEventListener('click', loadDashboard);
 $('logoutButton').addEventListener('click', logout);
 if (token) loadDashboard();
+
+function renderSettings(data) {
+  $('keyStatus').textContent = data.configured ? (data.source === 'environment' ? '서버 환경 키 사용 중' : '키 등록됨') : '키 미등록';
+  $('keyMode').textContent = data.mode === 'local conversation' ? '로컬 응답 · AI 비활성' : 'AI 활성 · 연결 검증 필요';
+  $('keyUpdated').textContent = formatDate(data.updatedAt);
+  $('deleteKeyButton').disabled = !data.configured;
+}
+async function settingsRequest(method = 'GET', apiKey) {
+  const version = requestVersion;
+  const response = await fetch('/v1/admin/settings', { method, cache: 'no-store',
+    headers: { Authorization: `Bearer ${token}`, ...(method === 'PUT' ? { 'Content-Type': 'application/json' } : {}) },
+    ...(method === 'PUT' ? { body: JSON.stringify({ apiKey }) } : {}) });
+  if (version !== requestVersion) return;
+  if (response.status === 401) { logout(); throw Error('관리자 인증이 만료되었습니다. 다시 로그인하세요.'); }
+  if (!response.ok) throw Error(response.status === 400 ? 'API 키 형식을 확인해 주세요.' : '설정을 처리하지 못했습니다. 연결 상태를 확인하고 다시 시도하세요.');
+  const data = await response.json();
+  if (version !== requestVersion) return;
+  renderSettings(data);
+  return data;
+}
+async function loadSettings() {
+  try { await settingsRequest(); }
+  catch (error) { $('keyMessage').textContent = error.message; }
+}
+async function changeKey(method) {
+  if (!token) return;
+  const apiKey = $('apiKeyInput').value.trim();
+  $('apiKeyInput').value = '';
+  const buttons = ['saveKeyButton', 'deleteKeyButton', 'reloadKeyButton'];
+  buttons.forEach(id => { $(id).disabled = true; });
+  $('keyMessage').textContent = '처리 중…';
+  try {
+    const data = await settingsRequest(method, apiKey);
+    if (data) $('keyMessage').textContent = method === 'DELETE' ? '키를 삭제했습니다. 새 요청은 로컬 응답을 사용합니다.' : '저장했습니다. 새 요청부터 적용됩니다. 실제 연결은 아직 검증하지 않았습니다.';
+  } catch (error) { $('keyMessage').textContent = error.message; }
+  finally { buttons.forEach(id => { $(id).disabled = false; }); }
+}
+$('apiKeyForm').addEventListener('submit', event => { event.preventDefault(); changeKey('PUT'); });
+$('deleteKeyButton').addEventListener('click', () => {
+  if (window.confirm('등록한 키 사용을 중단할까요? 서버 환경 키도 대신 사용하지 않습니다. 진행 중인 요청은 완료될 수 있습니다.')) changeKey('DELETE');
+});
+$('reloadKeyButton').addEventListener('click', loadSettings);

@@ -7,6 +7,7 @@
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
     "test": "node --test",
+    "safety:smoke": "node scripts/safety_smoke.js",
     "smoke:cost": "node scripts/cost_smoke.js",
     "smoke:cost:persistence": "node scripts/cost_persistence_smoke.js",
     "eval:retrieval": "node src/evaluation/run_evaluation.js",

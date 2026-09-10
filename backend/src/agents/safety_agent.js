@@ -1,7 +1,7 @@
-import { assessCrisis, crisisResponse } from '../crisis.js';
+import { assessRequestCrisis, crisisResponse } from '../crisis.js';
 
 // Retain every existing risk level, including passive ideation and psychosis signals.
 export function assessSafety(context) {
-  const assessment = assessCrisis(context.userMessage);
+  const assessment = assessRequestCrisis({ userMessage: context.userMessage, session: context.conversationState });
   return assessment.level > 0 ? crisisResponse(context.emotion, assessment) : null;
 }

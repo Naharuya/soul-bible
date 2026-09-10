@@ -1,6 +1,7 @@
 import OpenAI from 'openai';
 import { SYSTEM_PROMPT, buildInput } from './prompt.js';
 import { responseJsonSchema, responseSchema } from './schema.js';
+import { assessRequestCrisis, crisisResponse } from './crisis.js';
 
 export function createOpenAiService({ apiKey, model, client, timeout = 6_000, maxRetries = 1 }) {
   if (!apiKey) throw new Error('OPENAI_API_KEY is required.');
@@ -32,11 +33,14 @@ export function createOpenAiService({ apiKey, model, client, timeout = 6_000, ma
     } catch { /* Usage tracking cannot turn a successful response into an error. */ }
     if (response.status && response.status !== 'completed') throw new Error('The model response did not complete.');
     if (!response.output_text) throw new Error('The model returned no output text.');
+    if (response.output_text.includes(apiKey)) throw new Error('Provider output rejected.');
     return schema.parse(JSON.parse(response.output_text));
   }
 
   // Preserve the existing callable service contract for any legacy consumers.
   async function generate(body, agent, memorySummary = '', options = {}) {
+    const safety = assessRequestCrisis(body);
+    if (safety.level > 0) return crisisResponse(body.session.selectedEmotion, safety);
     return runStructured({
       name: 'soul_bible_turn', instructions: SYSTEM_PROMPT,
       input: buildInput(body, agent, memorySummary),

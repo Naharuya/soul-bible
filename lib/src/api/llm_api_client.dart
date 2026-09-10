@@ -54,25 +54,19 @@ class ProxyLlmApiClient implements LlmApiClient {
     if (response.statusCode < 200 || response.statusCode >= 300) {
       throw LlmApiException(
         statusCode: response.statusCode,
-        message: _readError(response.body),
+        message: '서버 연결을 처리하지 못했습니다. 잠시 후 다시 시도해 주세요.',
       );
     }
 
-    final decoded = jsonDecode(response.body);
-    if (decoded is! Map<String, dynamic>) {
-      throw const FormatException('LLM response must be a JSON object.');
-    }
-    return LlmConversationResponse.fromJson(decoded);
-  }
-
-  static String _readError(String body) {
     try {
-      final decoded = jsonDecode(body);
-      if (decoded is Map<String, dynamic> && decoded['message'] is String) {
-        return decoded['message'] as String;
+      final decoded = jsonDecode(response.body);
+      if (decoded is! Map<String, dynamic>) {
+        throw const FormatException('Invalid response.');
       }
-    } catch (_) {}
-    return '서버 연결을 처리하지 못했습니다. 잠시 후 다시 시도해 주세요.';
+      return LlmConversationResponse.fromJson(decoded);
+    } catch (_) {
+      throw const FormatException('서버 응답을 확인하지 못했습니다. 잠시 후 다시 시도해 주세요.');
+    }
   }
 
   void close() => _httpClient.close();

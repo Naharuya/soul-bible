@@ -1,3 +1,5 @@
+import { assessRequestCrisis, crisisResponse } from './crisis.js';
+
 const stageReplies = {
   situation: {
     message: (emotion) => `${emotion}한 마음을 안고 계셨군요. 서두르지 않고 지금 겪은 일을 함께 살펴볼게요.`,
@@ -37,6 +39,8 @@ function selectStage(session) {
 
 export function createLocalConversationService() {
   return async function generate(body, agent, memorySummary = '') {
+    const safety = assessRequestCrisis(body);
+    if (safety.level > 0) return crisisResponse(body.session.selectedEmotion, safety);
     const stage = selectStage(body.session);
     const reply = stageReplies[stage];
     const shouldOfferVerse = stage === 'verse_offer' && body.allowedVerseIds.length > 0;

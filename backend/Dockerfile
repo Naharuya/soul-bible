@@ -3,6 +3,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install --omit=dev
 COPY src ./src
+COPY public ./public
 RUN mkdir -p /app/data /app/cost-data && chown -R node:node /app
 ENV NODE_ENV=production PORT=8787
 EXPOSE 8787
