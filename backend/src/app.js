@@ -11,6 +11,7 @@ import { memberSchema, publicMember } from './member_schema.js';
 import { createMemberStore } from './member_store.js';
 import { routeAgent } from './ai_router.js';
 import { IdentityError } from './auth/identity_verifier.js';
+import { appLinksRouter } from './app_links.js';
 
 export function createApp({ generate, adminSettings, allowedOrigins = [], appToken = '', adminToken = '', logger = console, memberStore = createMemberStore(), identity = { required: false, verify: null } }) {
   const app = express();
@@ -18,6 +19,7 @@ export function createApp({ generate, adminSettings, allowedOrigins = [], appTok
   const metrics = { requests: 0, chats: 0, crises: 0, errors: 0, statusCodes: {} };
   app.disable('x-powered-by');
   app.use(helmet());
+  app.use(appLinksRouter());
   app.use(cors({ origin(origin, cb) { cb(null, !origin || allowedOrigins.includes(origin)); } }));
   app.use('/v1', (_req, res, next) => {
     res.set('Cache-Control', 'no-store');

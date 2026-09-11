@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
@@ -10,6 +11,12 @@ import '../app/api_config.dart';
 import '../app/asset_loader.dart';
 import '../app/mind_card_store.dart';
 import '../onaria.dart';
+import '../engagement/engagement_controller.dart';
+import '../engagement/domain_events.dart';
+import '../engagement/mini_games/cross_light/cross_light_page.dart';
+import '../engagement/sharing/share_card.dart';
+import '../engagement/sharing/share_preview_page.dart';
+import 'growth_page.dart';
 
 class _ChatItem {
   const _ChatItem(this.text, {this.fromUser = false, this.question});
@@ -19,7 +26,8 @@ class _ChatItem {
 }
 
 class ConversationPage extends StatefulWidget {
-  const ConversationPage({super.key, required this.emotion, required this.intensity, this.customEmotion, this.apiClient});
+  const ConversationPage({super.key, required this.emotion, required this.intensity, this.customEmotion, this.apiClient, this.mindCardStore});
+  final MindCardStore? mindCardStore;
   final LlmApiClient? apiClient;
   final String? customEmotion;
   final EmotionType emotion;
@@ -270,7 +278,7 @@ class _ConversationPageState extends State<ConversationPage> {
   final _scrollController = ScrollController();
   final _speech = SpeechToText();
   final _tts = FlutterTts();
-  final _mindCardStore = MindCardStore();
+  late final _mindCardStore = widget.mindCardStore ?? MindCardStore();
   final _detector = const CrisisDetector();
   final _machine = const ConversationMachine();
   late final LlmApiClient? _client;
@@ -282,11 +290,13 @@ class _ConversationPageState extends State<ConversationPage> {
   bool _isListening = false;
   bool _isSpeaking = false;
   bool _savingCard = false;
+  MindCardRecord? _savedMindCard;
   bool _showVerseOffer = false;
   BibleVerse? _verse;
   BibleVerse? _suggestedVerse;
   bool _showActions = false;
   bool _showSummary = false;
+  bool _openingGame = false;
   String? _chosenAction;
   String _agentMode = 'auto';
   String _verseLanguage = 'bilingual';
@@ -331,7 +341,9 @@ class _ConversationPageState extends State<ConversationPage> {
   Future<void> _send() async {
     final text = _controller.text.trim();
     if (text.isEmpty || _busy || _session.isEnded ||
-        _session.turnCount >= _machine.maxCoreTurns) return;
+        _session.turnCount >= _machine.maxCoreTurns) {
+      return;
+    }
     _controller.clear();
     setState(() {
       _items.add(_ChatItem(text, fromUser: true));
@@ -624,7 +636,20 @@ class _ConversationPageState extends State<ConversationPage> {
     _scrollDown();
   }
 
-  void _chooseAction(String action) {
+  Future<void> _chooseAction(String action) async {
+    if (_openingGame) return;
+    setState(() {
+      _openingGame = true;
+      _chosenAction = action;
+    });
+    await _tts.stop();
+    if (!mounted) return;
+    final completed = await Navigator.of(context).push<bool>(MaterialPageRoute(
+      builder: (_) => const CrossLightPage(continueToMindCard: true),
+    ));
+    if (!mounted) return;
+    setState(() => _openingGame = false);
+    if (completed != true) return;
     _session = _machine.selectAction(_session).session;
     setState(() {
       _chosenAction = action;
@@ -634,22 +659,19 @@ class _ConversationPageState extends State<ConversationPage> {
     _scrollDown();
   }
 
-  Future<void> _saveMindCard() async {
-    if (_savingCard || _verse == null || _chosenAction == null) return;
+  MindCardRecord _mindCard() {
     final now = DateTime.now();
-    setState(() => _savingCard = true);
-    try {
-      await _mindCardStore.save(MindCardRecord(
+    return MindCardRecord(
         id: now.microsecondsSinceEpoch.toString(),
         createdAt: now,
         title: _cardTitle,
         dateLabel: '${now.year}년 ${now.month}월 ${now.day}일',
         emotion: widget.emotion.label,
         intensity: widget.intensity,
-        verseReference: _verse!.reference,
-        verseText: _verse!.text,
-        englishVerseText: _verse!.englishText,
-        reflectionQuestion: _questionText(_verse!.reflectionQuestion),
+        verseReference: _verse?.reference ?? '',
+        verseText: _verse?.text ?? '',
+        englishVerseText: _verse?.englishText ?? '',
+        reflectionQuestion: _questionText(_verse?.reflectionQuestion ?? ''),
         action: _chosenAction!,
         closingMessage: _cardClosingMessage,
         agent: _lastAgent,
@@ -657,14 +679,44 @@ class _ConversationPageState extends State<ConversationPage> {
         clinicalReflection: _clinicalReflection,
         integratedInsight: _integratedInsight,
         verseLanguage: _verseLanguage,
-      ));
-      if (!mounted) return;
+      );
+  }
+
+  Future<void> _shareMindCard() => _saveMindCard(share: true);
+
+  Future<void> _saveMindCard({bool share = false}) async {
+    if (_savingCard || _chosenAction == null) return;
+    final engagement = EngagementScope.maybeOf(context);
+    final route = ModalRoute.of(context);
+    setState(() => _savingCard = true);
+    try {
+      if (_savedMindCard == null) {
+        final card = _mindCard();
+        await _mindCardStore.save(card);
+        _savedMindCard = card;
+        // Analytics failure must not turn a successful save into a failed action.
+        unawaited(engagement?.emit(EngagementEventType.mindCardCreated)
+            .catchError((Object _) {}) ?? Future<void>.value());
+      }
+      if (!mounted || route?.isCurrent == false) return;
       _showVoiceMessage('마음 카드와 감정·대화 요약을 이 기기에 저장했어요. 저장된 카드에서 삭제할 수 있어요.');
-      Navigator.of(context).pop();
+      if (share) {
+        await Navigator.of(context).push(MaterialPageRoute<void>(
+          builder: (_) => SharePreviewPage(content: ShareCardContent.mindCard(
+            _savedMindCard!, engagement?.catalog ?? [],
+          )),
+        ));
+      } else {
+        Navigator.of(context).pushReplacement(MaterialPageRoute<void>(
+          builder: (_) => GrowthPage(store: _mindCardStore)));
+      }
     } catch (_) {
       if (!mounted) return;
-      setState(() => _savingCard = false);
-      _showVoiceMessage('마음 카드를 저장하지 못했어요. 다시 시도해 주세요.');
+      _showVoiceMessage(_savedMindCard == null
+          ? '마음 카드를 저장하지 못했어요. 다시 시도해 주세요.'
+          : '카드는 저장했지만 공유 화면을 열지 못했어요. 다시 시도해 주세요.');
+    } finally {
+      if (mounted) setState(() => _savingCard = false);
     }
   }
 
@@ -679,6 +731,7 @@ class _ConversationPageState extends State<ConversationPage> {
 
   Future<void> _showCrisisSupport(bool immediate) async {
     if (!mounted) return;
+    unawaited(EngagementScope.maybeOf(context)?.reminders.pause() ?? Future<void>.value());
     FocusScope.of(context).unfocus();
     await showModalBottomSheet<void>(
       context: context,
@@ -944,12 +997,14 @@ class _ConversationPageState extends State<ConversationPage> {
 
   Widget _actionCard() => _panel(children: [
     const Text('지금 할 수 있는\n아주 작은 한 걸음', style: TextStyle(fontSize: 21, fontWeight: FontWeight.w800, height: 1.35), textAlign: TextAlign.center),
+    const SizedBox(height: 8),
+    const Text('작은 행동을 하나 고른 뒤, 십자가에 빛을 모으며 잠시 쉬어 가요.', textAlign: TextAlign.center),
     const SizedBox(height: 16),
     ..._currentActions.map(
       (action) => Padding(
         padding: const EdgeInsets.only(bottom: 9),
         child: OutlinedButton(
-          onPressed: () => _chooseAction(action),
+          onPressed: _openingGame ? null : () => _chooseAction(action),
           style: OutlinedButton.styleFrom(
             minimumSize: const Size.fromHeight(52),
             alignment: Alignment.centerLeft,
@@ -979,6 +1034,15 @@ class _ConversationPageState extends State<ConversationPage> {
           : const Icon(Icons.bookmark_add_outlined),
       label: const Text('마음 카드 저장하기'),
     ),
+    const SizedBox(height: 8),
+    OutlinedButton.icon(
+      onPressed: _savingCard ? null : _shareMindCard,
+      icon: const Icon(Icons.ios_share),
+      label: const Text('마음 카드 공유하기'),
+    ),
+    const SizedBox(height: 8),
+    const Text('공유하면 마음 카드도 이 기기에 함께 저장돼요.',
+        textAlign: TextAlign.center),
     const SizedBox(height: 8),
     OutlinedButton(
       onPressed: () => Navigator.of(context).pop(),

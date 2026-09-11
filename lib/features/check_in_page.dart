@@ -6,7 +6,12 @@ import '../onaria.dart';
 import '../app/mind_card_store.dart';
 import 'conversation_page.dart';
 import 'saved_cards_page.dart';
+import 'growth_page.dart';
 import 'signup_page.dart';
+import '../engagement/engagement_page.dart';
+import '../engagement/journey/journey_page.dart';
+import '../engagement/mini_games/cross_light/cross_light_page.dart';
+import '../engagement/notifications/notification_settings_page.dart';
 
 class CheckInPage extends StatefulWidget {
   const CheckInPage({super.key});
@@ -72,13 +77,28 @@ class _CheckInPageState extends State<CheckInPage> {
                     icon: Icon(Icons.menu, color: AppTheme.of(context).green, size: 24),
                     tooltip: '메뉴',
                     onSelected: (value) {
-                      if (value == 'saved_cards') {
+                      if (value == 'growth') {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const GrowthPage()));
+                      } else if (value == 'saved_cards') {
                         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SavedCardsPage()));
                       } else if (value == 'signup') {
                         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SignUpPage()));
+                      } else if (value == 'engagement') {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const EngagementPage()));
+                      } else if (value == 'journey') {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const JourneyPage()));
+                      } else if (value == 'cross_light') {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CrossLightPage()));
+                      } else if (value == 'reminders') {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const NotificationSettingsPage()));
                       }
                     },
                     itemBuilder: (_) => const [
+                      PopupMenuItem(value: 'growth', child: Text('작은 성장 기록')),
+                      PopupMenuItem(value: 'journey', child: Text('7일 마음의 여정')),
+                      PopupMenuItem(value: 'engagement', child: Text('말씀과 작은 기록')),
+                      PopupMenuItem(value: 'cross_light', child: Text('십자가 미니게임')),
+                      PopupMenuItem(value: 'reminders', child: Text('알림 설정')),
                       PopupMenuItem<String>(
                         value: 'signup',
                         child: Row(children: [
@@ -114,7 +134,7 @@ class _CheckInPageState extends State<CheckInPage> {
                     boxShadow: [BoxShadow(color: AppTheme.of(context).green.withValues(alpha: 0.12), blurRadius: 18, offset: Offset(0, 8))],
                   ),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text('오늘의 묵상', style: TextStyle(color: AppTheme.of(context).gold, fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 1.2)),
+                    Text('매일 3분 마음대화', style: TextStyle(color: AppTheme.of(context).gold, fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 1.2)),
                     SizedBox(height: 12),
                     Text('오늘 마음은\n어떤가요?', style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w700, height: 1.15)),
                     SizedBox(height: 12),
@@ -216,7 +236,7 @@ class _CheckInPageState extends State<CheckInPage> {
                     onPressed: (_otherEmotion ? _customEmotion.text.trim().isEmpty : _emotion == null) || _loadingUsage || _startingConversation
                       ? null
                       : _startConversation,
-                    child: const Text('다음 이야기 선택하기'),
+                    child: const Text('AI 마음대화 시작하기'),
                 ),
                 const SizedBox(height: 12),
                 Text(

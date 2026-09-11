@@ -1,12 +1,29 @@
 import 'package:onaria/app/app_theme.dart';
 import 'package:onaria/onaria.dart';
 import 'package:onaria/features/conversation_page.dart';
+import 'package:onaria/engagement/mini_games/cross_light/cross_light_page.dart';
+import 'package:onaria/engagement/sharing/share_preview_page.dart';
+import 'package:onaria/app/mind_card_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
+
+class _RetryCardStore extends MindCardStore {
+  bool failNext = true;
+  int attempts = 0;
+  @override
+  Future<void> save(MindCardRecord card) async {
+    attempts++;
+    if (failNext) {
+      failNext = false;
+      throw StateError('storage unavailable');
+    }
+    await super.save(card);
+  }
+}
 
 class _ExampleClient implements LlmApiClient {
   _ExampleClient({this.failTurns = const []});
@@ -66,9 +83,10 @@ void main() {
       );
     }
     final client = _ExampleClient(failTurns: failures);
+    final store = _RetryCardStore();
     await tester.pumpWidget(MaterialApp(
       theme: AppTheme.light,
-      home: ConversationPage(emotion: EmotionType.admiration, intensity: 7, apiClient: client),
+      home: ConversationPage(emotion: EmotionType.admiration, intensity: 7, apiClient: client, mindCardStore: store),
     ));
     await tester.pumpAndSettle();
     for (var turn = 1; turn <= 3; turn++) {
@@ -94,6 +112,71 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('작은 실천'), findsOneWidget);
     expect(find.text('오늘의 말씀'), findsNothing);
+    final action = find.text('감동받은 내용을 깊이 묵상하기');
+    await tester.ensureVisible(action);
+    await tester.tap(action);
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byType(CrossLightPage), findsOneWidget);
+    expect(find.text('마음 카드 저장하기'), findsNothing);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.text('작은 실천'), findsOneWidget);
+    await tester.ensureVisible(action);
+    await tester.tap(action);
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    // Exercise the game's completion result contract; game tests play all six lights.
+    if (failures.isEmpty) {
+      await tester.scrollUntilVisible(find.text('이번에는 건너뛰고 마음카드 보기'), 180);
+      await tester.ensureVisible(find.widgetWithText(TextButton, '이번에는 건너뛰고 마음카드 보기'));
+      await tester.pump(const Duration(seconds: 1));
+      await tester.tap(find.text('이번에는 건너뛰고 마음카드 보기'));
+    } else {
+      Navigator.of(tester.element(find.byType(CrossLightPage))).pop(true);
+    }
+    await tester.pumpAndSettle();
+    expect(find.text('오늘의 마음 카드'), findsOneWidget);
+    expect(find.text('감동받은 내용을 깊이 묵상하기'), findsOneWidget);
+    await tester.ensureVisible(find.text('마음 카드 공유하기'));
+    await tester.tap(find.text('마음 카드 공유하기'));
+    await tester.pumpAndSettle();
+    expect(find.byType(SharePreviewPage), findsNothing);
+    expect(await store.getAll(), isEmpty);
+    expect(find.text('마음 카드를 저장하지 못했어요. 다시 시도해 주세요.'), findsOneWidget);
+    final shareAction = tester.widget<OutlinedButton>(
+        find.widgetWithText(OutlinedButton, '마음 카드 공유하기')).onPressed!;
+    shareAction();
+    shareAction();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byType(SharePreviewPage), findsOneWidget);
+    final savedBeforeSharing = await store.getAll();
+    expect(savedBeforeSharing, hasLength(1));
+    expect(store.attempts, 2);
+    final preview = tester.widget<SharePreviewPage>(find.byType(SharePreviewPage));
+    expect(preview.content.accessibleText, isNot(contains('오늘 자연을 보며 감탄했어요.')));
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('마음 카드 공유하기'));
+    await tester.tap(find.text('마음 카드 공유하기'));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byType(SharePreviewPage), findsOneWidget);
+    expect(store.attempts, 2);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('마음 카드 저장하기'));
+    await tester.tap(find.text('마음 카드 저장하기'));
+    await tester.pumpAndSettle();
+    final cards = await MindCardStore().getAll();
+    expect(cards, hasLength(1));
+    expect(cards.single.id, savedBeforeSharing.single.id);
+    expect(store.attempts, 2);
+    expect(find.text('작은 성장 기록'), findsOneWidget);
+    expect(cards.single.action, '감동받은 내용을 깊이 묵상하기');
+    expect(cards.single.intensity, 7);
+    expect(client.requests, hasLength(3));
     expect(tester.takeException(), isNull);
   });
   }

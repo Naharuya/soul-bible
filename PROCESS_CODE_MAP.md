@@ -25,7 +25,15 @@ flowchart TD
     M --> O[응답 검증]
     N --> O
     O --> P[앱 상태 전이 및 대화 표시]
-    P --> Q[말씀 표시 및 마음 카드 저장]
+    P --> Q[말씀]
+    Q --> U[작은 행동 선택]
+    U --> V[십자가 미니게임]
+    V -->|완료 후 계속| W[오늘의 마음카드]
+    V -->|뒤로| U
+    W --> X[기기 저장]
+    W --> Y[공유 미리보기]
+    X --> Z[작은 성장 기록]
+    Z --> AA[다음날부터 알림: 직접 켜기]
     C --> R[메뉴: 회원가입]
     R --> S[POST /v1/auth/signup]
     S --> T[입력 검증 및 SQLite 저장]
@@ -116,7 +124,7 @@ flowchart TD
 | 말씀 읽기 | `ConversationPage._toggleVerseSpeech()` | 채팅 화면에 연결, 실기기 검증 별도 |
 | 알림 | [reminder_controller.dart](lib/engagement/notifications/reminder_controller.dart), [native_notifications.dart](lib/engagement/notifications/native_notifications.dart), [notification_settings_page.dart](lib/engagement/notifications/notification_settings_page.dart) | 구현 존재; 현재 앱 진입점에서 설정 화면으로의 연결 호출은 확인되지 않음 |
 | 공유 | [sharing](lib/engagement/sharing) | 구현 존재; 현재 주요 화면에서 공유 미리보기로의 연결 호출은 확인되지 않음 |
-| 미니게임 | [cross_light](lib/engagement/mini_games/cross_light) | 구현 존재; 현재 주요 화면에서 게임으로의 연결 호출은 확인되지 않음 |
+| 미니게임 | [cross_light](lib/engagement/mini_games/cross_light) | 메인 메뉴·말씀 기록 화면에서 진입. 여섯 별빛을 직접 터치해 십자가로 모으기·일시정지·재시작·완료 말씀 연결. [검증 기록](CROSS_LIGHT_GAME_REPORT.md) |
 | 여정·성취·이벤트 | [engagement_controller.dart](lib/engagement/engagement_controller.dart), [journey](lib/engagement/journey), [achievements](lib/engagement/achievements), [domain_events.dart](lib/engagement/domain_events.dart) | 확장 구현; 앱 루트의 EngagementScope 연결은 확인되지 않음 |
 
 구현 파일이 존재한다는 사실과 사용자가 메뉴로 접근할 수 있다는 사실을 구분한다. 위 확장 기능을 노출하는 작업은 화면 연결과 실기기 검증을 포함한 별도 기능 작업이다.

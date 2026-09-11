@@ -6,6 +6,7 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 
@@ -36,6 +37,17 @@ void main() {
     await tester.tap(find.text('회원가입'));
     await tester.pumpAndSettle();
     expect(find.text('onaria 시작하기'), findsOneWidget);
+    for (final link in ['https://api.onaria.ai.kr/app/open', 'onaria://app/open']) {
+      await tester.binding.defaultBinaryMessenger.handlePlatformMessage(
+        'flutter/navigation',
+        const JSONMethodCodec().encodeMethodCall(
+            MethodCall('pushRouteInformation', {'location': link})),
+        (_) {},
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('onaria 시작하기'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    }
     await tester.pageBack();
     await tester.pumpAndSettle();
     expect(find.text('오늘 마음은\n어떤가요?'), findsOneWidget);
