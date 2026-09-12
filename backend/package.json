@@ -22,7 +22,8 @@
     "pilot:a-track": "node src/knowledge/a_track_pilot.js",
     "cost:v1:dry": "node scripts/cost_router_v1.js",
     "cost:v1:real": "node --env-file=.env scripts/cost_router_v1.js --real",
-    "test:web": "playwright test"
+    "test:web": "playwright test",
+    "test:web:performance": "node scripts/website_lighthouse.mjs"
   },
   "engines": {
     "node": ">=20"
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.63.0",
-    "js-tiktoken": "^1.0.21"
+    "js-tiktoken": "^1.0.21",
+    "lighthouse": "^13.4.1"
   }
 }

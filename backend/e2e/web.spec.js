@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-for (const width of [360, 390, 430, 768, 1280, 1440]) {
+for (const width of [360, 390, 430, 768, 1024, 1280, 1440]) {
   test(`public navigation, layout and accessibility at ${width}px`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: 900 });
     const errors = []; page.on('pageerror', error => errors.push(error.message));
     for (const path of ['/', '/about', '/services', '/traditions', '/privacy', '/terms']) {
       await page.goto(path); await expect(page.locator('h1')).toBeVisible();
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-      const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+      const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
       expect(results.violations).toEqual([]);
     }
     await page.goto('/');

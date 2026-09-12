@@ -20,6 +20,10 @@ test('public routes have unique canonical SEO and do not disclose operational da
     assert.equal(response.status, 200); assert.match(text, /<html lang="ko">/);
     assert.ok(text.includes(`rel="canonical" href="https://onaria.ai.kr${path}"`));
     assert.match(text, /og:image/); assert.match(text, /본문 바로가기/);
+    const structured = JSON.parse(text.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);
+    assert.equal(structured.url, 'https://onaria.ai.kr');
+    assert.equal(structured['@type'], 'Organization');
+    assert.match(text, /name="twitter:title"/);
     assert.ok(!text.includes('web-test-admin-credential')); assert.ok(!text.includes('memberRows'));
   }
   const sitemap = await (await fetch(base + '/sitemap.xml')).text();

@@ -30,9 +30,12 @@ jobs:
       - run: npm test
       - run: npx playwright install --with-deps chromium
       - run: npm run test:web
+      - run: npm run test:web:performance
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: onaria-web-results
-          path: build/onaria-web-results
+          path: |
+            build/onaria-web-results
+            build/onaria-lighthouse
           if-no-files-found: ignore
