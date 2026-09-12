@@ -63,14 +63,16 @@ jobs:
           set -euo pipefail
           ADB="$ANDROID_HOME/platform-tools/adb"
           "$ADB" start-server
-          mapfile -t DEVICES < <("$ADB" devices | awk '$2=="device" {print $1}')
-          if [[ "${#DEVICES[@]}" -ne 1 ]]; then
-            echo "Expected exactly one authorized Android device, found ${#DEVICES[@]}." >&2
+          DEVICE_LIST="$($ADB devices | awk '$2=="device" {print $1}')"
+          DEVICE_COUNT="$(printf '%s\n' "$DEVICE_LIST" | sed '/^$/d' | wc -l | tr -d ' ')"
+          if [[ "$DEVICE_COUNT" != "1" ]]; then
+            echo "Expected exactly one authorized Android device, found $DEVICE_COUNT." >&2
             "$ADB" devices -l
             exit 1
           fi
-          echo "serial=${DEVICES[0]}" >> "$GITHUB_OUTPUT"
-          echo "Authorized Android device: ${DEVICES[0]}"
+          DEVICE_SERIAL="$(printf '%s\n' "$DEVICE_LIST" | head -1)"
+          echo "serial=$DEVICE_SERIAL" >> "$GITHUB_OUTPUT"
+          echo "Authorized Android device: $DEVICE_SERIAL"
 
       - name: Update ONARIA on connected phone without deleting app data
         shell: bash
