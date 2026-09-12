@@ -153,46 +153,41 @@ class _CheckInPageState extends State<CheckInPage> {
                   if (_emotion != null || _otherEmotion) Text('선택됨', style: TextStyle(fontSize: 12, color: AppTheme.of(context).green, fontWeight: FontWeight.w700)),
                 ]),
                 const SizedBox(height: 12),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    final columns = constraints.maxWidth < 390 ? 3 : 4;
-                    return GridView.count(
-                      crossAxisCount: columns,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      childAspectRatio: columns == 3 ? 1.12 : 1.0,
-                      children: <EmotionType?>[...EmotionType.values, null].map((emotion) {
-                        final selected = emotion == null ? _otherEmotion : !_otherEmotion && emotion == _emotion;
-                        return Semantics(
-                          button: true,
-                          selected: selected,
-                          label: '${emotion?.label ?? '기타'}${selected ? ' 선택됨' : ''}',
-                          child: InkWell(
-                            onTap: () => _selectEmotion(emotion),
+                GridView.count(
+                  crossAxisCount: 3,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  childAspectRatio: 1.12,
+                  children: <EmotionType?>[...EmotionType.values, null].map((emotion) {
+                    final selected = emotion == null ? _otherEmotion : !_otherEmotion && emotion == _emotion;
+                    return Semantics(
+                      button: true,
+                      selected: selected,
+                      label: '${emotion?.label ?? '기타'}${selected ? ' 선택됨' : ''}',
+                      child: InkWell(
+                        onTap: () => _selectEmotion(emotion),
+                        borderRadius: BorderRadius.circular(16),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 180),
+                          decoration: BoxDecoration(
+                            color: selected ? AppTheme.of(context).sage : AppTheme.of(context).panel,
                             borderRadius: BorderRadius.circular(16),
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 180),
-                              decoration: BoxDecoration(
-                                color: selected ? AppTheme.of(context).sage : AppTheme.of(context).panel,
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(color: selected ? AppTheme.of(context).gold : AppTheme.of(context).border, width: selected ? 1.5 : 1),
-                              ),
-                              child: Stack(children: [
-                                Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                  Text(emotion == null ? '✏️' : _icons[emotion]!, style: const TextStyle(fontSize: 20)),
-                                  const SizedBox(height: 5),
-                                  Text(emotion?.label ?? '기타', style: TextStyle(fontSize: 13, color: selected ? AppTheme.of(context).ink : AppTheme.of(context).muted, fontWeight: selected ? FontWeight.w800 : FontWeight.w600)),
-                                ])),
-                                if (selected) Positioned(top: 7, right: 7, child: Icon(Icons.check_circle, size: 17, color: AppTheme.of(context).green)),
-                              ]),
-                            ),
+                            border: Border.all(color: selected ? AppTheme.of(context).gold : AppTheme.of(context).border, width: selected ? 1.5 : 1),
                           ),
-                        );
-                      }).toList(),
+                          child: Stack(children: [
+                            Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                              Text(emotion == null ? '✏️' : _icons[emotion]!, style: const TextStyle(fontSize: 20)),
+                              const SizedBox(height: 5),
+                              Text(emotion?.label ?? '기타', style: TextStyle(fontSize: 13, color: selected ? AppTheme.of(context).ink : AppTheme.of(context).muted, fontWeight: selected ? FontWeight.w800 : FontWeight.w600)),
+                            ])),
+                            if (selected) Positioned(top: 7, right: 7, child: Icon(Icons.check_circle, size: 17, color: AppTheme.of(context).green)),
+                          ]),
+                        ),
+                      ),
                     );
-                  },
+                  }).toList(),
                 ),
                 if (_otherEmotion) ...[
                   const SizedBox(height: 16),
