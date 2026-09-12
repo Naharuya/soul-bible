@@ -3,6 +3,7 @@ set -euo pipefail
 
 fail() { echo "[FAIL] $*" >&2; exit 1; }
 ok() { echo "[OK] $*"; }
+warn() { echo "[WARN] $*"; }
 
 [[ "$(uname -s)" == "Darwin" ]] || fail "This preflight is for macOS."
 [[ "$(uname -m)" == "arm64" ]] || fail "Apple Silicon arm64 is required for the configured runner labels."
@@ -29,16 +30,18 @@ AAPT="$SDK/build-tools/36.0.0/aapt"
 [[ -x "$AAPT" ]] || fail "aapt missing: $AAPT"
 ok "Android SDK tools"
 
-[[ -f android/key.properties ]] || fail "android/key.properties missing"
-[[ -f android/soul-bible-release.jks ]] || fail "android/soul-bible-release.jks missing"
-ok "Release signing files exist (contents not printed)"
+if [[ -f android/key.properties && -f android/soul-bible-release.jks ]]; then
+  ok "Release signing files exist (contents not printed)"
+else
+  warn "Release signing is not configured. Debug deployment only."
+fi
 
 DEVICE_LIST="$($ADB devices | awk '$2=="device" {print $1}')"
 DEVICE_COUNT="$(printf '%s\n' "$DEVICE_LIST" | sed '/^$/d' | wc -l | tr -d ' ')"
 if [[ "$DEVICE_COUNT" == "1" ]]; then
   ok "One authorized Android device: $(printf '%s\n' "$DEVICE_LIST" | head -1)"
 elif [[ "$DEVICE_COUNT" == "0" ]]; then
-  echo "[WARN] No authorized Android phone connected. Auto-deploy will fail until one is available."
+  warn "No authorized Android phone connected. Auto-deploy will fail until one is available."
 else
   fail "More than one authorized Android device is connected. Keep exactly one for automatic deployment."
 fi
@@ -47,4 +50,4 @@ node --test scripts/android-release.test.mjs
 ok "Installer safety tests"
 
 echo
-ok "Mac mini is ready for ONARIA self-hosted deployment."
+ok "Mac mini is ready for ONARIA self-hosted debug deployment."
