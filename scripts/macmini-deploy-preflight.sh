@@ -33,11 +33,12 @@ ok "Android SDK tools"
 [[ -f android/soul-bible-release.jks ]] || fail "android/soul-bible-release.jks missing"
 ok "Release signing files exist (contents not printed)"
 
-mapfile -t DEVICES < <("$ADB" devices | awk '$2=="device" {print $1}')
-if [[ ${#DEVICES[@]} -eq 1 ]]; then
-  ok "One authorized Android device: ${DEVICES[0]}"
-elif [[ ${#DEVICES[@]} -eq 0 ]]; then
-  echo "[WARN] No authorized Android phone connected. Auto-deploy will wait/fail until one is available."
+DEVICE_LIST="$($ADB devices | awk '$2=="device" {print $1}')"
+DEVICE_COUNT="$(printf '%s\n' "$DEVICE_LIST" | sed '/^$/d' | wc -l | tr -d ' ')"
+if [[ "$DEVICE_COUNT" == "1" ]]; then
+  ok "One authorized Android device: $(printf '%s\n' "$DEVICE_LIST" | head -1)"
+elif [[ "$DEVICE_COUNT" == "0" ]]; then
+  echo "[WARN] No authorized Android phone connected. Auto-deploy will fail until one is available."
 else
   fail "More than one authorized Android device is connected. Keep exactly one for automatic deployment."
 fi
