@@ -8,22 +8,26 @@ on:
 permissions:
   contents: read
 
-# Never run this workflow for pull_request events. It is intentionally limited
-# to trusted main pushes and explicit manual dispatches.
+# Security: intentionally never runs on pull_request events.
+# This repository is public, so the self-hosted runner must only accept trusted
+# main pushes/manual dispatches and must not be exposed to untrusted PR code.
 concurrency:
   group: onaria-macmini-phone-deploy
   cancel-in-progress: true
 
 jobs:
   deploy-android-phone:
-    # Register the Mac mini runner with the custom label `onaria-deploy`.
-    # Default self-hosted labels should also include macOS and ARM64.
     runs-on: [self-hosted, macOS, ARM64, onaria-deploy]
     timeout-minutes: 45
     env:
       SOUL_AI_MODE: local
       SOUL_EXTERNAL_API_DISABLED: 'true'
       OPENAI_API_KEY: ''
+      ANDROID_HOME: /Users/server/Library/Android/sdk
+      ANDROID_SDK_ROOT: /Users/server/Library/Android/sdk
+      ONARIA_ANDROID_PACKAGE: com.example.bible_mind_core
+      PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/server/Library/Android/sdk/platform-tools
+
     steps:
       - name: Checkout trusted main source
         uses: actions/checkout@v4
@@ -32,32 +36,67 @@ jobs:
           clean: true
           fetch-depth: 1
 
-      - name: Verify tools and one authorized Android device
+      - name: Debug deployment preflight
         shell: bash
-        run: |
-          set -euo pipefail
-          command -v node
-          command -v flutter
-          command -v adb || true
-          flutter --version
-          node --version
-
-      - name: Verify data-preserving Android installer contract
-        run: node --test scripts/android-release.test.mjs
+        run: bash scripts/macmini-deploy-preflight.sh --debug
 
       - name: Run Flutter regression tests
+        shell: bash
         run: flutter test
 
       - name: Analyze ONARIA app
+        shell: bash
         run: flutter analyze lib test example --no-fatal-infos
 
-      - name: Build signed production APK and update connected phone
-        # android-release.mjs validates:
-        # - exactly one authorized Android device (unless a serial is supplied)
-        # - existing installed certificate
-        # - official release keystore/certificate
-        # - production API
-        # - version downgrade prevention
-        # - adb install -r (no uninstall, preserves app data)
-        # - successful app launch after install
-        run: node scripts/android-release.mjs
+      - name: Build debug APK
+        shell: bash
+        run: |
+          set -euo pipefail
+          flutter pub get
+          flutter build apk --debug
+          test -f build/app/outputs/flutter-apk/app-debug.apk
+
+      - name: Verify exactly one authorized Android phone
+        id: phone
+        shell: bash
+        run: |
+          set -euo pipefail
+          ADB="$ANDROID_HOME/platform-tools/adb"
+          "$ADB" start-server
+          mapfile -t DEVICES < <("$ADB" devices | awk '$2=="device" {print $1}')
+          if [[ "${#DEVICES[@]}" -ne 1 ]]; then
+            echo "Expected exactly one authorized Android device, found ${#DEVICES[@]}." >&2
+            "$ADB" devices -l
+            exit 1
+          fi
+          echo "serial=${DEVICES[0]}" >> "$GITHUB_OUTPUT"
+          echo "Authorized Android device: ${DEVICES[0]}"
+
+      - name: Update ONARIA on connected phone without deleting app data
+        shell: bash
+        env:
+          DEVICE_SERIAL: ${{ steps.phone.outputs.serial }}
+        run: |
+          set -euo pipefail
+          ADB="$ANDROID_HOME/platform-tools/adb"
+          APK="build/app/outputs/flutter-apk/app-debug.apk"
+          "$ADB" -s "$DEVICE_SERIAL" install -r "$APK"
+
+      - name: Launch ONARIA
+        shell: bash
+        env:
+          DEVICE_SERIAL: ${{ steps.phone.outputs.serial }}
+        run: |
+          set -euo pipefail
+          ADB="$ANDROID_HOME/platform-tools/adb"
+          "$ADB" -s "$DEVICE_SERIAL" shell monkey \
+            -p "$ONARIA_ANDROID_PACKAGE" \
+            -c android.intent.category.LAUNCHER 1
+
+      - name: Deployment summary
+        if: always()
+        shell: bash
+        run: |
+          echo "ONARIA Mac mini debug deployment finished."
+          echo "Package: $ONARIA_ANDROID_PACKAGE"
+          echo "Commit: $GITHUB_SHA"
