@@ -1,0 +1,64 @@
+name: Cafe24 deployment package
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['App QA and Android Test APK', 'ONARIA Web and Admin']
+    types: [completed]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: cafe24-package-${{ github.event.workflow_run.head_sha || github.sha }}
+  cancel-in-progress: false
+jobs:
+  package:
+    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.conclusion == 'success')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require successful QA and Web for the current main commit
+        id: gate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const api = async path => {
+            const r = await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/${path}`, {headers:{Authorization:`Bearer ${process.env.GH_TOKEN}`,Accept:'application/vnd.github+json'}});
+            if (!r.ok) throw Error(`GitHub API HTTP ${r.status}`);
+            return r.json();
+          };
+          const sha = process.env.SOURCE_SHA;
+          const main = await api('git/ref/heads/main');
+          const {workflow_runs:runs} = await api(`actions/runs?head_sha=${sha}&per_page=100`);
+          const required = ['.github/workflows/build-android.yml','.github/workflows/onaria-web.yml'];
+          const ready = main.object.sha === sha && required.every(path => {
+            const latest = runs.filter(r => r.path === path && r.head_branch === 'main').sort((a,b)=>b.id-a.id)[0];
+            return latest?.status === 'completed' && latest?.conclusion === 'success';
+          });
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `ready=${ready}\nsha=${sha}\n`);
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, ready ? `Packaging verified main ${sha}\n` : 'No package: current main requires successful App QA and Web CI. Run missing workflow, then dispatch again.\n');
+          NODE
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.ready == 'true'
+        with:
+          ref: ${{ steps.gate.outputs.sha }}
+          persist-credentials: false
+      - name: Verify deployment script with isolated fixtures
+        if: steps.gate.outputs.ready == 'true'
+        run: |
+          bash -n scripts/deploy-cafe24.sh
+          python3 scripts/test_deploy_cafe24.py
+      - name: Build secret-free ZIP from committed files
+        if: steps.gate.outputs.ready == 'true'
+        run: |
+          node scripts/package-backend.mjs HEAD
+          mkdir -p build/cafe24-artifact
+          cp build/onaria-backend-deploy.zip* scripts/deploy-cafe24.sh docs/CAFE24_ZIP_DEPLOYMENT.md build/cafe24-artifact/
+      - uses: actions/upload-artifact@v4
+        if: steps.gate.outputs.ready == 'true'
+        with:
+          name: onaria-backend-deploy
+          path: build/cafe24-artifact/
+          if-no-files-found: error
+          retention-days: 30
