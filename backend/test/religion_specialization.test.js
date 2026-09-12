@@ -64,13 +64,13 @@ for (const text of ['하나님이 저에게 직접 계시하셨습니다.', '이
 
 test('specialization: false flag keeps preexisting local behavior for every question', async () => {
   const logger = { info() {}, warn() {} };
-  const off = createConversationService({ env: { SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'false' }, logger, openAiFactory: () => assert.fail('disabled') });
+  const off = createConversationService({ env: { SOUL_COST_ROUTER_V1_ENABLED: 'false', SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'false' }, logger, openAiFactory: () => assert.fail('disabled') });
   const baseline = createConversationService({ env: {}, logger });
   for (const message of [...messages, '불교와 기독교', '마음이 힘들어요.']) assert.deepEqual(await off(body(message)), await baseline(body(message)));
 });
 
 test('specialization: inferred non-Christian provider failure never offers Bible verses', async () => {
-  const generate = createConversationService({ env: { SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-placeholder' }, logger: { info() {}, warn() {} }, openAiFactory: () => { throw Error('offline'); } });
+  const generate = createConversationService({ env: { SOUL_COST_ROUTER_V1_ENABLED: 'false', SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-placeholder' }, logger: { info() {}, warn() {} }, openAiFactory: () => { throw Error('offline'); } });
   for (const message of [messages[2], '기독교와 불교']) {
     const result = await generate(body(message));
     assert.equal(result.shouldOfferVerse, false);

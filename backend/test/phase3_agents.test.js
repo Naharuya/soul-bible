@@ -13,7 +13,7 @@ const normal = (extra = {}) => ({ perspective: '지금 느끼는 마음을 판�
   guidance: '원하시면 오늘 자신을 돌볼 작은 행동 하나를 정해 보세요.', reflectionQuestion: '지금 어떤 도움이 가장 필요하신가요?', sourceRefs: [], cautions: [], ...extra });
 const body = (religion = 'protestant', emotion = '불안') => ({ session: { sessionId: 'phase3', selectedEmotion: emotion, emotionIntensity: 6, turnCount: 1 },
   userMessage: '복잡한 마음을 돌아보고 싶어요', systemPromptVersion: 'ko-v1', allowedVerseIds: [], religion });
-const env = { SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-key', OPENAI_MODEL: 'test-model' };
+const env = { SOUL_COST_ROUTER_V1_ENABLED: 'false', SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-key', OPENAI_MODEL: 'test-model' };
 
 test('phase 3: psychology is an internal observation contract, not a final answer', () => {
   assert.deepEqual(psychologySchema.parse(psychology), psychology);

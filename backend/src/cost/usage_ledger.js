@@ -1,9 +1,10 @@
 import { createHmac, randomBytes } from 'node:crypto';
 import { evaluateCostGate } from './cost_gate.js';
 import { estimateCost, estimateCacheSavings } from './model_pricing.js';
+import { sessionSummary } from './session_summary.js';
 
 const blank = () => ({ aiRequests: 0, premiumRequests: 0, premiumModelCalls: 0, budgetUsedUsd: 0, modelCalls: 0,
-  inputTokens: 0, cachedInputTokens: 0, outputTokens: 0, knownCostUsd: 0, unknownCostCalls: 0, estimatedCacheSavings: 0 });
+  inputTokens: 0, cachedInputTokens: 0, cacheWriteTokens: 0, outputTokens: 0, knownCostUsd: 0, unknownCostCalls: 0, estimatedCacheSavings: 0 });
 const routingBlank = () => ({ local: 0, rag: 0, cheap: 0, standard: 0, premium: 0 });
 const safeLabel = value => typeof value === 'string' && /^[a-zA-Z0-9_.:-]{1,80}$/.test(value) && !/^sk-/i.test(value) ? value : 'configured';
 
@@ -11,6 +12,8 @@ export function createUsageLedger({ env = {}, pricing = {}, now = () => new Date
   const salt = randomBytes(32);
   const hash = value => createHmac('sha256', salt).update(String(value)).digest('hex');
   const days = new Map(); const months = new Map(); const events = [];
+  const sessions = new Map();
+  const sessionKey = ({ userId, sessionId = '' }) => hash(`${typeof userId === 'string' && userId ? hash(userId) : 'anonymous'}:${sessionId}`);
   function period(map, key) {
     if (!map.has(key)) map.set(key, { total: blank(), owners: new Map(), routing: routingBlank(), sessions: new Set(), users: new Set() });
     return map.get(key);
@@ -31,15 +34,21 @@ export function createUsageLedger({ env = {}, pricing = {}, now = () => new Date
   }
   function add(targets, key, value) { for (const target of targets) target[key] += value; }
   function push(event) { events.push(event); if (events.length > maxEntries) events.shift(); }
-  function reserve({ userId = null, sessionId = '', plan = 'free', taskType = 'conversation', agent = 'integrated' } = {}) {
+  function reserve({ userId = null, sessionId = '', plan = 'free', taskType = 'conversation', agent = 'integrated', reservationUsd } = {}) {
     const window = current();
     const authenticated = typeof userId === 'string' && userId.length > 0;
     const id = authenticated ? hash(userId) : 'anonymous';
     const effectivePlan = authenticated && plan === 'premium' ? 'premium' : 'free';
     const daily = owner(window.day, id); const monthly = owner(window.month, id);
-    const decision = evaluateCostGate({ plan: effectivePlan, taskType, dailyUsage: daily, monthlyUsage: monthly, globalUsage: window.day.total }, env);
+    const decision = evaluateCostGate({ plan: effectivePlan, taskType, dailyUsage: daily, monthlyUsage: monthly, globalUsage: window.day.total, reservationUsd }, env);
     const paid = ['cheap', 'standard', 'premium'].includes(decision.tier);
-    const targets = [daily, monthly, window.day.total, window.month.total];
+    const key = sessionKey({ userId, sessionId });
+    if (!sessions.has(key)) {
+      if (sessions.size >= maxEntries) throw new Error('Session ledger capacity reached.');
+      sessions.set(key, blank());
+    }
+    const sessionTotal = sessions.get(key);
+    const targets = [daily, monthly, window.day.total, window.month.total, sessionTotal];
     if (paid) {
       add(targets, 'aiRequests', 1);
       add(targets, 'budgetUsedUsd', decision.policy.reservationUsd);
@@ -50,13 +59,14 @@ export function createUsageLedger({ env = {}, pricing = {}, now = () => new Date
     const calls = []; let finished = false;
     return {
       decision,
+      sessionSummary: () => sessionSummary(sessionTotal),
       capModelTier(tier) {
         return tier === 'premium' && (window.day.total.premiumModelCalls + 1) / (window.day.total.modelCalls + 1) > 0.05 ? 'standard' : tier;
       },
       recordCall({ model, modelTier }) {
         if (!paid || finished || calls.length >= 4) throw new Error('Cost call limit.');
         const entry = { ...metadata, model: safeLabel(model), modelTier: safeLabel(modelTier), modelCalls: 1,
-          inputTokens: 0, cachedInputTokens: 0, outputTokens: 0, estimatedCostUsd: null,
+          inputTokens: 0, cachedInputTokens: 0, cacheWriteTokens: 0, outputTokens: 0, estimatedCostUsd: null,
           provider: 'openai', fallback: false, fallbackReason: null };
         calls.push(entry); push(entry);
         add(targets, 'modelCalls', 1); add(targets, 'unknownCostCalls', 1);
@@ -68,8 +78,10 @@ export function createUsageLedger({ env = {}, pricing = {}, now = () => new Date
           entry.inputTokens = counts.inputTokens; entry.outputTokens = counts.outputTokens;
           entry.cachedInputTokens = Number.isSafeInteger(counts.cachedInputTokens) && counts.cachedInputTokens >= 0
             ? Math.min(counts.cachedInputTokens, counts.inputTokens) : 0;
-          for (const key of ['inputTokens', 'cachedInputTokens', 'outputTokens']) add(targets, key, entry[key]);
-          entry.estimatedCostUsd = estimateCost({ ...entry, model }, pricing);
+          const validWrite = counts.cacheWriteTokens === undefined || (Number.isSafeInteger(counts.cacheWriteTokens) && counts.cacheWriteTokens >= 0);
+          entry.cacheWriteTokens = validWrite ? counts.cacheWriteTokens ?? 0 : 0;
+          for (const key of ['inputTokens', 'cachedInputTokens', 'cacheWriteTokens', 'outputTokens']) add(targets, key, entry[key]);
+          entry.estimatedCostUsd = validWrite ? estimateCost({ ...entry, model }, pricing) : null;
           if (entry.estimatedCostUsd !== null) {
             add(targets, 'unknownCostCalls', -1); add(targets, 'knownCostUsd', entry.estimatedCostUsd);
             add(targets, 'estimatedCacheSavings', estimateCacheSavings({ ...entry, model }, pricing));
@@ -89,7 +101,7 @@ export function createUsageLedger({ env = {}, pricing = {}, now = () => new Date
         }
         for (const entry of calls) Object.assign(entry, { fallback: Boolean(fallback), fallbackReason: fallbackReason ? safeLabel(fallbackReason) : null });
         if (!calls.length) push({ ...metadata, model: null, modelTier: finalTier, modelCalls: 0,
-          inputTokens: 0, cachedInputTokens: 0, outputTokens: 0, estimatedCostUsd: 0,
+          inputTokens: 0, cachedInputTokens: 0, cacheWriteTokens: 0, outputTokens: 0, estimatedCostUsd: 0,
           provider: safeLabel(provider), fallback: Boolean(fallback), fallbackReason: fallbackReason ? safeLabel(fallbackReason) : null });
         if (paid) {
           if (!calls.length) {
@@ -105,6 +117,7 @@ export function createUsageLedger({ env = {}, pricing = {}, now = () => new Date
   }
   return {
     reserve,
+    sessionSummary: input => sessionSummary(sessions.get(sessionKey(input))),
     entries: () => structuredClone(events),
     overview() {
       const { day } = current(); const total = day.total;

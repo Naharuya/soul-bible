@@ -22,8 +22,9 @@ export function costPolicy(plan = 'free', env = process.env) {
   };
 }
 
-export function evaluateCostGate({ plan = 'free', taskType = 'conversation', dailyUsage = {}, monthlyUsage = {}, globalUsage = {} } = {}, env = process.env) {
+export function evaluateCostGate({ plan = 'free', taskType = 'conversation', dailyUsage = {}, monthlyUsage = {}, globalUsage = {}, reservationUsd } = {}, env = process.env) {
   const policy = costPolicy(plan, env);
+  if (Number.isFinite(reservationUsd) && reservationUsd > 0 && !env.SOUL_AI_REQUEST_RESERVATION_USD) policy.reservationUsd = reservationUsd;
   const remainingDailyBudget = Math.max(0, policy.dailyBudget - (dailyUsage.budgetUsedUsd ?? 0));
   const desired = taskTiers[taskType] ?? 'standard';
   const result = (tier, reason) => ({ allowed: tier !== 'blocked', tier, reason, remainingDailyBudget, policy });

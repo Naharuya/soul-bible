@@ -23,12 +23,12 @@ export function noAnswerReligion() {
     guidance: '지금 필요한 돌봄을 먼저 살펴보셔도 괜찮습니다.', reflectionQuestion: '어떤 도움이 가장 필요하신가요?', sourceRefs: [], cautions: [] };
 }
 
-export function applyRetrievalConfidence(output, confidence) {
+export function applyRetrievalConfidence(output, confidence, { strict = false } = {}) {
   if (!Object.hasOwn(output, 'tradition')) return output;
   // Existing optional emotional support remains unchanged. Only asserted religious insight is weakened.
   const asserted = /(?:교리|경전|구원|윤회|신의 뜻|가르침).{0,35}(?:입니다|이다|확실|반드시)/u.test(output.religiousInsight);
   const fields = [output.religiousInsight, output.suggestedPractice?.guidance ?? '', output.suggestedPractice?.reflectionQuestion ?? '', ...(output.caution ?? [])].join(' ');
-  if (confidence < 0.4 && /(?:[\p{L}]+\s*\d+\s*[:장]\s*\d+)|[“”「」『』"]|(?:교리|경전).{0,20}(?:반드시|유일|절대)/u.test(fields)) {
+  if (confidence < 0.4 && (strict || /(?:[\p{L}]+\s*\d+\s*[:장]\s*\d+)|[“”「」『』"]|(?:교리|경전).{0,20}(?:반드시|유일|절대)/u.test(fields))) {
     const safe = noAnswerReligion();
     return { ...output, confidence, religiousInsight: safe.perspective, suggestedPractice: { guidance: safe.guidance, reflectionQuestion: safe.reflectionQuestion }, sourceHints: [], caution: [] };
   }

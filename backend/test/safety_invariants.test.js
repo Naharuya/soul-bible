@@ -30,7 +30,7 @@ test('shared Flutter/backend risk corpus has identical expected levels', () => {
 test('all religions and every fallback entry preserve crisis with zero downstream calls', async () => {
   let downstream = 0; let logs = 0;
   const forbidden = () => { downstream++; throw Error('provider-secret-must-not-escape'); };
-  const service = createConversationService({ env: { SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-only' },
+  const service = createConversationService({ env: { SOUL_COST_ROUTER_V1_ENABLED: 'false', SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-only' },
     logger: { info() { logs++; throw Error('logger failure'); }, warn() { throw Error('logger failure'); } }, openAiFactory: forbidden, selectReligion: forbidden,
     knowledgeProvider: { search: forbidden }, usageLedger: { reserve() { throw Error('ledger failure'); } } });
   // Accounting/logging are allowed to fail without invoking provider or routing.

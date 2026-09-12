@@ -1,38 +1,46 @@
 import { ZodError } from 'zod';
+import OpenAI from 'openai';
 import { createLocalConversationService } from './local_conversation_service.js';
 import { createOpenAiService } from './openai_service.js';
 import { requestSchema, responseSchema } from './schema.js';
 import { routeAgent } from './ai_router.js';
 import { createConversationOrchestrator, normalizeContext } from './agents/conversation_orchestrator.js';
 import { assessSafety } from './agents/safety_agent.js';
-import { resolveReligion } from './agents/religion_router.js';
+import { resolveReligion, comparisonTraditions } from './agents/religion_router.js';
 import { createReligionKnowledgeProvider } from './knowledge/provider.js';
 import { createHybridRetriever } from './knowledge/hybrid_retriever.js';
 import { createOpenAiEmbeddingAdapter } from './knowledge/openai_embedding_adapter.js';
 import { createRetrievalStrategy } from './knowledge/retrieval_strategy.js';
 import { createProductionIndex, activeIndexStore } from './knowledge/production_index.js';
 import { productionConfiguration } from './knowledge/production_readiness.js';
-import { classifyTask, routeModel } from './cost/model_router.js';
+import { classifyTask, routeModel, routeCostRequest, applySessionTarget, costRouterEnabled, costTierNames, outputLimits, modelForCostTier } from './cost/model_router.js';
+import { compactModelInput, COST_PREFIX } from './cost/prompt_context.js';
 import { createUsageLedger } from './cost/usage_ledger.js';
 import { readPricing, estimateCost } from './cost/model_pricing.js';
-import { createPsychologyAgent } from './agents/psychology_agent.js';
+import { createPsychologyAgent, createSupportTurn } from './agents/psychology_agent.js';
 import { reviewPsychologyIntegrity } from './agents/religious_integrity_agent.js';
 import { buildSourceContext } from './knowledge/source_context_builder.js';
 import { calculateRetrievalConfidence } from './knowledge/retrieval_confidence.js';
 import { keywordRetriever } from './knowledge/retriever.js';
 import { inferTraditionBranch } from './knowledge/query_normalization.js';
+import { religionJsonSchema } from './agents/agent_contracts.js';
 
-function fallbackReason(error) {
+export function fallbackReason(error) {
   if (error?.code === 'COST_LEDGER') return 'cost_gate_error';
   if (error?.code === 'COST_BUDGET') return 'cost_budget';
+  if (error?.code === 'COST_QUALITY') return 'quality_floor';
   if (error?.code === 'KNOWLEDGE_RETRIEVAL') return 'knowledge_retrieval';
-  if (error?.code === 'CONVERSATION_TIMEOUT' || error?.name === 'APIConnectionTimeoutError' || error?.name === 'AbortError') return 'timeout';
+  if (error instanceof OpenAI.APIConnectionTimeoutError || error instanceof OpenAI.APIUserAbortError
+    || ['CONVERSATION_TIMEOUT', 'OVERALL_TIMEOUT', 'REQUEST_TIMEOUT', 'ETIMEDOUT', 'ESOCKETTIMEDOUT', 'UND_ERR_CONNECT_TIMEOUT', 'UND_ERR_HEADERS_TIMEOUT', 'ABORT_ERR'].includes(error?.code)
+    || error?.status === 408
+    || ['APIConnectionTimeoutError', 'AbortError', 'TimeoutError'].includes(error?.name)) return 'timeout';
+  if (error?.code === 'PROVIDER_INCOMPLETE') return 'incomplete_output';
   if (error?.code === 'RELIGIOUS_INTEGRITY') return 'religious_integrity';
   if (error?.code === 'RELIGION_ROUTING') return 'religion_routing';
   if (error?.status === 429) return 'rate_limit';
   if (error?.status >= 500 && error?.status <= 599) return 'provider_5xx';
   if (error?.status === 401) return 'provider_auth';
-  if (error?.status === 403) return 'provider_403';
+  if (error?.status === 403) return 'provider_auth';
   if (error?.name === 'APIConnectionError' || ['ECONNRESET', 'ECONNREFUSED', 'ENOTFOUND'].includes(error?.code)) return 'connection_failure';
   if (error instanceof SyntaxError) return 'malformed_json';
   if (error instanceof ZodError) return 'schema_validation';
@@ -66,6 +74,7 @@ export function createConversationService({ env = process.env, logger = console,
   openAiFactory = createOpenAiService, timeoutMs = 18_000, selectReligion, knowledgeProvider,
   usageLedger = createUsageLedger({ env, pricing: readPricing(env) }), costKnowledgeProvider } = {}) {
   const local = createLocalConversationService();
+  const v1 = costRouterEnabled(env);
   const apiKey = (env.OPENAI_API_KEY || '').trim();
   const configuration = productionConfiguration(env);
   const requestedOpenAi = env.SOUL_AI_MODE === 'openai' && env.SOUL_MULTI_AGENT_ENABLED === 'true';
@@ -87,13 +96,17 @@ export function createConversationService({ env = process.env, logger = console,
     ...(corpusMode === 'production' && env.SOUL_PRODUCTION_INDEX_DIR
       ? { store: activeIndexStore(createProductionIndex(env.SOUL_PRODUCTION_INDEX_DIR)) } : {}) });
 
-  function getProvider(selectedModel) {
+  function getProvider(selectedModel, tier) {
+    // REAL Sol responses approached 6s (5.69s) and intermittently hit the SDK
+    // deadline. Give only Sol headroom; the 18s overall deadline still bounds it.
+    const timeout = v1 && tier === 'premium' ? 12_000 : 6_000;
+    const cacheKey = `${selectedModel}:${timeout}`;
     // Cache only the client, never request-specific usage or conversation state.
-    if (!providers.has(selectedModel)) providers.set(selectedModel,
-      Promise.resolve().then(() => openAiFactory({ apiKey, model: selectedModel, maxRetries: 0 })).catch(error => {
-        providers.delete(selectedModel); throw error;
+    if (!providers.has(cacheKey)) providers.set(cacheKey,
+      Promise.resolve().then(() => openAiFactory({ apiKey, model: selectedModel, timeout, maxRetries: 0 })).catch(error => {
+        providers.delete(cacheKey); throw error;
       }));
-    return providers.get(selectedModel);
+    return providers.get(cacheKey);
   }
 
   async function fallback(body, agent, memorySummary, neutral = false) {
@@ -115,8 +128,9 @@ export function createConversationService({ env = process.env, logger = console,
 
   async function generate(request, suppliedAgent, memorySummary = '', trustedIdentity = {}) {
     const started = performance.now();
-    const usage = { modelCalls: 0, inputTokens: 0, cachedInputTokens: 0, outputTokens: 0 };
+    const usage = { modelCalls: 0, inputTokens: 0, cachedInputTokens: 0, cacheWriteTokens: 0, outputTokens: 0 };
     const usedModels = new Set();
+    let knownCalls = 0; let knownCost = 0; let costRoute;
     let lease; let selectedTier = 'local'; let actualModelTier = 'local';
     const retrieval = { routedTradition: null, knowledgeSearchCount: 0, selectedSourceIds: [], citationValidationResult: 'not_run' };
     Object.assign(retrieval, { retrievalMode: null, keywordScore: 0, vectorScore: 0, rerankScore: 0,
@@ -130,6 +144,11 @@ export function createConversationService({ env = process.env, logger = console,
           models: [...usedModels], tier: actualModelTier, gateTier: selectedTier,
           fallback: reason !== null, fallbackReason: reason,
           latencyMs: Math.round(performance.now() - started), ...usage, ...retrieval,
+          estimatedCostUsd: knownCalls === usage.modelCalls ? knownCost : null,
+          ...(v1 ? { tier: provider === 'rag' ? 'rag' : costTierNames[actualModelTier], taskType: costRoute?.taskType ?? 'crisis',
+            complexity: costRoute?.complexity ?? 'low', routingReason: costRoute?.reason ?? 'local_template',
+            targetSessionCostUsd: costRoute?.targetSessionCostUsd ?? 0.007, targetAction: costRoute?.targetAction ?? 'within_target',
+            session: lease?.sessionSummary?.() ?? null } : {}),
         });
       } catch { /* Telemetry must not affect conversation delivery. */ }
     }
@@ -142,7 +161,15 @@ export function createConversationService({ env = process.env, logger = console,
       return responseSchema.parse(safety);
     }
     const agent = suppliedAgent ?? routeAgent({ requestedAgent: body.agentMode, userMessage: body.userMessage, verseLanguage: body.verseLanguage });
-    const taskType = classifyTask(body);
+    costRoute = v1 ? routeCostRequest(body, env) : null;
+    if (v1) {
+      let session;
+      try { session = usageLedger.sessionSummary?.({ userId: trustedIdentity.userId, sessionId: body.session.sessionId }); } catch {
+        session = { sessionEstimatedCostUsd: null };
+      }
+      costRoute = applySessionTarget(costRoute, session, env);
+    }
+    const taskType = costRoute?.taskType ?? classifyTask(body);
     if (!enabled && !['bible_search', 'religion_search'].includes(taskType)) {
       try { lease = usageLedger.reserve({ sessionId: body.session.sessionId, taskType: 'rule', agent: agent.id }); } catch { /* Local remains available. */ }
       const result = await fallback(body, agent, memorySummary);
@@ -153,7 +180,9 @@ export function createConversationService({ env = process.env, logger = console,
       // This fourth argument is server-internal; app.js never copies identity or
       // plan from the JSON payload or from the shared app bearer.
       lease = usageLedger.reserve({ userId: trustedIdentity.userId, plan: trustedIdentity.plan,
-        sessionId: body.session.sessionId, taskType, agent: agent.id });
+        sessionId: body.session.sessionId, taskType: costRoute?.gateTaskType ?? taskType, agent: agent.id,
+        ...(v1 ? { reservationUsd: ({ cheap: 0.004, standard: 0.028, premium: 0.08 }[costRoute.ledgerTier] ?? 0)
+          * Math.max(1, comparisonTraditions(body).length) } : {}) });
       selectedTier = lease.decision.tier;
     } catch {
       const result = await fallback(body, agent, memorySummary, resolveReligion(body).tradition !== 'protestant');
@@ -191,31 +220,47 @@ export function createConversationService({ env = process.env, logger = console,
       }
     }
     try {
+      if (v1 && ['local', 'rag', 'cheap', 'standard', 'premium'].indexOf(selectedTier)
+        < ['local', 'rag', 'cheap', 'standard', 'premium'].indexOf(costRoute.minimumTier)) {
+        const error = new Error('Required quality tier unavailable.'); error.code = 'COST_QUALITY'; throw error;
+      }
       const attempt = async (input, selectedAgent, memory, { signal }) => {
         let reservedUpperCost = 0;
         const runStructured = async (task, options) => {
           signal.throwIfAborted();
           let routed = routeModel({ taskType: task.name === 'psychology_reflection' ? 'emotion' : taskType, costTier: lease.capModelTier(selectedTier) }, env);
+          if (v1) {
+            const required = task.name === 'psychology_reflection' ? 'cheap' : costRoute.minimumTier;
+            if (['local', 'rag', 'cheap', 'standard', 'premium'].indexOf(routed.tier) < ['local', 'rag', 'cheap', 'standard', 'premium'].indexOf(required)) {
+              const error = new Error('Required quality tier unavailable.'); error.code = 'COST_QUALITY'; throw error;
+            }
+            routed.model = modelForCostTier(routed.tier, env);
+            task = { ...task, input: compactModelInput(task.input), instructions: task.costInstructions ?? COST_PREFIX + task.instructions,
+              maxOutputTokens: routed.tier === 'cheap' && task.name.startsWith('religion_') ? 320 : outputLimits[costTierNames[routed.tier]], costOptimized: true };
+            if (task.name.startsWith('religion_')) task.jsonSchema = religionJsonSchema;
+          }
           // Bound priced calls conservatively by UTF-8 bytes plus schema/framing
           // allowance. Unknown pricing retains the full request reservation.
           const estimateUpper = model => estimateCost({ model,
-            inputTokens: Buffer.byteLength(JSON.stringify(task), 'utf8') + 4096,
+            inputTokens: Buffer.byteLength(JSON.stringify(task), 'utf8') + (v1 ? 256 : 4096),
+            ...(v1 && pricing[model]?.cacheWrite ? { cacheWriteTokens: Buffer.byteLength(JSON.stringify(task), 'utf8') + 256 } : {}),
             outputTokens: task.maxOutputTokens ?? 1800 }, pricing);
           let upperCost = estimateUpper(routed.model);
           if (upperCost !== null && reservedUpperCost + upperCost > lease.decision.policy.reservationUsd) {
             const error = new Error('Cost reservation exceeded.'); error.code = 'COST_BUDGET'; throw error;
           }
-          let provider = await getProvider(routed.model);
+          let provider = await getProvider(routed.model, routed.tier);
           signal.throwIfAborted();
           // Recheck after asynchronous client creation: another concurrent
           // request may have consumed the premium share in the meantime.
           if (routed.tier === 'premium' && lease.capModelTier('premium') !== 'premium') {
+            if (v1) { const error = new Error('Required quality tier unavailable.'); error.code = 'COST_QUALITY'; throw error; }
             routed = routeModel({ taskType, costTier: 'standard' }, env);
             upperCost = estimateUpper(routed.model);
             if (upperCost !== null && reservedUpperCost + upperCost > lease.decision.policy.reservationUsd) {
               const error = new Error('Cost reservation exceeded.'); error.code = 'COST_BUDGET'; throw error;
             }
-            provider = await getProvider(routed.model);
+            provider = await getProvider(routed.model, routed.tier);
             signal.throwIfAborted();
           }
           if (typeof provider?.runStructured !== 'function') throw new TypeError('Invalid provider interface.');
@@ -223,6 +268,7 @@ export function createConversationService({ env = process.env, logger = console,
           try { track = lease.recordCall({ model: routed.model, modelTier: routed.tier }); }
           catch (error) {
             if (error?.code !== 'COST_PREMIUM_SHARE') throw error;
+            if (v1) { const quality = new Error('Required quality tier unavailable.'); quality.code = 'COST_QUALITY'; throw quality; }
             // A second server process can consume the last premium allowance
             // between the advisory read and the atomic call reservation.
             routed = routeModel({ taskType, costTier: 'standard' }, env);
@@ -230,7 +276,7 @@ export function createConversationService({ env = process.env, logger = console,
             if (upperCost !== null && reservedUpperCost + upperCost > lease.decision.policy.reservationUsd) {
               const budgetError = new Error('Cost reservation exceeded.'); budgetError.code = 'COST_BUDGET'; throw budgetError;
             }
-            provider = await getProvider(routed.model);
+            provider = await getProvider(routed.model, routed.tier);
             signal.throwIfAborted();
             if (typeof provider?.runStructured !== 'function') throw new TypeError('Invalid provider interface.');
             track = lease.recordCall({ model: routed.model, modelTier: routed.tier });
@@ -240,14 +286,36 @@ export function createConversationService({ env = process.env, logger = console,
             > ['local', 'cheap', 'standard', 'premium'].indexOf(actualModelTier)) actualModelTier = routed.tier;
           usedModels.add(/^[a-zA-Z0-9][a-zA-Z0-9_.:-]{0,79}$/.test(routed.model) && !/^sk-/i.test(routed.model) ? routed.model : 'configured-model');
           usage.modelCalls++;
+          let reported = false;
           return provider.runStructured(task, { ...options, onUsage: (counts) => {
+            if (reported || ![counts?.inputTokens, counts?.outputTokens].every(n => Number.isSafeInteger(n) && n >= 0)) return;
+            reported = true;
             try { track(counts); } catch { /* Keep provider response usable. */ }
-            for (const key of ['inputTokens', 'cachedInputTokens', 'outputTokens']) {
+            const cost = estimateCost({ model: routed.model, ...counts }, pricing);
+            if (cost !== null) { knownCalls++; knownCost += cost; }
+            for (const key of ['inputTokens', 'cachedInputTokens', 'cacheWriteTokens', 'outputTokens']) {
               if (Number.isSafeInteger(counts?.[key]) && counts[key] >= 0) usage[key] += counts[key];
             }
           } });
         };
-        if (selectedTier === 'cheap') {
+        if (v1 && !costRoute.specialist) {
+          const context = normalizeContext(input, memory);
+          const routing = resolveReligion(input);
+          const result = await fallback(input, selectedAgent, memory, routing.tradition !== 'protestant');
+          const turn = await createSupportTurn({ runStructured })(context, { signal });
+          signal.throwIfAborted();
+          reviewPsychologyIntegrity({ emotionSummary: turn.empathy, supportNeed: turn.summary,
+            suggestedTone: 'gentle', avoid: [turn.nextQuestion] }, { religion: routing.tradition });
+          if (turn.empathy.length < 8 || turn.nextQuestion === input.session.previousAssistantQuestion) {
+            const error = new Error('Response quality insufficient.'); error.code = 'COST_QUALITY'; throw error;
+          }
+          result.message = turn.empathy;
+          result.detectedEmotion = turn.emotion;
+          if (result.question !== null) result.question = turn.nextQuestion;
+          result.memorySummary = [context.memorySummary.slice(-600), turn.summary].filter(Boolean).join('\n').slice(-800);
+          return responseSchema.parse(result);
+        }
+        if (!v1 && selectedTier === 'cheap') {
           const context = normalizeContext(input, memory);
           const routing = resolveReligion(input);
           const reflection = reviewPsychologyIntegrity(await createPsychologyAgent({ runStructured })(context, { signal }), { religion: routing.tradition });
@@ -257,7 +325,10 @@ export function createConversationService({ env = process.env, logger = console,
           result.memorySummary = [memory, reflection.emotionSummary].filter(Boolean).join('\n').slice(-4000);
           return responseSchema.parse(result);
         }
-        return createConversationOrchestrator({ runStructured, selectReligion, knowledgeProvider: selectedKnowledgeProvider, corpusMode,
+        return createConversationOrchestrator({ runStructured, selectReligion, knowledgeProvider: selectedKnowledgeProvider, corpusMode, strictEvidence: v1,
+          ...(v1 && costRoute.tier === 'luna' ? { initialPsychology: {
+            emotionSummary: '마음과 신앙에 관한 질문을 함께 살펴볼게요.', supportNeed: '질문에 맞는 근거와 성찰', suggestedTone: 'gentle', avoid: [],
+          } } : {}),
           onRetrieval: update => { if (!signal.aborted) Object.assign(retrieval, update); },
         })(input, selectedAgent, memory, { signal });
       };

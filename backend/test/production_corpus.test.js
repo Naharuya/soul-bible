@@ -36,7 +36,7 @@ function approved(source = candidate()) {
   return reviewCorpusSource(reviewCorpusSource(source, { status: 'reviewed', reviewer: 'test-reviewer', at: stamp }), { status: 'approved', reviewer: 'test-reviewer', at: stamp });
 }
 const search = { tradition: 'protestant', query: '위로', language: 'ko-KR', limit: 3 };
-const env = { NODE_ENV: 'production', SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-only' };
+const env = { NODE_ENV: 'production', SOUL_COST_ROUTER_V1_ENABLED: 'false', SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-only' };
 const quiet = { info() {}, warn() {} };
 const body = message => ({ session: { sessionId: 'phase6', selectedEmotion: '불안', emotionIntensity: 6, turnCount: 1 }, userMessage: message,
   systemPromptVersion: 'ko-v1', allowedVerseIds: [] });

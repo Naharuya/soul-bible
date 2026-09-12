@@ -96,10 +96,12 @@ class CrisisDetector {
     RegExp(r'나를 해치'),
     RegExp(r'자해하고 싶'),
     RegExp(r'끝내 버리고 싶'),
+    RegExp(r'자(?:해|살)(?:할|하려는|하려고)(?:생각|계획|마음|해)'),
   ];
 
   static final _planPatterns = <RegExp>[
     RegExp(r'계획을 세웠'),
+    RegExp(r'자(?:해|살)(?:할|하려는)(?:생각과)?계획'),
     RegExp(r'방법을 정했'),
     RegExp(r'유서를'),
     RegExp(r'준비해 뒀'),

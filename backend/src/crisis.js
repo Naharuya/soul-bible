@@ -1,7 +1,7 @@
 const patterns = {
   medical: [/가슴이 너무 아프/, /숨을 못 쉬/, /의식을 잃/, /심한 출혈/, /약을 너무 많이 먹/],
   violence: [/죽이고 싶/, /해치고 싶/, /복수하고 싶/, /다치게 하/, /공격하고 싶/],
-  active: [/죽고 싶/, /자살하고 싶/, /목숨을 끊/, /나를 해치/, /자해하고 싶/, /끝내 버리고 싶/],
+  active: [/죽고 싶/, /자살하고 싶/, /목숨을 끊/, /나를 해치/, /자해하고 싶/, /끝내 버리고 싶/, /자(?:해|살)(?:할|하려는|하려고)(?:생각|계획|마음|해)/],
   passive: [/사라지고 싶/, /눈을 뜨지 않았으면/, /사는 의미가 없/, /살 이유가 없/, /모든 걸 포기하고 싶/, /없어졌으면 좋겠/],
   psychosis: [/생각을 읽고 있/, /누가 나를 감시/, /목소리가 시켜/, /환청/, /내 머릿속에 말/],
   imminent: [/계획을 세웠/, /방법을 정했/, /유서를/, /준비해 뒀/, /실행할/, /도구를 준비/, /위험한 물건/, /수단이 있/, /이미 준비/, /오늘 밤/, /지금 당장/, /오늘 하/, /곧 실행/, /몇 시에/],
@@ -12,7 +12,7 @@ export function assessCrisis(raw) {
   const text = raw.toLowerCase().replace(/[^\w가-힣]/g, '');
   const matches = (pattern) => new RegExp(pattern.source.replaceAll(' ', '')).test(text);
   if (patterns.medical.some(matches)) return { level: 3, immediate: true, kind: 'medical' };
-  const imminent = patterns.imminent.some(matches);
+  const imminent = patterns.imminent.some(matches) || /자(?:해|살)(?:할|하려는)(?:생각과)?계획/.test(text);
   if (patterns.violence.some(matches)) return { level: imminent ? 3 : 2, immediate: imminent, kind: 'violence' };
   if (patterns.active.some(matches)) return { level: imminent ? 3 : 2, immediate: imminent, kind: 'self_harm' };
   if (patterns.passive.some(matches)) return { level: 1, immediate: false, kind: 'passive_self_harm' };

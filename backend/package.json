@@ -19,7 +19,9 @@
     "corpus:expert": "node src/knowledge/expert_cli.js",
     "eval:pilot": "node src/knowledge/expert_cli.js evaluate",
     "pilot:christianity": "node src/knowledge/christianity_pilot.js",
-    "pilot:a-track": "node src/knowledge/a_track_pilot.js"
+    "pilot:a-track": "node src/knowledge/a_track_pilot.js",
+    "cost:v1:dry": "node scripts/cost_router_v1.js",
+    "cost:v1:real": "node --env-file=.env scripts/cost_router_v1.js --real"
   },
   "engines": {
     "node": ">=20"
@@ -34,5 +36,8 @@
     "jose": "6.2.12",
     "openai": "^5.12.2",
     "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "js-tiktoken": "^1.0.21"
   }
 }

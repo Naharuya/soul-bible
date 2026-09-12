@@ -8,7 +8,7 @@ import { responseSchema } from '../src/schema.js';
 import { createApp } from '../src/app.js';
 import { psychologyOutput, religionOutput } from './fixtures/agent_outputs.js';
 
-const enabled = { SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-only-key', OPENAI_MODEL: 'test-model' };
+const enabled = { SOUL_COST_ROUTER_V1_ENABLED: 'false', SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-only-key', OPENAI_MODEL: 'test-model' };
 const request = (extra = {}) => ({ session: { sessionId: 'phase2', selectedEmotion: '불안', emotionIntensity: 7, turnCount: 1 },
   userMessage: 'private-user-message', systemPromptVersion: 'ko-v1', allowedVerseIds: ['PHP_4_6_7'], ...extra });
 const agent = { id: 'integrated' };
@@ -59,7 +59,7 @@ for (const [name, fail, reason] of [
   ['connection', () => { throw Object.assign(Error('private'), { name: 'APIConnectionError' }); }, 'connection_failure'],
   ['429', () => { throw Object.assign(Error('private'), { status: 429 }); }, 'rate_limit'],
   ['401', () => { throw Object.assign(Error('private'), { status: 401 }); }, 'provider_auth'],
-  ['403', () => { throw Object.assign(Error('private'), { status: 403 }); }, 'provider_403'],
+  ['403', () => { throw Object.assign(Error('private'), { status: 403 }); }, 'provider_auth'],
   ['503', () => { throw Object.assign(Error('private'), { status: 503 }); }, 'provider_5xx'],
   ['malformed JSON', () => JSON.parse('not-json'), 'malformed_json'],
   ['schema failure', () => ({ reflection: 42 }), 'schema_validation'],

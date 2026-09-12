@@ -8,7 +8,7 @@ import { psychologyOutput, religionOutput } from './fixtures/agent_outputs.js';
 const body = () => ({ session: { sessionId: 'fallback-test', selectedEmotion: '불안', emotionIntensity: 7, turnCount: 2 },
   userMessage: '내일 발표가 걱정돼요', systemPromptVersion: 'ko-v1', allowedVerseIds: ['PHP_4_6_7'] });
 const agent = { id: 'integrated' };
-const enabled = { SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-only-key', OPENAI_MODEL: 'test-model' };
+const enabled = { SOUL_COST_ROUTER_V1_ENABLED: 'false', SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-only-key', OPENAI_MODEL: 'test-model' };
 
 for (const [name, env] of Object.entries({ default: {}, local: { ...enabled, SOUL_AI_MODE: 'local' },
   disabled: { ...enabled, SOUL_MULTI_AGENT_ENABLED: 'false' }, noKey: { ...enabled, OPENAI_API_KEY: '' },

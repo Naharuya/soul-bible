@@ -8,7 +8,7 @@ import { createLocalConversationService } from '../src/local_conversation_servic
 import { responseSchema } from '../src/schema.js';
 import { psychologyOutput, religionOutput } from './fixtures/agent_outputs.js';
 
-const env = { SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-only', OPENAI_MODEL: 'test-model' };
+const env = { SOUL_COST_ROUTER_V1_ENABLED: 'false', SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-only', OPENAI_MODEL: 'test-model' };
 const body = (sessionId = 'http-test', extra = {}) => ({
   session: { sessionId, selectedEmotion: '불안', emotionIntensity: 7, turnCount: 1 },
   userMessage: '내일 발표가 걱정돼요', systemPromptVersion: 'ko-v1', allowedVerseIds: ['PHP_4_6_7'], ...extra,

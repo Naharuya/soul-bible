@@ -23,12 +23,12 @@ export function normalizeContext(request, memorySummary) {
     ...(body.session.customEmotion ? { customEmotion: body.session.customEmotion } : {}),
     userMessage: body.userMessage, allowedVerseIds: body.allowedVerseIds,
     conversationState: body.session,
-    memorySummary: memorySummary || body.session.conversationSummary || '',
+    memorySummary: memorySummary || body.session.conversationMemory || body.session.conversationSummary || '',
   };
 }
 
 export function createConversationOrchestrator({ runStructured, selectReligion = routeReligion, logger = console,
-  knowledgeProvider = createReligionKnowledgeProvider(), onRetrieval = () => {}, corpusMode = 'development' } = {}) {
+  knowledgeProvider = createReligionKnowledgeProvider(), onRetrieval = () => {}, corpusMode = 'development', initialPsychology, strictEvidence = false } = {}) {
   const local = createLocalConversationService();
   // Phase 1 has no provider, credentials or environment-driven activation.
   // Phase 2 injects the existing provider only through the feature-gated factory.
@@ -52,7 +52,7 @@ export function createConversationOrchestrator({ runStructured, selectReligion =
       // any local response, including explicit religion values during this phase.
       return responseSchema.parse(await local(request, legacyAgent, memorySummary));
     }
-    const reflection = await reflect(context, { signal });
+    const reflection = initialPsychology ?? await reflect(context, { signal });
     signal?.throwIfAborted();
     const routing = resolveReligion({ religion: request.religion, userMessage: context.userMessage });
     context.religion = routing.tradition;
@@ -131,7 +131,7 @@ export function createConversationOrchestrator({ runStructured, selectReligion =
         secondScore: found.diagnostics?.scores?.[1]?.rerankScore ?? 0,
         citationResult: citationConfidenceStatus, ambiguous: routing.reason === 'legacy_default' });
       const retrievalConfidence = confidenceDebug.score;
-      const religion = applyRetrievalConfidence(reviewed, retrievalConfidence);
+      const religion = applyRetrievalConfidence(reviewed, retrievalConfidence, { strict: strictEvidence });
       reviewReligiousIntegrity(religion, { religionAgent: specialist, sourceContext });
       retrievalByTradition[tradition] = { ...metrics, retrievalConfidence, selectedSourceIds: sourceContext.map(source => source.id), citationValidationResult: citation.status };
       observe({ retrievalConfidence, confidenceDebug, retrievalByTradition: structuredClone(retrievalByTradition) });

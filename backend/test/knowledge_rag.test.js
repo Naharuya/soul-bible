@@ -12,7 +12,7 @@ import { createApp } from '../src/app.js';
 import { responseSchema } from '../src/schema.js';
 import { psychologyOutput, religionOutput } from './fixtures/agent_outputs.js';
 
-const env = { SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-only' };
+const env = { SOUL_COST_ROUTER_V1_ENABLED: 'false', SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-only' };
 const body = (userMessage = '기도', religion) => ({ session: { sessionId: 'rag', selectedEmotion: '불안', emotionIntensity: 6, turnCount: 1 }, userMessage, religion, systemPromptVersion: 'ko-v1', allowedVerseIds: [] });
 const search = (tradition = 'protestant', query = '기도') => ({ tradition, query, language: 'ko-KR', limit: 3 });
 const quiet = { info() {}, warn() {} };

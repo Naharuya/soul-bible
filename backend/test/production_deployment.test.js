@@ -204,7 +204,7 @@ test('deployment: external API disabled and multi-agent false serve local HTTP c
   const { root } = await workspace(t);
   for (const flags of [{ SOUL_EXTERNAL_API_DISABLED: 'true', SOUL_MULTI_AGENT_ENABLED: 'true' }, { SOUL_MULTI_AGENT_ENABLED: 'false' }]) {
     const generate = createConversationService({ logger: quiet,
-      env: { NODE_ENV: 'production', SOUL_AI_MODE: 'openai', OPENAI_API_KEY: 'mock-only', SOUL_PRODUCTION_INDEX_DIR: root, ...flags },
+      env: { NODE_ENV: 'production', SOUL_COST_ROUTER_V1_ENABLED: 'false', SOUL_AI_MODE: 'openai', OPENAI_API_KEY: 'mock-only', SOUL_PRODUCTION_INDEX_DIR: root, ...flags },
       openAiFactory: () => assert.fail('External client must not be created') });
     const app = createApp({ generate, memberStore: {}, logger: quiet });
     const server = await new Promise(resolve => { const listener = app.listen(0, '127.0.0.1', () => resolve(listener)); });
@@ -219,7 +219,7 @@ test('deployment: service uses active index; safety preempts model and retrieval
   const { root, index } = await workspace(t);
   await build(index, 'v1'); await index.activate('v1');
   const logs = [], calls = [];
-  const generate = createConversationService({ env: { NODE_ENV: 'production', SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'mock-only', SOUL_PRODUCTION_INDEX_DIR: root },
+  const generate = createConversationService({ env: { NODE_ENV: 'production', SOUL_COST_ROUTER_V1_ENABLED: 'false', SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'mock-only', SOUL_PRODUCTION_INDEX_DIR: root },
     logger: { ...quiet, info: (_, row) => logs.push(row) }, openAiFactory: () => ({ runStructured: async task => { calls.push(task.name); return task.name === 'psychology_reflection' ? psychologyOutput() : religionOutput(); } }) });
   responseSchema.parse(await generate(body));
   assert.equal(logs[0].retrievalMode, 'keyword');

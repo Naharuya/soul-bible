@@ -4,6 +4,7 @@ import { createHmac, randomBytes, randomUUID } from 'node:crypto';
 import Database from 'better-sqlite3';
 import { evaluateCostGate } from './cost_gate.js';
 import { estimateCost, estimateCacheSavings } from './model_pricing.js';
+import { sessionSummary } from './session_summary.js';
 
 const applicationId = 0x53424347; // SBCG: never migrate an unrelated SQLite DB.
 const tiers = ['local', 'rag', 'cheap', 'standard', 'premium'];
@@ -60,6 +61,9 @@ export function createSqliteUsageLedger({ filename, env = {}, pricing = {}, now 
         );
         CREATE INDEX IF NOT EXISTS cost_calls_request ON cost_calls(request_id);
       `);
+      if (!db.pragma('table_info(cost_calls)').some(column => column.name === 'cache_write_tokens')) {
+        db.exec('ALTER TABLE cost_calls ADD COLUMN cache_write_tokens INTEGER NOT NULL DEFAULT 0');
+      }
       db.prepare("INSERT OR IGNORE INTO cost_meta VALUES ('version', '1')").run();
       if (db.prepare("SELECT value FROM cost_meta WHERE key = 'version'").get().value !== '1') throw ledgerError();
       db.prepare("INSERT OR IGNORE INTO cost_meta VALUES ('salt', ?)").run(randomBytes(32).toString('hex'));
@@ -119,7 +123,7 @@ export function createSqliteUsageLedger({ filename, env = {}, pricing = {}, now 
       && db.prepare('SELECT COUNT(DISTINCT owner_id) AS count FROM cost_requests WHERE month = ?').get(month).count >= maxOwners) throw ledgerError();
     const decision = evaluateCostGate({ plan, taskType: input.taskType ?? 'conversation',
       dailyUsage: windowUsage('day', day, ownerId), monthlyUsage: windowUsage('month', month, ownerId),
-      globalUsage: windowUsage('day', day) }, env);
+      globalUsage: windowUsage('day', day), reservationUsd: input.reservationUsd }, env);
     const paid = paidTiers.includes(decision.tier);
     const id = randomUUID();
     db.prepare(`INSERT INTO cost_requests (id, timestamp, day, month, owner_id, session_id, plan, agent, task_type,
@@ -141,17 +145,21 @@ export function createSqliteUsageLedger({ filename, env = {}, pricing = {}, now 
     const id = randomUUID();
     const price = estimateCost({ model }, pricing) === null ? null : pricing[model];
     db.prepare('INSERT INTO cost_calls (id, request_id, model, model_tier, price_json) VALUES (?, ?, ?, ?, ?)')
-      .run(id, requestId, label(model), modelTier, price ? JSON.stringify({ input: price.input, cachedInput: price.cachedInput, output: price.output }) : null);
+      .run(id, requestId, label(model), modelTier, price ? JSON.stringify(price) : null);
     return id;
   });
   const track = atomic((callId, counts) => {
     const call = getCall.get(callId);
     if (!call || call.usage_reported || ![counts?.inputTokens, counts?.outputTokens].every(n => Number.isSafeInteger(n) && n >= 0)) return;
     const cachedInputTokens = Number.isSafeInteger(counts.cachedInputTokens) && counts.cachedInputTokens >= 0 ? Math.min(counts.cachedInputTokens, counts.inputTokens) : 0;
-    const usage = { model: call.model, inputTokens: counts.inputTokens, cachedInputTokens, outputTokens: counts.outputTokens };
+    const usage = { model: call.model, inputTokens: counts.inputTokens, cachedInputTokens, outputTokens: counts.outputTokens,
+      ...(counts.cacheWriteTokens !== undefined ? { cacheWriteTokens: counts.cacheWriteTokens } : {}) };
     const savedPrice = call.price_json ? { [call.model]: JSON.parse(call.price_json) } : {};
     db.prepare(`UPDATE cost_calls SET usage_reported = 1, input_tokens = ?, cached_input_tokens = ?, output_tokens = ?, cost_usd = ?, savings_usd = ? WHERE id = ?`)
       .run(usage.inputTokens, cachedInputTokens, usage.outputTokens, estimateCost(usage, savedPrice), estimateCacheSavings(usage, savedPrice), callId);
+    if (Number.isSafeInteger(counts.cacheWriteTokens) && counts.cacheWriteTokens >= 0) {
+      db.prepare('UPDATE cost_calls SET cache_write_tokens = ? WHERE id = ?').run(counts.cacheWriteTokens, callId);
+    }
     const request = getRequest.get(call.request_id);
     // Reconcile late usage idempotently, including after expiry or normal finish.
     if (request.state !== 'pending') settle(request);
@@ -169,16 +177,27 @@ export function createSqliteUsageLedger({ filename, env = {}, pricing = {}, now 
     lastPrunedDay = lease.day;
     return {
       decision: lease.decision,
+      sessionSummary: () => readSession(input),
       capModelTier: tier => tier === 'premium' && !premiumAllowed(lease.day) ? 'standard' : tier,
       recordCall(options) { const callId = startCall(lease.id, options); return counts => track(callId, counts); },
       finish: (result = {}) => finish(lease.id, result),
     };
   }
+  function readSession({ userId, sessionId = '' } = {}) {
+    const ownerId = typeof userId === 'string' && userId ? hash(userId) : 'anonymous';
+    const key = hash(`${ownerId}:${sessionId}`);
+    const total = db.prepare(`SELECT COUNT(c.id) AS modelCalls, COALESCE(SUM(c.input_tokens),0) AS inputTokens,
+      COALESCE(SUM(c.cached_input_tokens),0) AS cachedInputTokens, COALESCE(SUM(c.output_tokens),0) AS outputTokens,
+      COALESCE(SUM(c.cost_usd),0) AS knownCostUsd, COALESCE(SUM(c.id IS NOT NULL AND c.cost_usd IS NULL),0) AS unknownCostCalls
+      FROM cost_requests r LEFT JOIN cost_calls c ON c.request_id = r.id WHERE r.owner_id = ? AND r.session_id = ?`).get(ownerId, key);
+    total.budgetUsedUsd = db.prepare('SELECT COALESCE(SUM(budget_usd),0) AS cost FROM cost_requests WHERE owner_id = ? AND session_id = ?').get(ownerId, key).cost;
+    return sessionSummary(total);
+  }
   const overview = atomic(() => {
     const timestamp = timestampNow(); recoverAt(timestamp); const day = timestamp.slice(0, 10);
     const totals = db.prepare(`SELECT COUNT(*) AS modelCalls, COALESCE(SUM(c.model_tier = 'premium'),0) AS premiumModelCalls,
       COALESCE(SUM(input_tokens),0) AS inputTokens, COALESCE(SUM(cached_input_tokens),0) AS cachedInputTokens,
-      COALESCE(SUM(output_tokens),0) AS outputTokens, COALESCE(SUM(cost_usd),0) AS knownCostUsd,
+      COALESCE(SUM(output_tokens),0) AS outputTokens, COALESCE(SUM(cache_write_tokens),0) AS cacheWriteTokens, COALESCE(SUM(cost_usd),0) AS knownCostUsd,
       COALESCE(SUM(cost_usd IS NULL),0) AS unknownCostCalls, COALESCE(SUM(savings_usd),0) AS estimatedCacheSavings
       FROM cost_calls c JOIN cost_requests r ON r.id = c.request_id WHERE r.day = ?`).get(day);
     const estimatedCostUsd = totals.unknownCostCalls ? null : totals.knownCostUsd;
@@ -204,12 +223,12 @@ export function createSqliteUsageLedger({ filename, env = {}, pricing = {}, now 
     r.session_id AS sessionId, r.plan, r.agent, r.task_type AS taskType, c.model,
     COALESCE(c.model_tier,r.final_tier) AS modelTier, CASE WHEN c.id IS NULL THEN 0 ELSE 1 END AS modelCalls,
     COALESCE(c.input_tokens,0) AS inputTokens, COALESCE(c.cached_input_tokens,0) AS cachedInputTokens,
-    COALESCE(c.output_tokens,0) AS outputTokens, CASE WHEN c.id IS NULL THEN 0 ELSE c.cost_usd END AS estimatedCostUsd,
+    COALESCE(c.output_tokens,0) AS outputTokens, COALESCE(c.cache_write_tokens,0) AS cacheWriteTokens, CASE WHEN c.id IS NULL THEN 0 ELSE c.cost_usd END AS estimatedCostUsd,
     CASE WHEN c.id IS NULL THEN r.provider ELSE 'openai' END AS provider,
     r.fallback, r.fallback_reason AS fallbackReason
     FROM cost_requests r LEFT JOIN cost_calls c ON c.request_id = r.id
     WHERE c.id IS NOT NULL OR r.state != 'pending' ORDER BY r.timestamp DESC, r.id, c.id LIMIT ?`).all(maxEntries)
     .map(entry => ({ ...entry, fallback: Boolean(entry.fallback) }));
   try { atomic(() => recoverAt(timestampNow()))(); } catch (error) { db.close(); throw error; }
-  return { reserve, overview, entries, close() { if (db.open) db.close(); } };
+  return { reserve, overview, entries, sessionSummary: readSession, close() { if (db.open) db.close(); } };
 }
