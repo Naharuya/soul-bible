@@ -18,7 +18,10 @@ class EngagementPage extends StatelessWidget {
     return SpaceScaffold(
       appBar: AppBar(title: Text(savedOnly ? '저장한 말씀' : '말씀과 작은 기록')),
       body: controller.error != null
-          ? Center(child: Text(controller.error!))
+          ? Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Text(controller.error!),
+              TextButton(onPressed: controller.load, child: const Text('다시 시도')),
+            ]))
           : !controller.ready
               ? const Center(child: CircularProgressIndicator())
               : ListView(padding: const EdgeInsets.all(20), children: [

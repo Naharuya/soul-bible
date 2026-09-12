@@ -1,8 +1,8 @@
 # onaria Safety 12범주 검증
 
-등급 명칭: `none / low / medium / high / critical`. [등급 정책 초안](ONARIA_GATES.md#safety-등급)에 기존 숫자와의 호환 관계를 기록했다. 현재 사례의 0/1/2/3은 각각 none/medium/high/critical에 대응하며, low는 독립 판정 기준과 테스트가 아직 없다. 아래 실행 결과는 기존 네 단계 구현의 검증 결과다.
+등급 명칭: `none / low / medium / high / critical`. [등급 정책 초안](../../ONARIA_GATES.md#safety-등급)에 기존 숫자와의 호환 관계를 기록했다. 현재 사례의 0/1/2/3은 각각 none/medium/high/critical에 대응하며, low는 독립 판정 기준과 테스트가 아직 없다. 아래 실행 결과는 기존 네 단계 구현의 검증 결과다.
 
-검증일: 2026-09-10. [공통 예제](backend_contract/safety_cases.json) 43개를 Flutter와 backend에서 동일하게 실행했다. 아래 단계는 현재 소프트웨어의 라우팅 기대값이며 임상적 위험 평가나 전문가 승인 기준이 아니다. 기존 판정 규칙을 낮추거나 인용·농담에 대한 일괄 예외를 추가하지 않았다.
+검증일: 2026-09-10. [공통 예제](../../backend_contract/safety_cases.json) 43개를 Flutter와 backend에서 동일하게 실행했다. 아래 단계는 현재 소프트웨어의 라우팅 기대값이며 임상적 위험 평가나 전문가 승인 기준이 아니다. 기존 판정 규칙을 낮추거나 인용·농담에 대한 일괄 예외를 추가하지 않았다.
 
 | 범주 | 검증한 구분 | 현재 기대 라우팅 |
 | --- | --- | --- |

@@ -1,4 +1,6 @@
-# onaria MVP v0.4.0 테스트 버전
+# onaria MVP v0.4.1 테스트 버전
+
+개발 문서는 [문서 안내](docs/README.md)에서 찾을 수 있습니다. [현재 상태](ONARIA_STATUS.md), [작업 순서](ONARIA_ROADMAP.md), [완료 기준](ONARIA_GATES.md)을 기준으로 확인하고, 과거 보고서는 개발 이력으로 참고합니다.
 
 앱의 공식 표기는 소문자 `onaria`입니다. Flutter 패키지는 `onaria`, 앱 진입 위젯은 `OnariaApp`이며, 공용 라이브러리는 `lib/onaria.dart`입니다.
 
@@ -22,7 +24,7 @@
 모든 회원은 하루 사용 횟수 제한 없이 대화를 시작할 수 있습니다.
 오늘 사용한 횟수는 안내용으로만 표시하며, 대화 시작을 제한하지 않습니다.
 
-전화번호 회원가입은 바로 사용할 수 있습니다. 네이버·카카오·Google OAuth는
+전화번호 회원가입 화면과 API는 구현되어 있으나, 현재 외부 서버 연결은 확인이 필요합니다. 네이버·카카오·Google OAuth는
 아직 준비 중으로 표시됩니다.
 
 ## 처음 실행하기
@@ -30,7 +32,6 @@
 Flutter 3.24 이상을 설치한 뒤 프로젝트 폴더에서 실행합니다.
 
 ```bash
-flutter create --platforms=android,ios,web .
 flutter pub get
 flutter test
 flutter run
@@ -153,7 +154,7 @@ LLM 제공자 API 키를 Flutter 앱에 직접 넣지 마세요. 프록시에서
 ## 기술스택 및 운영 배포
 
 전체 기술스택, 데이터 저장 방식, Docker 호스팅 설치, Flutter APK/AAB 패키징 절차는
-[`TECH_STACK_AND_DEPLOYMENT.md`](TECH_STACK_AND_DEPLOYMENT.md)를 참고하세요.
+[`TECH_STACK_AND_DEPLOYMENT.md`](docs/guides/TECH_STACK_AND_DEPLOYMENT.md)를 참고하세요.
 
 ## 백엔드 도메인
 - https://lightshare8.mycafe24.com/ (출시 전 TLS 연결 검증 필요)

@@ -1,4 +1,4 @@
-library onaria;
+library;
 
 export 'src/api/llm_api_client.dart';
 export 'src/api/llm_models.dart';

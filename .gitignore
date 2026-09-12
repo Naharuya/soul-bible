@@ -33,3 +33,5 @@ backend/backups/
 .env
 .env.*
 !.env.example
+,env
+debug.log

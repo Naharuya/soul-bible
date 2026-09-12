@@ -1,5 +1,7 @@
 # AI API 제외 앱 개발 — 2026-09-11
 
+> 과거 작업 기록입니다. 테스트 수·버전·실기기 상태는 작성 당시의 결과이며, 현재 상태는 [ONARIA_STATUS](../../ONARIA_STATUS.md)를 확인하세요.
+
 현재 Gate: R2 앱 기능 CODE·TEST, R6 CI 설정 CODE. 아래 범위의 기능 개발을 진행했으며, 전체 로드맵이나 운영·사용자 검증의 완료를 뜻하지 않는다. AI API 구현·호출·키 변경은 이번 작업에서 제외했다.
 
 ## 완료된 항목
@@ -29,11 +31,11 @@ Android 실제 저장창·외부 공유앱·알림 수신·재부팅 검증, iOS
 
 ## 생성/수정한 파일
 
-- [여정 화면](lib/engagement/journey/journey_page.dart), [여정·보상 저장](lib/engagement/engagement_controller.dart), [메뉴](lib/features/check_in_page.dart), [말씀 기록 화면](lib/engagement/engagement_page.dart)
-- [Android 저장](android/app/src/main/kotlin/com/example/bible_mind_core/MainActivity.kt), [iOS 저장](ios/Runner/AppDelegate.swift), [Dart 저장 연결](lib/engagement/sharing/native_share.dart), [공유/저장 화면](lib/engagement/sharing/share_preview_page.dart)
-- [저장 카드 관리](lib/features/saved_cards_page.dart), [알림 컨트롤러](lib/engagement/notifications/reminder_controller.dart), [알림 설정](lib/engagement/notifications/notification_settings_page.dart)
-- [CI](.github/workflows/build-android.yml), [현황](ONARIA_STATUS.md), [로드맵](ONARIA_ROADMAP.md)
-- [여정 도메인 테스트](test/journey_test.dart), [여정 화면 테스트](test/journey_page_test.dart), [이미지 저장 테스트](test/image_export_test.dart), [카드 관리 테스트](test/saved_cards_page_test.dart), [알림 복구 테스트](test/reminder_recovery_test.dart), [테스트 대역](test/support/engagement_fakes.dart)
+- [여정 화면](../../lib/engagement/journey/journey_page.dart), [여정·보상 저장](../../lib/engagement/engagement_controller.dart), [메뉴](../../lib/features/check_in_page.dart), [말씀 기록 화면](../../lib/engagement/engagement_page.dart)
+- [Android 저장](../../android/app/src/main/kotlin/com/example/bible_mind_core/MainActivity.kt), [iOS 저장](../../ios/Runner/AppDelegate.swift), [Dart 저장 연결](../../lib/engagement/sharing/native_share.dart), [공유/저장 화면](../../lib/engagement/sharing/share_preview_page.dart)
+- [저장 카드 관리](../../lib/features/saved_cards_page.dart), [알림 컨트롤러](../../lib/engagement/notifications/reminder_controller.dart), [알림 설정](../../lib/engagement/notifications/notification_settings_page.dart)
+- [CI](../../.github/workflows/build-android.yml), [현황](../../ONARIA_STATUS.md), [로드맵](../../ONARIA_ROADMAP.md)
+- [여정 도메인 테스트](../../test/journey_test.dart), [여정 화면 테스트](../../test/journey_page_test.dart), [이미지 저장 테스트](../../test/image_export_test.dart), [카드 관리 테스트](../../test/saved_cards_page_test.dart), [알림 복구 테스트](../../test/reminder_recovery_test.dart), [테스트 대역](../../test/support/engagement_fakes.dart)
 
 ## 기존 테스트 영향
 
@@ -42,7 +44,7 @@ Android 실제 저장창·외부 공유앱·알림 수신·재부팅 검증, iOS
 - `flutter test --no-pub`: **60개 통과**, 기존 조건부 skip 1개, 실패 0. 신규 13개 테스트를 포함한다.
 - `flutter analyze --no-pub --no-fatal-infos`: error/warning 0, 기존 info 6개, 종료 코드 0.
 - backend `npm test`: `SOUL_EXTERNAL_API_DISABLED=true`, `SOUL_AI_MODE=local`, API 키 미설정으로 **333개 통과**, 실패·skip 0. backend 제품 코드는 변경하지 않았다.
-- `flutter build apk --debug --no-pub`: 최종 코드로 Android debug APK 생성 성공(종료 코드 0). 경로: [테스트 APK](build/app/outputs/flutter-apk/app-debug.apk). KGP·SDK XML 호환 안내가 있었으며 실행 가능성을 실기기에서 확인한 것은 아니다.
+- `flutter build apk --debug --no-pub`: 최종 코드로 Android debug APK 생성 성공(종료 코드 0). 경로: [테스트 APK](../../build/app/outputs/flutter-apk/app-debug.apk). KGP·SDK XML 호환 안내가 있었으며 실행 가능성을 실기기에서 확인한 것은 아니다.
 - 테스트 로그는 로컬 `build/flutter-non-ai-tests.log`, `build/backend-non-ai-tests.log`, `build/android-non-ai-build.log`에 보관한다. 비밀 값·사용자 대화 원문을 기록하지 않는다.
 
 ## 플랫폼 구현 근거

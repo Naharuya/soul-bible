@@ -1,5 +1,7 @@
 # 참여 기능 앱 연결 — 2026-09-10
 
+> 과거 작업 기록입니다. 테스트 수·버전·실기기 상태는 작성 당시의 결과이며, 현재 상태는 [ONARIA_STATUS](../../ONARIA_STATUS.md)를 확인하세요.
+
 후속 기록: 2026-09-11의 여정 UI·이미지 파일 저장·삭제/알림 복구 구현과 최신 테스트 결과는 [AI API 제외 개발 보고서](NON_AI_DEVELOPMENT_REPORT.md)를 참고한다. 아래는 최초 연결 당시 기록이다.
 
 현재 Gate: R2의 앱 연결 CODE·TEST 완료(아래 범위). REAL·USER 미확인.
@@ -22,11 +24,11 @@
 3. 7일 여정 UI와 측정 정의를 연결한 뒤 베타 사용자 검증을 준비한다.
 
 생성/수정한 파일:
-- [앱 루트](lib/app/onaria_app.dart), [메인 메뉴](lib/features/check_in_page.dart)
-- [말씀·기록 화면](lib/engagement/engagement_page.dart)
-- [알림 초기화](lib/engagement/notifications/reminder_controller.dart), [설정 UI](lib/engagement/notifications/notification_settings_page.dart)
-- [저장 카드](lib/features/saved_cards_page.dart), [공유 화면](lib/engagement/sharing/share_preview_page.dart)
-- [대화 이벤트·알림 중지](lib/features/conversation_page.dart)
-- [기능 연결 테스트](test/engagement_integration_test.dart), [현황](ONARIA_STATUS.md), 본 보고서
+- [앱 루트](../../lib/app/onaria_app.dart), [메인 메뉴](../../lib/features/check_in_page.dart)
+- [말씀·기록 화면](../../lib/engagement/engagement_page.dart)
+- [알림 초기화](../../lib/engagement/notifications/reminder_controller.dart), [설정 UI](../../lib/engagement/notifications/notification_settings_page.dart)
+- [저장 카드](../../lib/features/saved_cards_page.dart), [공유 화면](../../lib/engagement/sharing/share_preview_page.dart)
+- [대화 이벤트·알림 중지](../../lib/features/conversation_page.dart)
+- [기능 연결 테스트](../../test/engagement_integration_test.dart), [현황](../../ONARIA_STATUS.md), 본 보고서
 
 기존 테스트 영향: Windows에서 `flutter test --no-pub` 실행, 47개 통과·기존 조건부 skip 1개. 신규 7개 테스트는 메뉴 왕복, 알림 거절·탭 라우팅, 말씀 저장·재생성 복원·삭제, 위기 알림 중지, 공유 민감 필드 제외, 게임 완료, 실제 PNG 렌더링과 fake 공유 성공·취소를 검증한다. `flutter analyze --no-pub`는 error/warning 0, 기존 info 8개로 종료 코드 1. backend 코드는 변경하지 않았으며 backend 테스트는 재실행하지 않았다. APK 생성·설치·운영 배포는 수행하지 않았다.

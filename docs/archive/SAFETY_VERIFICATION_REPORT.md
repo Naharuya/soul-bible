@@ -1,5 +1,7 @@
 # onaria Safety 검증 — 2026-09-10
 
+> 과거 작업 기록입니다. 테스트 수·버전·실기기 상태는 작성 당시의 결과이며, 현재 상태는 [ONARIA_STATUS](../../ONARIA_STATUS.md)를 확인하세요.
+
 Safety 로그 추가 검증: HTTP 입력 검증 직후 `safety_assessment` 이벤트에 `riskLevel`(기존 숫자 0~3), `crisisTriggered`, `category`, UTC ISO `timestamp`만 기록한다. 사용자 원문·식별자·모델 원문은 포함하지 않는다. 추가 감지로 응답이 위기로 전환되면 `response_crisis` 이벤트가 별도로 기록되므로 이벤트 수는 요청 수와 같지 않다. customEmotion 및 세션 위기에서 category가 safe로 남던 문제를 수정했다. 동기/비동기 로거 실패에도 위기 응답이 유지된다. 서버 로그 출력이며 별도 DB 저장은 추가하지 않았다. backend 전체 327개 통과(`build/safety-events.log`), 기존 모델 호출 0회 검증 포함. Flutter는 이번 서버 변경에서 재실행하지 않았으며 운영 로그 수집 및 실제 사용자 검증은 미완료다.
 
 최신 추가 검증: `safety_invariants.test.js`에서 Psychology 호출·Religion 호출·OpenAI 클라이언트 생성을 별도로 계수했다. cold 서비스에서 모두 0회, 일반 입력으로 세 계수가 실제 증가하는 양성 대조 후 warm 서비스에서도 위험 요청에 따른 증가량이 모두 0임을 확인했다. backend 전체 325개 통과(`build/safety-zero-calls.log`). 이번 추가 작업은 테스트·문서만 변경했으며 Flutter는 재실행하지 않았다. 운영 telemetry 검증은 미완료다.
@@ -16,7 +18,7 @@ REAL: 부분 완료 — 실제 localhost HTTP 서버의 입력 검증·위기 �
 
 USER: 미확인 — 전문가·실제 사용자 검증은 아직 없다.
 
-근거 파일/테스트: [서버 불변조건 테스트](backend/test/safety_invariants.test.js), [공유 표현 집합](backend_contract/safety_cases.json), [Flutter 판정·통신 오류 테스트](test/safety_parity_test.dart), [위기 UI 테스트](test/conversation_lifecycle_test.dart), [API 응답 비밀 차단 테스트](backend/test/openai_service.test.js). 실행 로그는 `build/safety-backend.log`, `build/safety-flutter.log`, `build/safety-analysis.log`에 있다.
+근거 파일/테스트: [서버 불변조건 테스트](../../backend/test/safety_invariants.test.js), [공유 표현 집합](../../backend_contract/safety_cases.json), [Flutter 판정·통신 오류 테스트](../../test/safety_parity_test.dart), [위기 UI 테스트](../../test/conversation_lifecycle_test.dart), [API 응답 비밀 차단 테스트](../../backend/test/openai_service.test.js). 실행 로그는 `build/safety-backend.log`, `build/safety-flutter.log`, `build/safety-analysis.log`에 있다.
 
 남은 리스크: 규칙 밖 표현의 누락/오탐·부정/인용 문맥, 운영 배포 차이, 전문가 검수 미완료. 모델 정상 응답의 모든 종류의 부적절한 내용이나 임의의 비밀 정보까지 완전 차단한다는 의미는 아니다. 서버의 설정 API key echo, raw 오류/출력·stack의 실패 경로 노출을 막는 범위다. 공통 앱 인증·요청 크기/형식·rate limit은 Safety 이전 HTTP 경계에 남아 있다.
 

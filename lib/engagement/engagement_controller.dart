@@ -65,11 +65,19 @@ class EngagementController extends ChangeNotifier {
   BibleVerse? journeyVerse(int day) =>
       catalog.isEmpty ? null : catalog[(day - 1) % catalog.length];
 
-  Future<void> load() => _loading ??= _load();
+  Future<void> load() => _loading ??= _load().whenComplete(() {
+        if (!ready) _loading = null;
+      });
   Future<void> _load() async {
     try {
       catalog = await verses.loadAll();
       final raw = await storage.read(storageKey);
+      journey = null;
+      _saved.clear();
+      _gratitudeSaved.clear();
+      _achievements.clear();
+      _eggs.clear();
+      _metrics.clear();
       if (raw != null) {
         final data = jsonDecode(raw) as Map<String, dynamic>;
         if (data['journey'] != null) {
@@ -91,8 +99,10 @@ class EngagementController extends ChangeNotifier {
         }
       }
       ready = true;
+      error = null;
     } catch (_) {
-      error = '기록을 불러오지 못했어요. 앱을 다시 열어 주세요.';
+      ready = false;
+      error = '기록을 불러오지 못했어요. 다시 시도해 주세요.';
     }
     _notify();
   }

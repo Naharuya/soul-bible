@@ -31,7 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   const SizedBox(height: 18),
                   Text('onaria 시작하기', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
                   const SizedBox(height: 8),
-                  Text('이름과 휴대폰 번호를 등록하면 마음 기록을 안전하게 이어갈 수 있어요.', style: TextStyle(color: AppTheme.of(context).muted)),
+                  Text('회원 정보를 등록할 수 있어요. 마음 기록은 현재 휴대폰에 저장되며 다른 기기로 자동 동기화되지 않아요.', style: TextStyle(color: AppTheme.of(context).muted)),
                   const SizedBox(height: 28),
                   Form(
                     key: _formKey,
@@ -40,6 +40,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       const SizedBox(height: 10),
                       TextFormField(
                         controller: _name,
+                        maxLength: 40,
                         textInputAction: TextInputAction.next,
                         decoration: const InputDecoration(labelText: '이름', prefixIcon: Icon(Icons.person_outline)),
                         validator: _required,
@@ -50,11 +51,13 @@ class _SignUpPageState extends State<SignUpPage> {
                         keyboardType: TextInputType.phone,
                         textInputAction: TextInputAction.next,
                         decoration: const InputDecoration(labelText: '전화번호', hintText: '010-0000-0000', prefixIcon: Icon(Icons.phone_outlined)),
-                        validator: _required,
+                        validator: (value) => RegExp(r'^01[0-9]-?[0-9]{3,4}-?[0-9]{4}$').hasMatch(value?.trim() ?? '')
+                            ? null : '휴대폰 번호를 확인해 주세요.',
                       ),
                       const SizedBox(height: 12),
                       TextFormField(
                         controller: _church,
+                        maxLength: 100,
                         textInputAction: TextInputAction.done,
                         decoration: const InputDecoration(labelText: '교회명', prefixIcon: Icon(Icons.church_outlined)),
                         validator: _required,

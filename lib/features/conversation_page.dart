@@ -289,6 +289,7 @@ class _ConversationPageState extends State<ConversationPage> {
   bool _speechInitialized = false;
   bool _isListening = false;
   bool _isSpeaking = false;
+  int _speechGeneration = 0;
   bool _savingCard = false;
   MindCardRecord? _savedMindCard;
   bool _showVerseOffer = false;
@@ -328,8 +329,9 @@ class _ConversationPageState extends State<ConversationPage> {
 
   @override
   void dispose() {
-    _speech.cancel();
-    _tts.stop();
+    _speechGeneration++;
+    _speech.cancel().catchError((Object _) {});
+    _tts.stop().catchError((Object _) => 0);
     if (_client case final ProxyLlmApiClient proxy) {
       if (widget.apiClient == null) proxy.close();
     }
@@ -488,10 +490,20 @@ class _ConversationPageState extends State<ConversationPage> {
   }
 
   Future<void> _toggleVoiceInput() async {
-    if (_isSpeaking) {
-      await _tts.stop();
-      if (mounted) setState(() => _isSpeaking = false);
+    try {
+      await _startOrStopVoiceInput();
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _isListening = false);
+      _showVoiceMessage('마이크를 시작하지 못했어요. 권한과 음성 인식 기능을 확인해 주세요.');
     }
+  }
+
+  Future<void> _startOrStopVoiceInput() async {
+    if (_isSpeaking) {
+      await _stopVerseSpeech();
+    }
+    if (!mounted) return;
     if (_isListening) {
       await _speech.stop();
       if (mounted) setState(() => _isListening = false);
@@ -521,6 +533,7 @@ class _ConversationPageState extends State<ConversationPage> {
       }
     }
 
+    if (!mounted) return;
     await _speech.listen(
       onResult: _onSpeechResult,
       listenOptions: SpeechListenOptions(
@@ -551,16 +564,8 @@ class _ConversationPageState extends State<ConversationPage> {
 
   void _configureTts() {
     _tts
-      ..setStartHandler(() {
-        if (mounted) setState(() => _isSpeaking = true);
-      })
-      ..setCompletionHandler(() {
-        if (mounted) setState(() => _isSpeaking = false);
-      })
-      ..setCancelHandler(() {
-        if (mounted) setState(() => _isSpeaking = false);
-      })
-      ..setErrorHandler((msg) {
+      .setErrorHandler((msg) {
+        _speechGeneration++;
         if (!mounted) return;
         setState(() => _isSpeaking = false);
         _showVoiceMessage('말씀을 재생하지 못했어요. 기기의 한국어 음성을 확인해 주세요.');
@@ -569,31 +574,52 @@ class _ConversationPageState extends State<ConversationPage> {
 
   Future<void> _toggleVerseSpeech(BibleVerse verse) async {
     if (_isSpeaking) {
-      await _tts.stop();
-      if (mounted) setState(() => _isSpeaking = false);
+      await _stopVerseSpeech();
       return;
     }
-    if (_isListening) {
-      await _speech.stop();
-      if (mounted) setState(() => _isListening = false);
-    }
-
-    await _tts.setSpeechRate(0.42);
-    await _tts.setPitch(1.0);
-    await _tts.setVolume(1.0);
-    await _tts.awaitSpeakCompletion(true);
-    final korean = '${verse.koreanSpokenReference}. ${verse.text}.';
-    final english = verse.englishText.isEmpty ? '' : '${verse.reference}. ${verse.englishText}.';
-    if (_verseLanguage == 'english' && english.isNotEmpty) {
-      await _tts.setLanguage('en-US');
-      await _tts.speak(english);
-    } else {
-      await _tts.setLanguage('ko-KR');
-      await _tts.speak(korean);
-      if (_verseLanguage == 'bilingual' && english.isNotEmpty) {
-        await _tts.setLanguage('en-US');
-        await _tts.speak(english);
+    final generation = ++_speechGeneration;
+    bool active() => mounted && generation == _speechGeneration;
+    setState(() => _isSpeaking = true);
+    try {
+      if (_isListening) {
+        await _speech.stop();
+        if (!active()) return;
+        setState(() => _isListening = false);
       }
+      await _tts.setSpeechRate(0.42);
+      if (!active()) return;
+      await _tts.setPitch(1.0);
+      if (!active()) return;
+      await _tts.setVolume(1.0);
+      if (!active()) return;
+      await _tts.awaitSpeakCompletion(true);
+      if (!active()) return;
+      final korean = '${verse.koreanSpokenReference}. ${verse.text}.';
+      final english = verse.englishText.isEmpty ? '' : '${verse.reference}. ${verse.englishText}.';
+      final segments = <(String, String)>[
+        if (_verseLanguage != 'english' || english.isEmpty) ('ko-KR', korean),
+        if (_verseLanguage != 'korean' && english.isNotEmpty) ('en-US', english),
+      ];
+      for (final segment in segments) {
+        if (!active()) return;
+        await _tts.setLanguage(segment.$1);
+        if (!active()) return;
+        await _tts.speak(segment.$2);
+      }
+    } catch (_) {
+      if (active()) _showVoiceMessage('말씀을 재생하지 못했어요. 기기의 음성 설정을 확인해 주세요.');
+    } finally {
+      if (active()) setState(() => _isSpeaking = false);
+    }
+  }
+
+  Future<void> _stopVerseSpeech() async {
+    _speechGeneration++;
+    if (mounted) setState(() => _isSpeaking = false);
+    try {
+      await _tts.stop();
+    } catch (_) {
+      if (mounted) _showVoiceMessage('음성 재생을 중지하지 못했어요. 기기의 음성 설정을 확인해 주세요.');
     }
   }
 
@@ -642,7 +668,7 @@ class _ConversationPageState extends State<ConversationPage> {
       _openingGame = true;
       _chosenAction = action;
     });
-    await _tts.stop();
+    await _stopVerseSpeech();
     if (!mounted) return;
     final completed = await Navigator.of(context).push<bool>(MaterialPageRoute(
       builder: (_) => const CrossLightPage(continueToMindCard: true),

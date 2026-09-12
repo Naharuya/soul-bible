@@ -1,5 +1,7 @@
 # 십자가 빛 모으기 — 2026-09-11
 
+> 과거 작업 기록입니다. 테스트 수·버전·실기기 상태는 작성 당시의 결과이며, 현재 상태는 [ONARIA_STATUS](../../ONARIA_STATUS.md)를 확인하세요.
+
 현재 Gate: 십자가 미니게임 CODE·TEST. 아리와 나눈 별도 기획 원문은 프로젝트에서 확인되지 않아 기존 Cross Light 규칙을 기준으로 개발했다. 사용자에게 규칙 확인을 요청했으며, 응답이 없는 동안 기존 방식을 유지했다.
 
 완료된 항목:
@@ -20,9 +22,9 @@
 2. 홈 이동·복귀·잠시 쉬기·재시작 취소와 큰 글자 설정을 확인한다.
 3. 원래 합의한 게임 규칙과 사용자 피드백을 반영한다.
 
-생성/수정한 파일: [게임 규칙](lib/engagement/mini_games/cross_light/cross_light_game.dart), [게임 화면](lib/engagement/mini_games/cross_light/cross_light_page.dart), [추가 진입점](lib/engagement/engagement_page.dart), [규칙 테스트](test/cross_light_game_test.dart), [화면 테스트](test/cross_light_page_test.dart), [현재 상태](ONARIA_STATUS.md), [기능 코드 연결표](PROCESS_CODE_MAP.md), 본 보고서.
+생성/수정한 파일: [게임 규칙](../../lib/engagement/mini_games/cross_light/cross_light_game.dart), [게임 화면](../../lib/engagement/mini_games/cross_light/cross_light_page.dart), [추가 진입점](../../lib/engagement/engagement_page.dart), [규칙 테스트](../../test/cross_light_game_test.dart), [화면 테스트](../../test/cross_light_page_test.dart), [현재 상태](../../ONARIA_STATUS.md), [기능 코드 연결표](../guides/PROCESS_CODE_MAP.md), 본 보고서.
 
-기존 테스트 영향: 신규 규칙 테스트 2개·화면 테스트 3개를 추가했다. 전체 `flutter test --no-pub`는 **65개 통과·기존 skip 1개**, 실패 0. 정적 분석 error/warning 0·기존 info 6개. 최종 `flutter build apk --debug --no-pub` 성공. [테스트 APK](build/app/outputs/flutter-apk/app-debug.apk)를 생성했다. API 및 backend 제품 코드는 변경하지 않았으며 실제 AI API를 호출하지 않았다. 실제 단말 설치·실행은 하지 않았다.
+기존 테스트 영향: 신규 규칙 테스트 2개·화면 테스트 3개를 추가했다. 전체 `flutter test --no-pub`는 **65개 통과·기존 skip 1개**, 실패 0. 정적 분석 error/warning 0·기존 info 6개. 최종 `flutter build apk --debug --no-pub` 성공. [테스트 APK](../../build/app/outputs/flutter-apk/app-debug.apk)를 생성했다. API 및 backend 제품 코드는 변경하지 않았으며 실제 AI API를 호출하지 않았다. 실제 단말 설치·실행은 하지 않았다.
 
 검증 환경: Windows, Flutter 3.47.2. 자동 테스트는 5초 간격·중복 선택·6조각 완료·중지 중 시간 보존·재시작·백그라운드 복귀·판별 완료 횟수·320×640 화면/글자 2배·움직임 줄이기를 포함한다.
 
@@ -54,7 +56,7 @@
 - 마지막 빛을 모으면 가느다란 가로·세로 선이 부드럽게 나타난다. 사각 타일과 단어 선택 버튼은 제거했다.
 - 실제 터치 영역은 48×48 논리 픽셀이며, 화면 읽기에는 각 별빛의 이름·선택 상태와 터치 동작을 제공한다. 움직임 줄이기 설정에서는 위치 이동과 선 전환을 즉시 적용한다.
 - 5초 간격의 여섯 번 터치, 약 30초 기본 흐름, 일시정지, 재시작, 마태복음 11:28 연결을 유지한다. 실제 AI API는 사용하지 않는다.
-- [별빛 화면](lib/engagement/mini_games/cross_light/cross_light_sky.dart)과 [터치·이동 테스트](test/cross_light_sky_test.dart)를 추가했다. 기존 화면 테스트는 실제 십자가의 가로·세로 정렬을 검증하도록 갱신했다.
+- [별빛 화면](../../lib/engagement/mini_games/cross_light/cross_light_sky.dart)과 [터치·이동 테스트](../../test/cross_light_sky_test.dart)를 추가했다. 기존 화면 테스트는 실제 십자가의 가로·세로 정렬을 검증하도록 갱신했다.
 - 최신 검증: Flutter 전체 67개 통과·기존 skip 1개. 정적 분석 error/warning 0·기존 info 6개. 릴리스 APK 빌드 성공.
 - SM-S908N USB 업데이트 `adb install -r` 결과 `Success`, 앱 실행 요청 `Status: ok`. 기기 잠금 화면이 표시되어 실제 게임 화면의 글리프·배치와 플레이는 확인하지 못했다. 기존 앱 데이터는 삭제하지 않았다.
 

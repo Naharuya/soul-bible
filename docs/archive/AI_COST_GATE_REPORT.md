@@ -1,5 +1,7 @@
 # onaria AI Cost Gate v1 완료 보고
 
+> 과거 작업 기록입니다. 테스트 수·버전·실기기 상태는 작성 당시의 결과이며, 현재 상태는 [ONARIA_STATUS](../../ONARIA_STATUS.md)를 확인하세요.
+
 > 2026-09-09 후속: 런타임 기본 원장은 별도 SQLite 저장소로 확장되었다. 아래 v1의 프로세스 메모리 한계와 보관 범위 설명은 [영구 원장 후속 보고서](AI_COST_GATE_PERSISTENCE_REPORT.md)의 최신 내용을 따른다.
 
 작업일: 2026-09-09. 로컬 구현 및 mock 검증 완료. 운영 배포나 유료 OpenAI 호출은 수행하지 않았다.

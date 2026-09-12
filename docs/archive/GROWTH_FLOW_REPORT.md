@@ -1,5 +1,7 @@
 # 저장 → 작은 성장 기록 → 다음날 알림
 
+> 과거 작업 기록입니다. 테스트 수·버전·실기기 상태는 작성 당시의 결과이며, 현재 상태는 [ONARIA_STATUS](../../ONARIA_STATUS.md)를 확인하세요.
+
 2026-09-11. AI API를 변경하거나 실제 호출하지 않고 앱 흐름을 보강했다.
 
 - 홈에 `매일 3분 마음대화`를 표시한다. 대화를 시간 제한으로 종료하지 않는다.
@@ -12,4 +14,4 @@
 
 릴리스 APK 빌드 및 SM-S908N USB 업데이트 `Success`, 앱 실행 요청 `Status: ok`. 실제 단말의 전체 사용 흐름과 다음날 알림 수신은 아직 확인하지 않았다.
 
-코드: [성장 기록](lib/features/growth_page.dart), [저장 후 이동](lib/features/conversation_page.dart), [알림 설정](lib/engagement/notifications/notification_settings_page.dart), [예약 로직](lib/engagement/notifications/reminder_controller.dart).
+코드: [성장 기록](../../lib/features/growth_page.dart), [저장 후 이동](../../lib/features/conversation_page.dart), [알림 설정](../../lib/engagement/notifications/notification_settings_page.dart), [예약 로직](../../lib/engagement/notifications/reminder_controller.dart).

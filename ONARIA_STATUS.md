@@ -2,7 +2,7 @@
 
 문서 연결: **현재 상태** · [진행 순서](ONARIA_ROADMAP.md) · [완료 판정 기준](ONARIA_GATES.md).
 
-확인일: 2026-09-11. 기준 커밋 `5cef939` 이후 참여 기능 연결 및 AI API 제외 앱 개발 작업을 반영했다(미커밋). Safety 및 참여 기능 자동 검증 결과와 운영/사용자 검증을 구분한다. 외부 운영/사용자 자료가 없는 항목은 미확인으로 기록하며 구현 파일만으로 완료를 판정하지 않는다.
+확인일: 2026-09-11. 현재 Android 수정본은 0.4.1(versionCode 6)이며 SM-S908N 업데이트 설치와 실행을 확인했다. 외부 서버·실제 AI 왕복·소셜 로그인은 미완료다. 상세 수정과 테스트 수는 [0.4.1 릴리즈 기록](docs/releases/APP_REVIEW_2026-09-11.md)에서 관리한다.
 
 ## 런칭 이후로 보류한 작업
 
@@ -10,17 +10,13 @@
 
 ## 판정 기준
 
-2026-09-11 십자가 미니게임 후속 점검: 기존 화면·게임·애니메이션·마음카드 경로를 재사용하고, 건너뛰기 버튼·중복 종료 방지·시작/완료/건너뛰기/재플레이 이벤트를 연결했다. Flutter 전체 77개 통과(조건부 1개 skip), 서버 이벤트 계약 2개 통과. 이번 수정본의 REAL·USER는 미완료다. 상세는 [기존 구현 분석·연결 검증](docs/CROSS_LIGHT_FLOW_REVIEW.md)을 따른다.
+십자가 미니게임의 구현 및 당시 검증 기록은 [연결 점검](docs/CROSS_LIGHT_FLOW_REVIEW.md)을 참고한다. 설치·실행 성공을 실제 게임 플레이나 사용자 검증 완료로 판정하지 않는다.
 
 작업 전체 상태 보고에는 [7개 항목 공통 양식](ONARIA_GATES.md#작업-전체-보고-양식)을 사용한다. 기능별 상세와 작업 전체 보고를 구분하고, 상태는 해당 근거가 있는 범위에 한정한다.
 
-- CODE: 명시한 범위의 코드 구현. 부분은 앱 연결·저장·운영 경로 등 필수 부분이 남은 상태다.
-- TEST: 해당 구현의 자동 검증. mock 통과는 실제 OpenAI·서버 연결 성공을 뜻하지 않는다.
-- REAL: 실제 대상 서버/기기/환경 검증. 로컬 SQLite 검증이나 앱 실행만으로 운영 전체를 완료 처리하지 않는다.
-- USER: 실제 사용자 검증 결과. 개발자의 설치·실행 확인이나 합성 데이터 평가로 대체하지 않는다.
-- 미확인: 완료 증거 없음. 미구현이라고 단정하지 않는다. 사업 항목의 CODE/TEST는 직접 해당하지 않아 `해당 없음`으로 표시한다.
+CODE·TEST·REAL·USER의 정의와 허용 상태는 [완료 판정 기준](ONARIA_GATES.md)을 따른다. 기능별 미확인 조건은 아래 표에 기록한다.
 
-최근 실행 근거: 저장·성장 기록·다음날 알림 연결 후 Flutter 70개 통과·1개 조건부 skip. 정적 분석 error/warning 0·기존 info 6. Android release APK 생성 및 SM-S908N USB 업데이트 성공, 앱 실행 요청 `Status: ok`. 기기가 잠겨 실제 게임 화면·플레이는 확인하지 못했다. backend 333개 통과는 직전 AI API 제외 작업 기록이며 이번 게임 작업에서는 재실행하지 않았다. iOS·GitHub Actions 실행과 운영 HTTPS는 이번에 검증하지 않았다. 상세: [성장 흐름 보고서](GROWTH_FLOW_REPORT.md), [십자가 게임 보고서](CROSS_LIGHT_GAME_REPORT.md), [AI API 제외 개발 보고서](NON_AI_DEVELOPMENT_REPORT.md), [이전 참여 기능 연결](ENGAGEMENT_INTEGRATION_REPORT.md), [Safety 검증 보고서](SAFETY_VERIFICATION_REPORT.md).
+최신 검증 근거는 [0.4.1 릴리즈 기록](docs/releases/APP_REVIEW_2026-09-11.md), 과거 기능별 보고서는 [문서 안내](docs/README.md#과거-개발-보고서)에서 확인한다. 과거 테스트 수와 환경 상태를 최신 결과로 중복 기재하지 않는다.
 
 ## 25개 항목
 
@@ -36,9 +32,9 @@
 | Response Integrator | 구현 | 계약·통합 통과 | 미확인 | 미확인 | 전문 결과 통합·응답 schema 검증. 실제 모델부터 단말 출력까지 E2E 필요 |
 | 7화면 MVP | 부분 | 주요 흐름 통과 | 부분 | 미확인 | 감정·대화·말씀·실천·카드·저장 카드·가입 관련 구현. 사용자가 뜻한 정확한 7화면 명세는 미확정. 설치·실행만 실기기 확인 |
 | Persistent Memory | 부분 | 영속 대화 복원 미확인 | 미확인 | 미확인 | 서버 요약은 Map 메모리. 마음 카드 기기 저장과 회원/비용 SQLite는 영속 대화 메모리와 별개 |
-| 익명 Analytics | 부분 | 십자가 시작·완료 이벤트 순서 및 로컬 집계 보존 통과 | 원격 수집 미확인 | 미확인 | `cross_game_started`·`cross_game_completed` 구현. 외부 서비스 미연결. [실기기·베타 상태](CROSS_GAME_BETA_REPORT.md) |
+| 익명 Analytics | 부분 | 십자가 시작·완료 이벤트 순서 및 로컬 집계 보존 통과 | 원격 수집 미확인 | 미확인 | `cross_game_started`·`cross_game_completed` 구현. 외부 서비스 미연결. [실기기·베타 상태](docs/archive/CROSS_GAME_BETA_REPORT.md) |
 | 재방문 알림 | 앱 연결·복구 구현 | 권한 거절·탭·중지·초기화 재시도·재시작 fake 통과 | 미확인 | 미확인 | 루트/메뉴·복귀·설정 재시도 연결. 초기화 실패에도 위기 중지 영속화. 실제 수신·재부팅·시간대 검증 필요 |
-| 십자가 미니게임 | 6조각 게임·제어 구현 | 메뉴·완료·일시정지·재시작·반복 플레이·작은 화면 통과 | 미확인 | 미확인 | 메인 메뉴·말씀 기록에서 진입. 5초 간격 수집·배경 전환 시 중지. [검증 기록](CROSS_LIGHT_GAME_REPORT.md). 실제 기기·원기획 일치 확인 필요 |
+| 십자가 미니게임 | 6조각 게임·제어 구현 | 메뉴·완료·일시정지·재시작·반복 플레이·작은 화면 통과 | 미확인 | 미확인 | 메인 메뉴·말씀 기록에서 진입. 5초 간격 수집·배경 전환 시 중지. [검증 기록](docs/archive/CROSS_LIGHT_GAME_REPORT.md). 실제 기기·원기획 일치 확인 필요 |
 | 마음카드/말씀 공유 | 모바일 파일 저장 구현 | PNG·민감 필드 제외·공유/저장 성공·취소·실패 gateway 통과 | 부분 | 미확인 | Android/iOS 문서 저장창 구현. Android APK 빌드 확인, iOS 컴파일·양 플랫폼 실기기 저장/공유 검증 남음 |
 | 이스터에그/가벼운 게임화 | 여정 UI 연결 구현 | 여정 중복 방지·복원·삭제·원자적 완료·저장 실패 복구 통과 | 미확인 | 미확인 | 시작·기록·완료 카드·삭제까지 앱 연결. 전체 이스터에그 조건과 기기·사용자 검증 남음 |
 | Closed Beta 50명 | 해당 없음 | 해당 없음 | 미확인 | 미확인 | 실제 참여자·배포·동의·사용·피드백 기록 필요 |
@@ -56,7 +52,7 @@
 
 ## 주요 근거
 
-### Safety / 위기대응 상세
+### Safety / 위기대응 이전 검증 근거
 
 기능명: Safety / 위기대응
 
@@ -70,7 +66,7 @@ REAL: 부분 완료 — 실제 로컬 HTTP 및 배포 smoke 13건 검증. 운영
 
 USER: 미확인 — 전문가·대상 사용자의 위기 안내 이해도·접근성 검증 근거 없음.
 
-근거 파일/테스트: [앱 감지 테스트](test/crisis_detector_test.dart), [위험 단계별 호출 0회](backend/test/orchestrator.test.js), [HTTP 위기 선차단·provider 실패 fallback](backend/test/chat_integration.test.js), [오류·timeout·출력 실패](backend/test/conversation_service.test.js), [fallback 사유 검증](backend/test/phase2_service.test.js), [비용 저장 장애 시 safety 우선](backend/test/cost_integration.test.js), [서버 호출 순서](backend/src/app.js), [기존 실행 기록](BUILD_REPAIR_REPORT.md).
+근거 파일/테스트: [앱 감지 테스트](test/crisis_detector_test.dart), [위험 단계별 호출 0회](backend/test/orchestrator.test.js), [HTTP 위기 선차단·provider 실패 fallback](backend/test/chat_integration.test.js), [오류·timeout·출력 실패](backend/test/conversation_service.test.js), [fallback 사유 검증](backend/test/phase2_service.test.js), [비용 저장 장애 시 safety 우선](backend/test/cost_integration.test.js), [서버 호출 순서](backend/src/app.js), [기존 실행 기록](docs/archive/BUILD_REPAIR_REPORT.md).
 
 남은 리스크: 기존 표현 집합 밖의 누락/오탐, 운영 배포·설정 차이, 실제 장애 상황 미검증. 서버 공통 앱 인증과 요청 형식 검증은 safety보다 앞서므로 모든 잘못된 요청에 위기 응답이 반환되는 구조는 아님.
 
@@ -90,10 +86,10 @@ USER: 미확인 — 전문가·대상 사용자의 위기 안내 이해도·접�
 - AI와 통합: [서비스 활성화 조건](backend/src/conversation_service.js), [Psychology](backend/src/agents/psychology_agent.js), [Integrator](backend/src/agents/response_integrator.js), [전문 모듈 테스트](backend/test/phase3_agents.test.js), [오케스트레이션 테스트](backend/test/orchestrator.test.js).
 - RAG·자료: [A-track 보고서](backend/PHASE_9_CHRISTIANITY_A_TRACK.md), [readiness](backend/evaluation/phase9-results/readiness.json), [다종교 검색 테스트](backend/test/knowledge_rag.test.js), [vector 테스트](backend/test/vector_rag.test.js). 저장된 readiness는 `BLOCKED_NO_APPROVED_CORPUS`이며 전문가 검토도 차단 상태다. 여기서는 법적 사용 가능성을 독립 판정하지 않았다.
 - 메모리: [서버 Map 저장](backend/src/memory_store.js), [기기 카드 저장](lib/app/mind_card_store.dart).
-- 앱 연결: [앱 루트](lib/app/onaria_app.dart), [메뉴](lib/features/check_in_page.dart), [기능별 연결 현황](PROCESS_CODE_MAP.md). 기존 안내 문서의 과거 테스트 수는 최신 검증 기록과 구분한다.
+- 앱 연결: [앱 루트](lib/app/onaria_app.dart), [메뉴](lib/features/check_in_page.dart), [기능별 연결 현황](docs/guides/PROCESS_CODE_MAP.md). 기존 안내 문서의 과거 테스트 수는 최신 검증 기록과 구분한다.
 - 참여·지표: [로컬 이벤트 계약](lib/engagement/domain_events.dart), [컨트롤러](lib/engagement/engagement_controller.dart), [알림](lib/engagement/notifications/native_notifications.dart), [공유](lib/engagement/sharing/native_share.dart), [게임](lib/engagement/mini_games/cross_light/cross_light_game.dart).
-- Premium·비용: [인증 통합](IDENTITY_INTEGRATION_REPORT.md), [영속 비용 원장 검증](AI_COST_GATE_PERSISTENCE_REPORT.md), [비용 테스트](backend/test/cost_integration.test.js), [SQLite 테스트](backend/test/sqlite_usage_ledger.test.js).
-- 운영·QA: [GitHub workflow](.github/workflows/build-android.yml), [배포 스크립트](script/deploy-backend.ps1), [최신 테스트·단말 기록](BUILD_REPAIR_REPORT.md).
+- Premium·비용: [인증 통합](docs/archive/IDENTITY_INTEGRATION_REPORT.md), [영속 비용 원장 검증](docs/archive/AI_COST_GATE_PERSISTENCE_REPORT.md), [비용 테스트](backend/test/cost_integration.test.js), [SQLite 테스트](backend/test/sqlite_usage_ledger.test.js).
+- 운영·QA: [GitHub workflow](.github/workflows/build-android.yml), [배포 스크립트](script/deploy-backend.ps1), [최신 테스트·단말 기록](docs/archive/BUILD_REPAIR_REPORT.md).
 
 ## 권장 진행 순서
 
