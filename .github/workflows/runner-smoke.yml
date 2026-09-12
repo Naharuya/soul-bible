@@ -1,0 +1,20 @@
+name: Runner Smoke Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "ubuntu runner started"
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - run: echo "macos runner started"
