@@ -7,6 +7,8 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+if ($ApiBaseUrl -and $ApiBaseUrl -ne 'https://api.onaria.ai.kr') { throw 'Release device updates require the official API. Use an isolated development app for overrides.' }
+# -Release remains accepted for compatibility; this script is now always Release.
 $projectRoot = Split-Path $PSScriptRoot -Parent
 $adbCommand = Get-Command adb -ErrorAction SilentlyContinue
 $adb = if ($adbCommand) { $adbCommand.Source } else { $null }
@@ -56,15 +58,5 @@ if ($DeviceAddress) {
 } else {
     throw 'Enable wireless debugging, then specify -DeviceAddress IP:PORT. For first pairing also specify -PairAddress IP:PAIR_PORT.'
 }
-$flutter = Get-Command flutter -ErrorAction Stop
-Push-Location $projectRoot
-try {
-    $runArgs = @('run', '-d', $device)
-    # No implicit override: ApiConfig owns the production default.
-    if ($ApiBaseUrl) { $runArgs += "--dart-define=ONARIA_API_BASE_URL=$ApiBaseUrl" }
-    if ($Release) { $runArgs += '--release' }
-    & $flutter.Source @runArgs
-    if ($LASTEXITCODE -ne 0) { throw 'Flutter build or device launch failed.' }
-} finally {
-    Pop-Location
-}
+# Production-device updates use the same guarded path as USB.
+& (Join-Path $projectRoot 'scripts/install-onaria-release.ps1') -Device $device

@@ -31,6 +31,8 @@
 
 Flutter 3.24 이상을 설치한 뒤 프로젝트 폴더에서 실행합니다.
 
+아래 Debug 실행은 에뮬레이터·테스트 전용 기기에 한합니다. 기존 기록이 있는 휴대폰은 [Release 업데이트 절차](docs/ANDROID_RELEASE_UPDATE.md)를 사용하세요. Flutter의 설치 실패 후 재설치 경로는 기존 앱을 삭제할 수 있습니다.
+
 ```bash
 flutter pub get
 flutter test
@@ -157,6 +159,7 @@ LLM 제공자 API 키를 Flutter 앱에 직접 넣지 마세요. 프록시에서
 [`TECH_STACK_AND_DEPLOYMENT.md`](docs/guides/TECH_STACK_AND_DEPLOYMENT.md)를 참고하세요.
 
 ## 백엔드 도메인
+- 실제 기록이 있는 Android 휴대폰은 [안전한 Release 설치](docs/ANDROID_RELEASE_UPDATE.md)를 사용하세요. `flutter run`이나 CI Debug APK로 정식 앱을 덮어쓰지 마세요.
 - https://api.onaria.ai.kr/ (공식 Production API)
 - 앱 환경 설정과 release 검증: [APP_PRODUCTION_API.md](docs/APP_PRODUCTION_API.md)
 - ip : 104.105.128.84

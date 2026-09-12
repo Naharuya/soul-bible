@@ -1,4 +1,6 @@
-# onaria v0.4.0 테스트 안내
+# ONARIA 테스트 및 데이터 보존 업데이트
+
+실제 기록이 있는 휴대폰은 [Release 업데이트 절차](../ANDROID_RELEASE_UPDATE.md)를 사용합니다. Debug APK와 `flutter run`은 정식 앱 업데이트에 사용하지 않습니다.
 
 ## 휴대폰 무선 테스트 (Windows / Android 11 이상)
 
@@ -15,13 +17,13 @@ powershell -ExecutionPolicy Bypass -File .\script\test-wireless.ps1 -PairAddress
 ```
 
 최초 페어링 이후, 연결된 휴대폰이 하나이면 아래 명령으로 최신 소스를 빌드하고
-무선 설치·실행합니다. 개발 중에는 터미널에서 `r`로 핫 리로드할 수 있습니다.
+무선 Release 업데이트·실행합니다. 인증서가 다르거나 버전이 낮으면 중단하며, 핫 리로드는 제공하지 않습니다.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\script\test-wireless.ps1
 ```
 
-개발 완료 후 릴리스 모드로 확인하려면:
+기존 `-Release` 옵션도 호환을 위해 유지하지만 생략해도 Release입니다:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\script\test-wireless.ps1 -Release
@@ -30,9 +32,8 @@ powershell -ExecutionPolicy Bypass -File .\script\test-wireless.ps1 -Release
 재연결이 필요하면 현재 무선 디버깅 화면의 주소를 `-DeviceAddress IP:PORT`로
 전달합니다. Wi-Fi 변경이나 재부팅 후 포트가 바뀔 수 있습니다.
 `-ListDevices`로 연결 상태만 확인할 수 있습니다.
-기본 백엔드는 `https://api.onaria.ai.kr`이며, 다른 서버는
-`-ApiBaseUrl https://your-server.example`로 지정합니다.
-HTTP 개발 연결은 명시한 loopback 주소만 허용합니다. USB/무선 ADB의 `adb reverse tcp:8787 tcp:8787` 후 `-ApiBaseUrl http://127.0.0.1:8787`을 지정할 수 있습니다. LAN HTTP 주소와 release HTTP override는 차단됩니다.
+정식 업데이트의 API는 `https://api.onaria.ai.kr`로 고정합니다.
+기존 앱의 개발용 dart-define override는 유지됩니다. 개발 서버는 별도 테스트 기기나 에뮬레이터에서 사용하세요.
 
 연결이 안 되면 같은 Wi-Fi인지, 게스트 네트워크의 기기 간 통신 차단 여부와
 PC 방화벽의 ADB 허용 여부를 확인합니다. Android 10 이하는 이 페어링 방식을 지원하지 않습니다.
