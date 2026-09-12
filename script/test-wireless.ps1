@@ -1,7 +1,7 @@
 param(
     [string]$PairAddress,
     [string]$DeviceAddress,
-    [string]$ApiBaseUrl = 'http://lightshare8.mycafe24.com',
+    [string]$ApiBaseUrl = '',
     [switch]$Release,
     [switch]$ListDevices
 )
@@ -59,7 +59,9 @@ if ($DeviceAddress) {
 $flutter = Get-Command flutter -ErrorAction Stop
 Push-Location $projectRoot
 try {
-    $runArgs = @('run', '-d', $device, "--dart-define=ONARIA_API_BASE_URL=$ApiBaseUrl")
+    $runArgs = @('run', '-d', $device)
+    # No implicit override: ApiConfig owns the production default.
+    if ($ApiBaseUrl) { $runArgs += "--dart-define=ONARIA_API_BASE_URL=$ApiBaseUrl" }
     if ($Release) { $runArgs += '--release' }
     & $flutter.Source @runArgs
     if ($LASTEXITCODE -ne 0) { throw 'Flutter build or device launch failed.' }

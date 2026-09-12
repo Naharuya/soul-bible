@@ -9,7 +9,10 @@ void main() {
     for (final url in ['http://lightshare8.mycafe24.com', 'http://localhost:8787', 'http://10.0.2.2:8787', 'ftp://example.com', 'https://user:pass@example.com', '/relative']) {
       expect(ApiConfig.isAllowedEndpoint(Uri.parse(url), debug: false), isFalse);
     }
-    expect(ApiConfig.isAllowedEndpoint(Uri.parse('https://lightshare8.mycafe24.com'), debug: false), isTrue);
+    expect(ApiConfig.isAllowedEndpoint(Uri.parse(ApiConfig.productionBaseUrl), debug: false), isTrue);
+    for (final url in ['https://lightshare8.mycafe24.com', 'https://LIGHTSHARE8.MYCAFE24.COM.', 'https://127.0.0.1', 'https://104.105.128.84', 'https://[::1]', 'https://localhost', 'https://app.localhost', 'https://2130706433']) {
+      expect(ApiConfig.isAllowedEndpoint(Uri.parse(url), debug: false), isFalse, reason: url);
+    }
   });
   test('debug HTTP is restricted to explicit development loopback hosts', () {
     expect(ApiConfig.isAllowedEndpoint(Uri.parse('http://127.0.0.1:8787'), debug: true), isTrue);

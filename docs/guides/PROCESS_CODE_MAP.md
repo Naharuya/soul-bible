@@ -150,7 +150,7 @@ flowchart TD
 flutter pub get
 flutter analyze
 flutter test
-flutter test test/conversation_lifecycle_test.dart --dart-define=SOUL_BIBLE_API_BASE_URL=http://lightshare8.mycafe24.com
+flutter test test/conversation_lifecycle_test.dart --dart-define=SOUL_BIBLE_API_BASE_URL=http://invalid.example
 npm.cmd --prefix backend test
 flutter build apk --release
 flutter build appbundle --release

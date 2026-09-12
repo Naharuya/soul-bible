@@ -30,9 +30,9 @@ powershell -ExecutionPolicy Bypass -File .\script\test-wireless.ps1 -Release
 재연결이 필요하면 현재 무선 디버깅 화면의 주소를 `-DeviceAddress IP:PORT`로
 전달합니다. Wi-Fi 변경이나 재부팅 후 포트가 바뀔 수 있습니다.
 `-ListDevices`로 연결 상태만 확인할 수 있습니다.
-기본 백엔드는 `http://lightshare8.mycafe24.com`이며, 다른 서버는
+기본 백엔드는 `https://api.onaria.ai.kr`이며, 다른 서버는
 `-ApiBaseUrl https://your-server.example`로 지정합니다.
-휴대폰에서 PC의 로컬 서버에 접속할 때는 localhost 대신 PC의 LAN IP를 사용해야 합니다.
+HTTP 개발 연결은 명시한 loopback 주소만 허용합니다. USB/무선 ADB의 `adb reverse tcp:8787 tcp:8787` 후 `-ApiBaseUrl http://127.0.0.1:8787`을 지정할 수 있습니다. LAN HTTP 주소와 release HTTP override는 차단됩니다.
 
 연결이 안 되면 같은 Wi-Fi인지, 게스트 네트워크의 기기 간 통신 차단 여부와
 PC 방화벽의 ADB 허용 여부를 확인합니다. Android 10 이하는 이 페어링 방식을 지원하지 않습니다.

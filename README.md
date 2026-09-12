@@ -157,7 +157,8 @@ LLM 제공자 API 키를 Flutter 앱에 직접 넣지 마세요. 프록시에서
 [`TECH_STACK_AND_DEPLOYMENT.md`](docs/guides/TECH_STACK_AND_DEPLOYMENT.md)를 참고하세요.
 
 ## 백엔드 도메인
-- https://lightshare8.mycafe24.com/ (출시 전 TLS 연결 검증 필요)
+- https://api.onaria.ai.kr/ (공식 Production API)
+- 앱 환경 설정과 release 검증: [APP_PRODUCTION_API.md](docs/APP_PRODUCTION_API.md)
 - ip : 104.105.128.84
 - os : Rocky 9
 - SSH 접속: `ssh soul-bible-server` (로컬 `~/.ssh/config`와 전용 키 필요)

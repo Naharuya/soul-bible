@@ -3,25 +3,35 @@ import 'package:flutter/foundation.dart';
 class ApiConfig {
   const ApiConfig._();
 
+  static const productionBaseUrl = 'https://api.onaria.ai.kr';
+
   static const _configuredBaseUrl = String.fromEnvironment(
     'ONARIA_API_BASE_URL',
     defaultValue: String.fromEnvironment(
       'SOUL_BIBLE_API_BASE_URL',
-      defaultValue: 'https://api.onaria.ai.kr',
+      defaultValue: productionBaseUrl,
     ),
   );
   static const appToken = String.fromEnvironment('ONARIA_APP_TOKEN',
       defaultValue: String.fromEnvironment('SOUL_BIBLE_APP_TOKEN'));
 
-  static Uri? get baseUrl {
-    if (_configuredBaseUrl.isEmpty) return null;
-    final uri = Uri.tryParse(_configuredBaseUrl);
-    return uri != null && isAllowedEndpoint(uri) ? uri : null;
+  static Uri? get baseUrl => resolveBaseUrl(_configuredBaseUrl);
+
+  static Uri? resolveBaseUrl(String value, {bool debug = kDebugMode}) {
+    if (value.isEmpty) return null;
+    final uri = Uri.tryParse(value);
+    return uri != null && isAllowedEndpoint(uri, debug: debug) ? uri : null;
   }
 
   static bool isAllowedEndpoint(Uri uri, {bool debug = kDebugMode}) {
     if (!uri.hasAuthority || uri.host.isEmpty || uri.userInfo.isNotEmpty) return false;
-    if (uri.scheme == 'https') return true;
+    if (uri.scheme == 'https') {
+      if (debug) return true;
+      final host = uri.host.toLowerCase().replaceFirst(RegExp(r'\.$'), '');
+      if (host == 'lightshare8.mycafe24.com' || host.endsWith('.localhost')) return false;
+      // Release overrides must be HTTPS DNS names, never IPs or loopback names.
+      return RegExp(r'^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z][a-z0-9-]*$').hasMatch(host);
+    }
     return debug && uri.scheme == 'http' &&
         const ['localhost', '127.0.0.1', '::1', '10.0.2.2'].contains(uri.host);
   }

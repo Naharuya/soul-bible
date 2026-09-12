@@ -64,12 +64,30 @@ jobs:
       - name: Run tests
         run: flutter test
 
+      - name: Verify explicit legacy development override
+        run: flutter test test/api_config_test.dart --dart-define=SOUL_BIBLE_API_BASE_URL=http://127.0.0.1:8787
+
+      - name: Verify ONARIA override precedence
+        run: flutter test test/api_config_test.dart --dart-define=SOUL_BIBLE_API_BASE_URL=http://127.0.0.1:8787 --dart-define=ONARIA_API_BASE_URL=https://staging.example.com
+
       # Only the root app is analyzed; RAMI is an independent Flutter project.
       - name: Analyze ONARIA lib, test and example
         run: flutter analyze lib test example --no-fatal-infos
 
       - name: Build test APK
+        # No API override: APK/AAB/iOS use ApiConfig.productionBaseUrl.
         run: flutter build apk --debug
+
+      - name: Build test AAB using the same API default
+        run: flutter build appbundle --debug
+
+      - name: Upload test AAB (not a store release)
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: onaria-debug-aab
+          path: build/app/outputs/bundle/debug/app-debug.aab
+          if-no-files-found: error
 
       - name: Upload test APK
         if: github.event_name != 'pull_request'
