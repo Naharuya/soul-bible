@@ -64,8 +64,9 @@ jobs:
       - name: Run tests
         run: flutter test
 
-      - name: Analyze app
-        run: flutter analyze --no-fatal-infos
+      # Only the root app is analyzed; RAMI is an independent Flutter project.
+      - name: Analyze ONARIA lib, test and example
+        run: flutter analyze lib test example --no-fatal-infos
 
       - name: Build test APK
         run: flutter build apk --debug

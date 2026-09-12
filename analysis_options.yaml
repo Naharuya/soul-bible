@@ -1,5 +1,7 @@
 analyzer:
   exclude:
+    - rami/**
+    - script/**
     - build/**
     - android/**
     - ios/**
