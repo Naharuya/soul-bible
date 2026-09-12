@@ -5,6 +5,13 @@ fail() { echo "[FAIL] $*" >&2; exit 1; }
 ok() { echo "[OK] $*"; }
 warn() { echo "[WARN] $*"; }
 
+MODE="${1:---debug}"
+[[ $# -le 1 ]] || fail "Usage: $0 [--debug|--release|--play-store]"
+case "$MODE" in
+  --debug|--release|--play-store) ;;
+  *) fail "Usage: $0 [--debug|--release|--play-store]" ;;
+esac
+
 [[ "$(uname -s)" == "Darwin" ]] || fail "This preflight is for macOS."
 [[ "$(uname -m)" == "arm64" ]] || fail "Apple Silicon arm64 is required for the configured runner labels."
 
@@ -30,10 +37,14 @@ AAPT="$SDK/build-tools/36.0.0/aapt"
 [[ -x "$AAPT" ]] || fail "aapt missing: $AAPT"
 ok "Android SDK tools"
 
-if [[ -f android/key.properties && -f android/soul-bible-release.jks ]]; then
+if [[ "$MODE" != "--debug" ]]; then
+  [[ -f android/key.properties ]] || fail "android/key.properties missing"
+  [[ -f android/soul-bible-release.jks ]] || fail "android/soul-bible-release.jks missing"
   ok "Release signing files exist (contents not printed)"
-else
+elif [[ ! -f android/key.properties || ! -f android/soul-bible-release.jks ]]; then
   warn "Release signing is not configured. Debug deployment only."
+else
+  ok "Release signing files exist (contents not printed)"
 fi
 
 DEVICE_LIST="$($ADB devices | awk '$2=="device" {print $1}')"
@@ -50,4 +61,4 @@ node --test scripts/android-release.test.mjs
 ok "Installer safety tests"
 
 echo
-ok "Mac mini is ready for ONARIA self-hosted debug deployment."
+ok "Mac mini preflight passed (${MODE#--} mode; build and installation not performed)."
