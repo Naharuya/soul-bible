@@ -1,17 +1,22 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
 
 import 'cross_light_game.dart';
 
-/// Each light moves from a quiet scattered position to its place on the cross.
+/// Calm tap-based cross-light board.
+///
+/// All six stars remain visible, but only the next uncollected star is the
+/// active target. The active target alone pulses while the game is ready.
+/// Collected stars move into the cross in order.
 class CrossLightSky extends StatefulWidget {
-  const CrossLightSky(
-      {super.key,
-      required this.pieces,
-      required this.ready,
-      this.paused = false,
-      required this.onCollect});
+  const CrossLightSky({
+    super.key,
+    required this.pieces,
+    required this.ready,
+    this.paused = false,
+    required this.onCollect,
+  });
+
   final Set<String> pieces;
   final bool ready;
   final bool paused;
@@ -22,50 +27,6 @@ class CrossLightSky extends StatefulWidget {
 }
 
 class _CrossLightSkyState extends State<CrossLightSky> {
-  final _surface = GlobalKey();
-  String? _dragging;
-  Offset? _dragPosition;
-  Set<String> get pieces => widget.pieces;
-  bool get ready => widget.ready;
-  bool get paused => widget.paused;
-  bool _canMove(String word) => ready && !paused && !pieces.contains(word);
-  void onCollect(String word) => widget.onCollect(word);
-
-  void _move(String word, Offset global, double width, double height) {
-    if (!ready || paused || pieces.contains(word)) return;
-    if (_dragging != null && _dragging != word) return;
-    final box = _surface.currentContext!.findRenderObject() as RenderBox;
-    final point = box.globalToLocal(global) - const Offset(24, 24);
-    setState(() {
-      _dragging = word;
-      _dragPosition =
-          Offset(point.dx.clamp(0, width - 48), point.dy.clamp(0, height - 48));
-    });
-  }
-
-  void _release(Rect target, {bool cancel = false}) {
-    final word = _dragging;
-    final accepted = !cancel &&
-        ready &&
-        !paused &&
-        word != null &&
-        target.contains(_dragPosition! + const Offset(24, 24));
-    setState(() {
-      _dragging = null;
-      _dragPosition = null;
-    });
-    if (accepted) onCollect(word);
-  }
-
-  @override
-  void didUpdateWidget(covariant CrossLightSky oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (!ready || paused) {
-      _dragging = null;
-      _dragPosition = null;
-    }
-  }
-
   static const _scattered = [
     Offset(0.18, 0.14),
     Offset(0.82, 0.12),
@@ -74,6 +35,7 @@ class _CrossLightSkyState extends State<CrossLightSky> {
     Offset(0.18, 0.86),
     Offset(0.82, 0.84),
   ];
+
   static const _cross = [
     Offset(0.5, 0.10),
     Offset(0.25, 0.36),
@@ -83,257 +45,254 @@ class _CrossLightSkyState extends State<CrossLightSky> {
     Offset(0.5, 0.88),
   ];
 
+  int get _activeIndex => widget.pieces.length.clamp(0, crossLightWords.length - 1);
+
   @override
   Widget build(BuildContext context) {
     const lightColor = Color(0xFFFFE3A0);
     final reduced = MediaQuery.disableAnimationsOf(context);
-    final duration =
-        reduced ? Duration.zero : const Duration(milliseconds: 900);
+    final moveDuration = reduced ? Duration.zero : const Duration(milliseconds: 850);
+
     return LayoutBuilder(builder: (context, constraints) {
       final width = constraints.maxWidth.clamp(48.0, 340.0);
       const height = 300.0;
-      final gatheringArea = Rect.fromCenter(
-          center: Offset(width / 2, height / 2),
-          width: math.min(140, width * .5),
-          height: 180);
+
       Offset position(Offset point) =>
           Offset(point.dx * (width - 48), point.dy * (height - 48));
+
       final targets = _cross
           .map((point) => position(point) + const Offset(24, 24))
           .toList();
+
       return Center(
-          child: SizedBox(
-              width: width,
-              height: height,
-              child: Stack(key: _surface, children: [
-                Positioned.fill(
-                    child: DecoratedBox(
+        child: SizedBox(
+          width: width,
+          height: height,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: DecoratedBox(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24),
                     gradient: const RadialGradient(
-                        colors: [Color(0xFF24354C), Color(0xFF0A1020)],
-                        radius: .9),
-                  ),
-                )),
-                Positioned.fromRect(
-                  rect: gatheringArea,
-                  child: IgnorePointer(
-                      child: AnimatedOpacity(
-                    opacity: pieces.length == crossLightWords.length ? 0 : .5,
-                    duration: duration,
-                    child: DecoratedBox(
-                      key: const ValueKey('cross-gathering-area'),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(36),
-                        border: Border.all(color: const Color(0xFFB6C7E2)),
-                        color: const Color(0x163F5879),
-                      ),
+                      colors: [Color(0xFF24354C), Color(0xFF0A1020)],
+                      radius: .9,
                     ),
-                  )),
+                  ),
                 ),
-                Positioned.fill(
-                    child: IgnorePointer(
-                        child: AnimatedOpacity(
-                  key: const ValueKey('cross-quiet-glow'),
-                  opacity: pieces.length == crossLightWords.length ? 1 : 0,
-                  duration: duration,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: RadialGradient(colors: [
-                        lightColor.withValues(alpha: .14),
-                        lightColor.withValues(alpha: 0),
-                      ]),
-                    ),
-                  ),
-                ))),
-                Positioned.fill(
-                    child: IgnorePointer(
-                        child: CustomPaint(
-                            painter: _DustPainter(const Color(0xFFB9C8E2))))),
-                Positioned.fill(
-                    child: IgnorePointer(
-                        child: AnimatedOpacity(
-                  opacity: pieces.length == crossLightWords.length ? 1 : 0,
-                  duration: duration,
+              ),
+              Positioned.fill(
+                child: IgnorePointer(
                   child: CustomPaint(
-                      key: const ValueKey('cross-starlight-lines'),
-                      painter: _CrossLinesPainter(targets, lightColor)),
-                ))),
-                for (final entry in crossLightWords.entries.indexed)
-                  AnimatedPositioned(
-                    key: ValueKey('cross-piece-${entry.$2.key}'),
-                    duration:
-                        _dragging == entry.$2.key ? Duration.zero : duration,
-                    curve: Curves.easeInOutCubic,
-                    left: _dragging == entry.$2.key
-                        ? _dragPosition!.dx
-                        : position(pieces.contains(entry.$2.key)
-                                ? _cross[entry.$1]
-                                : _scattered[entry.$1])
-                            .dx,
-                    top: _dragging == entry.$2.key
-                        ? _dragPosition!.dy
-                        : position(pieces.contains(entry.$2.key)
-                                ? _cross[entry.$1]
-                                : _scattered[entry.$1])
-                            .dy,
-                    width: 48,
-                    height: 48,
-                    child: _DriftingLight(
-                      collected: pieces.contains(entry.$2.key) ||
-                          _dragging == entry.$2.key,
-                      paused: paused,
-                      phase: entry.$1 * .8,
-                      horizontalTravel: math.min(30, (width - 48) * .14),
-                      child: RawGestureDetector(
-                        gestures: {
-                          if (_canMove(entry.$2.key))
-                            ImmediateMultiDragGestureRecognizer:
-                                GestureRecognizerFactoryWithHandlers<
-                                    ImmediateMultiDragGestureRecognizer>(
-                              () => ImmediateMultiDragGestureRecognizer(),
-                              (recognizer) => recognizer.onStart = (position) {
-                                if (_dragging != null) return null;
-                                _move(entry.$2.key, position, width, height);
-                                return _LightDrag(
-                                  (details) => _move(entry.$2.key,
-                                      details.globalPosition, width, height),
-                                  () => _release(gatheringArea),
-                                  () => _release(gatheringArea, cancel: true),
-                                );
-                              },
-                            ),
-                        },
-                        child: Semantics(
-                          label: '${entry.$2.value}의 빛',
-                          hint: '중앙으로 끌어 모으세요. 두 번 탭해서 모을 수도 있어요.',
-                          button: !pieces.contains(entry.$2.key),
-                          enabled: ready && !pieces.contains(entry.$2.key),
-                          selected: pieces.contains(entry.$2.key),
-                          onTap: ready && !pieces.contains(entry.$2.key)
-                              ? () => onCollect(entry.$2.key)
-                              : null,
-                          child: Tooltip(
-                            message: entry.$2.value,
-                            excludeFromSemantics: true,
-                            child: InkResponse(
-                              key:
-                                  ValueKey('cross-light-touch-${entry.$2.key}'),
-                              onTap: ready && !pieces.contains(entry.$2.key)
-                                  ? () => onCollect(entry.$2.key)
-                                  : null,
-                              radius: 24,
-                              containedInkWell: true,
-                              excludeFromSemantics: true,
-                              child: ExcludeSemantics(
-                                  child: Center(
-                                      child: AnimatedDefaultTextStyle(
-                                duration: duration,
-                                style: TextStyle(
-                                    fontSize:
-                                        pieces.contains(entry.$2.key) ? 28 : 24,
-                                    color:
-                                        pieces.contains(entry.$2.key) || ready
-                                            ? lightColor
-                                            : const Color(0xFFB9C8E2),
-                                    shadows: [
-                                      Shadow(
-                                          color:
-                                              lightColor.withValues(alpha: 0.4),
-                                          blurRadius: 12)
-                                    ]),
-                                child: Text(
-                                    pieces.contains(entry.$2.key) ||
-                                            entry.$1.isEven
-                                        ? '✦'
-                                        : '✧',
-                                    textScaler: TextScaler.noScaling),
-                              ))),
-                            ),
-                          ),
+                    painter: _DustPainter(const Color(0xFFB9C8E2)),
+                  ),
+                ),
+              ),
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: AnimatedOpacity(
+                    key: const ValueKey('cross-quiet-glow'),
+                    opacity: widget.pieces.length == crossLightWords.length ? 1 : 0,
+                    duration: moveDuration,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: RadialGradient(
+                          colors: [
+                            lightColor.withValues(alpha: .14),
+                            lightColor.withValues(alpha: 0),
+                          ],
                         ),
                       ),
                     ),
                   ),
-              ])));
+                ),
+              ),
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: AnimatedOpacity(
+                    opacity: widget.pieces.length == crossLightWords.length ? 1 : 0,
+                    duration: moveDuration,
+                    child: CustomPaint(
+                      key: const ValueKey('cross-starlight-lines'),
+                      painter: _CrossLinesPainter(targets, lightColor),
+                    ),
+                  ),
+                ),
+              ),
+              for (final entry in crossLightWords.entries.indexed)
+                AnimatedPositioned(
+                  key: ValueKey('cross-piece-${entry.$2.key}'),
+                  duration: moveDuration,
+                  curve: Curves.easeInOutCubic,
+                  left: position(widget.pieces.contains(entry.$2.key)
+                          ? _cross[entry.$1]
+                          : _scattered[entry.$1])
+                      .dx,
+                  top: position(widget.pieces.contains(entry.$2.key)
+                          ? _cross[entry.$1]
+                          : _scattered[entry.$1])
+                      .dy,
+                  width: 48,
+                  height: 48,
+                  child: _StarTarget(
+                    key: ValueKey('cross-light-touch-${entry.$2.key}'),
+                    word: entry.$2.key,
+                    label: entry.$2.value,
+                    collected: widget.pieces.contains(entry.$2.key),
+                    active: entry.$1 == _activeIndex &&
+                        !widget.pieces.contains(entry.$2.key),
+                    ready: widget.ready && !widget.paused,
+                    reducedMotion: reduced,
+                    onCollect: widget.onCollect,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      );
     });
   }
 }
 
-/// The star and its 48px touch target drift together until collected.
-class _DriftingLight extends StatefulWidget {
-  const _DriftingLight(
-      {required this.collected,
-      required this.paused,
-      required this.phase,
-      required this.horizontalTravel,
-      required this.child});
+class _StarTarget extends StatefulWidget {
+  const _StarTarget({
+    super.key,
+    required this.word,
+    required this.label,
+    required this.collected,
+    required this.active,
+    required this.ready,
+    required this.reducedMotion,
+    required this.onCollect,
+  });
+
+  final String word;
+  final String label;
   final bool collected;
-  final bool paused;
-  final double phase;
-  final double horizontalTravel;
-  final Widget child;
+  final bool active;
+  final bool ready;
+  final bool reducedMotion;
+  final ValueChanged<String> onCollect;
 
   @override
-  State<_DriftingLight> createState() => _DriftingLightState();
+  State<_StarTarget> createState() => _StarTargetState();
 }
 
-class _DriftingLightState extends State<_DriftingLight>
+class _StarTargetState extends State<_StarTarget>
     with SingleTickerProviderStateMixin {
-  late final _motion =
-      AnimationController(vsync: this, duration: const Duration(seconds: 12));
+  late final AnimationController _pulse = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 900),
+  );
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _syncMotion();
+  void initState() {
+    super.initState();
+    _syncPulse();
   }
 
   @override
-  void didUpdateWidget(covariant _DriftingLight oldWidget) {
+  void didUpdateWidget(covariant _StarTarget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _syncMotion();
+    _syncPulse();
   }
 
-  void _syncMotion() {
-    if (MediaQuery.disableAnimationsOf(context) || widget.collected) {
-      _motion.stop();
-      _motion.value = 0;
-    } else if (widget.paused) {
-      _motion.stop();
-    } else if (!_motion.isAnimating) {
-      _motion.repeat();
+  void _syncPulse() {
+    final shouldPulse = widget.active && widget.ready && !widget.reducedMotion;
+    if (shouldPulse) {
+      if (!_pulse.isAnimating) _pulse.repeat(reverse: true);
+    } else {
+      _pulse.stop();
+      _pulse.value = 0;
     }
   }
 
   @override
   void dispose() {
-    _motion.dispose();
+    _pulse.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) => AnimatedBuilder(
-        animation: _motion,
-        child: widget.child,
-        builder: (context, child) {
-          final strength =
-              widget.collected || MediaQuery.disableAnimationsOf(context)
-                  ? 0.0
-                  : 1.0;
-          final angle = _motion.value * math.pi * 2 + widget.phase;
-          return Transform.translate(
-            offset: Offset(math.sin(angle) * widget.horizontalTravel * strength,
-                math.cos(angle) * 22 * strength),
-            child: child,
-          );
-        },
-      );
+  Widget build(BuildContext context) {
+    const lightColor = Color(0xFFFFE3A0);
+    final enabled = widget.active && widget.ready && !widget.collected;
+
+    return Semantics(
+      label: '${widget.label}의 빛',
+      hint: enabled ? '지금 반짝이는 별을 터치하세요.' : null,
+      button: enabled,
+      enabled: enabled,
+      selected: widget.collected,
+      onTap: enabled ? () => widget.onCollect(widget.word) : null,
+      child: Tooltip(
+        message: widget.label,
+        excludeFromSemantics: true,
+        child: InkResponse(
+          onTap: enabled ? () => widget.onCollect(widget.word) : null,
+          radius: 24,
+          containedInkWell: true,
+          excludeFromSemantics: true,
+          child: ExcludeSemantics(
+            child: AnimatedBuilder(
+              animation: _pulse,
+              builder: (context, child) {
+                final t = _pulse.value;
+                final scale = enabled ? 1 + (0.18 * t) : 1.0;
+                final opacity = widget.collected
+                    ? 1.0
+                    : widget.active
+                        ? (widget.ready ? 1.0 : .58)
+                        : .32;
+                return Transform.scale(
+                  scale: scale,
+                  child: Opacity(
+                    opacity: opacity,
+                    child: Container(
+                      decoration: enabled
+                          ? BoxDecoration(
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: lightColor.withValues(alpha: .20 + .30 * t),
+                                  blurRadius: 12 + 14 * t,
+                                  spreadRadius: 1 + 3 * t,
+                                ),
+                              ],
+                            )
+                          : null,
+                      alignment: Alignment.center,
+                      child: Text(
+                        widget.collected || widget.active ? '✦' : '✧',
+                        textScaler: TextScaler.noScaling,
+                        style: TextStyle(
+                          fontSize: widget.collected ? 28 : 25,
+                          color: lightColor,
+                          shadows: [
+                            Shadow(
+                              color: lightColor.withValues(
+                                  alpha: enabled ? .65 : .20),
+                              blurRadius: enabled ? 14 : 6,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _DustPainter extends CustomPainter {
   const _DustPainter(this.color);
   final Color color;
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..color = color.withValues(alpha: 0.35);
@@ -344,7 +303,7 @@ class _DustPainter extends CustomPainter {
       Offset(.85, .68),
       Offset(.24, .70),
       Offset(.66, .97),
-      Offset(.42, .52)
+      Offset(.42, .52),
     ]) {
       canvas.drawCircle(
           Offset(point.dx * size.width, point.dy * size.height), 1.3, paint);
@@ -359,6 +318,7 @@ class _CrossLinesPainter extends CustomPainter {
   const _CrossLinesPainter(this.points, this.color);
   final List<Offset> points;
   final Color color;
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
@@ -382,17 +342,4 @@ class _CrossLinesPainter extends CustomPainter {
           .asMap()
           .entries
           .any((entry) => entry.value != points[entry.key]);
-}
-
-class _LightDrag extends Drag {
-  _LightDrag(this.onUpdate, this.onEnd, this.onCancel);
-  final ValueChanged<DragUpdateDetails> onUpdate;
-  final VoidCallback onEnd;
-  final VoidCallback onCancel;
-  @override
-  void update(DragUpdateDetails details) => onUpdate(details);
-  @override
-  void end(DragEndDetails details) => onEnd();
-  @override
-  void cancel() => onCancel();
 }
