@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="theme-color" content="#18362d">
+  <meta name="theme-color" content="#10182b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="onaria 관리자">
   <meta name="description" content="onaria 회원과 서비스 현황을 확인하는 관리자 앱">
@@ -15,22 +15,26 @@
   <link rel="stylesheet" href="/admin/admin.css">
 </head>
 <body>
+  <a class="skip-link" href="#adminMain">본문 바로가기</a>
   <div class="shell">
     <aside class="sidebar">
-      <a class="brand" href="/admin/"><span class="brand-mark">o</span><span>onaria<small>ADMIN CONSOLE</small></span></a>
-      <nav>
-        <a class="active" href="#overview"><span>◫</span> Overview</a>
-        <a href="#conversations"><span>◎</span> Conversations</a>
-        <a href="#members"><span>♙</span> Members</a>
-        <a href="#crisisCount"><span>◇</span> Safety</a>
-        <a href="#settings"><span>⚙</span> API 설정</a>
+      <a class="brand" href="/admin/"><img src="/assets/onaria-emblem.svg" width="42" height="42" alt=""><span>ONARIA<small>ADMIN CONSOLE</small></span></a>
+      <button id="adminMenu" type="button" aria-expanded="false" aria-controls="adminNav">메뉴 ☰</button>
+      <nav id="adminNav" aria-label="관리자 메뉴">
+        <a class="active" href="/admin/dashboard">대시보드</a>
+        <a href="/admin/users">사용자</a>
+        <a href="/admin/ai-usage">AI 비용과 사용량</a>
+        <a href="/admin/safety">Safety</a>
+        <a href="/admin/content">콘텐츠</a>
+        <a href="/admin/analytics">이용 분석</a>
+        <a href="/admin/system">시스템 / API 설정</a>
       </nav>
-      <div class="sidebar-foot">onaria 운영 관리</div>
+      <div class="sidebar-foot"><a href="/">공식 홈페이지 ↗</a></div>
     </aside>
 
-    <main>
+    <main id="adminMain">
       <header>
-        <div><p class="eyebrow">OPERATIONS</p><h1>onaria 관리자</h1><p class="sub">onaria의 오늘을 한눈에 확인하세요.</p></div>
+        <div><p class="eyebrow">OPERATIONS</p><h1 id="pageTitle">대시보드</h1><p class="sub">ONARIA의 운영 현황을 확인하세요.</p></div>
         <div class="header-actions"><span id="lastUpdated">업데이트 대기 중</span><button id="refreshButton" class="icon-button" aria-label="새로고침">↻</button><button id="logoutButton" class="text-button hidden">로그아웃</button></div>
       </header>
 
@@ -40,15 +44,16 @@
         <button id="installButton" class="text-button">앱 설치</button>
       </section>
       <p id="connectionStatus" class="connection-status" role="status" aria-live="polite"></p>
+      <p id="dashboardError" class="connection-status" role="alert"></p>
 
       <section id="loginPanel" class="login-panel">
-        <div><p class="eyebrow">SECURE ACCESS</p><h2>관리자 인증</h2><p>관리자 인증키로 로그인하세요. 인증 정보는 현재 창을 사용하는 동안만 보관됩니다.</p></div>
+        <div><p class="eyebrow">SECURE ACCESS</p><h2>관리자 인증</h2><p>관리자 인증키로 로그인하세요. 인증키는 브라우저 저장소에 보관하지 않으며, 로그인은 최대 30분 후 만료됩니다.</p></div>
         <form id="loginForm"><input id="tokenInput" type="password" autocomplete="off" aria-label="관리자 인증키" placeholder="관리자 인증키" required><button type="submit">대시보드 열기</button></form>
         <p id="loginError" class="error" role="alert"></p>
       </section>
 
       <div id="dashboard" class="hidden">
-        <section class="status-strip"><span class="status-pill"><i></i> 서버 연결됨</span><a href="#settings">API 설정 관리 →</a><span id="uptime">Uptime —</span></section>
+        <section class="status-strip"><span class="status-pill"><i></i> 서버 연결됨</span><a href="/admin/system">API 설정 관리 →</a><span id="uptime">Uptime —</span></section>
         <section class="panel settings-panel" id="settings" aria-labelledby="settingsTitle">
           <div class="panel-head"><div><p class="eyebrow">AI CONNECTION</p><h2 id="settingsTitle">OpenAI API 설정</h2></div><span id="keyStatus" class="privacy">확인 중</span></div>
           <p class="sub">키를 등록하거나 새 키로 교체하세요. 저장한 키는 다시 표시되지 않습니다.</p>
@@ -64,13 +69,15 @@
         <section class="metric-grid" id="overview">
           <article class="metric-card accent-green"><div class="metric-top"><span>대화 요청</span><b>↗</b></div><strong id="chatCount">—</strong><small>서버 시작 이후</small></article>
           <article class="metric-card accent-gold"><div class="metric-top"><span>가입 회원</span><b>♙</b></div><strong id="memberCount">—</strong><small>누적 회원</small></article>
-          <article class="metric-card accent-blue"><div class="metric-top"><span>활성 세션</span><b>◎</b></div><strong id="sessionCount">—</strong><small>메모리 보관 중</small></article>
+          <article class="metric-card accent-blue"><div class="metric-top"><span>오늘 활성 사용자</span><b>◎</b></div><strong id="sessionCount">측정 준비 중</strong><small>사용자 활동 측정 미연결</small></article>
           <article class="metric-card accent-coral"><div class="metric-top"><span>안전 감지</span><b>◇</b></div><strong id="crisisCount">—</strong><small>서버 시작 이후</small></article>
         </section>
 
         <section class="panel" id="aiUsage">
+          <p id="aiRuntime" role="status">실제 응답 경로 확인 대기 중</p>
           <div class="panel-head"><div><p class="eyebrow">AI USAGE · UTC</p><h2>오늘 AI 사용량</h2></div><span id="aiUsageStatus" class="privacy">집계 대기 중</span></div>
           <div class="metric-grid">
+            <article class="metric-card"><div class="metric-top"><span>오늘 AI 요청</span></div><strong id="aiRequests">데이터 없음</strong><small>하나의 요청에서 여러 모델이 호출될 수 있습니다.</small></article>
             <article class="metric-card"><div class="metric-top"><span>AI 호출</span></div><strong id="aiCalls">—</strong><small>모델 호출 시도 수</small></article>
             <article class="metric-card"><div class="metric-top"><span>입력 토큰</span></div><strong id="aiInputTokens">—</strong></article>
             <article class="metric-card"><div class="metric-top"><span>캐시 입력 토큰</span></div><strong id="aiCachedTokens">—</strong></article>
@@ -85,7 +92,7 @@
 
         <section class="content-grid" id="conversations">
           <article class="panel performance">
-            <div class="panel-head"><div><p class="eyebrow">LIVE HEALTH</p><h2>서비스 성능</h2></div><span class="status-pill"><i></i> Healthy</span></div>
+            <div class="panel-head"><div><p class="eyebrow">PROCESS METRICS</p><h2>서비스 응답</h2></div><span class="privacy">서버 시작 이후 · 전체 HTTP 요청</span></div>
             <div class="performance-row"><div class="score"><strong id="successRate">—</strong><span>성공 응답률</span></div><div class="bars"><div><span>2xx 응답</span><b id="successCount">—</b></div><div class="bar"><i id="successBar"></i></div><div><span>5xx 오류</span><b id="errorCount">—</b></div><div class="bar error-bar"><i id="errorBar"></i></div></div></div>
           </article>
           <article class="panel service-card">
@@ -97,6 +104,28 @@
         <section class="panel members" id="members">
           <div class="panel-head"><div><p class="eyebrow">COMMUNITY</p><h2>최근 가입 회원</h2></div><span class="privacy">전화번호 마스킹 적용</span></div>
           <div class="table-wrap"><table><thead><tr><th>회원</th><th>연락처</th><th>교회</th><th>가입 방식</th><th>가입일</th></tr></thead><tbody id="memberRows"><tr><td colspan="5" class="empty">회원 정보를 불러오는 중입니다.</td></tr></tbody></table></div>
+        </section>
+        <section class="panel" id="webOverview" aria-labelledby="operationsTitle">
+          <h2 id="operationsTitle">운영 지표</h2><p id="opsScope" class="sub">측정 준비 중</p>
+          <div class="metric-grid"><article class="metric-card"><span>Fallback 비율</span><strong id="fallbackRate">데이터 없음</strong><small>완료된 AI 라우터 응답 기준</small></article><article class="metric-card"><span>D1 retention</span><strong>측정 준비 중</strong><small>가입 코호트 활동 이벤트 미연결</small></article><article class="metric-card"><span>D7 retention</span><strong>측정 준비 중</strong><small>가입 코호트 활동 이벤트 미연결</small></article></div>
+        </section>
+        <section class="panel" id="modelUsage" aria-labelledby="modelTitle">
+          <h2 id="modelTitle">Luna · Terra · Sol</h2><p id="costTarget" class="sub"></p><p id="modelScope" class="sub">데이터 없음</p>
+          <p id="tierShares" class="sub">모델 호출 비율 데이터 없음</p>
+          <div class="metric-grid"><article class="metric-card"><span>세션 비용 p50 · USD</span><strong id="sessionP50">데이터 없음</strong></article><article class="metric-card"><span>세션 비용 p90 · USD</span><strong id="sessionP90">데이터 없음</strong></article></div>
+          <p id="sessionCostScope" class="sub">최근 원장에서 관측된 세션 비용입니다. 완결된 세션의 전체 비용을 보장하지 않습니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="모델별 사용량 표"><table><thead><tr><th scope="col">Tier</th><th scope="col">모델</th><th scope="col">호출</th><th scope="col">입력</th><th scope="col">캐시 입력</th><th scope="col">출력</th><th scope="col">USD</th><th scope="col">Fallback 호출</th></tr></thead><tbody id="modelRows"></tbody></table></div>
+        </section>
+        <section class="panel" id="safetyPanel" aria-labelledby="safetyTitle">
+          <p class="eyebrow">SAFETY · PROCESS AGGREGATES</p><h2 id="safetyTitle">안전 현황</h2><p class="sub">서버 시작 이후 집계입니다. 원문·회원·세션 정보는 표시하지 않습니다. 시각은 각 분류의 마지막 감지 시각입니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="안전 집계 표"><table><thead><tr><th scope="col">분류</th><th scope="col">위험 수준</th><th scope="col">위기 감지</th><th scope="col">횟수</th><th scope="col">최근 시각</th></tr></thead><tbody id="safetyRows"></tbody></table></div>
+        </section>
+        <section class="panel" id="analyticsPanel" aria-labelledby="analyticsTitle">
+          <h2 id="analyticsTitle">전통별 검색·통합 경로</h2><p class="sub">AI 라우터가 전통을 기록한 응답의 횟수입니다. 종교별 회원 수나 전체 대화 점유율이 아닙니다. 서버 재시작 시 초기화됩니다.</p><div id="traditionUsage">데이터 없음</div>
+        </section>
+        <section class="panel" id="contentPanel" aria-labelledby="contentTitle">
+          <p class="eyebrow">CONTENT GOVERNANCE</p><h2 id="contentTitle">콘텐츠 관리 안내</h2><p class="sub">기존 RAG·경전 데이터와 검토 절차를 재사용합니다. 브라우저 편집·배포 기능은 아직 연결되지 않았습니다.</p>
+          <ul><li>새 경전과 해석은 출처·라이선스·전통별 검토를 거친 뒤 저장소의 기존 콘텐츠 검토 도구로 반영합니다.</li><li>공개 홈페이지에는 승인되지 않은 경전 본문이나 새로운 교리 해석을 추가하지 않습니다.</li><li>이 화면에서 콘텐츠 수정 또는 운영 DB 초기화를 수행하지 않습니다.</li></ul>
         </section>
       </div>
     </main>

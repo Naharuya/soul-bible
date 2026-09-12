@@ -6,6 +6,30 @@ import { join } from 'node:path';
 import { createAdminSettings } from '../src/admin_settings.js';
 import { createApp } from '../src/app.js';
 
+
+test('runtime distinguishes fallback and provider success and clears after key change', async t => {
+  const { options } = fixture(t);
+  let next = { provider: 'local', fallback: true, fallbackReason: 'provider_auth' };
+  const settings = createAdminSettings({ ...options, factory: ({ logger }) => {
+    const generate = async () => logger.info('conversation_result', next);
+    generate.mode = 'multi-agent conversation';
+    return generate;
+  } });
+  assert.equal(settings.runtimeStatus(), null);
+  await settings.generate();
+  assert.equal(settings.runtimeStatus().fallbackReason, 'provider_auth');
+  assert.equal(settings.runtimeStatus().provider, 'local');
+  next = { provider: 'openai', fallback: false, fallbackReason: null };
+  await settings.generate();
+  assert.equal(settings.runtimeStatus().provider, 'openai');
+  assert.equal(settings.runtimeStatus().fallback, false);
+  const snapshot = settings.runtimeStatus();
+  snapshot.provider = 'changed';
+  assert.equal(settings.runtimeStatus().provider, 'openai');
+  settings.update('sk-test-replacement');
+  assert.equal(settings.runtimeStatus(), null);
+});
+
 function fixture(t) {
   const directory = mkdtempSync(join(tmpdir(), 'onaria-admin-'));
   t.after(() => rmSync(directory, { recursive: true, force: true }));

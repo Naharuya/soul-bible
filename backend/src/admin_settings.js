@@ -3,7 +3,7 @@ import { mkdirSync, readFileSync, writeFileSync, renameSync } from 'node:fs';
 import { join } from 'node:path';
 import { createConversationService } from './conversation_service.js';
 
-export function createAdminSettings({ directory, env = process.env, usageLedger, factory = createConversationService }) {
+export function createAdminSettings({ directory, env = process.env, usageLedger, factory = createConversationService, onResult }) {
   mkdirSync(directory, { recursive: true, mode: 0o700 });
   const masterPath = join(directory, 'master.key');
   const settingsPath = join(directory, 'settings.enc');
@@ -21,7 +21,25 @@ export function createAdminSettings({ directory, env = process.env, usageLedger,
     saved = JSON.parse(Buffer.concat([decipher.update(Buffer.from(data.data, 'base64')), decipher.final()]).toString());
   } catch (error) { if (error.code !== 'ENOENT') throw new Error('Admin settings unavailable'); }
   const keyFor = value => value === null ? (env.OPENAI_API_KEY || '') : value.apiKey;
-  const build = value => factory({ env: { ...env, OPENAI_API_KEY: keyFor(value) }, usageLedger });
+  let lastResult = null;
+  const logger = {
+    info(event, data) {
+      if (event !== 'conversation_result') return;
+      lastResult = {
+        at: new Date().toISOString(),
+        provider: ['openai', 'local', 'rag', 'safety'].includes(data.provider) ? data.provider : 'unknown',
+        fallback: data.fallback === true,
+        fallbackReason: ['missing_api_key', 'provider_auth', 'rate_limit', 'timeout', 'provider_error',
+          'budget_exceeded', 'external_api_disabled'].includes(data.fallbackReason) ? data.fallbackReason :
+          (data.fallbackReason ? 'other' : null),
+      };
+      try { onResult?.(data); } catch { /* Metrics cannot interrupt conversation. */ }
+      console.info(event, data);
+    },
+    warn: (...args) => console.warn(...args),
+    error: (...args) => console.error(...args),
+  };
+  const build = value => factory({ env: { ...env, OPENAI_API_KEY: keyFor(value) }, usageLedger, logger });
   let current = build(saved);
   const generate = (...args) => current(...args);
   generate.usageLedger = usageLedger;
@@ -41,7 +59,8 @@ export function createAdminSettings({ directory, env = process.env, usageLedger,
     renameSync(temporary, settingsPath);
     saved = next;
     current = service;
+    lastResult = null;
     return status();
   }
-  return { generate, status, update };
+  return { generate, status, update, runtimeStatus: () => lastResult ? { ...lastResult } : null };
 }

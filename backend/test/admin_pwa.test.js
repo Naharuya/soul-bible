@@ -4,6 +4,23 @@ import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 import { createApp } from '../src/app.js';
 
+test('late session restore cannot reopen a logged-out dashboard', async () => {
+  const elements = new Map();
+  const element = id => {
+    if (!elements.has(id)) elements.set(id, { value: '', textContent: '', classList: { add() {}, remove() {} }, replaceChildren() {}, addEventListener() {} });
+    return elements.get(id);
+  };
+  let complete;
+  const context = vm.createContext({ document: { getElementById: element }, Intl,
+    sessionStorage: { removeItem() {} }, fetch: () => new Promise(resolve => { complete = resolve; }) });
+  vm.runInContext(await readFile(new URL('../public/admin.js', import.meta.url), 'utf8'), context);
+  const restoring = vm.runInContext('resumeSession()', context);
+  vm.runInContext('logout()', context);
+  complete({ ok: true, json: () => assert.fail('Stale session must not be consumed') });
+  await restoring;
+  assert.equal(vm.runInContext('authenticated', context), false);
+});
+
 test('API key form sends authenticated write, clears secret and ignores response after logout', async () => {
   const elements = new Map();
   const element = id => {
@@ -19,13 +36,15 @@ test('API key form sends authenticated write, clears secret and ignores response
     fetch: (url, options) => { request = { url, options }; return new Promise(resolve => { resolveResponse = resolve; }); },
   });
   vm.runInContext(await readFile(new URL('../public/admin.js', import.meta.url), 'utf8'), context);
-  vm.runInContext("token = 'test-admin'", context);
+  vm.runInContext("authenticated = true; csrfToken = 'test-csrf'", context);
   element('apiKeyInput').value = 'sk-test-private-value';
   const saving = vm.runInContext("changeKey('PUT')", context);
   assert.equal(element('apiKeyInput').value, '');
-  assert.equal(request.options.headers.Authorization, 'Bearer test-admin');
+  assert.equal(request.options.credentials, 'same-origin');
+  assert.equal(request.options.headers['X-CSRF-Token'], 'test-csrf');
+  assert.equal(request.options.headers.Authorization, undefined);
   assert.equal(JSON.parse(request.options.body).apiKey, 'sk-test-private-value');
-  element('logoutButton').handlers.click();
+  vm.runInContext('logout()', context);
   resolveResponse({ ok: true, status: 200, json: () => assert.fail('Stale settings must not render') });
   await saving;
   assert.equal(element('keyMessage').textContent, '');

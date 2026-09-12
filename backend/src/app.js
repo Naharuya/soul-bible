@@ -12,12 +12,16 @@ import { createMemberStore } from './member_store.js';
 import { routeAgent } from './ai_router.js';
 import { IdentityError } from './auth/identity_verifier.js';
 import { appLinksRouter } from './app_links.js';
+import { adminAuth } from './admin_auth.js';
+import { websiteRouter } from './website.js';
+import { createWebMetrics, modelUsageSample } from './web_metrics.js';
 
-export function createApp({ generate, adminSettings, allowedOrigins = [], appToken = '', adminToken = '', logger = console, memberStore = createMemberStore(), identity = { required: false, verify: null } }) {
+export function createApp({ generate, adminSettings, allowedOrigins = [], appToken = '', adminToken = '', logger = console, memberStore = createMemberStore(), identity = { required: false, verify: null }, production = false, trustProxy = false, publicOrigin = 'https://onaria.ai.kr', allowAdminBearer = !production, webMetrics = createWebMetrics() }) {
   const app = express();
   const startedAt = new Date();
   const metrics = { requests: 0, chats: 0, crises: 0, errors: 0, statusCodes: {} };
   app.disable('x-powered-by');
+  app.set('trust proxy', trustProxy);
   app.use(helmet());
   app.use(appLinksRouter());
   app.use(cors({ origin(origin, cb) { cb(null, !origin || allowedOrigins.includes(origin)); } }));
@@ -26,7 +30,8 @@ export function createApp({ generate, adminSettings, allowedOrigins = [], appTok
     next();
   });
   app.use(express.json({ limit: '16kb' }));
-  app.use('/v1', rateLimit({ windowMs: 60_000, limit: 20, standardHeaders: 'draft-8', legacyHeaders: false }));
+  app.use('/v1', rateLimit({ windowMs: 60_000, limit: 20, skip: req => /^\/admin(?:\/|$)/.test(req.path), standardHeaders: 'draft-8', legacyHeaders: false }));
+  app.use('/v1/admin', rateLimit({ windowMs: 60_000, limit: 240, standardHeaders: 'draft-8', legacyHeaders: false }));
   app.use((req, res, next) => {
     metrics.requests += 1;
     res.on('finish', () => {
@@ -38,8 +43,8 @@ export function createApp({ generate, adminSettings, allowedOrigins = [], appTok
   });
 
   app.get('/health', (_req, res) => res.json({ status: 'ok' }));
+  app.use('/v1/admin', adminAuth({ token: adminToken, production, allowBearer: allowAdminBearer }));
   app.use('/v1/admin/settings', (req, res, next) => {
-    if (!adminToken || req.get('authorization') !== `Bearer ${adminToken}`) return res.status(401).json({ message: '관리자 인증이 필요합니다.' });
     if (!adminSettings) return res.status(503).json({ message: '설정 저장소를 사용할 수 없습니다.' });
     next();
   });
@@ -57,15 +62,24 @@ export function createApp({ generate, adminSettings, allowedOrigins = [], appTok
     try { return res.json(adminSettings.update('')); }
     catch { return res.status(503).json({ message: '삭제하지 못했습니다. 다시 시도해 주세요.' }); }
   });
-  app.use('/admin', express.static(fileURLToPath(new URL('../public', import.meta.url)), { index: 'admin.html', maxAge: 0 }));
+  app.use('/admin', (req, res, next) => {
+    res.set('X-Robots-Tag', 'noindex, nofollow');
+    if (production && !req.secure) return res.status(426).type('text').send('HTTPS required');
+    next();
+  });
+  app.get(['/admin', '/admin/', ...['dashboard', 'users', 'ai-usage', 'safety', 'content', 'analytics', 'system'].map(p => `/admin/${p}`)], (_req, res) => {
+    res.set('Cache-Control', 'no-cache');
+    res.sendFile(fileURLToPath(new URL('../public/admin.html', import.meta.url)));
+  });
+  app.use('/admin', express.static(fileURLToPath(new URL('../public', import.meta.url)), { index: false, maxAge: 0, dotfiles: 'deny' }));
+  app.use(websiteRouter({ publicOrigin }));
   app.get('/v1/admin/overview', (req, res) => {
     res.set('Cache-Control', 'no-store');
-    if (!adminToken || req.get('authorization') !== `Bearer ${adminToken}`) {
-      return res.status(401).json({ message: '관리자 인증이 필요합니다.' });
-    }
-    const members = memberStore.getAdminOverview?.() ?? { total: 0, recent: [] };
+    const members = memberStore.getAdminOverview?.() ?? { total: null, recent: [] };
     let aiUsage = { available: false };
+    let modelUsage = { available: false, rows: [] };
     try { aiUsage = generate.usageLedger?.overview() ?? aiUsage; } catch { /* Existing overview stays available. */ }
+    try { modelUsage = modelUsageSample(generate.usageLedger); } catch { /* Totals remain available. */ }
     return res.json({
       generatedAt: new Date().toISOString(),
       service: {
@@ -74,9 +88,12 @@ export function createApp({ generate, adminSettings, allowedOrigins = [], appTok
         startedAt: startedAt.toISOString(),
         uptimeSeconds: Math.floor(process.uptime()),
       },
-      metrics: { ...metrics, activeSessions: 0 },
+      metrics: { ...metrics, activeSessions: null },
       members,
       aiUsage,
+      modelUsage,
+      operations: webMetrics.overview(),
+      aiRuntime: adminSettings?.runtimeStatus?.() ?? null,
     });
   });
   app.post('/v1/auth/signup', (req, res, next) => {
@@ -97,6 +114,7 @@ export function createApp({ generate, adminSettings, allowedOrigins = [], appTok
       const body = requestSchema.parse(req.body);
       const assessment = assessRequestCrisis(body);
       logSafetyAssessment(logger, assessment);
+      webMetrics.safety(assessment);
       if (assessment.level > 0) {
         metrics.crises += 1;
         try { generate.usageLedger?.reserve({ sessionId: body.session.sessionId, taskType: 'crisis' }).finish({ provider: 'safety', tier: 'local' }); } catch { /* Never gate safety. */ }
@@ -120,6 +138,8 @@ export function createApp({ generate, adminSettings, allowedOrigins = [], appTok
       const memorySummary = body.session.conversationMemory || body.session.conversationSummary || '';
       const result = responseSchema.parse(await generate(body, agent, memorySummary, trustedIdentity));
       if (result.riskLevel > 0 || result.stage === 'crisis') {
+        metrics.crises += 1;
+        webMetrics.safety({ level: Math.max(1, result.riskLevel), kind: 'response_crisis' });
         logSafetyAssessment(logger, { level: Math.max(1, result.riskLevel), kind: 'response_crisis' });
         return res.json(crisisResponse(body.session.selectedEmotion, { level: Math.max(1, result.riskLevel) }));
       }

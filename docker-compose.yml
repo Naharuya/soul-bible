@@ -5,11 +5,16 @@ services:
     env_file:
       - ./backend/.env
     environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
       SOUL_USAGE_LEDGER: sqlite
       SOUL_USAGE_DB_PATH: /app/cost-data/ai_usage.sqlite
+      MEMBER_DB_PATH: /app/member-data/members.sqlite
     volumes:
       - soul-bible-cost-data:/app/cost-data
       - onaria-admin-secrets:/app/data/admin-secrets
+      # Before upgrading an existing container, migrate members.sqlite as documented.
+      - onaria-member-data:/app/member-data
     ports:
       - "127.0.0.1:8787:8787"
     restart: unless-stopped
@@ -23,3 +28,4 @@ services:
 volumes:
   soul-bible-cost-data:
   onaria-admin-secrets:
+  onaria-member-data:
