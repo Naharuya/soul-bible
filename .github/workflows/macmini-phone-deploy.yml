@@ -1,0 +1,63 @@
+name: Mac mini phone auto-deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Never run this workflow for pull_request events. It is intentionally limited
+# to trusted main pushes and explicit manual dispatches.
+concurrency:
+  group: onaria-macmini-phone-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy-android-phone:
+    # Register the Mac mini runner with the custom label `onaria-deploy`.
+    # Default self-hosted labels should also include macOS and ARM64.
+    runs-on: [self-hosted, macOS, ARM64, onaria-deploy]
+    timeout-minutes: 45
+    env:
+      SOUL_AI_MODE: local
+      SOUL_EXTERNAL_API_DISABLED: 'true'
+      OPENAI_API_KEY: ''
+    steps:
+      - name: Checkout trusted main source
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          clean: true
+          fetch-depth: 1
+
+      - name: Verify tools and one authorized Android device
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v node
+          command -v flutter
+          command -v adb || true
+          flutter --version
+          node --version
+
+      - name: Verify data-preserving Android installer contract
+        run: node --test scripts/android-release.test.mjs
+
+      - name: Run Flutter regression tests
+        run: flutter test
+
+      - name: Analyze ONARIA app
+        run: flutter analyze lib test example --no-fatal-infos
+
+      - name: Build signed production APK and update connected phone
+        # android-release.mjs validates:
+        # - exactly one authorized Android device (unless a serial is supplied)
+        # - existing installed certificate
+        # - official release keystore/certificate
+        # - production API
+        # - version downgrade prevention
+        # - adb install -r (no uninstall, preserves app data)
+        # - successful app launch after install
+        run: node scripts/android-release.mjs
