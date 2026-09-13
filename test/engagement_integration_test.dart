@@ -287,9 +287,9 @@ void main() {
     await tester.scrollUntilVisible(find.text('작은 빛이 모였어요.'), 150,
         scrollable: find.byType(Scrollable).last);
     expect(find.text('작은 빛이 모였어요.'), findsOneWidget);
-    await tester.scrollUntilVisible(find.text('오늘의 마음카드 보기'), 200,
+    await tester.scrollUntilVisible(find.text('작은 성장 기록 보기'), 200,
         scrollable: find.byType(Scrollable).last);
-    await tester.tap(find.text('오늘의 마음카드 보기'));
+    await tester.tap(find.text('작은 성장 기록 보기'));
     await settle(tester);
     expect(await result, isTrue);
     await tester.pumpWidget(const SizedBox());

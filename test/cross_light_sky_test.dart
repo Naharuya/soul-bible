@@ -4,107 +4,88 @@ import 'package:onaria/engagement/mini_games/cross_light/cross_light_sky.dart';
 import 'package:onaria/engagement/mini_games/cross_light/cross_light_game.dart';
 
 void main() {
-  testWidgets(
-      'drag collects only inside the center and leaves page scrolling in place',
+  testWidgets('only the next star accepts taps; dragging does not collect',
       (tester) async {
     final pieces = ValueNotifier<Set<String>>({});
-    final scroll = ScrollController();
     addTearDown(pieces.dispose);
-    addTearDown(scroll.dispose);
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: ListView(
-      controller: scroll,
-      children: [
-        ValueListenableBuilder<Set<String>>(
-          valueListenable: pieces,
-          builder: (context, value, child) => CrossLightSky(
-              pieces: value,
-              ready: true,
-              onCollect: (word) => pieces.value = {...value, word}),
+      body: ValueListenableBuilder<Set<String>>(
+        valueListenable: pieces,
+        builder: (context, value, _) => CrossLightSky(
+          pieces: value,
+          ready: true,
+          onCollect: (word) => pieces.value = {...value, word},
         ),
-        const SizedBox(height: 900)
-      ],
-    ))));
-    final star = find.byKey(const ValueKey('cross-light-touch-peace'));
-    final target =
-        tester.getCenter(find.byKey(const ValueKey('cross-gathering-area')));
-    await tester.drag(star, const Offset(0, 30));
+      ),
+    )));
+    Finder star(String word) => find.byKey(ValueKey('cross-light-touch-$word'));
+    await tester.tap(star('hope'));
     await tester.pump();
-    await tester.pump(const Duration(seconds: 1));
     expect(pieces.value, isEmpty);
-    expect(scroll.offset, 0);
-    final gesture = await tester.startGesture(tester.getCenter(star));
-    await gesture.moveBy(const Offset(20, 20));
+    await tester.drag(star('peace'), const Offset(80, 40));
     await tester.pump();
-    await gesture.moveTo(target);
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 16));
-    expect((tester.getCenter(star) - target).distance, lessThan(1));
-    await gesture.up();
-    await tester.pump();
-    await tester.pump(const Duration(seconds: 1));
-    expect(pieces.value, {'peace'});
-    expect(scroll.offset, 0);
-    final hope = find.byKey(const ValueKey('cross-light-touch-hope'));
-    final cancelled = await tester.startGesture(tester.getCenter(hope));
-    await cancelled.moveTo(target);
-    await tester.pump();
-    await cancelled.cancel();
-    await tester.pump();
-    expect(pieces.value, {'peace'});
+    expect(pieces.value, isEmpty);
+    for (final word in crossLightWords.keys) {
+      await tester.tap(star(word));
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+      expect(pieces.value.last, word);
+    }
+    expect(pieces.value, crossLightWords.keys.toSet());
     await tester.pumpWidget(const SizedBox());
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('stars keep drifting until collected and respect reduced motion',
+  testWidgets('only the active star pulses; pause and reduced motion stop it',
       (tester) async {
-    Future<void> show(Set<String> pieces, {bool reduced = false}) =>
+    Future<void> show(Set<String> pieces,
+            {bool reduced = false, bool paused = false, bool ready = true}) =>
         tester.pumpWidget(MaterialApp(
             home: MediaQuery(
-                data: MediaQueryData(disableAnimations: reduced),
-                child: Scaffold(
-                    body: CrossLightSky(
-                        pieces: pieces, ready: true, onCollect: (_) {})))));
-    Offset displacement() {
-      final transform = tester.widget<Transform>(find
-          .ancestor(
-              of: find.byKey(const ValueKey('cross-light-touch-peace')),
-              matching: find.byType(Transform))
-          .first);
-      return Offset(
-          transform.transform.storage[12], transform.transform.storage[13]);
-    }
-
+          data: MediaQueryData(disableAnimations: reduced),
+          child: Scaffold(
+              body: CrossLightSky(
+            pieces: pieces,
+            ready: ready,
+            paused: paused,
+            onCollect: (_) {},
+          )),
+        )));
+    double scale(String word) => tester
+        .widget<Transform>(find
+            .descendant(
+              of: find.byKey(ValueKey('cross-light-touch-$word')),
+              matching: find.byType(Transform),
+            )
+            .first)
+        .transform
+        .storage[0];
     await show({});
-    final initial = displacement();
-    await tester.pump(const Duration(milliseconds: 800));
-    expect(displacement(), isNot(initial));
-    await tester.pump(const Duration(milliseconds: 2200));
-    expect((displacement() - initial).distance, greaterThan(25));
-    expect(
-        tester.getSize(find.byKey(const ValueKey('cross-light-touch-peace'))),
-        const Size(48, 48));
-    await tester.pump(const Duration(seconds: 7));
-    final later = displacement();
-    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(scale('peace'), greaterThan(1));
+    for (final word in crossLightWords.keys.skip(1)) {
+      expect(scale(word), 1);
+    }
+    await show({'peace'});
     await tester.pump(const Duration(seconds: 1));
-    expect(displacement(), isNot(later));
+    expect(scale('peace'), 1);
+    expect(scale('hope'), greaterThan(1));
+    for (final options in [0, 1, 2]) {
+      await show({'peace'},
+          reduced: options == 0, paused: options == 1, ready: options != 2);
+      await tester.pumpAndSettle();
+      expect(scale('hope'), 1);
+      expect(tester.binding.transientCallbackCount, 0);
+    }
     await show(crossLightWords.keys.toSet());
-    await tester.pump();
-    await tester.pump(const Duration(seconds: 1));
-    expect(displacement(), Offset.zero);
+    await tester.pumpAndSettle();
     expect(
         tester
             .widget<AnimatedOpacity>(
                 find.byKey(const ValueKey('cross-quiet-glow')))
             .opacity,
         1);
-    await tester.pump(const Duration(seconds: 3));
-    expect(displacement(), Offset.zero);
-    await show({}, reduced: true);
-    await tester.pump();
-    expect(displacement(), Offset.zero);
     expect(tester.binding.transientCallbackCount, 0);
   });
   testWidgets(

@@ -74,13 +74,13 @@ void main() {
       await tester.pump();
       now = now.add(const Duration(seconds: 7));
       if (skip) {
-        await tester.scrollUntilVisible(find.text('이번에는 건너뛰고 마음카드 보기'), 200);
-        await tester.tap(find.text('이번에는 건너뛰고 마음카드 보기'));
+        await tester.scrollUntilVisible(find.text('이번에는 여기까지'), 200);
+        await tester.tap(find.text('이번에는 여기까지'));
       } else {
         await tester.pageBack();
       }
       await tester.pumpAndSettle();
-      expect(result, skip ? isTrue : isNull);
+      expect(result, skip ? isFalse : isNull);
       final skipped = received
           .where((e) => e.type == EngagementEventType.crossGameSkipped)
           .single;

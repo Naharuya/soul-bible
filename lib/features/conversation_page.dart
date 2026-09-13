@@ -14,9 +14,11 @@ import '../onaria.dart';
 import '../engagement/engagement_controller.dart';
 import '../engagement/domain_events.dart';
 import '../engagement/mini_games/cross_light/cross_light_page.dart';
+import '../engagement/mini_games/cross_light/cross_light_game.dart';
 import '../engagement/sharing/share_card.dart';
 import '../engagement/sharing/share_preview_page.dart';
 import 'growth_page.dart';
+import 'conversation_question_examples.dart';
 
 class _ChatItem {
   const _ChatItem(this.text, {this.fromUser = false, this.question});
@@ -187,91 +189,14 @@ class _ConversationPageState extends State<ConversationPage> {
         ['1분간 천천히 호흡하기', '믿을 수 있는 사람에게 안부 보내기', '짧게 기도하고 마음 한 줄 적기'];
   }
 
-  static const _clinicalExamplePrompts = <ConversationStage, List<String>>{
-    ConversationStage.emotion: [
-      '오늘 아침부터 별일이 없는데도 마음이 무거웠어요.',
-      '가족과 이야기한 뒤부터 감정이 더 크게 느껴졌어요.',
-      '직장에서 실수한 일이 계속 마음에 남아 있어요.',
-      '혼자 집에 돌아왔을 때 감정이 갑자기 올라왔어요.',
-      '누군가의 말을 듣고 존중받지 못한다는 느낌이 들었어요.',
-      '해야 할 일이 한꺼번에 겹치면서 마음이 버거워졌어요.',
-      '기대했던 일이 계획대로 되지 않아 힘들었어요.',
-      '다른 사람과 나를 비교한 뒤 마음이 불편해졌어요.',
-      '잠을 충분히 자지 못한 날에 감정이 더 심해졌어요.',
-      '중요한 결정을 앞두고 마음이 흔들리고 있어요.',
-      '오래 참아 온 일이 오늘 작은 계기로 터진 것 같아요.',
-      '정확한 이유는 모르지만 특정 순간부터 힘들어졌어요.',
-    ],
-    ConversationStage.situation: [
-      '오늘 아침부터 별일이 없는데도 마음이 무거웠어요.',
-      '가족과 이야기한 뒤부터 감정이 더 크게 느껴졌어요.',
-      '직장에서 실수한 일이 계속 마음에 남아 있어요.',
-      '혼자 집에 돌아왔을 때 감정이 갑자기 올라왔어요.',
-      '누군가의 말을 듣고 존중받지 못한다는 느낌이 들었어요.',
-      '해야 할 일이 한꺼번에 겹치면서 마음이 버거워졌어요.',
-      '기대했던 일이 계획대로 되지 않아 힘들었어요.',
-      '다른 사람과 나를 비교한 뒤 마음이 불편해졌어요.',
-      '잠을 충분히 자지 못한 날에 감정이 더 심해졌어요.',
-      '중요한 결정을 앞두고 마음이 흔들리고 있어요.',
-      '오래 참아 온 일이 오늘 작은 계기로 터진 것 같아요.',
-      '정확한 이유는 모르지만 특정 순간부터 힘들어졌어요.',
-    ],
-    ConversationStage.thought: [
-      '내가 또 잘못했다는 생각이 가장 먼저 들었어요.',
-      '앞으로도 계속 이렇게 힘들 것 같다고 생각했어요.',
-      '다른 사람들이 나를 부족하게 볼까 봐 걱정됐어요.',
-      '아무리 노력해도 달라지지 않을 것 같았어요.',
-      '내가 모두 책임져야 한다는 생각이 들었어요.',
-      '왜 나만 이런 일을 겪는지 억울하다고 생각했어요.',
-      '상대가 나를 일부러 무시했다고 느꼈어요.',
-      '실수하면 모든 기회를 잃을 것 같았어요.',
-      '누구도 내 마음을 이해하지 못할 것 같았어요.',
-      '지금 당장 답을 찾아야 한다는 압박이 들었어요.',
-      '감정을 드러내면 약해 보일 것 같았어요.',
-      '무슨 생각인지 선명하지 않고 머릿속이 복잡했어요.',
-    ],
-    ConversationStage.need: [
-      '누군가 판단하지 않고 제 이야기를 들어주면 좋겠어요.',
-      '지금은 아무것도 하지 않고 충분히 쉬고 싶어요.',
-      '괜찮다고 안심할 수 있는 말이 필요해요.',
-      '혼자가 아니라는 느낌과 따뜻한 위로가 필요해요.',
-      '상황을 차분하게 정리할 시간과 여유가 필요해요.',
-      '내 선택을 믿고 한 걸음 내딛을 용기가 필요해요.',
-      '상대에게 존중받고 제 마음을 이해받고 싶어요.',
-      '도움을 요청해도 괜찮다는 확신이 필요해요.',
-      '무엇부터 해야 할지 정할 수 있는 기준이 필요해요.',
-      '제 감정을 있는 그대로 인정하고 싶어요.',
-      '몸과 마음이 안전하다고 느낄 공간이 필요해요.',
-      '지금은 무엇이 필요한지 조금 더 생각할 시간이 필요해요.',
-    ],
-    ConversationStage.action: [
-      '5분 동안 천천히 호흡하며 몸의 긴장을 살펴볼게요.',
-      '믿을 수 있는 사람에게 짧게 안부를 보내볼게요.',
-      '오늘 해야 할 일 중 가장 작은 것 하나만 해볼게요.',
-      '지금 느끼는 감정을 종이에 한 줄 적어볼게요.',
-      '10분 동안 휴대폰을 내려놓고 조용히 쉬어볼게요.',
-      '따뜻한 물을 마시고 몸을 천천히 풀어볼게요.',
-      '도움이 필요한 일을 한 가지 구체적으로 요청해볼게요.',
-      '스스로에게 괜찮다고 말하며 잠시 기다려볼게요.',
-      '오늘은 평소보다 조금 일찍 잠자리에 들어볼게요.',
-      '감정이 커진 장소에서 잠시 벗어나 걸어볼게요.',
-      '지금 바꿀 수 있는 일과 없는 일을 나눠 적어볼게요.',
-      '마음에 남은 말씀을 천천히 한 번 읽어볼게요.',
-    ],
-  };
-
   List<String> get _currentExamplePrompts {
-    final primary = _agentMode == 'clinical_reflection'
-        ? _clinicalExamplePrompts[_session.stage] ?? _clinicalExamplePrompts[ConversationStage.emotion]!
-        : _emotionSpecificPrompts[widget.emotion] ?? _clinicalExamplePrompts[ConversationStage.emotion]!;
-    final candidates = <String>{
-      ...primary,
-      ...?_clinicalExamplePrompts[_session.stage],
-      '지금 마음을 조금 더 천천히 살펴보고 싶어요.',
-      '어떤 말부터 해야 할지 아직 잘 모르겠어요.',
-      '말로 표현하기 어렵지만 조금 더 이야기해 보고 싶어요.',
-    };
-    return candidates.where((prompt) => !_selectedExamples.contains(prompt)).take(primary.length).toList();
+    final assistant = _items.where((item) => !item.fromUser).lastOrNull;
+    final question = assistant?.question;
+    if (question == null) return const [];
+    return conversationQuestionExamples(
+      _questionText(question),
+      situationExamples: _emotionSpecificPrompts[widget.emotion] ?? const [],
+    ).where((prompt) => !_selectedExamples.contains(prompt)).toList();
   }
   final _selectedExamples = <String>{};
   final _controller = TextEditingController();
@@ -297,7 +222,6 @@ class _ConversationPageState extends State<ConversationPage> {
   BibleVerse? _suggestedVerse;
   bool _showActions = false;
   bool _showSummary = false;
-  bool _openingGame = false;
   String? _chosenAction;
   String _agentMode = 'auto';
   String _verseLanguage = 'bilingual';
@@ -663,25 +587,15 @@ class _ConversationPageState extends State<ConversationPage> {
   }
 
   Future<void> _chooseAction(String action) async {
-    if (_openingGame) return;
-    setState(() {
-      _openingGame = true;
-      _chosenAction = action;
-    });
-    await _stopVerseSpeech();
-    if (!mounted) return;
-    final completed = await Navigator.of(context).push<bool>(MaterialPageRoute(
-      builder: (_) => const CrossLightPage(continueToMindCard: true),
-    ));
-    if (!mounted) return;
-    setState(() => _openingGame = false);
-    if (completed != true) return;
+    if (_showSummary) return;
     _session = _machine.selectAction(_session).session;
     setState(() {
       _chosenAction = action;
       _showActions = false;
       _showSummary = true;
     });
+    await _stopVerseSpeech();
+    if (!mounted) return;
     _scrollDown();
   }
 
@@ -733,6 +647,16 @@ class _ConversationPageState extends State<ConversationPage> {
           )),
         ));
       } else {
+        await _stopVerseSpeech();
+        if (!mounted || route?.isCurrent == false) return;
+        final game = CrossLightGame();
+        final completed = await Navigator.of(context).push<bool>(MaterialPageRoute(
+          builder: (_) => CrossLightPage(game: game, continueToMindCard: true),
+        ));
+        if (!mounted || route?.isCurrent == false || completed != true ||
+            !game.complete) {
+          return;
+        }
         Navigator.of(context).pushReplacement(MaterialPageRoute<void>(
           builder: (_) => GrowthPage(store: _mindCardStore)));
       }
@@ -740,7 +664,7 @@ class _ConversationPageState extends State<ConversationPage> {
       if (!mounted) return;
       _showVoiceMessage(_savedMindCard == null
           ? '마음 카드를 저장하지 못했어요. 다시 시도해 주세요.'
-          : '카드는 저장했지만 공유 화면을 열지 못했어요. 다시 시도해 주세요.');
+          : '카드는 저장했지만 다음 화면을 열지 못했어요. 다시 시도해 주세요.');
     } finally {
       if (mounted) setState(() => _savingCard = false);
     }
@@ -854,7 +778,8 @@ class _ConversationPageState extends State<ConversationPage> {
                   padding: const EdgeInsets.fromLTRB(16, 12, 16, 14),
                   decoration: BoxDecoration(color: AppTheme.of(context).panel, border: Border(top: BorderSide(color: AppTheme.of(context).border))),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                    Text('이렇게 시작해 보세요', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppTheme.of(context).muted)),
+                    if (_currentExamplePrompts.isNotEmpty)
+                    Text(_session.turnCount == 0 ? '이렇게 시작해 보세요' : '이렇게 이어가도 좋아요', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppTheme.of(context).muted)),
                     const SizedBox(height: 8),
                     LayoutBuilder(
                       builder: (context, constraints) => SingleChildScrollView(
@@ -1030,7 +955,7 @@ class _ConversationPageState extends State<ConversationPage> {
       (action) => Padding(
         padding: const EdgeInsets.only(bottom: 9),
         child: OutlinedButton(
-          onPressed: _openingGame ? null : () => _chooseAction(action),
+          onPressed: () => _chooseAction(action),
           style: OutlinedButton.styleFrom(
             minimumSize: const Size.fromHeight(52),
             alignment: Alignment.centerLeft,
