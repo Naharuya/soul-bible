@@ -1,3 +1,4 @@
+import { answerExamplesSchema } from '../answer_examples.js';
 import { z } from 'zod';
 import { religionSchema, religionOutputSchema } from './agent_contracts.js';
 import { calculateRetrievalConfidence } from '../knowledge/retrieval_confidence.js';
@@ -8,7 +9,7 @@ export const specialistResultSchema = z.object({
   confidence: z.number().min(0).max(1),
   emotionalSupport: z.string().min(1).max(200),
   religiousInsight: z.string().min(1).max(250),
-  suggestedPractice: z.object({ guidance: z.string().min(1).max(250), reflectionQuestion: z.string().min(1).max(160) }).strict(),
+  suggestedPractice: z.object({ answerExamples: answerExamplesSchema, guidance: z.string().min(1).max(250), reflectionQuestion: z.string().min(1).max(160) }).strict(),
   caution: z.array(z.string().min(1).max(160)).max(3),
   sourceHints: z.array(z.string().min(1).max(128)).max(5),
 }).strict();
@@ -18,7 +19,8 @@ export function toSpecialistResult(draft, specialist, psychology, sourceContext 
   return specialistResultSchema.parse({ agent: specialist.identity, tradition: specialist.id,
     confidence: retrievalConfidence ?? calculateRetrievalConfidence({ sources: sourceContext, tradition: specialist.id }), emotionalSupport: psychology.emotionSummary,
     religiousInsight: result.perspective,
-    suggestedPractice: { guidance: result.guidance, reflectionQuestion: result.reflectionQuestion },
+    suggestedPractice: { guidance: result.guidance, reflectionQuestion: result.reflectionQuestion,
+      ...(result.answerExamples ? { answerExamples: result.answerExamples } : {}) },
     caution: result.cautions, sourceHints: result.sourceRefs });
 }
 

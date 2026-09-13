@@ -1,3 +1,4 @@
+import { answerExamplesSchema, answerExamplesJsonSchema } from '../answer_examples.js';
 import { z } from 'zod';
 import { provenanceFields } from '../knowledge/source_quality.js';
 
@@ -22,16 +23,18 @@ export const religionOutputSchema = z.object({
   perspective: z.string().trim().min(1).max(250),
   guidance: z.string().trim().min(1).max(250),
   reflectionQuestion: z.string().trim().min(1).max(160),
+  answerExamples: answerExamplesSchema,
   sourceRefs: z.array(z.string().min(1).max(128)).max(5),
   cautions: z.array(z.string().min(1).max(160)).max(3),
 }).strict();
 
 export const religionJsonSchema = {
   type: 'object', additionalProperties: false,
-  required: ['perspective', 'guidance', 'reflectionQuestion', 'sourceRefs', 'cautions'],
+  required: ['perspective', 'guidance', 'reflectionQuestion', 'sourceRefs', 'cautions', 'answerExamples'],
   properties: {
     perspective: { type: 'string', maxLength: 250 }, guidance: { type: 'string', maxLength: 250 },
     reflectionQuestion: { type: 'string', maxLength: 160 },
+    answerExamples: answerExamplesJsonSchema,
     sourceRefs: { type: 'array', items: { type: 'string', maxLength: 128 }, maxItems: 5 },
     cautions: { type: 'array', items: { type: 'string', maxLength: 160 }, maxItems: 3 },
   },

@@ -4,6 +4,50 @@ import 'package:onaria/engagement/mini_games/cross_light/cross_light_sky.dart';
 import 'package:onaria/engagement/mini_games/cross_light/cross_light_game.dart';
 
 void main() {
+  testWidgets(
+      'uncollected stars drift with their touch targets and pause safely',
+      (tester) async {
+    Future<void> show(
+            {Set<String> pieces = const {},
+            bool paused = false,
+            bool reduced = false}) =>
+        tester.pumpWidget(MaterialApp(
+            home: MediaQuery(
+          data: MediaQueryData(disableAnimations: reduced),
+          child: Scaffold(
+              body: CrossLightSky(
+                  pieces: pieces,
+                  ready: false,
+                  paused: paused,
+                  onCollect: (_) {})),
+        )));
+    Offset position(String word) =>
+        tester.getCenter(find.byKey(ValueKey('cross-light-touch-$word')));
+    await show();
+    final before = {
+      for (final word in crossLightWords.keys) word: position(word)
+    };
+    await tester.pump(const Duration(seconds: 2));
+    for (final word in crossLightWords.keys) {
+      expect(position(word), isNot(before[word]));
+    }
+    await show(paused: true);
+    final paused = position('hope');
+    await tester.pump(const Duration(seconds: 2));
+    expect(position('hope'), paused);
+    await show(pieces: {'peace'});
+    await tester.pump(const Duration(seconds: 1));
+    final collected = position('peace');
+    await tester.pump(const Duration(seconds: 2));
+    expect(position('peace'), collected);
+    await show(reduced: true);
+    await tester.pumpAndSettle();
+    final still = position('hope');
+    await tester.pump(const Duration(seconds: 2));
+    expect(position('hope'), still);
+    expect(tester.binding.transientCallbackCount, 0);
+    await tester.pumpWidget(const SizedBox());
+  });
   testWidgets('only the next star accepts taps; dragging does not collect',
       (tester) async {
     final pieces = ValueNotifier<Set<String>>({});
@@ -74,9 +118,14 @@ void main() {
     for (final options in [0, 1, 2]) {
       await show({'peace'},
           reduced: options == 0, paused: options == 1, ready: options != 2);
-      await tester.pumpAndSettle();
+      if (options == 2) {
+        // Stars still drift between collection windows, but do not pulse.
+        await tester.pump(const Duration(seconds: 1));
+      } else {
+        await tester.pumpAndSettle();
+        expect(tester.binding.transientCallbackCount, 0);
+      }
       expect(scale('hope'), 1);
-      expect(tester.binding.transientCallbackCount, 0);
     }
     await show(crossLightWords.keys.toSet());
     await tester.pumpAndSettle();

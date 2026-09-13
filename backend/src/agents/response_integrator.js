@@ -25,6 +25,7 @@ export function integrateResponse({ context, psychology, religion, agent }) {
   return responseSchema.parse({
     message: [psychology.emotionSummary, religion.perspective, religion.guidance, ...religion.cautions].join('\n\n'),
     question: ended || canOfferVerse ? null : religion.reflectionQuestion,
+    ...(!ended && !canOfferVerse && religion.answerExamples ? { answerExamples: religion.answerExamples } : {}),
     stage, detectedEmotion: context.emotion, secondaryEmotion: null, riskLevel: 0,
     shouldOfferVerse: canOfferVerse, verseTags: [], actionTags: stage === 'action' ? ['작은 행동'] : [],
     shouldEndConversation: ended, suggestedVerseId: canOfferVerse ? context.allowedVerseIds[0] : null,

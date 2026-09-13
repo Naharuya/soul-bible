@@ -146,7 +146,9 @@ export function createConversationOrchestrator({ runStructured, selectReligion =
       // Each specialist and citation review stays isolated; only checked text meets at integration.
       const result = integrateResponse({ context, psychology, religion: {
         perspective: '각 전통의 관점을 구분하여 살펴보겠습니다.', guidance: '필요한 돌봄을 먼저 선택하셔도 좋습니다.',
-        reflectionQuestion: '어느 관점을 더 살펴보고 싶으신가요?', sourceRefs: [], cautions: [],
+        reflectionQuestion: '어느 관점을 더 살펴보고 싶으신가요?',
+        answerExamples: separate.map(({ specialist }) => `저는 ${specialist.label}의 관점을 더 살펴보고 싶어요.`),
+        sourceRefs: [], cautions: [],
       }, agent: agent ?? routeAgent({ requestedAgent: request.agentMode, userMessage: context.userMessage, verseLanguage: request.verseLanguage }) });
       const summaries = separate.map(({ religion, specialist }) => {
         const text = toLegacyReligion(religion);

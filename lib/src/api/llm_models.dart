@@ -39,6 +39,7 @@ class LlmConversationResponse {
     required this.shouldOfferVerse,
     required this.shouldEndConversation,
     this.question,
+    this.answerExamples = const [],
     this.secondaryEmotion,
     this.verseTags = const [],
     this.actionTags = const [],
@@ -51,6 +52,7 @@ class LlmConversationResponse {
 
   final String message;
   final String? question;
+  final List<String> answerExamples;
   final ConversationStage stage;
   final EmotionType detectedEmotion;
   final String? secondaryEmotion;
@@ -74,6 +76,11 @@ class LlmConversationResponse {
     return LlmConversationResponse(
       message: _requiredString(json, 'message'),
       question: _nullableString(json['question']),
+      // Older servers omit this optional field. Bad suggestions cannot discard
+      // an otherwise valid conversation response.
+      answerExamples: json['answerExamples'] is List
+          ? (json['answerExamples'] as List).whereType<String>().toList()
+          : const [],
       stage: ConversationStage.fromWire(
         _requiredString(json, 'stage'),
       ),
@@ -97,6 +104,7 @@ class LlmConversationResponse {
   Map<String, dynamic> toJson() => {
         'message': message,
         'question': question,
+        if (answerExamples.isNotEmpty) 'answerExamples': answerExamples,
         'stage': stage.wireName,
         'detectedEmotion': detectedEmotion.label,
         'secondaryEmotion': secondaryEmotion,

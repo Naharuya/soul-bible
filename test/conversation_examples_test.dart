@@ -28,8 +28,9 @@ class _RetryCardStore extends MindCardStore {
 }
 
 class _ExampleClient implements LlmApiClient {
-  _ExampleClient({this.failTurns = const [], this.questions = const []});
+  _ExampleClient({this.failTurns = const [], this.questions = const [], this.answerExamples = const []});
   final List<String> questions;
+  final List<List<String>> answerExamples;
   final List<int> failTurns;
   final requests = <LlmConversationRequest>[];
   @override
@@ -38,6 +39,7 @@ class _ExampleClient implements LlmApiClient {
     if (failTurns.contains(requests.length)) throw StateError('network unavailable');
     return LlmConversationResponse(
       message: '이야기해 주셔서 고마워요.', question: questions.isEmpty ? '그때 어떤 생각이 들었나요.' : questions[requests.length - 1],
+      answerExamples: answerExamples.isEmpty ? const [] : answerExamples[requests.length - 1],
       stage: ConversationStage.thought, detectedEmotion: EmotionType.admiration,
       riskLevel: 0, shouldOfferVerse: false, shouldEndConversation: false,
     );
@@ -96,6 +98,81 @@ void main() {
       expect(find.byType(TextField), findsNothing);
       expect(find.text('오늘의 말씀'), findsWidgets);
     });
+  }
+  testWidgets('server-authored examples handle unfamiliar questions and send on tap', (tester) async {
+    rootBundle.clear();
+    await tester.runAsync(() => rootBundle.loadString('assets/data/bible_verses_ko.json'));
+    for (final channel in ['flutter_tts', 'plugin.csdcorp.com/speech_to_text']) {
+      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(MethodChannel(channel), (_) async => 1);
+    }
+    final client = _ExampleClient(questions: [
+      '지금 마음을 색으로 표현한다면요?', '그 색을 어떤 모양으로 그리고 싶나요?',
+    ], answerExamples: [
+      ['저는 차분한 파란색이 떠올라요.', '저는 따뜻한 노란색이 떠올라요.'],
+      ['저는 둥근 원으로 그리고 싶어요.', '저는 부드러운 물결로 그리고 싶어요.'],
+    ]);
+    await tester.pumpWidget(MaterialApp(theme: AppTheme.light,
+      home: ConversationPage(emotion: EmotionType.admiration, intensity: 5, apiClient: client)));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), '오늘은 마음이 편안해요.');
+    await tester.tap(find.byTooltip('보내기'));
+    for (var i = 0; i < 50 && client.requests.isEmpty; i++) {
+      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 10)));
+      await tester.pump();
+    }
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(OutlinedButton, '저는 차분한 파란색이 떠올라요.'));
+    for (var i = 0; i < 50 && client.requests.length < 2; i++) {
+      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 10)));
+      await tester.pump();
+    }
+    await tester.pumpAndSettle();
+    expect(client.requests.last.userMessage, '저는 차분한 파란색이 떠올라요.');
+    expect(find.widgetWithText(OutlinedButton, '저는 부드러운 물결로 그리고 싶어요.'), findsOneWidget);
+    expect(find.widgetWithText(OutlinedButton, '저는 따뜻한 노란색이 떠올라요.'), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+  for (final sceneQuestion in [false, true]) {
+  testWidgets('alternate displayed questions keep selectable direct examples: scene=$sceneQuestion', (tester) async {
+    rootBundle.clear();
+    await tester.runAsync(() => rootBundle.loadString('assets/data/bible_verses_ko.json'));
+    for (final channel in ['flutter_tts', 'plugin.csdcorp.com/speech_to_text']) {
+      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(MethodChannel(channel), (_) async => 1);
+    }
+    final client = _ExampleClient(questions: [
+      sceneQuestion ? '그 순간 가장 오래 마음에 남은 장면은 무엇이었나요?' : '그 마음이 가장 크게 느껴진 상황은 언제였나요?',
+      '방금 이야기한 상황에서 가장 마음에 남는 것은 무엇인가요?',
+      '지금 가장 필요한 것은 무엇인가요?',
+    ]);
+    await tester.pumpWidget(MaterialApp(theme: AppTheme.light,
+      home: ConversationPage(emotion: sceneQuestion ? EmotionType.admiration : EmotionType.sadness, intensity: 9, apiClient: client)));
+    await tester.pumpAndSettle();
+    final answers = [
+      sceneQuestion ? '아름다운 노을을 보며 자연의 신비로움에 감탄했어요.' : '오늘 마음이 복잡했어요.',
+      sceneQuestion ? '저는 하늘이 붉게 물들던 장면이 가장 기억에 남아요.' : '저는 어제 혼자 집에 돌아왔을 때 그 마음이 가장 크게 느껴졌어요.',
+      '저는 상대방이 제게 했던 말이 가장 마음에 남아요.',
+    ];
+    for (var turn = 0; turn < answers.length; turn++) {
+      if (turn == 0) {
+        await tester.enterText(find.byType(TextField), answers[turn]);
+        await tester.tap(find.byTooltip('보내기'));
+      } else {
+        final example = find.widgetWithText(OutlinedButton, answers[turn]);
+        expect(example, findsOneWidget);
+        await tester.ensureVisible(example);
+        await tester.tap(example);
+      }
+      for (var i = 0; i < 50 && client.requests.length <= turn; i++) {
+        await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 10)));
+        await tester.pump();
+      }
+      await tester.pumpAndSettle();
+      expect(client.requests.last.userMessage, answers[turn]);
+    }
+    expect(client.requests, hasLength(3));
+    expect(find.byType(TextField), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
   }
   testWidgets('기타 입력이 첫 질문과 실패 후 질문 및 서버 요청에 유지된다', (tester) async {
     const feeling = '설레지만 조금 걱정돼요';

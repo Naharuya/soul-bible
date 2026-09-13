@@ -21,8 +21,9 @@ import 'growth_page.dart';
 import 'conversation_question_examples.dart';
 
 class _ChatItem {
-  const _ChatItem(this.text, {this.fromUser = false, this.question});
+  const _ChatItem(this.text, {this.fromUser = false, this.question, this.answerExamples = const []});
   final String? question;
+  final List<String> answerExamples;
   final String text;
   final bool fromUser;
 }
@@ -195,10 +196,11 @@ class _ConversationPageState extends State<ConversationPage> {
     if (question == null) return const [];
     return conversationQuestionExamples(
       _questionText(question),
+      answerExamples: assistant!.answerExamples,
+      userMessage: _session.lastUserMessage ?? '',
       situationExamples: _emotionSpecificPrompts[widget.emotion] ?? const [],
-    ).where((prompt) => !_selectedExamples.contains(prompt)).toList();
+    );
   }
-  final _selectedExamples = <String>{};
   final _controller = TextEditingController();
   final _scrollController = ScrollController();
   final _speech = SpeechToText();
@@ -211,6 +213,8 @@ class _ConversationPageState extends State<ConversationPage> {
   final _items = <_ChatItem>[];
   late ConversationSession _session;
   bool _busy = false;
+  Timer? _responseWaitTimer;
+  bool _responseDelayed = false;
   bool _speechInitialized = false;
   bool _isListening = false;
   bool _isSpeaking = false;
@@ -253,6 +257,7 @@ class _ConversationPageState extends State<ConversationPage> {
 
   @override
   void dispose() {
+    _responseWaitTimer?.cancel();
     _speechGeneration++;
     _speech.cancel().catchError((Object _) {});
     _tts.stop().catchError((Object _) => 0);
@@ -290,6 +295,10 @@ class _ConversationPageState extends State<ConversationPage> {
     }
 
     final turnBeforeRequest = _session.turnCount;
+    _responseDelayed = false;
+    _responseWaitTimer = Timer(const Duration(seconds: 4), () {
+      if (mounted && _busy) setState(() => _responseDelayed = true);
+    });
     try {
       final client = _client;
       if (client == null) {
@@ -353,6 +362,7 @@ class _ConversationPageState extends State<ConversationPage> {
         _items.add(_ChatItem(
           replyParts.join('\n\n'),
           question: shouldAutoShowVerse ? null : response.question,
+          answerExamples: response.answerExamples,
         ));
         _showVerseOffer = !shouldAutoShowVerse &&
           transition.uiAction == ConversationUiAction.showVerseConsent;
@@ -364,13 +374,15 @@ class _ConversationPageState extends State<ConversationPage> {
     } catch (_) {
       if (!mounted) return;
       await _continueWithoutServer(turnBeforeRequest);
+    } finally {
+      _responseWaitTimer?.cancel();
+      _responseDelayed = false;
     }
     _scrollDown();
   }
 
   Future<void> _selectExample(String prompt) async {
     if (_busy || _session.isEnded) return;
-    _selectedExamples.add(prompt);
     _controller.text = prompt;
     FocusScope.of(context).unfocus();
     await _send();
@@ -899,7 +911,20 @@ class _ConversationPageState extends State<ConversationPage> {
     ),
   );
 
-  Widget _typing() => const Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.all(16), child: SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2))));
+  Widget _typing() => Align(
+    alignment: Alignment.centerLeft,
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Row(children: [
+        const SizedBox(width: 22, height: 22,
+          child: CircularProgressIndicator(strokeWidth: 2)),
+        const SizedBox(width: 12),
+        Expanded(child: Text(_responseDelayed
+          ? '응답이 늦어지고 있어요. 잠시만 기다려 주세요.'
+          : '답변을 기다리고 있어요.')),
+      ]),
+    ),
+  );
 
   Widget _verseOffer() => _panel(
     children: [

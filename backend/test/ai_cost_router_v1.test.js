@@ -18,7 +18,7 @@ import { psychologyOutput, religionOutput } from './fixtures/agent_outputs.js';
 const env = { SOUL_AI_MODE: 'openai', SOUL_MULTI_AGENT_ENABLED: 'true', OPENAI_API_KEY: 'test-only-cost-v1' };
 const counts = { inputTokens: 800, cachedInputTokens: 400, cacheWriteTokens: 200, outputTokens: 120 };
 const support = () => ({ emotion: '불안', empathy: '불안한 마음이 드셨군요. 천천히 이야기해 주세요.',
-  nextQuestion: '지금 가장 마음에 남는 것은 무엇인가요?', summary: '불안한 감정과 안정에 대한 필요' });
+  nextQuestion: '지금 가장 마음에 남는 것은 무엇인가요?', summary: '불안한 감정과 안정에 대한 필요', answerExamples: ['저는 친구가 해 준 말이 마음에 남아요.', '저는 혼자 기다렸던 순간이 기억에 남아요.'] });
 function setup(extra = {}) {
   const calls = [], logs = [];
   const service = createConversationService({ env, knowledgeProvider: costKnowledge, costKnowledgeProvider: costKnowledge,
@@ -38,12 +38,14 @@ for (const message of ['오늘 피곤해요', '마음이 좀 답답해요', '불
     responseSchema.parse(result);
     assert.equal(calls.length, 1);
     assert.equal(calls[0].model, 'gpt-5.6-luna');
-    assert.equal(calls[0].task.maxOutputTokens, 220);
+    assert.equal(calls[0].task.maxOutputTokens, 340);
     assert.equal(calls[0].timeout, 6000);
     assert.equal(logs.at(-1).fallback, false);
     assert.equal(logs.at(-1).tier, 'luna');
     assert.equal(result.message, support().empathy);
     assert.equal(result.question, support().nextQuestion);
+    assert.deepEqual(result.answerExamples, support().answerExamples);
+    assert.ok(calls[0].task.jsonSchema.required.includes('answerExamples'));
     assert.doesNotMatch(JSON.stringify(logs), /test-only-cost-v1|오늘 피곤|불안한 감정/);
   });
 }
@@ -53,7 +55,7 @@ test('single compact Terra call handles complex nonreligious support', async () 
   responseSchema.parse(await service(costBody('가족과 갈등이 있고 직장에서도 반복되는 관계 문제가 있어요. 하지만 둘 다 포기하기 어려워요.')));
   assert.equal(calls.length, 1);
   assert.equal(calls[0].model, 'gpt-5.6-terra');
-  assert.equal(calls[0].task.maxOutputTokens, 360);
+  assert.equal(calls[0].task.maxOutputTokens, 480);
   assert.equal(logs.at(-1).fallback, false);
 });
 

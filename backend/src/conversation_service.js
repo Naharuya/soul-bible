@@ -235,8 +235,10 @@ export function createConversationService({ env = process.env, logger = console,
               const error = new Error('Required quality tier unavailable.'); error.code = 'COST_QUALITY'; throw error;
             }
             routed.model = modelForCostTier(routed.tier, env);
+            // Short examples travel with the existing answer, with a bounded
+            // output allowance instead of another provider call or retry.
             task = { ...task, input: compactModelInput(task.input), instructions: task.costInstructions ?? COST_PREFIX + task.instructions,
-              maxOutputTokens: routed.tier === 'cheap' && task.name.startsWith('religion_') ? 320 : outputLimits[costTierNames[routed.tier]], costOptimized: true };
+              maxOutputTokens: task.name === 'support_turn_v1' ? outputLimits[costTierNames[routed.tier]] + 120 : routed.tier === 'cheap' && task.name.startsWith('religion_') ? 440 : outputLimits[costTierNames[routed.tier]], costOptimized: true };
             if (task.name.startsWith('religion_')) task.jsonSchema = religionJsonSchema;
           }
           // Bound priced calls conservatively by UTF-8 bytes plus schema/framing
@@ -312,6 +314,7 @@ export function createConversationService({ env = process.env, logger = console,
           result.message = turn.empathy;
           result.detectedEmotion = turn.emotion;
           if (result.question !== null) result.question = turn.nextQuestion;
+          if (result.question && turn.answerExamples) result.answerExamples = turn.answerExamples;
           result.memorySummary = [context.memorySummary.slice(-600), turn.summary].filter(Boolean).join('\n').slice(-800);
           return responseSchema.parse(result);
         }

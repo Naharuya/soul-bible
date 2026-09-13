@@ -74,17 +74,17 @@ test('incomplete RAG retains actual usage and a distinct fallback reason', async
   const service = createConversationService({ env, knowledgeProvider: costKnowledge,
     logger: { info: (_, value) => logs.push(value), warn() {} },
     openAiFactory: options => createOpenAiService({ ...options, client: { responses: { async create(request) {
-      assert.equal(request.max_output_tokens, 320);
+      assert.equal(request.max_output_tokens, 440);
       return { status: 'incomplete', incomplete_details: { reason: 'max_output_tokens' }, output_text: '{',
-        usage: { input_tokens: 1200, output_tokens: 320 } };
+        usage: { input_tokens: 1200, output_tokens: 440 } };
     } } } }) });
   await service(costBody('기도하며 쉬고 싶어요'));
   assert.equal(logs.at(-1).fallbackReason, 'incomplete_output');
-  assert.equal(logs.at(-1).outputTokens, 320);
+  assert.equal(logs.at(-1).outputTokens, 440);
   assert.ok(logs.at(-1).estimatedCostUsd > 0);
 });
 
-test('RAG stable policy/schema precede changing memory, sources and user; only RAG Luna gets 320', async () => {
+test('RAG stable policy/schema precede changing memory, sources and user; only RAG Luna gets 440', async () => {
   const tasks = [], logs = [];
   const service = createConversationService({ env, knowledgeProvider: costKnowledge,
     logger: { info: (_, value) => logs.push(value), warn() {} },
@@ -99,7 +99,7 @@ test('RAG stable policy/schema precede changing memory, sources and user; only R
     const labels = ['Common policy:', 'Safety policy:', 'Religion role', 'Citation/integrity rules:', 'Output schema:'];
     const indices = labels.map(label => task.instructions.indexOf(label));
     assert.ok(indices.every((n, i) => n >= 0 && (!i || n > indices[i - 1])));
-    assert.equal(task.maxOutputTokens, 320);
+    assert.equal(task.maxOutputTokens, 440);
     const keys = Object.keys(task.input);
     assert.ok(keys.indexOf('memorySummary') < keys.indexOf('sourceContext'));
     assert.ok(keys.indexOf('sourceContext') < keys.indexOf('userMessage'));

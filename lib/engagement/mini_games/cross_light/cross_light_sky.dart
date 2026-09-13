@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import 'cross_light_game.dart';
@@ -44,13 +45,15 @@ class _CrossLightSkyState extends State<CrossLightSky> {
     Offset(0.5, 0.88),
   ];
 
-  int get _activeIndex => widget.pieces.length.clamp(0, crossLightWords.length - 1);
+  int get _activeIndex =>
+      widget.pieces.length.clamp(0, crossLightWords.length - 1);
 
   @override
   Widget build(BuildContext context) {
     const lightColor = Color(0xFFFFE3A0);
     final reduced = MediaQuery.disableAnimationsOf(context);
-    final moveDuration = reduced ? Duration.zero : const Duration(milliseconds: 850);
+    final moveDuration =
+        reduced ? Duration.zero : const Duration(milliseconds: 850);
 
     return LayoutBuilder(builder: (context, constraints) {
       final width = constraints.maxWidth.clamp(48.0, 340.0);
@@ -91,7 +94,8 @@ class _CrossLightSkyState extends State<CrossLightSky> {
                 child: IgnorePointer(
                   child: AnimatedOpacity(
                     key: const ValueKey('cross-quiet-glow'),
-                    opacity: widget.pieces.length == crossLightWords.length ? 1 : 0,
+                    opacity:
+                        widget.pieces.length == crossLightWords.length ? 1 : 0,
                     duration: moveDuration,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
@@ -109,7 +113,8 @@ class _CrossLightSkyState extends State<CrossLightSky> {
               Positioned.fill(
                 child: IgnorePointer(
                   child: AnimatedOpacity(
-                    opacity: widget.pieces.length == crossLightWords.length ? 1 : 0,
+                    opacity:
+                        widget.pieces.length == crossLightWords.length ? 1 : 0,
                     duration: moveDuration,
                     child: CustomPaint(
                       key: const ValueKey('cross-starlight-lines'),
@@ -133,16 +138,22 @@ class _CrossLightSkyState extends State<CrossLightSky> {
                       .dy,
                   width: 48,
                   height: 48,
-                  child: _StarTarget(
-                    key: ValueKey('cross-light-touch-${entry.$2.key}'),
-                    word: entry.$2.key,
-                    label: entry.$2.value,
+                  child: _DriftingLight(
                     collected: widget.pieces.contains(entry.$2.key),
-                    active: entry.$1 == _activeIndex &&
-                        !widget.pieces.contains(entry.$2.key),
-                    ready: widget.ready && !widget.paused,
-                    reducedMotion: reduced,
-                    onCollect: widget.onCollect,
+                    paused: widget.paused,
+                    phase: entry.$1 * math.pi / 3,
+                    horizontalTravel: math.min(28, (width - 48) * .12),
+                    child: _StarTarget(
+                      key: ValueKey('cross-light-touch-${entry.$2.key}'),
+                      word: entry.$2.key,
+                      label: entry.$2.value,
+                      collected: widget.pieces.contains(entry.$2.key),
+                      active: entry.$1 == _activeIndex &&
+                          !widget.pieces.contains(entry.$2.key),
+                      ready: widget.ready && !widget.paused,
+                      reducedMotion: reduced,
+                      onCollect: widget.onCollect,
+                    ),
                   ),
                 ),
             ],
@@ -253,7 +264,8 @@ class _StarTargetState extends State<_StarTarget>
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: lightColor.withValues(alpha: .20 + .30 * t),
+                                  color: lightColor.withValues(
+                                      alpha: .20 + .30 * t),
                                   blurRadius: 12 + 14 * t,
                                   spreadRadius: 1 + 3 * t,
                                 ),
@@ -286,6 +298,77 @@ class _StarTargetState extends State<_StarTarget>
       ),
     );
   }
+}
+
+/// The star and its 48px touch target drift together until collected.
+class _DriftingLight extends StatefulWidget {
+  const _DriftingLight(
+      {required this.collected,
+      required this.paused,
+      required this.phase,
+      required this.horizontalTravel,
+      required this.child});
+  final bool collected;
+  final bool paused;
+  final double phase;
+  final double horizontalTravel;
+  final Widget child;
+
+  @override
+  State<_DriftingLight> createState() => _DriftingLightState();
+}
+
+class _DriftingLightState extends State<_DriftingLight>
+    with SingleTickerProviderStateMixin {
+  late final _motion =
+      AnimationController(vsync: this, duration: const Duration(seconds: 12));
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _syncMotion();
+  }
+
+  @override
+  void didUpdateWidget(covariant _DriftingLight oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _syncMotion();
+  }
+
+  void _syncMotion() {
+    if (MediaQuery.disableAnimationsOf(context) || widget.collected) {
+      _motion.stop();
+      _motion.value = 0;
+    } else if (widget.paused) {
+      _motion.stop();
+    } else if (!_motion.isAnimating) {
+      _motion.repeat();
+    }
+  }
+
+  @override
+  void dispose() {
+    _motion.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AnimatedBuilder(
+        animation: _motion,
+        child: widget.child,
+        builder: (context, child) {
+          final strength =
+              widget.collected || MediaQuery.disableAnimationsOf(context)
+                  ? 0.0
+                  : 1.0;
+          final angle = _motion.value * math.pi * 2 + widget.phase;
+          return Transform.translate(
+            offset: Offset(math.sin(angle) * widget.horizontalTravel * strength,
+                math.cos(angle) * 22 * strength),
+            child: child,
+          );
+        },
+      );
 }
 
 class _DustPainter extends CustomPainter {

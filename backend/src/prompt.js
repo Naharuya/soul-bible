@@ -1,3 +1,4 @@
+import { answerExamplesInstructions } from './answer_examples.js';
 export const SYSTEM_PROMPT = `당신은 AI Router가 선택한 전문 에이전트로서 사용자가 감정을 안전하게 돌아보도록 돕는 대화 동반자입니다.
 
 역할과 안전 경계:
@@ -16,7 +17,7 @@ export const SYSTEM_PROMPT = `당신은 AI Router가 선택한 전문 에이전�
 - message 필드에는 질문을 넣지 않습니다. AI 의존을 유도하지 않습니다.
 - 임상 성찰은 clinicalReflection에, 심리와 신앙을 연결한 한 문장은 integratedInsight에 넣습니다.
 - memorySummary에는 다음 턴에 필요한 사실·감정·욕구만 2~4문장으로 요약하고 민감한 추론은 넣지 않습니다.
-- 출력 스키마 밖의 필드는 만들지 않습니다.`;
+- 출력 스키마 밖의 필드는 만들지 않습니다.\n${answerExamplesInstructions}`;
 
 export function buildInput(body, agent, memorySummary = '') {
   return JSON.stringify({

@@ -33,6 +33,37 @@ void main() {
     SharedPreferencesAsyncPlatform.instance = null;
   });
 
+  testWidgets('slow responses show waiting state and render immediately on arrival', (tester) async {
+    rootBundle.clear();
+    await tester.runAsync(() => rootBundle.loadString('assets/data/bible_verses_ko.json'));
+    final client = _PendingClient();
+    await tester.pumpWidget(MaterialApp(theme: AppTheme.light,
+      home: ConversationPage(emotion: EmotionType.anxiety, intensity: 5, apiClient: client)));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), '내일 발표가 걱정돼요.');
+    await tester.tap(find.byTooltip('보내기'));
+    await tester.pump();
+    expect(find.text('답변을 기다리고 있어요.'), findsOneWidget);
+    for (var i = 0; i < 50 && !client.called; i++) {
+      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 10)));
+      await tester.pump();
+    }
+    expect(client.called, isTrue);
+    await tester.pump(const Duration(seconds: 4));
+    expect(find.text('응답이 늦어지고 있어요. 잠시만 기다려 주세요.'), findsOneWidget);
+    client.result.complete(const LlmConversationResponse(
+      message: '발표를 앞두고 걱정되시는군요.', question: '그때 어떤 생각이 들었나요?',
+      stage: ConversationStage.thought, detectedEmotion: EmotionType.anxiety,
+      riskLevel: 0, shouldOfferVerse: false, shouldEndConversation: false,
+    ));
+    // No minimum display duration may delay an already available response.
+    await tester.pump();
+    expect(find.text('발표를 앞두고 걱정되시는군요.'), findsOneWidget);
+    expect(find.text('응답이 늦어지고 있어요. 잠시만 기다려 주세요.'), findsNothing);
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('local high risk stops before the client and never shows fallback', (tester) async {
     final client = _PendingClient();
     await tester.pumpWidget(MaterialApp(theme: AppTheme.light,

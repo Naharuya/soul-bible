@@ -1,3 +1,4 @@
+import { answerExamplesSchema, answerExamplesJsonSchema } from './answer_examples.js';
 import { z } from 'zod';
 import { religionSchema } from './agents/agent_contracts.js';
 
@@ -33,6 +34,7 @@ export const requestSchema = z.object({
 export const responseSchema = z.object({
   message: z.string().min(1).max(1200),
   question: z.string().max(500).nullable(),
+  answerExamples: answerExamplesSchema,
   stage: z.enum(stages),
   detectedEmotion: z.enum(emotions),
   secondaryEmotion: z.string().max(40).nullable(),
@@ -51,10 +53,11 @@ export const responseSchema = z.object({
 export const responseJsonSchema = {
   type: 'object',
   additionalProperties: false,
-  required: ['message', 'question', 'stage', 'detectedEmotion', 'secondaryEmotion', 'riskLevel', 'shouldOfferVerse', 'verseTags', 'actionTags', 'shouldEndConversation', 'suggestedVerseId', 'agent', 'memorySummary', 'clinicalReflection', 'integratedInsight'],
+  required: ['message', 'question', 'answerExamples', 'stage', 'detectedEmotion', 'secondaryEmotion', 'riskLevel', 'shouldOfferVerse', 'verseTags', 'actionTags', 'shouldEndConversation', 'suggestedVerseId', 'agent', 'memorySummary', 'clinicalReflection', 'integratedInsight'],
   properties: {
     message: { type: 'string' },
     question: { type: ['string', 'null'] },
+    answerExamples: answerExamplesJsonSchema,
     stage: { type: 'string', enum: stages },
     detectedEmotion: { type: 'string', enum: emotions },
     secondaryEmotion: { type: ['string', 'null'] },
