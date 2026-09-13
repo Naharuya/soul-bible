@@ -205,6 +205,20 @@ async function resumeSession() {
   }
 }
 function renderOperations(data) {
+  const feedbackElement = $('feedbackCounts');
+  if (feedbackElement) {
+    const ratings = { helpful: '도움됐어요', not_helpful: '맞지 않았어요' };
+    const reasons = { empathy: '공감 표현', relevance: '질문과 답변 연결', scripture: '말씀 연결', voice: '음성', usability: '사용 방법', other: '기타' };
+    feedbackElement.replaceChildren();
+    const entries = Object.entries(data.feedback?.counts ?? {});
+    if (!entries.length) feedbackElement.textContent = '아직 받은 의견이 없습니다.';
+    for (const [key, count] of entries) {
+      const [rating, reason] = key.split(':');
+      const row = document.createElement('p');
+      row.textContent = `${ratings[rating] ?? '기타'} · ${reasons[reason] ?? '기타'} · ${formatNumber(count)}건`;
+      feedbackElement.append(row);
+    }
+  }
   const ops = data.operations;
   $('fallbackRate').textContent = typeof ops?.fallbackRate === 'number' ? `${(ops.fallbackRate * 100).toFixed(1)}%` : '데이터 없음';
   $('opsScope').textContent = ops ? `서버 시작 이후 · ${formatDate(ops.startedAt)} · 재시작 시 초기화` : '측정 준비 중';
