@@ -155,6 +155,14 @@ export function createApp({ generate, adminSettings, allowedOrigins = [], appTok
 
   app.use((error, _req, res, _next) => {
     if (error instanceof IdentityError) return res.status(error.status).json({ message: error.message });
+    // JSON parsing fails before a route or provider runs. Keep client errors
+    // distinct from AI availability failures and never reflect parser details.
+    if (error?.type === 'entity.too.large') {
+      return res.status(413).json({ message: '요청 크기가 너무 큽니다. 내용을 줄여 다시 보내 주세요.' });
+    }
+    if (['charset.unsupported', 'encoding.unsupported'].includes(error?.type)) {
+      return res.status(415).json({ message: '지원하지 않는 요청 인코딩입니다. UTF-8 JSON으로 보내 주세요.' });
+    }
     if (error instanceof ZodError || error instanceof SyntaxError) {
       return res.status(400).json({ message: '요청 형식이 올바르지 않습니다.' });
     }
