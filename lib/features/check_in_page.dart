@@ -1,3 +1,10 @@
+import 'records_page.dart';
+import 'privacy_page.dart';
+import 'growth_page.dart';
+import '../engagement/engagement_controller.dart';
+import '../app/conversation_draft.dart';
+import '../app/seven_day_history.dart';
+import '../app/responsive_text.dart';
 import 'package:flutter/material.dart';
 import '../app/onaria_emblem.dart';
 import '../app/app_theme.dart';
@@ -5,16 +12,13 @@ import '../app/space_scaffold.dart';
 import '../onaria.dart';
 import '../app/mind_card_store.dart';
 import 'conversation_page.dart';
-import 'saved_cards_page.dart';
-import 'growth_page.dart';
 import 'signup_page.dart';
-import '../engagement/engagement_page.dart';
-import '../engagement/journey/journey_page.dart';
 import '../engagement/mini_games/cross_light/cross_light_page.dart';
 import '../engagement/notifications/notification_settings_page.dart';
 
 class CheckInPage extends StatefulWidget {
-  const CheckInPage({super.key});
+  const CheckInPage({super.key, this.dailyUsageStore});
+  final DailyUsageStore? dailyUsageStore;
 
   @override
   State<CheckInPage> createState() => _CheckInPageState();
@@ -25,10 +29,12 @@ class _CheckInPageState extends State<CheckInPage> {
   bool _otherEmotion = false;
   final _customEmotion = TextEditingController();
   double _intensity = 5;
-  final _dailyUsageStore = DailyUsageStore();
+  late final _dailyUsageStore = widget.dailyUsageStore ?? DailyUsageStore();
   int _dailyUsageCount = 0;
   bool _loadingUsage = true;
   bool _startingConversation = false;
+  ConversationDraft? _draft;
+  MindCardRecord? _previousAction;
   final _scrollController = ScrollController();
 
   static const _icons = <EmotionType, String>{
@@ -65,41 +71,62 @@ class _CheckInPageState extends State<CheckInPage> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Container(
-                      width: 32, height: 32,
+                      width: 32,
+                      height: 32,
                       color: AppTheme.of(context).sage,
-                      child: Icon(Icons.auto_awesome, size: 23, color: AppTheme.of(context).green),
+                      child: Icon(Icons.auto_awesome,
+                          size: 23, color: AppTheme.of(context).green),
                     ),
                   ),
                   const SizedBox(width: 10),
-                  const Text('onaria', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, letterSpacing: 4)),
-                  const Spacer(),
+                  const Expanded(
+                      child: Text('onaria',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 4))),
                   PopupMenuButton<String>(
-                    icon: Icon(Icons.menu, color: AppTheme.of(context).green, size: 24),
+                    icon: Icon(Icons.menu,
+                        color: AppTheme.of(context).green, size: 24),
                     tooltip: '메뉴',
                     onSelected: (value) {
-                      if (value == 'growth') {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const GrowthPage()));
-                      } else if (value == 'saved_cards') {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SavedCardsPage()));
+                      if (value == 'records') {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(
+                                builder: (_) => const RecordsPage()))
+                            .then((_) => _loadDraft());
                       } else if (value == 'signup') {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SignUpPage()));
-                      } else if (value == 'engagement') {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const EngagementPage()));
-                      } else if (value == 'journey') {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const JourneyPage()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => const SignUpPage()));
+                      } else if (value == 'privacy') {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(
+                                builder: (_) => const PrivacyPage()))
+                            .then((_) => _loadDraft());
                       } else if (value == 'cross_light') {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CrossLightPage()));
+                        if (EngagementScope.maybeOf(context)?.safetyBlocked ==
+                            true) {
+                          return;
+                        }
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => const CrossLightPage()));
                       } else if (value == 'reminders') {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const NotificationSettingsPage()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => const NotificationSettingsPage()));
                       }
                     },
-                    itemBuilder: (_) => const [
-                      PopupMenuItem(value: 'growth', child: Text('작은 성장 기록')),
-                      PopupMenuItem(value: 'journey', child: Text('7일 마음의 여정')),
-                      PopupMenuItem(value: 'engagement', child: Text('말씀과 작은 기록')),
-                      PopupMenuItem(value: 'cross_light', child: Text('십자가 미니게임')),
-                      PopupMenuItem(value: 'reminders', child: Text('알림 설정')),
-                      PopupMenuItem<String>(
+                    itemBuilder: (_) => [
+                      const PopupMenuItem(
+                          value: 'records', child: Text('내 기록')),
+                      const PopupMenuItem(
+                          value: 'privacy', child: Text('개인정보와 기록 관리')),
+                      if (EngagementScope.maybeOf(context)?.safetyBlocked !=
+                          true)
+                        const PopupMenuItem(
+                            value: 'cross_light', child: Text('십자가 미니게임')),
+                      const PopupMenuItem(
+                          value: 'reminders', child: Text('알림 설정')),
+                      const PopupMenuItem<String>(
                         value: 'signup',
                         child: Row(children: [
                           Icon(Icons.person_add_outlined),
@@ -107,87 +134,243 @@ class _CheckInPageState extends State<CheckInPage> {
                           Text('회원가입'),
                         ]),
                       ),
-                      PopupMenuItem<String>(
-                        value: 'saved_cards',
-                        child: Row(children: [
-                          Icon(Icons.bookmarks_outlined),
-                          SizedBox(width: 12),
-                          Text('저장된 카드'),
-                        ]),
-                      ),
                     ],
                   ),
                 ]),
                 const SizedBox(height: 16),
+                if (_previousAction != null &&
+                    EngagementScope.maybeOf(context)?.safetyBlocked != true)
+                  Card(
+                      child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('지난번의 작은 실천, 어땠나요?'),
+                                Text(_previousAction!.replacementAction ??
+                                    _previousAction!.action),
+                                const Text('아직 하지 못했어도 괜찮아요. 지금 가능한 만큼만 돌아봐요.'),
+                                TextButton.icon(
+                                    onPressed: () async {
+                                      await Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  const GrowthPage()));
+                                      await _loadDraft();
+                                    },
+                                    icon: const Icon(Icons.spa_outlined),
+                                    label: const Text('지난번 작은 실천 돌아보기')),
+                              ]))),
+                if (_draft != null)
+                  Card(
+                      child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('임시 저장한 문장이 있어요'),
+                              const Text(
+                                  '이 기기에 저장한 문장으로 새 대화를 시작해요. 이전 대화는 포함되지 않아요.'),
+                              Wrap(spacing: 8, children: [
+                                TextButton(
+                                    onPressed: () async {
+                                      final draft = _draft!;
+                                      await Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (_) => ConversationPage(
+                                                  emotion: draft.emotion,
+                                                  intensity: draft.intensity,
+                                                  customEmotion:
+                                                      draft.customEmotion,
+                                                  initialText: draft.text)));
+                                      await _loadDraft();
+                                    },
+                                    child: const Text('이어서 입력')),
+                                TextButton(
+                                    onPressed: () async {
+                                      try {
+                                        await ConversationDraft.delete();
+                                        await _loadDraft();
+                                      } catch (_) {
+                                        if (context.mounted) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      '삭제하지 못했어요. 다시 시도해 주세요.')));
+                                        }
+                                      }
+                                    },
+                                    child: const Text('임시 문장 삭제')),
+                              ]),
+                            ],
+                          ))),
                 const Center(child: OnariaEmblem()),
-                Text('모든 마음은 저마다의 길이 있습니다', textAlign: TextAlign.center,
-                  style: TextStyle(color: AppTheme.of(context).ink, fontSize: 14, letterSpacing: 1.2, height: 1.6)),
+                ResponsiveText('모든 마음은 저마다의 길이 있습니다.',
+                    preferredWrap: '모든 마음은\n저마다의 길이 있습니다.',
+                    minFontSize: 13,
+                    maxFontSize: 16,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: AppTheme.of(context).ink,
+                        fontSize: 14,
+                        letterSpacing: 1.2,
+                        height: 1.6)),
                 const SizedBox(height: 6),
-                Text('EVERY HEART HAS ITS OWN WAY', textAlign: TextAlign.center,
-                  style: TextStyle(color: AppTheme.of(context).green, fontSize: 9, letterSpacing: 2)),
+                ResponsiveText('EVERY HEART HAS ITS OWN WAY',
+                    minFontSize: 9,
+                    maxFontSize: 11,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: AppTheme.of(context).green,
+                        fontSize: 9,
+                        letterSpacing: 2)),
                 const SizedBox(height: 24),
                 Container(
                   padding: const EdgeInsets.fromLTRB(22, 22, 22, 24),
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [AppTheme.of(context).sage, AppTheme.of(context).panel]), border: Border.all(color: AppTheme.of(context).border),
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          AppTheme.of(context).sage,
+                          AppTheme.of(context).panel
+                        ]),
+                    border: Border.all(color: AppTheme.of(context).border),
                     borderRadius: BorderRadius.circular(18),
-                    boxShadow: [BoxShadow(color: AppTheme.of(context).green.withValues(alpha: 0.12), blurRadius: 18, offset: Offset(0, 8))],
+                    boxShadow: [
+                      BoxShadow(
+                          color: AppTheme.of(context)
+                              .green
+                              .withValues(alpha: 0.12),
+                          blurRadius: 18,
+                          offset: Offset(0, 8))
+                    ],
                   ),
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text('매일 3분 마음대화', style: TextStyle(color: AppTheme.of(context).gold, fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 1.2)),
-                    SizedBox(height: 12),
-                    Text('오늘 마음은\n어떤가요?', style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w700, height: 1.15)),
-                    SizedBox(height: 12),
-                    Text('판단하지 않고, 천천히 마음을 살펴보는 시간입니다.', style: TextStyle(color: AppTheme.of(context).muted, fontSize: 14, height: 1.5)),
-                  ]),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('매일 3분 마음대화',
+                            style: TextStyle(
+                                color: AppTheme.of(context).gold,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: 1.2)),
+                        SizedBox(height: 12),
+                        Text('오늘 마음은\n어떤가요?',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.w700,
+                                height: 1.15)),
+                        SizedBox(height: 12),
+                        Text('판단하지 않고, 천천히 마음을 살펴보는 시간입니다.',
+                            style: TextStyle(
+                                color: AppTheme.of(context).muted,
+                                fontSize: 14,
+                                height: 1.5)),
+                      ]),
                 ),
                 const SizedBox(height: 24),
                 Row(children: [
                   Expanded(child: Divider(color: AppTheme.of(context).gold)),
-                  Padding(padding: EdgeInsets.symmetric(horizontal: 12), child: Icon(Icons.auto_awesome, size: 14, color: AppTheme.of(context).gold)),
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      child: Icon(Icons.auto_awesome,
+                          size: 14, color: AppTheme.of(context).gold)),
                   Expanded(child: Divider(color: AppTheme.of(context).gold)),
                 ]),
                 const SizedBox(height: 18),
-                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  Text('지금 가장 가까운 마음을 골라주세요', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppTheme.of(context).ink)),
-                  if (_emotion != null || _otherEmotion) Text('선택됨', style: TextStyle(fontSize: 12, color: AppTheme.of(context).green, fontWeight: FontWeight.w700)),
-                ]),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                          child: Text('지금 가장 가까운 마음을 골라주세요',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppTheme.of(context).ink))),
+                      if (_emotion != null || _otherEmotion)
+                        Text('선택됨',
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: AppTheme.of(context).green,
+                                fontWeight: FontWeight.w700)),
+                    ]),
                 const SizedBox(height: 12),
-                GridView.count(
-                  crossAxisCount: 3,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  childAspectRatio: 1.12,
-                  children: <EmotionType?>[...EmotionType.values, null].map((emotion) {
-                    final selected = emotion == null ? _otherEmotion : !_otherEmotion && emotion == _emotion;
-                    return Semantics(
-                      button: true,
-                      selected: selected,
-                      label: '${emotion?.label ?? '기타'}${selected ? ' 선택됨' : ''}',
-                      child: InkWell(
-                        onTap: () => _selectEmotion(emotion),
-                        borderRadius: BorderRadius.circular(16),
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 180),
-                          decoration: BoxDecoration(
-                            color: selected ? AppTheme.of(context).sage : AppTheme.of(context).panel,
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    return GridView.count(
+                      crossAxisCount: 3,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      mainAxisExtent: 64 +
+                          MediaQuery.textScalerOf(context).scale(20) +
+                          MediaQuery.textScalerOf(context).scale(13) * 2,
+                      children: <EmotionType?>[...EmotionType.values, null]
+                          .map((emotion) {
+                        final selected = emotion == null
+                            ? _otherEmotion
+                            : !_otherEmotion && emotion == _emotion;
+                        return Semantics(
+                          button: true,
+                          selected: selected,
+                          label:
+                              '${emotion?.label ?? '기타'}${selected ? ' 선택됨' : ''}',
+                          child: InkWell(
+                            onTap: () => _selectEmotion(emotion),
                             borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: selected ? AppTheme.of(context).gold : AppTheme.of(context).border, width: selected ? 1.5 : 1),
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 180),
+                              decoration: BoxDecoration(
+                                color: selected
+                                    ? AppTheme.of(context).sage
+                                    : AppTheme.of(context).panel,
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                    color: selected
+                                        ? AppTheme.of(context).gold
+                                        : AppTheme.of(context).border,
+                                    width: selected ? 1.5 : 1),
+                              ),
+                              child: Stack(children: [
+                                Center(
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                      Text(
+                                          emotion == null
+                                              ? '✏️'
+                                              : _icons[emotion]!,
+                                          style: const TextStyle(fontSize: 20)),
+                                      const SizedBox(height: 5),
+                                      Text(emotion?.label ?? '기타',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: selected
+                                                  ? AppTheme.of(context).ink
+                                                  : AppTheme.of(context).muted,
+                                              fontWeight: selected
+                                                  ? FontWeight.w800
+                                                  : FontWeight.w600)),
+                                    ])),
+                                if (selected)
+                                  Positioned(
+                                      top: 7,
+                                      right: 7,
+                                      child: Icon(Icons.check_circle,
+                                          size: 17,
+                                          color: AppTheme.of(context).green)),
+                              ]),
+                            ),
                           ),
-                          child: Stack(children: [
-                            Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                              Text(emotion == null ? '✏️' : _icons[emotion]!, style: const TextStyle(fontSize: 20)),
-                              const SizedBox(height: 5),
-                              Text(emotion?.label ?? '기타', style: TextStyle(fontSize: 13, color: selected ? AppTheme.of(context).ink : AppTheme.of(context).muted, fontWeight: selected ? FontWeight.w800 : FontWeight.w600)),
-                            ])),
-                            if (selected) Positioned(top: 7, right: 7, child: Icon(Icons.check_circle, size: 17, color: AppTheme.of(context).green)),
-                          ]),
-                        ),
-                      ),
+                        );
+                      }).toList(),
                     );
-                  }).toList(),
+                  },
                 ),
                 if (_otherEmotion) ...[
                   const SizedBox(height: 16),
@@ -211,36 +394,64 @@ class _CheckInPageState extends State<CheckInPage> {
                 if (_emotion != null || _otherEmotion) ...[
                   const SizedBox(height: 16),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 12),
                     decoration: BoxDecoration(
                       color: AppTheme.of(context).panel,
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                        const Text('마음의 강도', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
-                        Text('${_intensity.round()} / 10', style: TextStyle(color: AppTheme.of(context).green, fontWeight: FontWeight.w800)),
-                      ]),
-                      Slider(value: _intensity, min: 1, max: 10, divisions: 9, onChanged: (value) => setState(() => _intensity = value)),
-                    ]),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Expanded(
+                                    child: Text('마음의 강도',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w700))),
+                                Text('${_intensity.round()} / 10',
+                                    style: TextStyle(
+                                        color: AppTheme.of(context).green,
+                                        fontWeight: FontWeight.w800)),
+                              ]),
+                          Slider(
+                              value: _intensity,
+                              min: 1,
+                              max: 10,
+                              divisions: 9,
+                              onChanged: (value) =>
+                                  setState(() => _intensity = value)),
+                        ]),
                   ),
                 ],
                 const SizedBox(height: 16),
                 FilledButton(
-                  style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(52)),
-                    onPressed: (_otherEmotion ? _customEmotion.text.trim().isEmpty : _emotion == null) || _loadingUsage || _startingConversation
+                  style: FilledButton.styleFrom(
+                      minimumSize: const Size.fromHeight(52)),
+                  onPressed: (_otherEmotion
+                              ? _customEmotion.text.trim().isEmpty
+                              : _emotion == null) ||
+                          _loadingUsage ||
+                          _startingConversation
                       ? null
                       : _startConversation,
-                    child: const Text('AI 마음대화 시작하기'),
+                  child: Text(
+                      _startingConversation ? '대화 준비 중...' : 'AI 마음대화 시작하기'),
                 ),
                 const SizedBox(height: 12),
                 Text(
-                    '사용 횟수 제한 없음 · 오늘 $_dailyUsageCount회 사용',
+                  '사용 횟수 제한 없음 · 오늘 $_dailyUsageCount회 사용',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 11, color: AppTheme.of(context).subtle),
+                  style: TextStyle(
+                      fontSize: 11, color: AppTheme.of(context).subtle),
                 ),
                 const SizedBox(height: 4),
-                Text('긴급한 위험이 있다면 112, 119 또는 109에 연락해 주세요.', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, color: AppTheme.of(context).subtle)),
+                Text('긴급한 위험이 있다면 112, 119 또는 109에 연락해 주세요.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 10, color: AppTheme.of(context).subtle)),
               ],
             ),
           ),
@@ -253,6 +464,7 @@ class _CheckInPageState extends State<CheckInPage> {
   void initState() {
     super.initState();
     _loadDailyUsage();
+    _loadDraft();
   }
 
   @override
@@ -277,8 +489,25 @@ class _CheckInPageState extends State<CheckInPage> {
     });
   }
 
+  Future<void> _loadDraft() async {
+    try {
+      final draft = await ConversationDraft.load();
+      if (mounted) setState(() => _draft = draft);
+    } catch (_) {/* Optional draft storage cannot block check-in. */}
+    try {
+      final previous =
+          actionToRevisit(await MindCardStore().getAll(), DateTime.now());
+      if (mounted) setState(() => _previousAction = previous);
+    } catch (_) {/* A reflection invitation never blocks check-in. */}
+  }
+
   Future<void> _loadDailyUsage() async {
-    final count = await _dailyUsageStore.getCount();
+    int count = 0;
+    try {
+      count = await _dailyUsageStore.getCount();
+    } catch (_) {
+      // A usage counter must not prevent opening a conversation.
+    }
     if (!mounted) return;
     setState(() {
       _dailyUsageCount = count;
@@ -287,28 +516,39 @@ class _CheckInPageState extends State<CheckInPage> {
   }
 
   Future<void> _startConversation() async {
-    if (_startingConversation || (_otherEmotion ? _customEmotion.text.trim().isEmpty : _emotion == null)) return;
+    if (_startingConversation ||
+        (_otherEmotion
+            ? _customEmotion.text.trim().isEmpty
+            : _emotion == null)) {
+      return;
+    }
     FocusScope.of(context).unfocus();
     final customEmotion = _otherEmotion ? _customEmotion.text.trim() : null;
     final emotion = _emotion ?? EmotionType.complexity;
     setState(() => _startingConversation = true);
-    final consumed = await _dailyUsageStore.tryConsume();
-    if (!mounted) return;
-    if (!consumed) {
-      setState(() => _startingConversation = false);
-      return;
+    bool consumed = false;
+    try {
+      consumed = await _dailyUsageStore.tryConsume();
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('사용 횟수를 기록하지 못했지만 대화는 시작할 수 있어요.')));
     }
+    if (!mounted) return;
     setState(() {
-      _dailyUsageCount++;
+      if (consumed) _dailyUsageCount++;
       _startingConversation = false;
     });
     await Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => ConversationPage(
-        emotion: emotion, customEmotion: customEmotion,
+        emotion: emotion,
+        customEmotion: customEmotion,
         intensity: _intensity.round(),
       ),
     ));
     if (mounted) {
+      await _loadDraft();
+      if (!mounted) return;
       setState(() {
         _emotion = null;
         _otherEmotion = false;

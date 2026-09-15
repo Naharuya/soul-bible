@@ -15,6 +15,7 @@ class ProxyLlmApiClient implements LlmApiClient {
     required this.endpoint,
     required this.appTokenProvider,
     this.identityTokenProvider,
+    this.privacyVersionProvider,
     http.Client? httpClient,
     this.timeout = const Duration(seconds: 25),
   }) : _httpClient = httpClient ?? http.Client();
@@ -23,6 +24,7 @@ class ProxyLlmApiClient implements LlmApiClient {
   final Future<String?> Function() appTokenProvider;
   /// Supply a fresh token from the configured login SDK. Never persist it here.
   final Future<String?> Function()? identityTokenProvider;
+  final Future<String?> Function()? privacyVersionProvider;
   final http.Client _httpClient;
   final Duration timeout;
 
@@ -33,6 +35,7 @@ class ProxyLlmApiClient implements LlmApiClient {
     ApiConfig.requireSecureEndpoint(endpoint);
     final token = await appTokenProvider();
     final identityToken = await identityTokenProvider?.call();
+    final privacyVersion = await privacyVersionProvider?.call();
     if (identityToken != null && identityToken.isNotEmpty &&
         (identityToken.length > 8192 ||
          !RegExp(r'^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$').hasMatch(identityToken))) {
@@ -43,6 +46,7 @@ class ProxyLlmApiClient implements LlmApiClient {
       ..headers.addAll({
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            if (privacyVersion != null) 'X-Onaria-Privacy-Version': privacyVersion,
             if (token != null && token.isNotEmpty)
               'Authorization': 'Bearer $token',
             if (identityToken != null && identityToken.isNotEmpty)

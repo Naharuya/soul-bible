@@ -37,6 +37,14 @@ class EngagementController extends ChangeNotifier {
   final Map<String, int> _metrics = {};
   List<BibleVerse> catalog = [];
   bool ready = false, _disposed = false;
+  // Session-only safety latch: never persist a risk label or conversation.
+  bool safetyBlocked = false;
+  void prioritizeSafety() {
+    safetyBlocked = true;
+    _notify();
+    unawaited(reminders.pause());
+  }
+
   String? error;
   Future<void>? _loading;
   Future<void> _tail = Future.value();
@@ -84,9 +92,9 @@ class EngagementController extends ChangeNotifier {
           journey = SevenDayJourney.fromJson(
               Map<String, dynamic>.from(data['journey'] as Map));
         }
-        _saved.addAll((data['savedVerseIds'] as List? ?? [])
-            .whereType<String>()
-            .where((id) => verse(id) != null));
+        // A temporarily withheld catalog must not erase the user's saved IDs.
+        // Views resolve IDs against the currently approved catalog.
+        _saved.addAll((data['savedVerseIds'] as List? ?? []).whereType<String>());
         _gratitudeSaved.addAll(
             (data['gratitudeVerseIds'] as List? ?? []).whereType<String>());
         _achievements.addAll(Achievement.values.where(
@@ -185,7 +193,22 @@ class EngagementController extends ChangeNotifier {
         }
         _notify();
       });
+  Future<void> clearSavedVerses() => _serial(() async {
+        final previous = Set<String>.of(_saved);
+        final previousGratitude = Set<String>.of(_gratitudeSaved);
+        _saved.clear();
+        _gratitudeSaved.clear();
+        try {
+          await _persist();
+        } catch (_) {
+          _saved.addAll(previous);
+          _gratitudeSaved.addAll(previousGratitude);
+          rethrow;
+        }
+        _notify();
+      });
   Future<void> startJourney() => _serial(() async {
+        if (safetyBlocked) return;
         if (journey != null) return;
         await _change(() {
           journey = SevenDayJourney(
@@ -195,6 +218,7 @@ class EngagementController extends ChangeNotifier {
         });
       });
   Future<void> finishJourneyDay(String mood, String note) => _serial(() async {
+        if (safetyBlocked) return;
         final before = journey;
         if (before == null || journeyVerse(before.currentDay) == null) {
           throw StateError('Journey unavailable');
@@ -255,6 +279,7 @@ class EngagementController extends ChangeNotifier {
           entryPoint: entryPoint,
           journeyDay: journeyDay);
       await _serial(() async {
+        if (safetyBlocked) return;
         final newEggs = <EasterEgg>[];
         void egg(EasterEgg value) {
           if (_eggs.add(value)) newEggs.add(value);
@@ -324,6 +349,7 @@ class EngagementController extends ChangeNotifier {
   Future<void> track(EngagementMetric metric) async {
     try {
       await _serial(() async {
+        if (safetyBlocked) return;
         await _change(() {
           _increment(metric);
           if (metric == EngagementMetric.shareCompleted) {

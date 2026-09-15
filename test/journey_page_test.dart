@@ -23,6 +23,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('메뉴'));
     await tester.pumpAndSettle();
+    await tester.tap(find.text('내 기록'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('7일 마음의 여정'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('여정 시작하기'));
@@ -64,6 +66,9 @@ void main() {
     await tester.pageBack();
     await tester.pumpAndSettle();
     expect(find.byType(JourneyPage), findsNothing);
+    expect(find.text('내 기록'), findsOneWidget);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
     expect(find.byTooltip('메뉴'), findsOneWidget);
     await tester.pumpWidget(const SizedBox());
   });

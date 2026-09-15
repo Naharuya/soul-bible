@@ -1,0 +1,161 @@
+{
+  "status": "PENDING_HUMAN_REVIEW",
+  "requiredEvidence": [
+    "edition/source provenance",
+    "exact quotation and references",
+    "license and attribution for app, AI, audio, sharing",
+    "named tradition reviewer and review date"
+  ],
+  "verses": [
+    {
+      "id": "ROM_15_13",
+      "reference": "로마서 15:13",
+      "translation": "KRV",
+      "status": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "licenseEvidence": null,
+      "contentSha256": "093f8539b40419e24683d382f7e2c9e445b816bab397d5b2d935bcbd868c0d11"
+    },
+    {
+      "id": "PHP_4_6_7",
+      "reference": "빌립보서 4:6-7",
+      "translation": "KRV",
+      "status": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "licenseEvidence": null,
+      "contentSha256": "1fc84a88ea35e31c7d74a6f0e28cf8282760a71ef673c2814555eb8e4c422e44"
+    },
+    {
+      "id": "ISA_41_10",
+      "reference": "이사야 41:10",
+      "translation": "KRV",
+      "status": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "licenseEvidence": null,
+      "contentSha256": "3521841458a64d6116e75c79bef4dcbef7f85dffc5cbde78699187dcf43620fc"
+    },
+    {
+      "id": "PSA_23_4",
+      "reference": "시편 23:4",
+      "translation": "KRV",
+      "status": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "licenseEvidence": null,
+      "contentSha256": "6902bbdb400055a19fcdc6670665beda1b5d14e11c81082168a28529e9200c69"
+    },
+    {
+      "id": "HEB_13_5",
+      "reference": "히브리서 13:5",
+      "translation": "KRV",
+      "status": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "licenseEvidence": null,
+      "contentSha256": "94b220a133e31fe1cbedde8b25f62cbb50ff92a2f0f06649ca0563051ce9aba8"
+    },
+    {
+      "id": "MAT_11_28",
+      "reference": "마태복음 11:28",
+      "translation": "KRV",
+      "status": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "licenseEvidence": null,
+      "contentSha256": "2f5d2a37a2d080bfd57c58906e95c26cf18794886c98adac0b9396f53232dd0a"
+    },
+    {
+      "id": "ISA_40_31",
+      "reference": "이사야 40:31",
+      "translation": "KRV",
+      "status": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "licenseEvidence": null,
+      "contentSha256": "122617a36db7ebee5d7abc5eff4ee67fefb6334c87740f06e29c9ff5f90c9ae8"
+    },
+    {
+      "id": "JAS_1_19_20",
+      "reference": "야고보서 1:19-20",
+      "translation": "KRV",
+      "status": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "licenseEvidence": null,
+      "contentSha256": "b5e1e6f09f28ada49245347b60578635c656b522040a611af510eb9729e35917"
+    },
+    {
+      "id": "PRO_15_1",
+      "reference": "잠언 15:1",
+      "translation": "KRV",
+      "status": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "licenseEvidence": null,
+      "contentSha256": "1fc95a5867e8c28f05f149f169c0be3ac3aea5b9da4e9350a7d66b4cf61cecfd"
+    },
+    {
+      "id": "PSA_34_18",
+      "reference": "시편 34:18",
+      "translation": "KRV",
+      "status": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "licenseEvidence": null,
+      "contentSha256": "754cecde82ccda69a9504479bd786546fb759599db567cafc8fb91bb37fdd827"
+    },
+    {
+      "id": "JHN_14_27",
+      "reference": "요한복음 14:27",
+      "translation": "KRV",
+      "status": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "licenseEvidence": null,
+      "contentSha256": "39e4ccfffaa175bbe57d70cec2ae597444e589eff484ccc830e80d1e4e760d8c"
+    },
+    {
+      "id": "PRO_3_5_6",
+      "reference": "잠언 3:5-6",
+      "translation": "KRV",
+      "status": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "licenseEvidence": null,
+      "contentSha256": "71275429476d33c9b5272f0aeeccaf1e5af3556f7a58cb383f8bc442a942c525"
+    },
+    {
+      "id": "JAS_1_5",
+      "reference": "야고보서 1:5",
+      "translation": "KRV",
+      "status": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "licenseEvidence": null,
+      "contentSha256": "19575227fbe661e9b1f9c808a7a3a1d2c5c7bbeac38e08b1ffb6184f7515c387"
+    },
+    {
+      "id": "1TH_5_18",
+      "reference": "데살로니가전서 5:18",
+      "translation": "KRV",
+      "status": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "licenseEvidence": null,
+      "contentSha256": "9aed92e44335be8704f0b0c126af28817f039d4529883ff9c7387f51e16ee603"
+    },
+    {
+      "id": "PSA_100_4",
+      "reference": "시편 100:4",
+      "translation": "KRV",
+      "status": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "licenseEvidence": null,
+      "contentSha256": "821975e0f1d0e74beb94ebcc771995b2a608f7c2595ceba302e7462460c4d09b"
+    }
+  ]
+}

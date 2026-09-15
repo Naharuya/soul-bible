@@ -3,7 +3,16 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { updateRelease, releaseCert, productionApi, packageId, execute } from './android-release.mjs';
+import { updateRelease, releaseCert, productionApi, packageId, execute, certificate } from './android-release.mjs';
+
+test('certificate reader accepts Build Tools 37 output without allowing ambiguous or unverified digests', () => {
+  const current = `V2 Signer: certificate SHA-256 digest: ${releaseCert}\r\n`;
+  assert.equal(certificate(current), releaseCert);
+  assert.equal(certificate(`Signer #1 certificate SHA-256 digest: ${releaseCert}\n`), releaseCert);
+  assert.throws(() => certificate(current + `Signer #2 certificate SHA-256 digest: ${'a'.repeat(64)}\n`));
+  assert.throws(() => certificate(`Unverified certificate SHA-256 digest: ${releaseCert}\n`));
+  assert.throws(() => certificate('V2 Signer: certificate SHA-256 digest: invalid'));
+});
 
 function fixture(overrides = {}) {
   const root = mkdtempSync(join(tmpdir(), 'onaria-install-test-'));
@@ -15,6 +24,10 @@ function fixture(overrides = {}) {
     run(tool, args) {
       calls.push([tool, ...args]);
       if (tool === 'adb' && args[0] === 'devices') return overrides.devices ?? 'List of devices attached\nfixture-device device\n';
+      if (tool === 'adb' && args.includes('packages')) {
+        if (overrides.packageListFailure) throw Error('Package listing failed');
+        return overrides.packages ?? `package:${packageId}\n`;
+      }
       if (tool === 'signer') return `Signer #1 certificate SHA-256 digest: ${overrides[args.at(-1).endsWith('installed.apk') ? 'installedCert' : 'apkCert'] ?? releaseCert}\n`;
       if (tool === 'aapt') return overrides.badging ?? `package: name='${packageId}' versionCode='7' versionName='0.4.2'\n`;
       if (tool === 'adb' && args.includes('path')) return overrides.path ?? 'package:/data/app/fixture/base.apk\n';
@@ -52,6 +65,9 @@ for (const [name, override] of [
   ['old signer mismatch', { installedCert: 'a'.repeat(64) }],
   ['new signer mismatch', { apkCert: 'b'.repeat(64) }],
   ['unknown installed APK', { path: 'Unexpected error' }],
+  ['empty installed APK path', { path: '' }],
+  ['package list error', { packages: 'Error: package manager unavailable' }],
+  ['package list tool failure', { packageListFailure: true }],
   ['downgrade', { version: 8 }],
   ['wrong package', { badging: "package: name='wrong.app' versionCode='7' versionName='test'" }],
   ['debug APK', { badging: `package: name='${packageId}' versionCode='7' versionName='test'\napplication-debuggable` }],
@@ -59,6 +75,15 @@ for (const [name, override] of [
   const { options, calls } = fixture(override);
   assert.throws(() => updateRelease(options));
   assert.equal(calls.filter(c => c.includes('install')).length, 0);
+  noDeletion(calls);
+});
+test('fresh Release installation verifies APK without querying an absent package path', () => {
+  const { options, calls } = fixture({ packages: '' });
+  const result = updateRelease(options);
+  assert.equal(result.certificate, releaseCert);
+  assert.equal(calls.filter(c => c.includes('path') || c.includes('pull')).length, 0);
+  assert.equal(calls.filter(c => c[0] === 'signer').length, 1);
+  assert.equal(calls.filter(c => c.includes('install')).length, 1);
   noDeletion(calls);
 });
 for (const override of [{ install: 'Failure [INSTALL_FAILED_UPDATE_INCOMPATIBLE]' }, { throwInstall: true }]) test('install failure never deletes or retries', () => {

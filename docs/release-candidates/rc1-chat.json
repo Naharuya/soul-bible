@@ -1,0 +1,35 @@
+[
+  {
+    "turn": 1,
+    "status": 200,
+    "durationMs": 183,
+    "contractValid": true,
+    "stage": "thought",
+    "riskLevel": 0,
+    "suggestedVerseId": null,
+    "hasMessage": true,
+    "hasQuestion": true
+  },
+  {
+    "turn": 2,
+    "status": 200,
+    "durationMs": 125,
+    "contractValid": true,
+    "stage": "need",
+    "riskLevel": 0,
+    "suggestedVerseId": null,
+    "hasMessage": true,
+    "hasQuestion": true
+  },
+  {
+    "turn": 3,
+    "status": 200,
+    "durationMs": 43,
+    "contractValid": true,
+    "stage": "verse_offer",
+    "riskLevel": 0,
+    "suggestedVerseId": null,
+    "hasMessage": true,
+    "hasQuestion": false
+  }
+]

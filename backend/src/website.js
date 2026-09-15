@@ -1,3 +1,4 @@
+import { privacyPages } from './privacy_pages.js';
 import { Router, static as serveStatic } from 'express';
 import { fileURLToPath } from 'node:url';
 
@@ -15,15 +16,16 @@ const pages = {
 function pageHero(tag, title, text) { return `<section class="page-hero"><p class="eyebrow">${tag}</p><h1>${title}</h1><p>${text}</p></section>`; }
 function legal(title, body) { return `${pageHero('SERVICE INFORMATION', title, '현재 구현 기준 · 정식 공개 전 검토 필요')}<article class="section legal prose">${body}</article>`; }
 
-export function websiteRouter({ publicOrigin }) {
+export function websiteRouter({ publicOrigin, privacy }) {
+  const displayedPages = { ...pages, ...(privacy ? privacyPages(privacy, escape) : {}) };
   const router = Router();
   const parsed = new URL(publicOrigin);
   if (!['https:', 'http:'].includes(parsed.protocol) || parsed.username || parsed.password) throw new Error('Invalid PUBLIC_ORIGIN');
   const origin = parsed.origin;
   router.use('/assets', serveStatic(fileURLToPath(new URL('../public/website', import.meta.url)), { maxAge: '1h', dotfiles: 'deny' }));
   router.get('/robots.txt', (_req, res) => res.type('text').send(`User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /v1/\nSitemap: ${origin}/sitemap.xml\n`));
-  router.get('/sitemap.xml', (_req, res) => res.type('application/xml').send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${Object.keys(pages).map(path => `<url><loc>${escape(origin + path)}</loc></url>`).join('')}</urlset>`));
-  for (const [path, page] of Object.entries(pages)) router.get(path, (_req, res) => {
+  router.get('/sitemap.xml', (_req, res) => res.type('application/xml').send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${Object.keys(displayedPages).map(path => `<url><loc>${escape(origin + path)}</loc></url>`).join('')}</urlset>`));
+  for (const [path, page] of Object.entries(displayedPages)) router.get(path, (_req, res) => {
     const canonical = escape(origin + path);
     res.set('Cache-Control', 'public, max-age=60');
     res.type('html').send(`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(page.title)}</title><meta name="description" content="${escape(page.description)}"><meta name="robots" content="index,follow"><meta name="theme-color" content="#10182b"><link rel="canonical" href="${canonical}"><meta property="og:type" content="website"><meta property="og:locale" content="ko_KR"><meta property="og:site_name" content="ONARIA"><meta property="og:title" content="${escape(page.title)}"><meta property="og:description" content="${escape(page.description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${escape(origin)}/assets/social-preview.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escape(page.title)}"><meta name="twitter:description" content="${escape(page.description)}"><meta name="twitter:image" content="${escape(origin)}/assets/social-preview.png"><meta property="og:image:alt" content="ONARIA ? EVERY HEART HAS ITS OWN WAY"><script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "Organization", name: "ONARIA", url: origin, logo: origin + "/assets/onaria-emblem.svg", slogan: "EVERY HEART HAS ITS OWN WAY" }).replace(/</g, "\\u003c")}</script><link rel="icon" href="/assets/onaria-emblem.svg" type="image/svg+xml"><link rel="stylesheet" href="/assets/site.css"><script src="/assets/site.js" defer></script></head><body><a class="skip-link" href="#main">본문 바로가기</a><header class="site-header"><a class="brand" href="/" aria-label="ONARIA 홈"><img src="/assets/onaria-emblem.svg" width="42" height="42" alt=""><span>ONARIA</span></a><button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">메뉴 <span aria-hidden="true">☰</span></button><nav id="site-nav" aria-label="주 메뉴"><a href="/about"${path === '/about' ? ' aria-current="page"' : ''}>ONARIA 소개</a><a href="/services"${path === '/services' ? ' aria-current="page"' : ''}>서비스</a><a href="/traditions"${path === '/traditions' ? ' aria-current="page"' : ''}>일곱 전통</a><a class="nav-cta" href="/#apps">앱 소식 <span aria-hidden="true">↗</span></a></nav></header><main id="main" tabindex="-1">${page.body()}</main><footer class="site-footer"><div><a class="brand" href="/">ONARIA</a><p>모든 마음에는 저마다의 길이 있습니다.</p><small>EVERY HEART HAS ITS OWN WAY</small></div><nav aria-label="하단 메뉴"><a href="/about">소개</a><a href="/services">서비스</a><a href="/privacy">개인정보 처리 안내</a><a href="/terms">이용 안내</a></nav><p class="copyright">© ONARIA · 마음의 속도를 존중합니다.</p></footer></body></html>`);

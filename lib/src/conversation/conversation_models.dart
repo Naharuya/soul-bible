@@ -39,9 +39,10 @@ enum EmotionType {
       };
 
   static EmotionType fromWire(String value) {
+    if (value == '벅참') return EmotionType.overwhelmed;
     return EmotionType.values.firstWhere(
       (item) => item.name == value || item.label == value,
-      orElse: () => EmotionType.happiness,
+      orElse: () => EmotionType.complexity,
     );
   }
 }

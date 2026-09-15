@@ -1,7 +1,7 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './browser-fixtures.js';
 
 test('brand structure, honest availability, SEO, links and 404', async ({ page, request }) => {
-  for (const path of ['/', '/about', '/services', '/traditions', '/privacy', '/terms']) {
+  for (const path of ['/', '/about', '/services', '/traditions', '/privacy', '/terms', '/account-deletion']) {
     await page.goto(path);
     await expect(page.locator('h1')).toHaveCount(1);
     const canonical = await page.locator('link[rel=canonical]').getAttribute('href');
@@ -26,7 +26,7 @@ test('brand structure, honest availability, SEO, links and 404', async ({ page, 
   await expect(page.getByRole('link', { name: /다운로드/ })).toHaveCount(0);
   expect((await request.get('/not-an-onaria-page')).status()).toBe(404);
   const sitemap = await (await request.get('/sitemap.xml')).text();
-  expect((sitemap.match(/<loc>/g) || []).length).toBe(6);
+  expect((sitemap.match(/<loc>/g) || []).length).toBe(7);
   expect(sitemap).not.toContain('/admin');
   expect(await (await request.get('/robots.txt')).text()).toContain('Disallow: /admin');
 });

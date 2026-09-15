@@ -5,7 +5,12 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createAdminSettings } from '../src/admin_settings.js';
 import { createApp } from '../src/app.js';
+import { memberSchema } from '../src/member_schema.js';
 
+test('signup accepts omission of optional church without weakening phone validation', () => {
+  assert.equal(memberSchema.parse({ name: 'Test', phone: '01012345678' }).churchName, '');
+  assert.equal(memberSchema.safeParse({ name: 'Test', phone: 'bad' }).success, false);
+});
 
 test('runtime distinguishes fallback and provider success and clears after key change', async t => {
   const { options } = fixture(t);

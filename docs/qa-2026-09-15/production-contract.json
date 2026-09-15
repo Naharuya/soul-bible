@@ -1,0 +1,14 @@
+[
+  {
+    "route": "/v1/feedback",
+    "invalidRequest": true,
+    "status": 404,
+    "cache": "no-store"
+  },
+  {
+    "route": "/v1/auth/signup",
+    "invalidRequest": true,
+    "status": 400,
+    "cache": "no-store"
+  }
+]

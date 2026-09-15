@@ -14,9 +14,7 @@ class ShareCardContent {
   // Only explicitly selected catalog scripture is copied; no English development-reference text.
   factory ShareCardContent.verse(BibleVerse verse) => ShareCardContent._(ShareCardKind.verse, '오늘 곁에 둔 말씀', verse.text, verse.reference);
   factory ShareCardContent.mindCard(MindCardRecord card, Iterable<BibleVerse> catalog) {
-    final canonical = catalog.where((v) => v.reference == card.verseReference).firstOrNull;
-    return ShareCardContent._(ShareCardKind.mindCard, '나를 돌보는 작은 시간',
-      canonical?.text ?? '오늘, 나를 위해 잠시 쉬어 가는 시간을 가졌어요.', canonical?.reference ?? '');
+    return SharePrivacySanitizer.mindCard(card, catalog);
   }
   factory ShareCardContent.prayer() => const ShareCardContent._(ShareCardKind.prayer, '잠시 머무는 기도',
     '오늘의 작은 순간을 소중히 여기게 해 주세요.\n나와 이웃에게 다정한 마음을 건네고,\n필요할 때 쉬어 갈 용기를 갖게 해 주세요.', 'onaria 창작 기도문');
@@ -25,6 +23,17 @@ class ShareCardContent {
     encountered.map((v) => v.reference).toSet().take(7).join(' · '));
   ShareCardContent withDate(DateTime? value) => ShareCardContent._(kind, title, text, reference, date: value);
   String get accessibleText => [title, text, reference, 'onaria', if (date != null) '${date!.year}.${date!.month}.${date!.day}'].join('\n');
+}
+
+/// Allowlist projection, not redaction: no free-form card field is exported.
+/// Scripture comes only from the existing catalog, unchanged.
+class SharePrivacySanitizer {
+  static ShareCardContent mindCard(MindCardRecord card, Iterable<BibleVerse> catalog) {
+    final canonical = catalog.where((v) => v.reference == card.verseReference).firstOrNull;
+    return ShareCardContent._(ShareCardKind.mindCard, '나를 돌보는 작은 시간',
+      canonical?.text ?? '오늘, 나를 위해 잠시 쉬어 가는 시간을 가졌어요.',
+      canonical?.reference ?? '');
+  }
 }
 
 class ShareCardRenderer {

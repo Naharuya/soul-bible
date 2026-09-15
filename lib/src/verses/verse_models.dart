@@ -14,6 +14,7 @@ class BibleVerse {
     required this.emotions,
     required this.tags,
     required this.reflectionQuestion,
+    this.sourceUrl,
   });
 
   final String id;
@@ -28,6 +29,23 @@ class BibleVerse {
   final List<EmotionType> emotions;
   final List<String> tags;
   final String reflectionQuestion;
+  final String? sourceUrl;
+
+  String get translationLabel => switch (translation) {
+        'KRV' => '개역한글',
+        'NIV' => 'NIV',
+        _ => translation,
+      };
+
+  Uri? get verifiedSourceUrl {
+    final uri = Uri.tryParse(sourceUrl ?? '');
+    return uri != null &&
+            uri.scheme == 'https' &&
+            uri.userInfo.isEmpty &&
+            uri.host == 'www.bskorea.or.kr'
+        ? uri
+        : null;
+  }
 
   /// Use spoken Korean units instead of asking TTS to interpret ':' and '-'.
   String get koreanSpokenReference {
@@ -74,6 +92,7 @@ class BibleVerse {
           .toList(growable: false),
       tags: (json['tags'] as List).whereType<String>().toList(growable: false),
       reflectionQuestion: json['reflectionQuestion'] as String,
+      sourceUrl: json['sourceUrl'] as String?,
     );
   }
 }

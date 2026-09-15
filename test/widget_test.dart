@@ -36,7 +36,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('회원가입'));
     await tester.pumpAndSettle();
-    expect(find.text('onaria 시작하기'), findsOneWidget);
+    expect(find.text('회원정보 안내'), findsOneWidget);
     for (final link in ['https://api.onaria.ai.kr/app/open', 'onaria://app/open']) {
       await tester.binding.defaultBinaryMessenger.handlePlatformMessage(
         'flutter/navigation',
@@ -45,7 +45,7 @@ void main() {
         (_) {},
       );
       await tester.pumpAndSettle();
-      expect(find.text('onaria 시작하기'), findsOneWidget);
+      expect(find.text('회원정보 안내'), findsOneWidget);
       expect(tester.takeException(), isNull);
     }
     await tester.pageBack();

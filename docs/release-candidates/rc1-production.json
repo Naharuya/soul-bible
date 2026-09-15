@@ -1,0 +1,110 @@
+[
+  {
+    "url": "https://api.onaria.ai.kr/health",
+    "method": "GET",
+    "status": 200,
+    "cache": null,
+    "hsts": "max-age=31536000; includeSubDomains",
+    "csp": true,
+    "location": null
+  },
+  {
+    "url": "https://onaria.ai.kr/",
+    "method": "GET",
+    "status": 200,
+    "cache": "public, max-age=60",
+    "hsts": "max-age=31536000; includeSubDomains",
+    "csp": true,
+    "location": null
+  },
+  {
+    "url": "https://onaria.ai.kr/privacy",
+    "method": "GET",
+    "status": 200,
+    "cache": "public, max-age=60",
+    "hsts": "max-age=31536000; includeSubDomains",
+    "csp": true,
+    "location": null
+  },
+  {
+    "url": "https://onaria.ai.kr/terms",
+    "method": "GET",
+    "status": 200,
+    "cache": "public, max-age=60",
+    "hsts": "max-age=31536000; includeSubDomains",
+    "csp": true,
+    "location": null
+  },
+  {
+    "url": "https://onaria.ai.kr/admin",
+    "method": "GET",
+    "status": 200,
+    "cache": "no-cache",
+    "hsts": "max-age=31536000; includeSubDomains",
+    "csp": true,
+    "location": null
+  },
+  {
+    "url": "https://api.onaria.ai.kr/v1/admin/overview",
+    "method": "GET",
+    "status": 401,
+    "cache": "no-store",
+    "hsts": "max-age=31536000; includeSubDomains",
+    "csp": true,
+    "location": null
+  },
+  {
+    "url": "https://api.onaria.ai.kr/v1/admin/feedback",
+    "method": "GET",
+    "status": 401,
+    "cache": "no-store",
+    "hsts": "max-age=31536000; includeSubDomains",
+    "csp": true,
+    "location": null
+  },
+  {
+    "url": "https://api.onaria.ai.kr/v1/feedback",
+    "method": "POST",
+    "status": 404,
+    "cache": "no-store",
+    "hsts": "max-age=31536000; includeSubDomains",
+    "csp": true,
+    "location": null
+  },
+  {
+    "url": "https://api.onaria.ai.kr/v1/mind/chat",
+    "method": "POST",
+    "status": 400,
+    "cache": "no-store",
+    "hsts": "max-age=31536000; includeSubDomains",
+    "csp": true,
+    "location": null
+  },
+  {
+    "browser": "Chrome",
+    "width": 390,
+    "status": 200,
+    "title": "ONARIA | 모든 마음에는 저마다의 길이 있습니다",
+    "overflow": false,
+    "sections": 10,
+    "errors": []
+  },
+  {
+    "browser": "Chrome",
+    "width": 768,
+    "status": 200,
+    "title": "ONARIA | 모든 마음에는 저마다의 길이 있습니다",
+    "overflow": false,
+    "sections": 10,
+    "errors": []
+  },
+  {
+    "browser": "Chrome",
+    "width": 1440,
+    "status": 200,
+    "title": "ONARIA | 모든 마음에는 저마다의 길이 있습니다",
+    "overflow": false,
+    "sections": 10,
+    "errors": []
+  }
+]

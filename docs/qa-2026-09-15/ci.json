@@ -1,0 +1,181 @@
+{
+  "local": [
+    {
+      "id": 34714803896,
+      "name": "Cafe24 deployment package",
+      "sha": "d73acfed15d10c25f0241d55112f3012b62aa584",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34714803896"
+    },
+    {
+      "id": 34714388935,
+      "name": "Checkout Action Smoke",
+      "sha": "d73acfed15d10c25f0241d55112f3012b62aa584",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34714388935"
+    },
+    {
+      "id": 34714388936,
+      "name": "Actions Smoke Test",
+      "sha": "d73acfed15d10c25f0241d55112f3012b62aa584",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34714388936"
+    },
+    {
+      "id": 34714389013,
+      "name": "Backend CI Smoke",
+      "sha": "d73acfed15d10c25f0241d55112f3012b62aa584",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34714389013"
+    },
+    {
+      "id": 34714389024,
+      "name": "Runner Smoke Test",
+      "sha": "d73acfed15d10c25f0241d55112f3012b62aa584",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34714389024"
+    },
+    {
+      "id": 34714388963,
+      "name": "App QA and Android Test APK",
+      "sha": "d73acfed15d10c25f0241d55112f3012b62aa584",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34714388963"
+    }
+  ],
+  "remote": [
+    {
+      "id": 34819421411,
+      "name": "Cafe24 deployment package",
+      "sha": "e58a0a8c42a570a8c4feae00e79f9cfafcc28bce",
+      "status": "completed",
+      "conclusion": "skipped",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34819421411"
+    },
+    {
+      "id": 34819421490,
+      "name": "Cafe24 deployment package",
+      "sha": "e58a0a8c42a570a8c4feae00e79f9cfafcc28bce",
+      "status": "completed",
+      "conclusion": "skipped",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34819421490"
+    },
+    {
+      "id": 34754890500,
+      "name": "Cafe24 deployment package",
+      "sha": "e58a0a8c42a570a8c4feae00e79f9cfafcc28bce",
+      "status": "completed",
+      "conclusion": "skipped",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34754890500"
+    },
+    {
+      "id": 34754569571,
+      "name": "Cafe24 deployment package",
+      "sha": "e58a0a8c42a570a8c4feae00e79f9cfafcc28bce",
+      "status": "completed",
+      "conclusion": "skipped",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34754569571"
+    },
+    {
+      "id": 34747213744,
+      "name": "Cafe24 deployment package",
+      "sha": "e58a0a8c42a570a8c4feae00e79f9cfafcc28bce",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34747213744"
+    },
+    {
+      "id": 34746940717,
+      "name": "Cafe24 deployment package",
+      "sha": "e58a0a8c42a570a8c4feae00e79f9cfafcc28bce",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34746940717"
+    },
+    {
+      "id": 34746849614,
+      "name": "Runner Smoke Test",
+      "sha": "e58a0a8c42a570a8c4feae00e79f9cfafcc28bce",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34746849614"
+    },
+    {
+      "id": 34746849604,
+      "name": "Backend CI Smoke",
+      "sha": "e58a0a8c42a570a8c4feae00e79f9cfafcc28bce",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34746849604"
+    },
+    {
+      "id": 34746849627,
+      "name": "Checkout Action Smoke",
+      "sha": "e58a0a8c42a570a8c4feae00e79f9cfafcc28bce",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34746849627"
+    },
+    {
+      "id": 34746849600,
+      "name": "Actions Smoke Test",
+      "sha": "e58a0a8c42a570a8c4feae00e79f9cfafcc28bce",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34746849600"
+    },
+    {
+      "id": 34746849633,
+      "name": "ONARIA Web and Admin",
+      "sha": "e58a0a8c42a570a8c4feae00e79f9cfafcc28bce",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34746849633"
+    },
+    {
+      "id": 34746849592,
+      "name": "App QA and Android Test APK",
+      "sha": "e58a0a8c42a570a8c4feae00e79f9cfafcc28bce",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Naharuya/soul-bible/actions/runs/34746849592"
+    }
+  ],
+  "remoteJobs": [
+    {
+      "name": "backend-tests",
+      "conclusion": "success"
+    },
+    {
+      "name": "build-apk",
+      "conclusion": "success"
+    },
+    {
+      "name": "ios-compile",
+      "conclusion": "success"
+    }
+  ],
+  "recentFailureJobs": [
+    {
+      "name": "backend-tests",
+      "conclusion": "failure",
+      "steps": 0
+    },
+    {
+      "name": "build-apk",
+      "conclusion": "skipped",
+      "steps": 0
+    },
+    {
+      "name": "ios-compile",
+      "conclusion": "skipped",
+      "steps": 0
+    }
+  ]
+}

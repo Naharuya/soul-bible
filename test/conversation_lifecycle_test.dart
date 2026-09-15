@@ -58,6 +58,8 @@ void main() {
     ));
     // No minimum display duration may delay an already available response.
     await tester.pump();
+    // Flush response microtasks and the resulting frame without advancing time.
+    await tester.pump();
     expect(find.text('발표를 앞두고 걱정되시는군요.'), findsOneWidget);
     expect(find.text('응답이 늦어지고 있어요. 잠시만 기다려 주세요.'), findsNothing);
     await tester.pumpAndSettle();

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,6 +22,9 @@ class MindCardRecord {
     this.clinicalReflection,
     this.integratedInsight,
     this.verseLanguage = 'bilingual',
+    this.actionReview,
+    this.reviewedAt,
+    this.replacementAction,
   });
 
   final String id;
@@ -40,6 +44,15 @@ class MindCardRecord {
   final String? clinicalReflection;
   final String? integratedInsight;
   final String verseLanguage;
+  final String? actionReview;
+  final DateTime? reviewedAt;
+  final String? replacementAction;
+  String get reviewLabel => switch (actionReview) {
+        'done' => '해봤어요',
+        'later' => '아직이에요',
+        'changed' => '다른 실천을 골랐어요',
+        _ => '아직 돌아보지 않았어요',
+      };
 
   String get fullText => [
         title,
@@ -77,6 +90,9 @@ class MindCardRecord {
         clinicalReflection: json['clinicalReflection'] as String?,
         integratedInsight: json['integratedInsight'] as String?,
         verseLanguage: json['verseLanguage'] as String? ?? 'bilingual',
+        actionReview: json['actionReview'] as String?,
+        reviewedAt: DateTime.tryParse(json['reviewedAt'] as String? ?? ''),
+        replacementAction: json['replacementAction'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
@@ -97,6 +113,9 @@ class MindCardRecord {
         'clinicalReflection': clinicalReflection,
         'integratedInsight': integratedInsight,
         'verseLanguage': verseLanguage,
+        if (actionReview != null) 'actionReview': actionReview,
+        if (reviewedAt != null) 'reviewedAt': reviewedAt!.toIso8601String(),
+        if (replacementAction != null) 'replacementAction': replacementAction,
       };
 }
 
@@ -107,34 +126,89 @@ class MindCardStore {
   static const _storageKey = 'soul_bible.mind_cards.v1';
   final SharedPreferencesAsync _preferences;
 
-  Future<void> save(MindCardRecord card) async {
-    final saved = await _preferences.getStringList(_storageKey) ?? <String>[];
-    final filtered = saved.where((value) {
-      try {
-        final decoded = jsonDecode(value);
-        return decoded is! Map<String, dynamic> || decoded['id'] != card.id;
-      } catch (_) {
-        return true;
-      }
-    });
-    await _preferences.setStringList(
-      _storageKey,
-      <String>[jsonEncode(card.toJson()), ...filtered.take(100)],
-    );
+  static Future<void>? _pending;
+  Future<void> _serialize(Future<void> Function() operation) async {
+    while (_pending != null) {
+      await _pending;
+    }
+    final completion = Completer<void>();
+    _pending = completion.future;
+    try {
+      await operation();
+    } finally {
+      _pending = null;
+      completion.complete();
+    }
   }
 
-  Future<void> delete(String id) async {
-    final saved = await _preferences.getStringList(_storageKey) ?? <String>[];
-    final remaining = saved.where((value) {
-      try {
-        final decoded = jsonDecode(value);
-        return decoded is! Map<String, dynamic> || decoded['id'] != id;
-      } catch (_) {
-        return true;
-      }
-    }).toList(growable: false);
-    await _preferences.setStringList(_storageKey, remaining);
-  }
+  Future<void> save(MindCardRecord card) => _serialize(() async {
+        final saved =
+            await _preferences.getStringList(_storageKey) ?? <String>[];
+        final filtered = saved.where((value) {
+          try {
+            final decoded = jsonDecode(value);
+            return decoded is! Map<String, dynamic> || decoded['id'] != card.id;
+          } catch (_) {
+            return true;
+          }
+        });
+        await _preferences.setStringList(
+          _storageKey,
+          <String>[jsonEncode(card.toJson()), ...filtered],
+        );
+      });
+
+  Future<void> delete(String id) => _serialize(() async {
+        final saved =
+            await _preferences.getStringList(_storageKey) ?? <String>[];
+        final remaining = saved.where((value) {
+          try {
+            final decoded = jsonDecode(value);
+            return decoded is! Map<String, dynamic> || decoded['id'] != id;
+          } catch (_) {
+            return true;
+          }
+        }).toList(growable: false);
+        await _preferences.setStringList(_storageKey, remaining);
+      });
+
+  Future<void> deleteAll() =>
+      _serialize(() => _preferences.remove(_storageKey));
+
+  Future<void> reviewAction(String id, String review,
+          {String? replacement, DateTime? now}) =>
+      _serialize(() async {
+        if (!['done', 'later', 'changed'].contains(review) ||
+            (review == 'changed' &&
+                (replacement == null ||
+                    replacement.trim().isEmpty ||
+                    replacement.length > 120))) {
+          throw ArgumentError('Invalid action review');
+        }
+        final saved =
+            await _preferences.getStringList(_storageKey) ?? <String>[];
+        var found = false;
+        final updated = saved.map((raw) {
+          dynamic data;
+          try {
+            data = jsonDecode(raw);
+          } catch (_) {
+            return raw;
+          }
+          if (data is! Map<String, dynamic> || data['id'] != id) return raw;
+          found = true;
+          data['actionReview'] = review;
+          data['reviewedAt'] = (now ?? DateTime.now()).toIso8601String();
+          if (review == 'changed') {
+            data['replacementAction'] = replacement!.trim();
+          } else {
+            data.remove('replacementAction');
+          }
+          return jsonEncode(data);
+        }).toList();
+        if (!found) throw StateError('Card no longer exists');
+        await _preferences.setStringList(_storageKey, updated);
+      });
 
   Future<List<MindCardRecord>> getAll() async {
     final saved = await _preferences.getStringList(_storageKey) ?? <String>[];
@@ -162,13 +236,13 @@ class MembershipConfig {
 
   static const _premiumMember = String.fromEnvironment(
     'ONARIA_PREMIUM_MEMBER',
-    defaultValue: String.fromEnvironment('SOUL_BIBLE_PREMIUM_MEMBER', defaultValue: 'false'),
+    defaultValue: String.fromEnvironment('SOUL_BIBLE_PREMIUM_MEMBER',
+        defaultValue: 'false'),
   );
 
-  static MembershipTier get current =>
-      _premiumMember.toLowerCase() == 'true'
-          ? MembershipTier.premium
-          : MembershipTier.free;
+  static MembershipTier get current => _premiumMember.toLowerCase() == 'true'
+      ? MembershipTier.premium
+      : MembershipTier.free;
 }
 
 class DailyUsageStore {

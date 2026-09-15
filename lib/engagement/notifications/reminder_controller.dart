@@ -15,6 +15,8 @@ enum ReminderKind {
       values.where((v) => payload == 'engagement:${v.name}').firstOrNull;
 }
 
+enum ReminderConsent { notAsked, allowed, denied, disabled }
+
 class ReminderSettings {
   const ReminderSettings(
       {this.enabled = false,
@@ -129,6 +131,7 @@ class ReminderController extends ChangeNotifier {
   final EngagementStorage storage;
   final DateTime Function() clock;
   ReminderSettings settings = const ReminderSettings();
+  ReminderConsent consent = ReminderConsent.notAsked;
   DateTime? lastVisit;
   void Function(ReminderKind kind)? onTap;
   String? message;
@@ -151,6 +154,9 @@ class ReminderController extends ChangeNotifier {
       settings = ReminderSettings.fromJson(
           Map<String, dynamic>.from(data['settings'] as Map));
       lastVisit = DateTime.tryParse(data['lastVisit'] as String? ?? '');
+      consent = ReminderConsent.values
+          .where((value) => value.name == data['consent']).firstOrNull ??
+          (settings.enabled ? ReminderConsent.allowed : ReminderConsent.notAsked);
     }
     _pauseRequested = _pauseRequested || settings.paused;
     if (_pauseRequested) _setPaused();
@@ -166,6 +172,7 @@ class ReminderController extends ChangeNotifier {
       storageKey,
       jsonEncode({
         'settings': settings.toJson(),
+        'consent': consent.name,
         'lastVisit': lastVisit?.toIso8601String()
       }));
   Future<void> _serial(Future<void> Function() action) {
@@ -200,6 +207,7 @@ class ReminderController extends ChangeNotifier {
         if (requested.enabled &&
             !await gateway.hasPermission() &&
             !await gateway.requestPermission()) {
+          consent = ReminderConsent.denied;
           settings = ReminderSettings(
               startOn: requested.startOn,
               hour: requested.hour,
@@ -218,6 +226,7 @@ class ReminderController extends ChangeNotifier {
           return;
         }
         if (requested.enabled && !requested.paused) _pauseRequested = false;
+        consent = requested.enabled ? ReminderConsent.allowed : ReminderConsent.disabled;
         settings = requested;
         if (_pauseRequested) _setPaused();
         await _schedule();

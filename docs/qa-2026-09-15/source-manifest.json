@@ -1,0 +1,2104 @@
+{
+  "head": "d73acfed15d10c25f0241d55112f3012b62aa584",
+  "dirty": true,
+  "sourceFingerprint": "cc7554865af0466d80f242d26eda073c3df5fa2569eab4885bf8be4341707163",
+  "files": [
+    {
+      "file": ".github/BUILD_RETRY.md",
+      "sha256": "e818134d56a33b06a598b4d1b8fa216dabc4850fbc39e9b39946bae2f5765058"
+    },
+    {
+      "file": ".github/BUILD_RETRY_2.md",
+      "sha256": "76ff87363ab87ce24226ab44f4bd9be9785d20b89bbc41028af0c8d6bd52cc3f"
+    },
+    {
+      "file": ".github/agents/rami-audio-manager.agent.md",
+      "sha256": "66d510af2863c2ef588ed265ac6d61810484da899b5a6c5d8719afd3daeb6173"
+    },
+    {
+      "file": ".github/workflows/actions-smoke.yml",
+      "sha256": "ba617eacfbbda17a5e9a1ceff6e289aefaacf86dcd35fa583aa1196691132535"
+    },
+    {
+      "file": ".github/workflows/backend-ci-smoke.yml",
+      "sha256": "4f77e5eb9fcb403ff6c1c22db04a7951aa9218bea049adf8397ac5a80efb7250"
+    },
+    {
+      "file": ".github/workflows/build-android.yml",
+      "sha256": "e28b7e8fa05946b13cc3b4240764ea97eb536fb75001eda98a70632889bfefd6"
+    },
+    {
+      "file": ".github/workflows/cafe24-package.yml",
+      "sha256": "883e41a35ce4f66b552b5be0f0fa7f832fcf2409da23adfdac9e7e73afd62e67"
+    },
+    {
+      "file": ".github/workflows/checkout-smoke.yml",
+      "sha256": "bdaa4a5df82b2df95c8e379569ba552deee4a5dd28571b3557dbc06636782298"
+    },
+    {
+      "file": ".github/workflows/onaria-web.yml",
+      "sha256": "6ed388e92a33f5038da5e8ef987b63847811339dc483900915c78b328945afe1"
+    },
+    {
+      "file": ".github/workflows/runner-smoke.yml",
+      "sha256": "f9e1c6faffa9217264dc7556c00c9291de2a1f222eed1a7502d489ff19518c9e"
+    },
+    {
+      "file": ".gitignore",
+      "sha256": "9207eeb2d34f03928cea4df1c9f8012d233e59ca640395e2e16fb4b98d55901f"
+    },
+    {
+      "file": "AGENTS.md",
+      "sha256": "b48a13ba4a979fd0429a12e4eee79393e5e1306470a279cd464d9a87e04de623"
+    },
+    {
+      "file": "ONARIA_GATES.md",
+      "sha256": "197af50ee7c226ace9392144bb26459892409bde765dcf335a206595c17247d0"
+    },
+    {
+      "file": "ONARIA_ROADMAP.md",
+      "sha256": "b915713e9753530c9db2696bcee5271b29645e860eac7f5290430b83ddcbde96"
+    },
+    {
+      "file": "ONARIA_STATUS.md",
+      "sha256": "5389bce419a5de945ba9546daa589b105cbe5b4bbc53ec7625fa8319c35af04f"
+    },
+    {
+      "file": "README.md",
+      "sha256": "2603bd822b06267827a6996ffe37af9b7a829b4ed58d8625fc89c23b66d194fe"
+    },
+    {
+      "file": "analysis_options.yaml",
+      "sha256": "e3da34c8ca10c16fafe76b3ba3b042d44d96645a88687fdb7297399889d9b036"
+    },
+    {
+      "file": "android/.gitignore",
+      "sha256": "c9af75dbc2c8aa867476a09426c80b178c4aeed8b9393ae48503eedfa3273d71"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836155677.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836155688.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836155706.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836155711.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836155717.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836155721.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836286137.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836286148.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836393283.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836393290.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836437478.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836437509.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836437534.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836437543.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836437551.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836437558.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836534535.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836534574.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836534614.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836534630.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836534642.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836534654.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836646314.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836646347.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836646379.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836646390.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836646402.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836646414.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836825483.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836825507.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836825532.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836825540.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836825550.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/.kotlin/errors/errors-1788836825558.log",
+      "sha256": "bd42b5875dd35ea22176eb9a5b85c60493c91f955a4bb92b199572cc53a5e6ea"
+    },
+    {
+      "file": "android/app/build.gradle.kts",
+      "sha256": "639e515fbc0553fc95d9089154bd0d8a21a6404d2dc431e53add0f0f7a990f3e"
+    },
+    {
+      "file": "android/app/src/debug/AndroidManifest.xml",
+      "sha256": "b01a4541a8144c15bc617bab7eb267c99fa1476368fbbda5a12cdbf4e316a34c"
+    },
+    {
+      "file": "android/app/src/debug/res/xml/network_security_config.xml",
+      "sha256": "3285e062d9f71dae34bf0956b9ecff110e74cd5a5107c2c87b27b4d2cba85612"
+    },
+    {
+      "file": "android/app/src/main/AndroidManifest.xml",
+      "sha256": "9155e5b27239d35c8710b6b2533a9b59c44f0aa515be10d87e10c7df70f1573f"
+    },
+    {
+      "file": "android/app/src/main/kotlin/com/example/bible_mind_core/MainActivity.kt",
+      "sha256": "f98ea6ab5cbc21edd4e4471ba637e17322acf6476660a854902135a278e826e6"
+    },
+    {
+      "file": "android/app/src/main/res/drawable-v21/launch_background.xml",
+      "sha256": "8b3ea7ec95aafd4fc2898f5ad3129934a1e06cc47dd6035a88a7d7d17ee8148c"
+    },
+    {
+      "file": "android/app/src/main/res/drawable/ic_notification.xml",
+      "sha256": "ccea31ef411e8b392e018f00ec9a6ec73e43aee1ccd6f1907c19318a34587ea4"
+    },
+    {
+      "file": "android/app/src/main/res/drawable/launch_background.xml",
+      "sha256": "8b3ea7ec95aafd4fc2898f5ad3129934a1e06cc47dd6035a88a7d7d17ee8148c"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "sha256": "5056b7226b3f58e65a61739e8ab6f5c52099fccee3ae9aad0e8856f31709e3fa"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+      "sha256": "f93562f62cab60230a1759baabd2bf4992036c238a2b35accc0cccb3c79dea6a"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png",
+      "sha256": "b25d10dbec8001b8b7062ee7a21d650148581131741d04d5a3d8e5f6d3f69318"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+      "sha256": "359f295e353ffeb7d2d0fc43f01a005f843e4304a2ab5f94597cd61155cbfdfe"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png",
+      "sha256": "6ecc25366040c2ea7eed1c38df30bc43fdb39ed5891da5a8bc3657043b841544"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+      "sha256": "4befbdd339820142bf3b448dee961ab8aee373749c8f8b3d695d35c9fc54af71"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png",
+      "sha256": "bc0d03be0bb1b6e49074f8e186b49a26df72989ab6172b175b9cd5c764044026"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+      "sha256": "5fe66f326d7d63921ccc7d28bbb7efeef4daa74853805f735cf1d37197c4dab3"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png",
+      "sha256": "574414b6bb7fd40d3e59b6eb8e460f0da7bc7155a84161903be1c862fb8cb849"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "sha256": "9d9b12fd0a340b4f8cf91073edd55cf733ceb094a643632dbf13c35c6bdf3590"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
+      "sha256": "9772e6a628da8372cdf2957834214f9105e1e738051e310ce24676d86b6806c5"
+    },
+    {
+      "file": "android/app/src/main/res/raw/keep.xml",
+      "sha256": "390a52ff8bed6db25d3988d135b503b4c7797328dd7442073e3af76098a862f2"
+    },
+    {
+      "file": "android/app/src/main/res/values-night/styles.xml",
+      "sha256": "ea763597dc1a84c8034251caee98d7753e0fbf57340ffc94677427de4b537516"
+    },
+    {
+      "file": "android/app/src/main/res/values/ic_launcher_background.xml",
+      "sha256": "d3a0981b9a87651ad1f6fc48c7595afb2f7327bb0fc1d6a46f628b82af524f18"
+    },
+    {
+      "file": "android/app/src/main/res/values/styles.xml",
+      "sha256": "cca15a99b59380a548bf6a890f7ca5380ee509b1f9bbb2f5f9ec3589fa25c2f7"
+    },
+    {
+      "file": "android/app/src/main/res/xml/network_security_config.xml",
+      "sha256": "0d4a081db3621e6147590cf22c972d5a9c65d262586e063a95930272dbb2c7d4"
+    },
+    {
+      "file": "android/app/src/profile/AndroidManifest.xml",
+      "sha256": "b01a4541a8144c15bc617bab7eb267c99fa1476368fbbda5a12cdbf4e316a34c"
+    },
+    {
+      "file": "android/build.gradle.kts",
+      "sha256": "218f400e3fff31c9c986a2535dfb974560e1b4d33cc27b7c1fee96a2b7e44454"
+    },
+    {
+      "file": "android/gradle.properties",
+      "sha256": "7714698de712a7872e371f0dbae626c255fc83ac1c15e52e7cd9fcaa241b5092"
+    },
+    {
+      "file": "android/gradle/wrapper/gradle-wrapper.properties",
+      "sha256": "594a00250ef7a36609a01f3263bf5ed63963afaf9ca9f82f2cd1de0f6f056383"
+    },
+    {
+      "file": "android/settings.gradle.kts",
+      "sha256": "092ba880c8d4a07591aafc082f45deedc9afcf60c113a4bb3d13cbe1a1fce9de"
+    },
+    {
+      "file": "assets/data/bible_verses_ko.json",
+      "sha256": "b501f2a4734bbc4399b47b0dda7fe5f559e4774c44ad5ebd63d6cc932afccdaf"
+    },
+    {
+      "file": "assets/images/logo.svg",
+      "sha256": "5f5bcc6916ed875ad9d864c221d8fd5358332568826b6063ace69a394389505e"
+    },
+    {
+      "file": "assets/prompts/system_prompt_ko.txt",
+      "sha256": "fec7652b86b464d418509d3a022eab8a2f69336b1ed865dc1ea6b9bbec2f6f31"
+    },
+    {
+      "file": "backend/.dockerignore",
+      "sha256": "ad6b427fd723d72b64bf700da0efd31b2e34c6568d41aac981aad76194d50f4f"
+    },
+    {
+      "file": "backend/.gitignore",
+      "sha256": "ea958ccfc32403a0ed01c25f5177ca77366b851a38fa1b6d3bce7d35e0d1886b"
+    },
+    {
+      "file": "backend/ADMIN_API_SETTINGS.md",
+      "sha256": "8656d639833b333340ae7cfd3bfd3c0f6d6ee812297666877462b659d38fa132"
+    },
+    {
+      "file": "backend/ADMIN_PWA.md",
+      "sha256": "1e4c61799c0fb45fbc8ba210e976bd857c4d6ce4fccd9fda023c9ebfed179b57"
+    },
+    {
+      "file": "backend/Dockerfile",
+      "sha256": "146b1a98772db9b64204f9e17729e9d4475305e5e44da5d0ce98469a5d4ee614"
+    },
+    {
+      "file": "backend/MULTI_AGENT_INTEGRATION.md",
+      "sha256": "734bdcf68f28afe0625f947c6d7ce464c98c0c82a948ead35b89d91cf3dd14bc"
+    },
+    {
+      "file": "backend/PHASE_1_INTEGRATION.md",
+      "sha256": "f128f211d0c4259384adfa29142a4264742823f2c40c776bf7b83e1c5a84c88a"
+    },
+    {
+      "file": "backend/PHASE_2_INTEGRATION.md",
+      "sha256": "8b759ba0da52fe356e82f7b86899871890c4faffd5d41db4464976f96e81ccdb"
+    },
+    {
+      "file": "backend/PHASE_3_SPECIALIZATION.md",
+      "sha256": "95e7a09a7b06c2af89b771a9a55f276508f566ab6fc61763ff78f46850830769"
+    },
+    {
+      "file": "backend/PHASE_4_RAG.md",
+      "sha256": "e9fd72cb009a1e4e97638e7e312a15fd28648567a4fcf77a83a7a76730b2c73a"
+    },
+    {
+      "file": "backend/PHASE_5_VECTOR_RAG.md",
+      "sha256": "ef2c7fbe4483ba20d4d922a82e43a026e8238f181e25ee4bbc7512af01ea83ce"
+    },
+    {
+      "file": "backend/PHASE_6_PRODUCTION_CORPUS.md",
+      "sha256": "08ebc76e81defee078e1548dc35016c433110cc12f5764757cb02886f88a14f9"
+    },
+    {
+      "file": "backend/PHASE_7_EXPERT_CORPUS.md",
+      "sha256": "b45755cb18b5d0f3399954fcad39af08cd73c67601acc97acb15f86f3fc03c1a"
+    },
+    {
+      "file": "backend/PHASE_8_PILOT_RELEASE.md",
+      "sha256": "842a1a6419984b393dedfa7f5520861d524b83f78e9ecff89f506db4413b8974"
+    },
+    {
+      "file": "backend/PHASE_9_CHRISTIANITY_A_TRACK.md",
+      "sha256": "826f86e866c0d0bfa4852f07761f4d5a68aa7710c94b6da4fffd5f34322cb53c"
+    },
+    {
+      "file": "backend/config/christianity-pilot-registry.json",
+      "sha256": "618e96981765ac5e1a2104158b6b9aeecd437f7a6301b5455e6eb3bb75db940b"
+    },
+    {
+      "file": "backend/config/christianity-source-metadata.template.json",
+      "sha256": "5b5c262af7b0730861b1fc5bc0676be0fbe02a8b66f0dcb3a798e82ef65e5aa7"
+    },
+    {
+      "file": "backend/config/expert-reviewers.json",
+      "sha256": "2c345de418a8338b095eb3f597dd6b237e54111be40643b94b43f69c142a97c9"
+    },
+    {
+      "file": "backend/config/expert-source-registry.json",
+      "sha256": "8a696eda38301cdfe256665b073498ce12a5f2e5ac77bed6f3559e0bf0bb8929"
+    },
+    {
+      "file": "backend/config/retrieval-concepts.json",
+      "sha256": "3ff1b9e88e84b958b2dede4d8e7883976cc77f47c7908578b451741a97e516dd"
+    },
+    {
+      "file": "backend/config/retrieval-tuning.json",
+      "sha256": "e3ec7cd3c75869975f777b53dd3ee9945f03d12b2651d74d0d1747cdc00dff4c"
+    },
+    {
+      "file": "backend/config/tradition-branches.json",
+      "sha256": "f73f375aad14dd5dfcc503361f7ad08d16f11297c859306b1a0599c12fe9c3bb"
+    },
+    {
+      "file": "backend/corpus/christianity-a-track/.gitattributes",
+      "sha256": "2dd1014f81c4190dfbcdfe585d342a0ec9563152afa075b9fd21bc787e742506"
+    },
+    {
+      "file": "backend/corpus/christianity-a-track/README.md",
+      "sha256": "e1d20d8e648de7c63d9d27d49d665f810a92c96ca639d6ba1eb679246d2f7423"
+    },
+    {
+      "file": "backend/corpus/christianity-a-track/selections.json",
+      "sha256": "4698b14ea2f82142361e7c890aa148491f02da192fb9574bf925c00672a9b3cf"
+    },
+    {
+      "file": "backend/corpus/christianity-a-track/upstream/engwebp_about.htm",
+      "sha256": "0b95b83e17f181aa4c23c976069c23de4f3ac58bd22954d1dff492f11694a200"
+    },
+    {
+      "file": "backend/corpus/christianity-a-track/upstream/provenance.json",
+      "sha256": "e26c265f38900b5203e86e7ab28814b4ae88c8adf98696a0e255acf607b1026c"
+    },
+    {
+      "file": "backend/corpus/christianity-a-track/upstream/selected.vpl.txt",
+      "sha256": "c4c4fef423406dd9bb97f3196476fae3e7042fb4f25a03357045ba2c15474eba"
+    },
+    {
+      "file": "backend/corpus/christianity-a-track/upstream/source.json",
+      "sha256": "f0265859373893e210f675515a055802d3d3b5d2f3cf7b63ac60caa397997f48"
+    },
+    {
+      "file": "backend/e2e/feedback.spec.js",
+      "sha256": "f1adb7b29c21752a31d916de9c41c32646523e507f850648108772e3745eab70"
+    },
+    {
+      "file": "backend/e2e/fixture.mjs",
+      "sha256": "118c6d75c55f869d17d7bb7b1b3d0c4db8ec1fe1b12ade78f9dc3e9a9921fc3b"
+    },
+    {
+      "file": "backend/e2e/web.spec.js",
+      "sha256": "4046c8037c8c55b575bce29bb79318971f1f26c06389ed4b1dcfc3fb75bcf466"
+    },
+    {
+      "file": "backend/e2e/website-v2.spec.js",
+      "sha256": "d2ab613886e8baa29aa0135bcab800621ad640f0e64b315f2429aaedaaadb40f"
+    },
+    {
+      "file": "backend/evaluation/gold-candidate-v1.json",
+      "sha256": "0150b87509ea61b15c0303e9b51de4714a5d2677629fceb5bcb0a04b7a364ac8"
+    },
+    {
+      "file": "backend/evaluation/phase6-results/benchmark.json",
+      "sha256": "9560561ec2efe4bdf75510ae2b26209903bf149fa2a45e1c5b942c7bcf691547"
+    },
+    {
+      "file": "backend/evaluation/phase6-results/expert-review.json",
+      "sha256": "217d94d4a2a14425a3d0e9c97ce995ff136c3a83201dd42ab3cbde40556c540a"
+    },
+    {
+      "file": "backend/evaluation/phase6-results/readiness.json",
+      "sha256": "965a238c304b7035d0338358db81c503df9a08aa525a355d0b4decadf2b98ffa"
+    },
+    {
+      "file": "backend/evaluation/phase7-expert-package/README.md",
+      "sha256": "ed242613a022277e6572e6452478c43f8a56faf58eabee013517683c71246cad"
+    },
+    {
+      "file": "backend/evaluation/phase7-expert-package/sources.csv",
+      "sha256": "14346bf78efd8d29b5474a3af7448da786f0107df2afa5c85c44a467d44f4915"
+    },
+    {
+      "file": "backend/evaluation/phase7-expert-package/sources.json",
+      "sha256": "bfe80722fb2efd7ad01d6970d394553b5c73849cf925ae68b0abcb1b8b0ae91a"
+    },
+    {
+      "file": "backend/evaluation/phase7-expert-package/submission.json",
+      "sha256": "d88e73ebe456bc8f61f1317643f6894cda3177b904a04f96f786adf19ab5c749"
+    },
+    {
+      "file": "backend/evaluation/phase7-expert-package/templates.json",
+      "sha256": "29d5a675346056c438f2640da7b41b774a8af7f1a3801ce948a6967e377b32c9"
+    },
+    {
+      "file": "backend/evaluation/phase7-results/critical-safety.json",
+      "sha256": "99a8c4d8f8f642d92f29d085d8abc294a493a93d9f95137664f35efe5666b69b"
+    },
+    {
+      "file": "backend/evaluation/phase7-results/human-response-review.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "file": "backend/evaluation/phase7-results/human-response-template.json",
+      "sha256": "8f469798ce14b22e811c0aca2830bef7ab30cef0adfd038162a4616ed601bcff"
+    },
+    {
+      "file": "backend/evaluation/phase7-results/pilot-evaluation.json",
+      "sha256": "3d62351ecec73a5e8b332497d21f3246727fd5e274e8aacd25d436cff2124d40"
+    },
+    {
+      "file": "backend/evaluation/phase7-results/readiness.json",
+      "sha256": "172f1c31a602996a23801631c2356945444df4ca9b574a26263145d928f1af69"
+    },
+    {
+      "file": "backend/evaluation/phase7-results/regression.json",
+      "sha256": "334f5506414b57883932219a74e01785154c62a0cf07de6c6f30cbf6f55b6338"
+    },
+    {
+      "file": "backend/evaluation/phase7-results/release-gate.json",
+      "sha256": "97c4fd75673c56220d6a53a115856309e1f741cef0c73d497bfaf5523826c494"
+    },
+    {
+      "file": "backend/evaluation/phase7-results/rollback.json",
+      "sha256": "5f7eee07d48c40fc67784b678aca2578f369c07deef45d0966a533f13f6a0c8d"
+    },
+    {
+      "file": "backend/evaluation/phase8-evidence/regression.json",
+      "sha256": "17ecbd9b9d4a0f2cf0232fb41a1bd3f2e1247a49f872c36264ee0ca26395e15e"
+    },
+    {
+      "file": "backend/evaluation/phase8-evidence/rollback.json",
+      "sha256": "d4b2befc25223cec85fc7a46977f6b78c8934a787d7e9d4654662815b32aa647"
+    },
+    {
+      "file": "backend/evaluation/phase8-results/critical-safety.json",
+      "sha256": "99a8c4d8f8f642d92f29d085d8abc294a493a93d9f95137664f35efe5666b69b"
+    },
+    {
+      "file": "backend/evaluation/phase8-results/expert-package.csv",
+      "sha256": "14346bf78efd8d29b5474a3af7448da786f0107df2afa5c85c44a467d44f4915"
+    },
+    {
+      "file": "backend/evaluation/phase8-results/expert-package.json",
+      "sha256": "bfe80722fb2efd7ad01d6970d394553b5c73849cf925ae68b0abcb1b8b0ae91a"
+    },
+    {
+      "file": "backend/evaluation/phase8-results/human-response-review.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "file": "backend/evaluation/phase8-results/human-response-template.json",
+      "sha256": "8f469798ce14b22e811c0aca2830bef7ab30cef0adfd038162a4616ed601bcff"
+    },
+    {
+      "file": "backend/evaluation/phase8-results/pilot-evaluation.json",
+      "sha256": "3d62351ecec73a5e8b332497d21f3246727fd5e274e8aacd25d436cff2124d40"
+    },
+    {
+      "file": "backend/evaluation/phase8-results/readiness.json",
+      "sha256": "f71dc5f15b3f47166902875e790ce57e7e9d9fc9c7fc1ff6e912dcdf3fccbc26"
+    },
+    {
+      "file": "backend/evaluation/phase8-results/release-gate.json",
+      "sha256": "7b99b13c1ce43dc9d662ef9c351719dbd5172555a02626b36cab7468ee529e9c"
+    },
+    {
+      "file": "backend/evaluation/phase8-results/review-submission.json",
+      "sha256": "d88e73ebe456bc8f61f1317643f6894cda3177b904a04f96f786adf19ab5c749"
+    },
+    {
+      "file": "backend/evaluation/phase8-results/review-template.json",
+      "sha256": "37cb18a01cab6c651b6a4062024bc805ffcaaf1cfe52a19752408323dd799e8e"
+    },
+    {
+      "file": "backend/evaluation/phase8-results/summary.json",
+      "sha256": "30cfc951a1654e7e8136d60b7e078c70dbf9d0614306772a8d92ea10b7bf21ec"
+    },
+    {
+      "file": "backend/evaluation/phase9-evidence/regression.json",
+      "sha256": "5bf47a8ebee8b9c869a7a446a184059fd027de8f8cc609adf9cc4dc14f358633"
+    },
+    {
+      "file": "backend/evaluation/phase9-evidence/rollback.json",
+      "sha256": "15c3f1d14a8bb8c08fbc51b72a356416ac2f98a69fca1d58ac7cc51b85d0c13b"
+    },
+    {
+      "file": "backend/evaluation/phase9-preparation/candidate-passages.json",
+      "sha256": "8b8a15e5de8e0d7ab8db9c881cea825413f8bfef06bc932a3fffee0b5854f62e"
+    },
+    {
+      "file": "backend/evaluation/phase9-preparation/candidate-registry.json",
+      "sha256": "618e96981765ac5e1a2104158b6b9aeecd437f7a6301b5455e6eb3bb75db940b"
+    },
+    {
+      "file": "backend/evaluation/phase9-preparation/expert-package.csv",
+      "sha256": "3d38f3b06366c04a3dbc8bc5abe31cda62d030abffdd60f3efdefe43a38643bd"
+    },
+    {
+      "file": "backend/evaluation/phase9-preparation/expert-package.json",
+      "sha256": "256d79970b77922cc138e3d32babbf787ac9244552594c1b8d3e353094051756"
+    },
+    {
+      "file": "backend/evaluation/phase9-preparation/gold-candidate.json",
+      "sha256": "cce003f83dbc7c065911571644c54a6930f2764a761da96c6c0b102d35882f1b"
+    },
+    {
+      "file": "backend/evaluation/phase9-preparation/review-submission.json",
+      "sha256": "a8ae9e8b8bfe1845cb6f1d0fcb0de6b79ff0303d641e25e911f498f715b6ccef"
+    },
+    {
+      "file": "backend/evaluation/phase9-preparation/summary.json",
+      "sha256": "432f2d89f35ca34299c07e20ad1855d6caf57e4d5a7ba986d7571f239450a5ef"
+    },
+    {
+      "file": "backend/evaluation/phase9-results/critical-safety.json",
+      "sha256": "46b0de562c3a76c0302d0afc544797e347764073a9a0ee8692daf44af4538d14"
+    },
+    {
+      "file": "backend/evaluation/phase9-results/expert-package.csv",
+      "sha256": "3d38f3b06366c04a3dbc8bc5abe31cda62d030abffdd60f3efdefe43a38643bd"
+    },
+    {
+      "file": "backend/evaluation/phase9-results/expert-package.json",
+      "sha256": "a68c8e0fbfd6ad7ebd152aa7d5e73cea168a899067482634636c5023fcfdd1ec"
+    },
+    {
+      "file": "backend/evaluation/phase9-results/human-response-review.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "file": "backend/evaluation/phase9-results/human-response-template.json",
+      "sha256": "ed13128fe4e5547c79536e01103ac1efaa0c37a31912b714909ca26f86499853"
+    },
+    {
+      "file": "backend/evaluation/phase9-results/pilot-evaluation.json",
+      "sha256": "10126de52b90d6393778519c407aa8ab2d4ce2733f0892e309f8b63d44078a3a"
+    },
+    {
+      "file": "backend/evaluation/phase9-results/readiness.json",
+      "sha256": "79457c75a9fe01727600120c5ddafdcacc440f5f3d062d119312f86ed04131e6"
+    },
+    {
+      "file": "backend/evaluation/phase9-results/release-gate.json",
+      "sha256": "bca17b1a3b890ad2dbe52a303328e5b24b7f8b53671ad68cab8d73ed7774d7ee"
+    },
+    {
+      "file": "backend/evaluation/phase9-results/review-submission.json",
+      "sha256": "13e3bda50f5c1bf0d8b3a3c35b556e642fead9af1874485e4e8448886a11ce60"
+    },
+    {
+      "file": "backend/evaluation/phase9-results/review-template.json",
+      "sha256": "9d84f3c41aaac75ef3e3870c14e9fad337de27fb788384d7c1dc6f0940a94ef5"
+    },
+    {
+      "file": "backend/evaluation/phase9-results/summary.json",
+      "sha256": "96944de0a034437e9c133ce9dda55fcff677f59002e16c6039bb758472ce6271"
+    },
+    {
+      "file": "backend/evaluation/questions.json",
+      "sha256": "64f072456e1d3d77db2605752a43b465199e0b1bb72956cbd8efbe4974ec7ed5"
+    },
+    {
+      "file": "backend/evaluation/results/expert-review.json",
+      "sha256": "8dac07ea821f1ce0d42611aba9118aca381d23f56823d2d0bf1e1f392c320832"
+    },
+    {
+      "file": "backend/evaluation/results/retrieval-report.json",
+      "sha256": "d47226974e54057384bca51cabed09da3b88bf03c1df1791943ee33573707eed"
+    },
+    {
+      "file": "backend/package-lock.json",
+      "sha256": "e23eadf9160815d6451462780de8e7e99d13cf33d12fe2d5db495f969439ce6e"
+    },
+    {
+      "file": "backend/package.json",
+      "sha256": "34ac24afb21653c005977098d0b8c1366145aba8f74f37a969c966c80a0501c5"
+    },
+    {
+      "file": "backend/playwright.config.js",
+      "sha256": "a9cebb0ecf70e62decb99f8b25b1b5274320e446c7234ad08957823f5c6eb6e6"
+    },
+    {
+      "file": "backend/production-corpus-policy/buddhism.json",
+      "sha256": "39ceed630319f837da5556e1a087bfc92a0c7960d6fb00d3bc7645b144e90ae3"
+    },
+    {
+      "file": "backend/production-corpus-policy/catholic.json",
+      "sha256": "a2ddfda876ae3660b98a72d34427d139679aa8faed525f9a099f66b339d6875a"
+    },
+    {
+      "file": "backend/production-corpus-policy/christianity.json",
+      "sha256": "0090fbef0e1dc0e611c1fa374bd8e455d344330a23de4c793ddac331c76ddcf6"
+    },
+    {
+      "file": "backend/production-corpus-policy/confucianism.json",
+      "sha256": "b9531e1e049cda5fb4f1a7a94a2a9271ec61d4ba5b0f4654adbea59f36aaf049"
+    },
+    {
+      "file": "backend/production-corpus-policy/hinduism.json",
+      "sha256": "28264e093367eec8e73f7959f9543132275f76c91943330f780a7f84f7bed22d"
+    },
+    {
+      "file": "backend/production-corpus-policy/islam.json",
+      "sha256": "9ec4fd7c7db52e5369ad6cb69cc856fae9a5e7f9cfcceb703adf119aab23d8a4"
+    },
+    {
+      "file": "backend/production-corpus-policy/judaism.json",
+      "sha256": "bfc00c55236c87c4529538263f85074878a216008df74471d3c116669c40e871"
+    },
+    {
+      "file": "backend/public/admin.css",
+      "sha256": "d32f6af5d292727ff567d9715577e62b8c2bb3b684da08d7c8235d58d8720728"
+    },
+    {
+      "file": "backend/public/admin.html",
+      "sha256": "f229ef24fdd507d2db7c5bf2649cc7841da88d819f99a67b898ff13aef709a71"
+    },
+    {
+      "file": "backend/public/admin.js",
+      "sha256": "6e903b43b5b0b46d61a020fed5e9ba2835626d077ea7b2979b34874ec9b6761c"
+    },
+    {
+      "file": "backend/public/icons/icon-192.png",
+      "sha256": "19fa28d311acbe5385d7e47ecdb1fac435c05a8e4e9499c1ddbb5016782bdd4e"
+    },
+    {
+      "file": "backend/public/icons/icon-512.png",
+      "sha256": "2e4ca18a6e929aef86a03fc4fa50b33200b1f405e087f0bf4ef3d1a9f7527b53"
+    },
+    {
+      "file": "backend/public/icons/icon-maskable.png",
+      "sha256": "2e4ca18a6e929aef86a03fc4fa50b33200b1f405e087f0bf4ef3d1a9f7527b53"
+    },
+    {
+      "file": "backend/public/install.js",
+      "sha256": "c0d9d2d668bdef9d0d2f9257ce86d4cfa7ef86274b59db517c36e4b65a3be4d2"
+    },
+    {
+      "file": "backend/public/manifest.webmanifest",
+      "sha256": "8029d81c5eb75c178fca90c003591bfbd771f83729d66a49466d89c5704afd4d"
+    },
+    {
+      "file": "backend/public/sw.js",
+      "sha256": "ab5468081d092eeeef67361173acb40a5b763d5a842b55da0683076d2342f4fa"
+    },
+    {
+      "file": "backend/public/website/onaria-emblem.svg",
+      "sha256": "4f761c77fc3ead49328a36d790ca24dd48f44912742ae9fc4f490006c8c83f1a"
+    },
+    {
+      "file": "backend/public/website/site.css",
+      "sha256": "4c432ee88c63b4d5267ff470c7b6dae866e5e189a6b26baccbe698f5eb5b9cd9"
+    },
+    {
+      "file": "backend/public/website/site.js",
+      "sha256": "fe91fb6c466a45a6a3feda3ed4bce341555f03ccb5f53e3733f352312937f668"
+    },
+    {
+      "file": "backend/public/website/social-preview.png",
+      "sha256": "d450e67ea854897c7255f9ca06c47e35026fba3e8e57a4043f19ceef00679573"
+    },
+    {
+      "file": "backend/scripts/cost_persistence_smoke.js",
+      "sha256": "f558c7c2c06657118480553e2324308db45c7b411b0ecbb6b986ee26a9725e00"
+    },
+    {
+      "file": "backend/scripts/cost_real_diagnostics.js",
+      "sha256": "203d4f862e8ce96dd3047845dbf7eb3b1314fa3f747e48f4f28649d3b92d06a1"
+    },
+    {
+      "file": "backend/scripts/cost_real_preflight.js",
+      "sha256": "37e90ff4dfa14d6a54e8be38e6b7b871fea8926cf9d59054748bab6748bbdd90"
+    },
+    {
+      "file": "backend/scripts/cost_router_real.js",
+      "sha256": "c2f80a08955f51517a22184164d7bf40419dc900bb42e261311dc49d9da27b84"
+    },
+    {
+      "file": "backend/scripts/cost_router_v1.js",
+      "sha256": "204f5b17e37df19a163ad18b6e27c6163dfa8e971c91307702f0413f5a5b928e"
+    },
+    {
+      "file": "backend/scripts/cost_safety_preflight.js",
+      "sha256": "3e5c1b42e2b917914aa9cb6fe80240449ffcf9fa5269f76c981e4c1b2437e111"
+    },
+    {
+      "file": "backend/scripts/cost_smoke.js",
+      "sha256": "1f716f51a5ff0c07dad5a83e586ec9d8b3200e2dfe6e1396a69364195f1bda72"
+    },
+    {
+      "file": "backend/scripts/cost_sol_chain.js",
+      "sha256": "a5021b210cad3c95f5e9f71d734989f4028ad7f0334d2c15643accd2e28877cc"
+    },
+    {
+      "file": "backend/scripts/cost_sol_diagnostic.js",
+      "sha256": "0bae62d17cf0e778892cbfef456952cb1c4ef19dab78113d0df7e17fe5ef6b92"
+    },
+    {
+      "file": "backend/scripts/safety_smoke.js",
+      "sha256": "d2cbaf72759393ee52b16dcf59ae60026afa884c30b514c9e3dc0b211596de29"
+    },
+    {
+      "file": "backend/scripts/web_brand_preview.mjs",
+      "sha256": "63bd0af0adfae5d7f07db4ad78a39121c52ad1e34426138d99acc7ebffd8ea36"
+    },
+    {
+      "file": "backend/scripts/website_lighthouse.mjs",
+      "sha256": "c5ba22653a79fb50ae324cb1a1896ce075cadd46cc14fb5eb3f7906dc0b0aa25"
+    },
+    {
+      "file": "backend/src/admin_auth.js",
+      "sha256": "1b2738719b0ce5f32f37a7563f8df821470118dac2cb8b414885b276cc42195c"
+    },
+    {
+      "file": "backend/src/admin_settings.js",
+      "sha256": "a40524649c46d8f6fb68630170cc548ec61b59c42bf4b16955f50cea1b228e6d"
+    },
+    {
+      "file": "backend/src/agents/agent_contracts.js",
+      "sha256": "9d6c3f3efa8986d7456db22db9eb5e77cb8075bb7e939fd8d01f35bd83679698"
+    },
+    {
+      "file": "backend/src/agents/citation_grounding.js",
+      "sha256": "0074e9c02150cd313d9eb2cd627e6266bf695fc762ad55fb3ec736980753cb84"
+    },
+    {
+      "file": "backend/src/agents/citation_validator.js",
+      "sha256": "74bb6ad6459490a03abdb928953f5c7e5b2209ff7c6f039ecb7f2c7d3d3cee65"
+    },
+    {
+      "file": "backend/src/agents/conversation_orchestrator.js",
+      "sha256": "0ff571aa6a13a7e0e7e7ec3b0e35989987218a9c6e8e07938c3bb274508d18f7"
+    },
+    {
+      "file": "backend/src/agents/prompts/common_religion_prompt.js",
+      "sha256": "9129e92c2e0926d3edb00fbc97d17f60c096e41a9dad0836b567489c60a8c9fc"
+    },
+    {
+      "file": "backend/src/agents/prompts/psychology_prompt.js",
+      "sha256": "7863ac716e2e354bb7f4ce35dc10d5cf67aef62ea6f717b735d834b4c03ce0f4"
+    },
+    {
+      "file": "backend/src/agents/prompts/religions/buddhist_prompt.js",
+      "sha256": "6b544025a5ddb6427bc272dadb1945fb6ceef046ed4eca2fa4319badc0ba42e7"
+    },
+    {
+      "file": "backend/src/agents/prompts/religions/catholic_prompt.js",
+      "sha256": "3e98c528f843442a31b3a860171339e1a734505488df6a6426c9d00f1646fb8b"
+    },
+    {
+      "file": "backend/src/agents/prompts/religions/confucian_prompt.js",
+      "sha256": "4e3bf83f17cfc12bfc1e0cd07d91cb704e0dda454c42807ee00ecee2cdd78eb5"
+    },
+    {
+      "file": "backend/src/agents/prompts/religions/hindu_prompt.js",
+      "sha256": "1b97e49b2462a5add02191e591087d645629fa5501943c8382969a58e6f1e7d7"
+    },
+    {
+      "file": "backend/src/agents/prompts/religions/islamic_prompt.js",
+      "sha256": "61853b49a824e2debe72d67a5939aa1ab61d91a85c7bc3ceb54e9adfcf44d6a3"
+    },
+    {
+      "file": "backend/src/agents/prompts/religions/jewish_prompt.js",
+      "sha256": "d07104d5d65e4ac309d3c626f3ed64bf267a8f4d28904bc6d452608d1aaf46b2"
+    },
+    {
+      "file": "backend/src/agents/prompts/religions/protestant_prompt.js",
+      "sha256": "f016b0c34b648cdd465e3f18a6303bcbf53fd9e43506710060569b360ba10b65"
+    },
+    {
+      "file": "backend/src/agents/prompts/religious_integrity_prompt.js",
+      "sha256": "71ab1cf2005d846a0a55dbb7371eaada066eb53ccedc62315817061dc534aab4"
+    },
+    {
+      "file": "backend/src/agents/prompts/retrieval_prompt.js",
+      "sha256": "c25be6f06861ec0f0fef65dd61e03ca3c924095731b38439fdf5ab110a159498"
+    },
+    {
+      "file": "backend/src/agents/psychology_agent.js",
+      "sha256": "6b0f2dc98d2ce758cd10bee28fd14141b45b9351ec84021c7b2588654d1931cf"
+    },
+    {
+      "file": "backend/src/agents/religion_router.js",
+      "sha256": "e26d316ee3a301fd37514d5a53e2f6c7e0e360c08b2f9ee46f35f64b2d8d218b"
+    },
+    {
+      "file": "backend/src/agents/religions/buddhist_agent.js",
+      "sha256": "5b5efd5d957b334bf9153d36cda37cbc9d83c8109fc5d181ade537587c51d21d"
+    },
+    {
+      "file": "backend/src/agents/religions/catholic_agent.js",
+      "sha256": "ad68ab9be0e3c313405a7e8ce7c6be8950af47300f8a3d41d80f6a2d126de7a2"
+    },
+    {
+      "file": "backend/src/agents/religions/confucian_agent.js",
+      "sha256": "788999469eab9f7cfdc9e0c4306b02fd003ee9fa7863657ec39c53662254d095"
+    },
+    {
+      "file": "backend/src/agents/religions/hindu_agent.js",
+      "sha256": "0dceb3fdca0da297610a18803a7cea0984e65fba31a6889430b27ba2845bf759"
+    },
+    {
+      "file": "backend/src/agents/religions/islamic_agent.js",
+      "sha256": "2f209bc62534c68a494718757dc7727598c9040b998b7ce2dcc1b1d92b8242be"
+    },
+    {
+      "file": "backend/src/agents/religions/jewish_agent.js",
+      "sha256": "d094874d2f73ef0565b80a1faa72c1511adb22baaef8865f01cab1d257e2eda2"
+    },
+    {
+      "file": "backend/src/agents/religions/protestant_agent.js",
+      "sha256": "44a10e3f9ffec2d38a36fb54d9abe0d707cdc91b50b2dee54082613c5e83d9af"
+    },
+    {
+      "file": "backend/src/agents/religions/religion_agent.js",
+      "sha256": "3eb0b7d2ac505f11cb32145172cbc070f6ca2ea6f0408d1d620d2c41c995b3d7"
+    },
+    {
+      "file": "backend/src/agents/religions/religion_profiles.js",
+      "sha256": "423acec8564a15201e920a2b0241c8e38ba91414c6a0c3bfa56c1caafba92782"
+    },
+    {
+      "file": "backend/src/agents/religious_integrity_agent.js",
+      "sha256": "32e9bd5d44429db3db90967c2e8c28cc2a3fb79d1fbd4e5f50dce27694c08ca6"
+    },
+    {
+      "file": "backend/src/agents/response_integrator.js",
+      "sha256": "06a3643950b077bcf7adc6bff4eafe35749729e578346ac602eb3468988738b0"
+    },
+    {
+      "file": "backend/src/agents/safety_agent.js",
+      "sha256": "67236f7207de3ad2c25d84b2713d15881913cb67f18a746a6129c12d55fe68cb"
+    },
+    {
+      "file": "backend/src/agents/specialist_result.js",
+      "sha256": "ca743ad730f3aa40e16c5bb246f8187f35fd12f074d07780242ba031451b7273"
+    },
+    {
+      "file": "backend/src/ai_router.js",
+      "sha256": "ffefd97367603de19f485a7b178297cf532b3eda20d83881ab18483f726902ca"
+    },
+    {
+      "file": "backend/src/app.js",
+      "sha256": "530dcd6c9ecccfc3b9b7fd34d9d4d40916505552269efdfd208291c38b488137"
+    },
+    {
+      "file": "backend/src/app_links.js",
+      "sha256": "204474ab7d9dc2934f01be1a963c45569aaa165ce4b1b9bbcbb28250f7a080ea"
+    },
+    {
+      "file": "backend/src/auth/identity_verifier.js",
+      "sha256": "18de5945468c457767bdb103be74e2bbb83b7d662b9c06fe4e68d840b06af670"
+    },
+    {
+      "file": "backend/src/conversation_service.js",
+      "sha256": "83cef2481103b7fec75544324572a8e35b31afb20e4e7781b821dc0624082181"
+    },
+    {
+      "file": "backend/src/cost/cost_gate.js",
+      "sha256": "998b7c92c6eea4a8b8fc349d9ecdce9c259f8bac544f77c28dce930b892ce0ae"
+    },
+    {
+      "file": "backend/src/cost/model_pricing.js",
+      "sha256": "ac2e9a880688c9371797eadb7b39cd19bb32aeb6c0ce8701bdaeeb12b1e068ea"
+    },
+    {
+      "file": "backend/src/cost/model_router.js",
+      "sha256": "58085f22ed61fd7acd620eeaf041fc35551cca332001b17232a7b1bdf6d95ca5"
+    },
+    {
+      "file": "backend/src/cost/prompt_context.js",
+      "sha256": "ede8489a2dee6e3e6535ce0841293ab2ccfb4e7bf2f17cc1545f33137b6ef5b8"
+    },
+    {
+      "file": "backend/src/cost/runtime_ledger.js",
+      "sha256": "df84e36dc520dc94c39bc8b0dfd0b910b40d56fca55de4f4c7800b12da2f234e"
+    },
+    {
+      "file": "backend/src/cost/session_summary.js",
+      "sha256": "8416c77884c2b4bf5c0e83b9a5d9fd658edaaa294049ecd6329714efa6bd9d6e"
+    },
+    {
+      "file": "backend/src/cost/sqlite_usage_ledger.js",
+      "sha256": "67ba1dfc5ce656342863c6fb5bcc3163090b12fbd1df8c5f04e0c9da01e03b0d"
+    },
+    {
+      "file": "backend/src/cost/usage_ledger.js",
+      "sha256": "0f449070f06056f1c3a2103d31e7f65ffa4a316b9103125bc69e40f4337a8407"
+    },
+    {
+      "file": "backend/src/crisis.js",
+      "sha256": "222b18da9d241e51be87527d2e94bd6d8f69a3976710c759a402134dca803ead"
+    },
+    {
+      "file": "backend/src/engagement/domain_events.js",
+      "sha256": "1e068be8d91d5d9c354d28e41b78fec61baa3a197f79011faae2ca2df0efcfd4"
+    },
+    {
+      "file": "backend/src/evaluation/critical_safety.js",
+      "sha256": "bb8a60da2fb21705b8b6e4bde79af0c03f3cb188c31413a49002267fcc9bff3e"
+    },
+    {
+      "file": "backend/src/evaluation/gold_benchmark.js",
+      "sha256": "560bba103c970c2990df7efd107c5dc8d82d9d7acb2246a83f3ee674b02a9f3a"
+    },
+    {
+      "file": "backend/src/evaluation/metrics.js",
+      "sha256": "3ee19f59964d65bc718b3fdae1dc8b6536ef322555f66ff342e4f04ffd6f30cf"
+    },
+    {
+      "file": "backend/src/evaluation/pilot_evaluation.js",
+      "sha256": "173fa59abbb2718754ee5825b8e63c8349ac3e02931e1e60fdd2994f577416c9"
+    },
+    {
+      "file": "backend/src/evaluation/response_review.js",
+      "sha256": "aa6f13dc39297c09c469c6ce20b7d4ae75c9e5684d86fbb12413c38231d4fd70"
+    },
+    {
+      "file": "backend/src/evaluation/retrieval_errors.js",
+      "sha256": "a910710d9495d68576e773cbb066e7bb531c20dfc99881168bafba24deb12e83"
+    },
+    {
+      "file": "backend/src/evaluation/run_evaluation.js",
+      "sha256": "0a2acd2bd46b4da1b0fc5374b5760bdc2a74e82e7d40dc8f2e50f89685d44924"
+    },
+    {
+      "file": "backend/src/feedback.js",
+      "sha256": "57125d21deab89d28f5b31fb46a2cffa082a1a049e115ca76175ea643a1af95c"
+    },
+    {
+      "file": "backend/src/knowledge/a_track_pilot.js",
+      "sha256": "4d4891d390c2a025bc5327cacebdec576dd293fddcbf872412d0af4a344ab0e2"
+    },
+    {
+      "file": "backend/src/knowledge/bible_corpus_adapter.js",
+      "sha256": "865e746ea3676190413049a90e85040fc5325704615b442857315be901c89cfe"
+    },
+    {
+      "file": "backend/src/knowledge/bible_passage.js",
+      "sha256": "91bf3d8607776c8d75385898657e91b7ca1632f423fd48f545d22fbaeb7b919e"
+    },
+    {
+      "file": "backend/src/knowledge/bible_tags.js",
+      "sha256": "19c68cc7719394512869bcb9d68c72b64263da60fff5e01cce24ca95aa5afc27"
+    },
+    {
+      "file": "backend/src/knowledge/buddhism/samples.json",
+      "sha256": "74d6043c9883f96274bc68081792a8922a6dad5ccee495f57c1a9a47ef822f1e"
+    },
+    {
+      "file": "backend/src/knowledge/catholic/samples.json",
+      "sha256": "2f80724dbb08d47b9b44143de062c4f4cd21cf288a59a1e9dee7357ac2a59473"
+    },
+    {
+      "file": "backend/src/knowledge/christianity/samples.json",
+      "sha256": "3b58058362783b4dd544d35f6a72073ed81a77a6a65a7b572b30ff2b161be351"
+    },
+    {
+      "file": "backend/src/knowledge/christianity_pilot.js",
+      "sha256": "87b6ac6f27d45162df7a0f16ae9a057ec12478738dbec492dce34c90fae2e345"
+    },
+    {
+      "file": "backend/src/knowledge/confucianism/samples.json",
+      "sha256": "c89b25317e95135455481e28d0b0b0a2f825376b5d48ec5c449e6b0f2b750767"
+    },
+    {
+      "file": "backend/src/knowledge/contracts.js",
+      "sha256": "da5629eb36bec72284c8f648e963b79d92301b3ff039ac501faba3217368c393"
+    },
+    {
+      "file": "backend/src/knowledge/corpus_review_cli.js",
+      "sha256": "2719d7314fb2f31bd519ccf902947e5a8ad73f6e7e0db1581b16d1f74ae03457"
+    },
+    {
+      "file": "backend/src/knowledge/embedding_provider.js",
+      "sha256": "39cae38efb101563f0498500b5a20fa8687f1785e1bed2c654d7009d78c55113"
+    },
+    {
+      "file": "backend/src/knowledge/expert_cli.js",
+      "sha256": "807b6439bde98da7c4380910f3660834b469938266bbd9d0aae3e8781e1afdb4"
+    },
+    {
+      "file": "backend/src/knowledge/expert_corpus.js",
+      "sha256": "b12aad21660099f65489a4d059fcfb72db44ddfd1d3ba007f50bbe8792ea5094"
+    },
+    {
+      "file": "backend/src/knowledge/expert_package.js",
+      "sha256": "827dd3f4e157ae110113971ee5196b4d29daf44cf593cef76b26b9e977204d3e"
+    },
+    {
+      "file": "backend/src/knowledge/expert_registry.js",
+      "sha256": "07d2809c8a4131bdf5f16a54864fcf0e472e84950f6705b1660b83e0f62fd91b"
+    },
+    {
+      "file": "backend/src/knowledge/expert_roles.js",
+      "sha256": "067880b670e40501379c6c1381deea1d72f325b26740d33450576d01b9a2eb48"
+    },
+    {
+      "file": "backend/src/knowledge/hinduism/samples.json",
+      "sha256": "9fec9aba4077f03d7ae2f53561208f8f3457aecd8e2e39ed9bf5861ee0f4f3d8"
+    },
+    {
+      "file": "backend/src/knowledge/hybrid_retriever.js",
+      "sha256": "0904229c33d9d36e15a15c9d5d5b214d6117a2dfc6113c871712ac30a74aa9a9"
+    },
+    {
+      "file": "backend/src/knowledge/ingestion/chunking.js",
+      "sha256": "504fea3073a9852e2bdd0c18e6d234d774596b5bb3dff4cacfa25b9052e887c5"
+    },
+    {
+      "file": "backend/src/knowledge/ingestion/enrichment.js",
+      "sha256": "c2a181b253c803c32aab98b1bb17c76aab0a0a264deb009f5002872c38324095"
+    },
+    {
+      "file": "backend/src/knowledge/ingestion/normalization.js",
+      "sha256": "acb9a40909c31ff0b93aac78c28cf6b5b69ea4a5be968b2cf36e13f35a913872"
+    },
+    {
+      "file": "backend/src/knowledge/ingestion/pipeline.js",
+      "sha256": "eca33241227b83a82f674d7e149c73402debeff21d6f9df4e71dd8fc6da413cb"
+    },
+    {
+      "file": "backend/src/knowledge/ingestion/validation.js",
+      "sha256": "f0e35fb675ec618a0b3cdcfb8f592eea6b8f064d7d5d4dbb9e64b0a3863434e3"
+    },
+    {
+      "file": "backend/src/knowledge/islam/samples.json",
+      "sha256": "4ab8ddfa44d6709cf7428c33d706b4709e3ff2cbc3a8b3902441e392fbce43a3"
+    },
+    {
+      "file": "backend/src/knowledge/judaism/samples.json",
+      "sha256": "bdc0c5ebb4f235048a04cf77aa7b58a298e615a3ced3e5f08a16d66e8b34392e"
+    },
+    {
+      "file": "backend/src/knowledge/namespaces.js",
+      "sha256": "ac64c675a6027e2335d1ff9fda18ee0f117283777acc786679bfdeb011e081d2"
+    },
+    {
+      "file": "backend/src/knowledge/openai_embedding_adapter.js",
+      "sha256": "35a072a09aac0bf312e3f84cb616b9b9b31c6d1695a93933c234a155d47e5b29"
+    },
+    {
+      "file": "backend/src/knowledge/production_cli.js",
+      "sha256": "7b807329a4cde5596dbb5d636a5cc2ad1d260344b7d261e9203f6e56ca371a6e"
+    },
+    {
+      "file": "backend/src/knowledge/production_guard.js",
+      "sha256": "5b622c3053b91cc83c3fe61f40cdc49f94fbfef98041cf262b10cda1f341a906"
+    },
+    {
+      "file": "backend/src/knowledge/production_index.js",
+      "sha256": "0b4cf0bf84722132109c911303550d1f19822635d585ce48306a8e753bcd63a5"
+    },
+    {
+      "file": "backend/src/knowledge/production_readiness.js",
+      "sha256": "9c753b9eae00c68f824f3cd470b3fa2cae872e0b040dfdfed43c07a1d25181b2"
+    },
+    {
+      "file": "backend/src/knowledge/provider.js",
+      "sha256": "3704102f16bafae0f4475f612dd37fa7ddb7b703be79eff81380ee245d30c736"
+    },
+    {
+      "file": "backend/src/knowledge/query_normalization.js",
+      "sha256": "c142b6d5260ef79e475cf28e0a455cabd33131f92649d1eff5c85f9960189e63"
+    },
+    {
+      "file": "backend/src/knowledge/reranker.js",
+      "sha256": "48bd673626661c560d60972c5e7da0c3d209674950c37fee6ba21c007d564093"
+    },
+    {
+      "file": "backend/src/knowledge/retrieval_confidence.js",
+      "sha256": "9bf542096bceec6d94aea5f1f334e698a17f5402a09112c1f4048e83584e63de"
+    },
+    {
+      "file": "backend/src/knowledge/retrieval_strategy.js",
+      "sha256": "6997e3b8541df739d8283c0001e0748d7a3dc19109606c1cb4c0e655f4646bf5"
+    },
+    {
+      "file": "backend/src/knowledge/retriever.js",
+      "sha256": "fd860805404cd2bd4657610ad5b812ffbb2f3a0ea312543ca3969832b8ee88f2"
+    },
+    {
+      "file": "backend/src/knowledge/source_context_builder.js",
+      "sha256": "f2da39e3296711dad22442f27c34c3cd8c1fbdc1a71e09b0d8e9176c7a57fba7"
+    },
+    {
+      "file": "backend/src/knowledge/source_quality.js",
+      "sha256": "7353fb812d5aefc45aec8b6e5957cf3edaebdd36f7eeb16f9e1d4ee587732d53"
+    },
+    {
+      "file": "backend/src/knowledge/vector_store.js",
+      "sha256": "12abe1007143164fe5704ec4c64af2cac0d0df7a0ec92ee3a9bec6fe81a195ba"
+    },
+    {
+      "file": "backend/src/local_conversation_service.js",
+      "sha256": "5b4ee1ecae31b224a0c240c31b5e0d2876d49bad6e6ff52d3f0194cc4aadb4aa"
+    },
+    {
+      "file": "backend/src/member_schema.js",
+      "sha256": "1b3419a13fafa5ce5632fc16e3b09fd72f3a3678c60bf7e436fd9222f842dfe0"
+    },
+    {
+      "file": "backend/src/member_store.js",
+      "sha256": "713425e3d2220d118b3b71e2a5e6896de146ab617953262e2552797b5712c9b7"
+    },
+    {
+      "file": "backend/src/memory_store.js",
+      "sha256": "818ccdf91ec2938839bf7bbe4ec0cc21da6b415ebd9a64c906532ffd3c322a66"
+    },
+    {
+      "file": "backend/src/openai_service.js",
+      "sha256": "e9c8bc00db24b589c618ef884ac7c31ac03cc881329c34c9cae446ee79cde62c"
+    },
+    {
+      "file": "backend/src/prompt.js",
+      "sha256": "e374025b7fcc31fa4ee6e353e94cc14228190ff94585b117eb7268258da72564"
+    },
+    {
+      "file": "backend/src/safety_event.js",
+      "sha256": "10eb50f6de5afba13cb2d81dbc43d7ae3782381bc2b3dc2646b2ed7d36fccac8"
+    },
+    {
+      "file": "backend/src/schema.js",
+      "sha256": "a980ebc60dc2b73a59d23894012682c30cad7dd425752db07ee680e6ade65971"
+    },
+    {
+      "file": "backend/src/server.js",
+      "sha256": "8352d1c99bb71e6ede142bcd73c669bd071122673cc6cbfa9578f565fe8117d4"
+    },
+    {
+      "file": "backend/src/web_metrics.js",
+      "sha256": "09da97b7c2735dde336fc397d65504fec16a52a4fa0d8160e93d2cc754d1d8d7"
+    },
+    {
+      "file": "backend/src/website.js",
+      "sha256": "0fe29cbd7de40ae42611930034fca216a97830260d1cdfd9a927dfdb2d590615"
+    },
+    {
+      "file": "backend/src/website_content.js",
+      "sha256": "f68b3532bb16bbb7f89a903c94d89d149e90dcde1b7ba53610aaea680952f823"
+    },
+    {
+      "file": "backend/test/a_track_pilot.test.js",
+      "sha256": "fc70cf93856d6e475dcad83eed9aa5e6da39612b4c040b9c03cc61dd3cab0962"
+    },
+    {
+      "file": "backend/test/admin_pwa.test.js",
+      "sha256": "6c5c7c7e96d5ddbf71e3343d2ae09af50e255dd136c07c51fe38d03dab9ba80c"
+    },
+    {
+      "file": "backend/test/admin_settings.test.js",
+      "sha256": "e05882179dd537daaf17d2143a88218f90ca257398a768fdc4523ffd3c2b0735"
+    },
+    {
+      "file": "backend/test/agent_modules.test.js",
+      "sha256": "8d439c867853029f85c6377a7aa57ebfcc01b61de96ae05c35b3eb2e30ce95a8"
+    },
+    {
+      "file": "backend/test/ai_cost_router_v1.test.js",
+      "sha256": "501e80cdf80fe610ac100bed7bb83e8d5b53873d2d03e7540a6551c0d2269111"
+    },
+    {
+      "file": "backend/test/app.test.js",
+      "sha256": "fa4a156aaac2654534693a8883bea0ec0d86cef950dff68d19ef939d08e646c3"
+    },
+    {
+      "file": "backend/test/app_links.test.js",
+      "sha256": "834debe0ae1616635f561d4683ef441134e402326fdadf5f078c4d83bcb52964"
+    },
+    {
+      "file": "backend/test/backup_restore.test.js",
+      "sha256": "1880abd7d89f7ff2ed18eb73819fab4f6f86b6760031db04436bfe619038c324"
+    },
+    {
+      "file": "backend/test/chat_integration.test.js",
+      "sha256": "a6f90c9cdf0c04821bc3491f2400ef81e061c48dea65f7a2738307eddfb8615a"
+    },
+    {
+      "file": "backend/test/christianity_pilot.test.js",
+      "sha256": "e1312797f9e405bc6a495b19287e3c43c2477007823f5152c2ec4e93c245c8e3"
+    },
+    {
+      "file": "backend/test/conversation_service.test.js",
+      "sha256": "cd4992a5133be857031862dd2418e86a2a2ed702d988f9fca691b5a943c62855"
+    },
+    {
+      "file": "backend/test/cost_admin.test.js",
+      "sha256": "798bcafa9d0035cbd1b49671c756d5603a3afe31c049dd10c79d4162c4b984fa"
+    },
+    {
+      "file": "backend/test/cost_gate.test.js",
+      "sha256": "60258a1a0749dc519a1730d58f32383a9ee52e4f066573af2255b4172ae1c905"
+    },
+    {
+      "file": "backend/test/cost_integration.test.js",
+      "sha256": "1ab82a401c0f7fde30467fea862d544fc32dd052d7db057502632e1cc928b214"
+    },
+    {
+      "file": "backend/test/cost_preflight.test.js",
+      "sha256": "3d41c749b98310654c69dc28166144c73ccd369968f45b38fd2beb0c8a04bd5d"
+    },
+    {
+      "file": "backend/test/cost_real_fixes.test.js",
+      "sha256": "c7cf7d4f091d93953232a2f02f9a56323bbc17c832e0f510cda09ab37845450d"
+    },
+    {
+      "file": "backend/test/cost_real_report.test.js",
+      "sha256": "113377ac4bf49e662b5085c35219d7f8c2df50cb927697d3c337ec676062550f"
+    },
+    {
+      "file": "backend/test/cross_game_events.test.js",
+      "sha256": "441099c1dd1162379fa06940d56c0e71db1a19d0feed4256714e0e9b3fcab515"
+    },
+    {
+      "file": "backend/test/custom_emotion.test.js",
+      "sha256": "c8f3b55d38ba2e0761cd01019f46c02c2033cf014e290319477ba3fbc89e3170"
+    },
+    {
+      "file": "backend/test/expert_corpus.test.js",
+      "sha256": "742772a19cc1481b575e255ef68d2a86aa360fd0be8a96e68123f80180db35a0"
+    },
+    {
+      "file": "backend/test/feedback.test.js",
+      "sha256": "53720819b61dd6a09e4f455b80056e5cd76f34d3d4ddeb7583f86a551d5cf131"
+    },
+    {
+      "file": "backend/test/fixtures/agent_outputs.js",
+      "sha256": "987ee470bb90934118518d1d5550f617f4878ead8a8584f75c4c8c0a854e04a3"
+    },
+    {
+      "file": "backend/test/fixtures/cost_fixtures.js",
+      "sha256": "09dc2e7cf79b6f73dbb7cc495d990af5e38dd18ab95efbd131d8164d6167e8e3"
+    },
+    {
+      "file": "backend/test/fixtures/multi_agent_response.json",
+      "sha256": "e86a0a574980717dd3ec542451cd4716fb7939878dc1075b830e209d7fe88f6e"
+    },
+    {
+      "file": "backend/test/identity_verifier.test.js",
+      "sha256": "a9dd3a736f322e5e0b4604a219936d5ad683f775e0bcb03f18d267ba4ffabf74"
+    },
+    {
+      "file": "backend/test/knowledge_rag.test.js",
+      "sha256": "30ac135a2cade657bda5b669910cbf7120d8081b0fbf8350e588630a77869a30"
+    },
+    {
+      "file": "backend/test/local_conversation_service.test.js",
+      "sha256": "9b0b6fd74ad3191f7e50f357ebf360ed5464ef0223f9c84679843e864653689e"
+    },
+    {
+      "file": "backend/test/local_orchestrator.test.js",
+      "sha256": "fe45de584605fd61318dac57a010070c0eb7385d7459076591413c15c54bde49"
+    },
+    {
+      "file": "backend/test/member_store.test.js",
+      "sha256": "d3ccaa68db2c4094c8adc73d4fc0642244a7d66bb1503b2bfa2b31ed78533638"
+    },
+    {
+      "file": "backend/test/model_pricing.test.js",
+      "sha256": "667b20816eec3e9fd5ba799626d1f15ea40217d01ced2ca2a33e88e682da302d"
+    },
+    {
+      "file": "backend/test/model_router.test.js",
+      "sha256": "ae1afa1ecb22ce6810b2086c8cd552c544740508fe6c08af969495b8945d4991"
+    },
+    {
+      "file": "backend/test/onaria_web.test.js",
+      "sha256": "3262e6dc788396a775c8fc42cf812d651b610bece2131480467fd7105e33a4e7"
+    },
+    {
+      "file": "backend/test/openai_service.test.js",
+      "sha256": "b7e721491d57756b515b9e27326f90e03c61e0f2287f250a3fedc1b81180c2f2"
+    },
+    {
+      "file": "backend/test/orchestrator.test.js",
+      "sha256": "cdd4631a971339083295135d5c673e790a8fe5bde5df14bdc9b95f9d18fa56aa"
+    },
+    {
+      "file": "backend/test/phase2_service.test.js",
+      "sha256": "abf497016550f90bdb7ac9fd8b7774d1563b12ac7287a80d249d7c6d32213db3"
+    },
+    {
+      "file": "backend/test/phase3_agents.test.js",
+      "sha256": "3601378326e0148b9ca40128d7cfb558ea51be16d6f5ea0cca27880772e539d6"
+    },
+    {
+      "file": "backend/test/privacy_security.test.js",
+      "sha256": "535388ea6f367d20f1b8e0c92b5626a4af792b48a79f89e5324b6833e9d59db5"
+    },
+    {
+      "file": "backend/test/production_corpus.test.js",
+      "sha256": "ba9552a77f1480456cbdd1f0dc7a2375aba34ea7009e032ab766fbfcaa228e03"
+    },
+    {
+      "file": "backend/test/production_deployment.test.js",
+      "sha256": "95b575f48d1819d6abe4c5ed3741e9f8e192d1e9f9016723db3a9d407531068b"
+    },
+    {
+      "file": "backend/test/religion_specialization.test.js",
+      "sha256": "86587fede2791215702bfd54c20f6d2e8d1aa30b4a6092e0a1a820f8e58ff46b"
+    },
+    {
+      "file": "backend/test/request_parser_errors.test.js",
+      "sha256": "984a004167970871c29e101d4db7218fffb782cbe3d2c8b1517e77257d119076"
+    },
+    {
+      "file": "backend/test/safety_invariants.test.js",
+      "sha256": "270d0c48bca7c3d8190f9ad130b7395a2c463b6fc665d192b627de2e5362b0bc"
+    },
+    {
+      "file": "backend/test/sqlite_usage_ledger.test.js",
+      "sha256": "e73602ba412a083d2cea8be39a1449cd5c4dde491cd2372c585115b0887a6e76"
+    },
+    {
+      "file": "backend/test/usage_ledger.test.js",
+      "sha256": "85f255ca5f7399eadd37cec838cab5fa1689e9f97f4acc4df0c52dfaf5eb912f"
+    },
+    {
+      "file": "backend/test/vector_rag.test.js",
+      "sha256": "1f49859cc648a4c56a99d70dfbd50916bd8a221d3c3fa7fd3279e6dee734a787"
+    },
+    {
+      "file": "backend_contract/openapi.yaml",
+      "sha256": "f8975e6498a0967af7bac280176230e16e055430693480c2b597e2a04b590662"
+    },
+    {
+      "file": "backend_contract/safety_cases.json",
+      "sha256": "30661a7051aaf977333f2d73d72fa3ced953b5137b66a5345f8b733a66d4e20e"
+    },
+    {
+      "file": "docker-compose.yml",
+      "sha256": "d8e0592beb881055fccbe2d68e47bdf2116fa4b935503e0bacef6e03fdb168e7"
+    },
+    {
+      "file": "example/main.dart",
+      "sha256": "c0c9042ae2d7dd409b2eee49aec146bbac87f97b878530c7bc420691759f7ac4"
+    },
+    {
+      "file": "ios/.gitignore",
+      "sha256": "e85b4db8ba6ed14708e5f7d3c60336e5a3067ce11329b84aa8ba5d98603ee253"
+    },
+    {
+      "file": "ios/Flutter/AppFrameworkInfo.plist",
+      "sha256": "e51cfa76fca1ae586244b43bf97423577315d2906394c1e7768ef43b8d23e161"
+    },
+    {
+      "file": "ios/Flutter/Debug.xcconfig",
+      "sha256": "690b8a8b1ae15ddd29b241429963e971bbc6720ab22f154cf8cf6b085b6d4925"
+    },
+    {
+      "file": "ios/Flutter/Release.xcconfig",
+      "sha256": "75abb819a9de1e0e41c835e7307bc64a506cac25a9a5c0b0d8253fa1c3d5d422"
+    },
+    {
+      "file": "ios/Podfile",
+      "sha256": "4523b4eb154c9257e87dea8251e008d5982d9b7c3fcdba12d8cd26e1556355c7"
+    },
+    {
+      "file": "ios/Runner.xcodeproj/project.pbxproj",
+      "sha256": "2aa6cee8a187aa7145d6b809f22d95b00c1ea6b5214729879b50cd301eebd5d7"
+    },
+    {
+      "file": "ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
+      "sha256": "ac28b35c2b940210bec0fff8e424b07fd0efe9112ab178a10533583f251a386c"
+    },
+    {
+      "file": "ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
+      "sha256": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30"
+    },
+    {
+      "file": "ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings",
+      "sha256": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74"
+    },
+    {
+      "file": "ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme",
+      "sha256": "a46c0d064503db8bf9f452b492c61fdf76f9febb8894005fe30b2facec21e550"
+    },
+    {
+      "file": "ios/Runner.xcworkspace/contents.xcworkspacedata",
+      "sha256": "706a4c812f2a1e220e6785c27580020d58048e2ae4d30d1280f3c43344ce6b38"
+    },
+    {
+      "file": "ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
+      "sha256": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30"
+    },
+    {
+      "file": "ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings",
+      "sha256": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74"
+    },
+    {
+      "file": "ios/Runner/AppDelegate.swift",
+      "sha256": "26e1b945205b9da5d6bfb1f0158c3b3e6492b4060367d8b39b2cd857869c6510"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json",
+      "sha256": "5f8b941b774bde4496d73347c1f79cbdd786bb76fbdab9ed1f3f0cb78a0fb0d3"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png",
+      "sha256": "7770183009e914112de7d8ef1d235a6a30c5834424858e0d2f8253f6b8d31926"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png",
+      "sha256": "cab10a0d391ec5bc09ef50ce49e8ad401cee7ef03707ec0923a222c5c2b3d212"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png",
+      "sha256": "b9ad02cf6576a04d1b6806ac02a2431481b448dd0c2e505ce25842d1f7c4730b"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png",
+      "sha256": "c6e6d3b215ae744a9c391f4c4d44157eff5e739d6ad6c39f9bfa5df66dddd267"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png",
+      "sha256": "5dee24dc104ac76dc162e42ae0beb163d426bf365562ee28ba7b3ad368559a60"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png",
+      "sha256": "a9b21eb6f4271385655a8771f76e29eef8c1107d7879cbcfc567e6619d1f716a"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png",
+      "sha256": "e677d701ffe4af7bc2935098d6b3984cc9ab7ace573e6900955a5535b12410cf"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png",
+      "sha256": "b9ad02cf6576a04d1b6806ac02a2431481b448dd0c2e505ce25842d1f7c4730b"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png",
+      "sha256": "7c61c42fc7b657d9cf314d32a4ec458f0647c3aaf360be1b9377857266ec2499"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png",
+      "sha256": "19be171481dc71a0b2803ebcd01dd8b0c5fd5778dee34c0a3cabc948c225f24e"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png",
+      "sha256": "19be171481dc71a0b2803ebcd01dd8b0c5fd5778dee34c0a3cabc948c225f24e"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png",
+      "sha256": "4209a49e44a92ec40a327d3455eb1b1c153ee83d75de1c2be0a12ab18b2ff9de"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png",
+      "sha256": "836c918cb613249eba0483a6b02fa3df3c1c0a89a315ee4d3b88509b83c7ab73"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png",
+      "sha256": "41c7d42f6e61f8fe7f30b1ffa2256aecbc9682be06d18c4a3062043e1a2e547c"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png",
+      "sha256": "5d7e5bdf01b93802bc973345b3a78c038907147625035952a08a115a563b7f81"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json",
+      "sha256": "fbd112a9f3b541a1d811f71ac8e4fe68b6176687d973a5f4d99b7aa4a722e94e"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png",
+      "sha256": "93ae7d494fad0fb30cbf3ae746a39c4bc7a0f8bbf87fbb587a3f3c01f3c5ce20"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png",
+      "sha256": "93ae7d494fad0fb30cbf3ae746a39c4bc7a0f8bbf87fbb587a3f3c01f3c5ce20"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png",
+      "sha256": "93ae7d494fad0fb30cbf3ae746a39c4bc7a0f8bbf87fbb587a3f3c01f3c5ce20"
+    },
+    {
+      "file": "ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md",
+      "sha256": "853ac958e2416fe2540f6f61165283a3618b71a7ba5f85f65ac41c2158dfcd21"
+    },
+    {
+      "file": "ios/Runner/Base.lproj/LaunchScreen.storyboard",
+      "sha256": "bc3644fbb251ff1e18de25a4932c927850ae1a025be3dd1447940429633fe4b2"
+    },
+    {
+      "file": "ios/Runner/Base.lproj/Main.storyboard",
+      "sha256": "dcea4686c02065e56217fd19fcfb73d7509b41872e7486126149d47a18559363"
+    },
+    {
+      "file": "ios/Runner/GeneratedPluginRegistrant.h",
+      "sha256": "a5f88cc6415d2e639d2cb549348b84e02a7fdd0261603b0063abef6fa11f075a"
+    },
+    {
+      "file": "ios/Runner/GeneratedPluginRegistrant.m",
+      "sha256": "730707a3f47c730df73c034265397e883f2a438510d3286a51ba0c532e62aeb6"
+    },
+    {
+      "file": "ios/Runner/Info.plist",
+      "sha256": "463cdca02bc465fab313792ab5f74c8d2dcb9b7eefc566b1eaa3c097e2e000a1"
+    },
+    {
+      "file": "ios/Runner/Runner-Bridging-Header.h",
+      "sha256": "efe657d8b27f7f8595a0d416bffb33fe7d93bd2869d81f7353b556c439d7a1a7"
+    },
+    {
+      "file": "ios/Runner/Runner.entitlements",
+      "sha256": "06f0477c00dd4dc43e1a7f452c55b0f863d5c15eb4a7b1fad9f6f22e22276b3a"
+    },
+    {
+      "file": "ios/Runner/SceneDelegate.swift",
+      "sha256": "edce811c671ca0a6ccb14753e14e16deb0d89a0adf4f1b685e362d87d8f4c366"
+    },
+    {
+      "file": "ios/RunnerTests/RunnerTests.swift",
+      "sha256": "c0e04141287eb7f9c9f3d31cf5be8cb626a9ea71351206c9121578e8b8f480c3"
+    },
+    {
+      "file": "lib/app/api_config.dart",
+      "sha256": "ab7b22e33d26c614216d6666389188c8695c4c87fe1baac0b70a0d86dd3f1cc8"
+    },
+    {
+      "file": "lib/app/app_theme.dart",
+      "sha256": "dd7b6ab3d9fa4faad21f17659d759036f4b73b14adb0e4ab69d0054c5a448914"
+    },
+    {
+      "file": "lib/app/asset_loader.dart",
+      "sha256": "9b39024917d2817a010d36597793c8de56cea2dbd6bc9204f65aeda35cd9960a"
+    },
+    {
+      "file": "lib/app/conversation_draft.dart",
+      "sha256": "d67d37160a90e01fde2b5910dc14f7edf2a3067eae10854677484374c5d98782"
+    },
+    {
+      "file": "lib/app/demo_llm_client.dart",
+      "sha256": "0ea4bb2a7f658c7801298bedf36a6cd5b41955490800fbfa6a4548efdcf4a87d"
+    },
+    {
+      "file": "lib/app/mind_card_store.dart",
+      "sha256": "bd90f57871156a320d6d7891c385357ea7d80d5a32031e565caae9f981f42f18"
+    },
+    {
+      "file": "lib/app/onaria_app.dart",
+      "sha256": "144e3058e6109f4de7b2b029e68e6a7929a2dfb9eca133216c1de266b1707efb"
+    },
+    {
+      "file": "lib/app/onaria_emblem.dart",
+      "sha256": "0ffc70787824821c0ab95dad555f4d2c98478c53e46fe1f808d74a58b95cabde"
+    },
+    {
+      "file": "lib/app/responsive_text.dart",
+      "sha256": "2809ccb311214914bbb5098b59ea82b13b9a02acd585cc085a19509c88e078f2"
+    },
+    {
+      "file": "lib/app/seven_day_history.dart",
+      "sha256": "5874e27a757390ebe8c50bf3774388e7f24bda478cd0cdd7ffa71a8179b46e5f"
+    },
+    {
+      "file": "lib/app/social_auth_config.dart",
+      "sha256": "4056f337a463a1ee4a1c004191ad2c552b61e2aa3d5c1c87414878c92ca64de1"
+    },
+    {
+      "file": "lib/app/space_scaffold.dart",
+      "sha256": "0a338729b4eaa79f47efc2a5866f20ab2fdc77426019ec04d75628fed866ca83"
+    },
+    {
+      "file": "lib/app/theme_controller.dart",
+      "sha256": "a6b078875621011c521f47c295d1d1b747787cb4d7d2b717172190536ff7f40b"
+    },
+    {
+      "file": "lib/app/verse_history.dart",
+      "sha256": "eb452c0af9d8404836fbafac1be2eaed26850753d92252cb767017c98f71a006"
+    },
+    {
+      "file": "lib/app/verse_narration.dart",
+      "sha256": "64b246b44f8dee64cb0579018eaa8dd32f1a52ade770a24718a13a53a458cbce"
+    },
+    {
+      "file": "lib/engagement/achievements/achievement.dart",
+      "sha256": "54d4837947116b5928b1645001b68ee7fbc389ddecf6821a310bda3f04a935c2"
+    },
+    {
+      "file": "lib/engagement/domain_events.dart",
+      "sha256": "784858cf2b758458fccbdcba106695dfb81b882b01b1a0decef50de2299a687b"
+    },
+    {
+      "file": "lib/engagement/easter_eggs/easter_egg.dart",
+      "sha256": "680bdad9d525d72d3f8fe4b2f659ceb5460dbc898242d57687d41fb57f52f9d8"
+    },
+    {
+      "file": "lib/engagement/engagement_controller.dart",
+      "sha256": "5153e31119bee93fdf0bd1460722e876eeda64634c6298b284a4a32b93dd550b"
+    },
+    {
+      "file": "lib/engagement/engagement_page.dart",
+      "sha256": "23886e70c92d837203c870954bd561f3893912a3b5dae13af7a13cd8ab8cb5aa"
+    },
+    {
+      "file": "lib/engagement/journey/journey.dart",
+      "sha256": "89b950f9c971f5f40fe72a6d8f204740d2b4102bf80ccac8a1a5d73c0cf21730"
+    },
+    {
+      "file": "lib/engagement/journey/journey_page.dart",
+      "sha256": "25fd1ea31db176ee399f5fbe46e8b489b77e73587db518e2922c2a74447cb1a4"
+    },
+    {
+      "file": "lib/engagement/mini_games/cross_light/cross_light_game.dart",
+      "sha256": "bb7f256a55303fdb07e1cd8c0fdcb07093d58c67a996fafe2bcb4a4681928cbb"
+    },
+    {
+      "file": "lib/engagement/mini_games/cross_light/cross_light_page.dart",
+      "sha256": "0ba49301dc208802ac901a161c17dbc7edbdca0f650eb9befcbd4a96153031b6"
+    },
+    {
+      "file": "lib/engagement/mini_games/cross_light/cross_light_sky.dart",
+      "sha256": "df50443b49e43b71eb9068b701826e1db773e41f7f740b7b338beb86554ac92f"
+    },
+    {
+      "file": "lib/engagement/notifications/native_notifications.dart",
+      "sha256": "1f4336e99b047f2d7864a6583f0ed46f49a9941f971c2fd060811d979e50c911"
+    },
+    {
+      "file": "lib/engagement/notifications/notification_settings_page.dart",
+      "sha256": "73151fcd79103c341e0e34203aef8ee2e607ed4b05befd230365c31ba228ae5e"
+    },
+    {
+      "file": "lib/engagement/notifications/reminder_controller.dart",
+      "sha256": "b409acacbec23c69174d60a9158ff612b6da1bc3ce5db76f93f9ad299ac47aa8"
+    },
+    {
+      "file": "lib/engagement/safety_notice.dart",
+      "sha256": "01fd43a9b44417641d806274406609206d4ff03e5bef3c5b5809278ec0fa377c"
+    },
+    {
+      "file": "lib/engagement/sharing/native_share.dart",
+      "sha256": "04fed277426de2e97533cae9d3e5ef07dfe9fa3ac4b38e36e2b232f07e3c395a"
+    },
+    {
+      "file": "lib/engagement/sharing/share_card.dart",
+      "sha256": "61ece804d247c09d6691ad8b3db32658c8b5b4ad3fe67b5e48f2910ae5a7cdd7"
+    },
+    {
+      "file": "lib/engagement/sharing/share_preview_page.dart",
+      "sha256": "04c5fbf976405af62b03ed563dc75bc6d51a02619475f9f70d63053ce05736ad"
+    },
+    {
+      "file": "lib/engagement/storage.dart",
+      "sha256": "c31a9b82beb7b2937970dcf86ddc0f67157ded19040a7e538ad4dd87ca3c7ba1"
+    },
+    {
+      "file": "lib/features/check_in_page.dart",
+      "sha256": "08265c028b3d01db12eec23d9febb6ed3f328dbdbaf3347a2ff4f1293a8130ff"
+    },
+    {
+      "file": "lib/features/conversation_page.dart",
+      "sha256": "b5d459b720a21cfb0a3027b534d0b74350ad4d9bfcc5364b674e18fbd0cc7e83"
+    },
+    {
+      "file": "lib/features/feedback_page.dart",
+      "sha256": "4e60d2b7b2ad2cd2c003aebca93a4c623b11840588769d8d6eba4655cbfd49bd"
+    },
+    {
+      "file": "lib/features/growth_page.dart",
+      "sha256": "501f3e15309470e19e2f6b0637bb3a650a4a2d250995f05b2de22e68ec30440c"
+    },
+    {
+      "file": "lib/features/privacy_page.dart",
+      "sha256": "e621584989f43a610b5a4f3fc1444408ffdfcb23e5b424f59644220f40f4a498"
+    },
+    {
+      "file": "lib/features/provider_setup_page.dart",
+      "sha256": "c1b8bc7bbffa4678e0c754f8b80834f8e53b7e57416261f5ba7092d4eb950af0"
+    },
+    {
+      "file": "lib/features/records_page.dart",
+      "sha256": "bcbdc7b04487f1cebc503cbc8dee5b3c2f16c5fb7555a0a7d7264aeae2adeb1f"
+    },
+    {
+      "file": "lib/features/saved_cards_page.dart",
+      "sha256": "be06b170c165fa1aaaed3daf7d7711b96c8a1cba27cd0ab5750a3d7edfa8d179"
+    },
+    {
+      "file": "lib/features/seven_day_history_page.dart",
+      "sha256": "73e80385190b3285848f97bb6b2e8154e4e6f31a5ca2e7a6cf93b3e943bf6144"
+    },
+    {
+      "file": "lib/features/signup_page.dart",
+      "sha256": "50734fe0e77aa5e9c4342a7a8ff6fde2b22e6ae28b2329a2ee84654c1b7a1c1e"
+    },
+    {
+      "file": "lib/main.dart",
+      "sha256": "a54ad2eac8823e0451eab42df1a4e060f8d7f8317f7cba3e618f9d824dc83cd4"
+    },
+    {
+      "file": "lib/onaria.dart",
+      "sha256": "903b309a47e0f200035d4b8c850f42f6bde81511d70df397c48f22cca2101247"
+    },
+    {
+      "file": "lib/src/api/llm_api_client.dart",
+      "sha256": "a86cf7839d228a106c1ee4b84c491e565f30c851593c0b0194b15491bfe4d75e"
+    },
+    {
+      "file": "lib/src/api/llm_models.dart",
+      "sha256": "76e20e672609776436da47b0fb4f914a214e7bd23d23dcd0d80f9ad63a0d091b"
+    },
+    {
+      "file": "lib/src/api/member_api_client.dart",
+      "sha256": "64de6f3a896d0becb7bfb85bd5fb25030d061f5ec5502abdac46e66b2c80fb76"
+    },
+    {
+      "file": "lib/src/conversation/conversation_machine.dart",
+      "sha256": "c239acaf4da6ebbcd11592c54b220542c90ce93a5e1baa24980d07a4104923a2"
+    },
+    {
+      "file": "lib/src/conversation/conversation_models.dart",
+      "sha256": "8b6655d0efa21d1795cd5ff21341101a4dd4881934bbf94ccd1b6a146ea2ead7"
+    },
+    {
+      "file": "lib/src/safety/crisis_detector.dart",
+      "sha256": "779437077cd0d2b6b205aef2c52e5e97609c4614c220cf0ba7c000f75fd440e4"
+    },
+    {
+      "file": "lib/src/safety/crisis_models.dart",
+      "sha256": "642c6313a0c13a43abc684670737e51e8670844488c0ce938c0d6f0beeec7a4a"
+    },
+    {
+      "file": "lib/src/verses/verse_models.dart",
+      "sha256": "24825cfcf6a41a28f2f01fa9613727ed437d816729aec5dab498a83af69b2a12"
+    },
+    {
+      "file": "lib/src/verses/verse_repository.dart",
+      "sha256": "c3b6331d8b3e7cd534e470c7f5be158a621799cf1c3388d86ab7fd375e4825df"
+    },
+    {
+      "file": "pubspec.lock",
+      "sha256": "a0f943e88ed6172645509efa6586247b09d9e54924f9d471cfd5633fab9a97cb"
+    },
+    {
+      "file": "pubspec.yaml",
+      "sha256": "e87bd896c017a42cc2d770adc6b61f2289a30a089259080b8dffeae28506c34f"
+    },
+    {
+      "file": "script/ONARIA-backend.service",
+      "sha256": "38c81486db11b6581685efca87d8d402dbd975ebc741b08f9bdd259cb1e13fe9"
+    },
+    {
+      "file": "script/ONARIA-http.conf",
+      "sha256": "075e4576ad09a0d4dc308f22b9ef04ab558c44a9a2e4caab52c082724fe34953"
+    },
+    {
+      "file": "script/configure-admin.sh",
+      "sha256": "f4347c0b2bca1db0df17afcbd39efeea5e258a41fc51110b7ecb063d110853e2"
+    },
+    {
+      "file": "script/connect-backend.cmd",
+      "sha256": "74b48c0802a803f302b1a8aec3f122a1eb9146bcd8df55e27ff0a4b0dc7a3b4e"
+    },
+    {
+      "file": "script/connect-backend.ps1",
+      "sha256": "a2a44f95e72f23dbb789a11d12d2902132f8d3e35dc53a41283ea59762b27cd2"
+    },
+    {
+      "file": "script/deploy-backend.ps1",
+      "sha256": "ba3deff016994156d4094a0cd6c1aac140e86af1c2bd6f78f4e5f03c859e612b"
+    },
+    {
+      "file": "script/export_admin_icons.dart",
+      "sha256": "5e518a6ed9d94600d172712735b901eb663b03b21503907552ffbf0ea6ee9a9e"
+    },
+    {
+      "file": "script/export_launcher_icons.dart",
+      "sha256": "70f79c90ae2bb03c91c33684908f6574587ebe145aa72d82d27003c6e1cb4c07"
+    },
+    {
+      "file": "script/prepare-a-track-source.ps1",
+      "sha256": "987e12c8ee0b83d8cdcbea2aa4f05a8183867bd3a8496d5e13a3fff75692e7d1"
+    },
+    {
+      "file": "script/setup-admin-https.sh",
+      "sha256": "3fdaecb1b4991731884dc41e2fe55938b9d1a7254ec28606be017e5c43f134db"
+    },
+    {
+      "file": "script/test-wireless.ps1",
+      "sha256": "1a24080cdf3a24a286faa754cd61f75b682d919922a5e049be3dd7d978307c6d"
+    },
+    {
+      "file": "scripts/android-release.mjs",
+      "sha256": "840a93475f61262d7074bc09beed3ac784928f7690a0f265c8169ba8737c5dcc"
+    },
+    {
+      "file": "scripts/android-release.test.mjs",
+      "sha256": "317b5b4020c638590c89a3c54cd113cff4914f4102bfb6424024a95e4bdd59fe"
+    },
+    {
+      "file": "scripts/deploy-cafe24.sh",
+      "sha256": "338ebc476fd31e85df2444a1ace2252e63555de0a678381be4a54fe89d430957"
+    },
+    {
+      "file": "scripts/install-onaria-release.ps1",
+      "sha256": "1b04f51955f8661cf7dbdf77f1b25cec2a2985cda6233dd9f868d72b7e5c5358"
+    },
+    {
+      "file": "scripts/package-backend.mjs",
+      "sha256": "e19fa74fb4d99aa7bbcbd6fb3120fe79a3eccece555549a2b16fab763d26acb8"
+    },
+    {
+      "file": "scripts/test_deploy_cafe24.py",
+      "sha256": "9cebe32833a895d3c1af53e20a04df6683b5d76328f1eb3d67cc80953c8cd869"
+    },
+    {
+      "file": "test/api_config_test.dart",
+      "sha256": "2fe0e6474653c7e9da50792d9b8a78d5723caadf4360b1a57c25cd2a2223955e"
+    },
+    {
+      "file": "test/api_transport_security_test.dart",
+      "sha256": "77690e457ed48bec9731a63105c76213e56bf29c6fd9fd8c54711a78c47c1c1a"
+    },
+    {
+      "file": "test/app_improvements_test.dart",
+      "sha256": "e36e7bd56e384eac9bdb10bb6b95ab0387eac7cc44b7c06993aacab27ade461e"
+    },
+    {
+      "file": "test/backend_contract_test.dart",
+      "sha256": "20fba42fdaa5be64ca532dbe77fe2b1fabbc96c394b7a914706eb2271c13bf29"
+    },
+    {
+      "file": "test/conversation_examples_test.dart",
+      "sha256": "257001762991f55cbf8efbeb1dd7b9a293d9dd254d02658eb6de83ad381d6157"
+    },
+    {
+      "file": "test/conversation_lifecycle_test.dart",
+      "sha256": "236a10b1dd3855776b29622598cfa927f6fe82ffceb00b7af403903471a06e76"
+    },
+    {
+      "file": "test/conversation_machine_test.dart",
+      "sha256": "e280fcf2d82695f05941de26e03de66e2f6b20eb8118798793aa36f0cc48e034"
+    },
+    {
+      "file": "test/crisis_detector_test.dart",
+      "sha256": "2a87d3c36dd24c8cae3790087f2bf71dfc334d83799d712f82744da2cb275613"
+    },
+    {
+      "file": "test/cross_light_game_test.dart",
+      "sha256": "8688b52195fb46ddb7f15f6c5bba3577a25a751344c92e51c26bb146a19aafed"
+    },
+    {
+      "file": "test/cross_light_lifecycle_test.dart",
+      "sha256": "04243274f3c54866aa6d209c1be3fb10f121280f4b26365b102534a4df935b61"
+    },
+    {
+      "file": "test/cross_light_page_test.dart",
+      "sha256": "7a4c778bf76124735616adb25057f2e1868cd952ffbdf0b517a4e3170214aae3"
+    },
+    {
+      "file": "test/cross_light_sky_test.dart",
+      "sha256": "f9be9ec317fa46dc5f75ab6aef50c20e1914cbd8a8eb67c0afcd9b483350f83e"
+    },
+    {
+      "file": "test/daily_usage_store_test.dart",
+      "sha256": "59f69f01dcd4e277856874dcb668790e59a54c4a575a9aff86a32e8a14be27af"
+    },
+    {
+      "file": "test/engagement_integration_test.dart",
+      "sha256": "1a45e5bef82e889760d02a5af0e684444e18ce978bd8b9ba4eaf595dab93d5aa"
+    },
+    {
+      "file": "test/engagement_recovery_test.dart",
+      "sha256": "ffb74a953101fc9804b2e9864ed5b3e08136d76bf00b4f5a1e3b8e9aa79fc4e9"
+    },
+    {
+      "file": "test/image_export_test.dart",
+      "sha256": "bcfe5e6fa15e43946a5cceaa92f4b280feb98f4351aeaea0c72a84a1b260abeb"
+    },
+    {
+      "file": "test/journey_page_test.dart",
+      "sha256": "cc2d3e3533affb7516c8dc0b845c29ed3a7babf606bb2674543fc1743619ea0c"
+    },
+    {
+      "file": "test/journey_test.dart",
+      "sha256": "990c16bfb8c95f24dd5c96ba8136fd288d20f6ad726622a705caa3f25945fb5c"
+    },
+    {
+      "file": "test/notification_activation_test.dart",
+      "sha256": "e4012f53d3b9ea625e2f3ea13a89f5be1e7a0c97651fd331d43c4704bac73489"
+    },
+    {
+      "file": "test/phase10_test.dart",
+      "sha256": "e2a3f655e752ed94e7aae8d5eb51f8cffc58da436395a06722aafcc031e98834"
+    },
+    {
+      "file": "test/reminder_recovery_test.dart",
+      "sha256": "f9d443a06673c964d9bc4b1a900bcbee15072bc8a8dfe2946d44c6919d544f3f"
+    },
+    {
+      "file": "test/responsive_layout_test.dart",
+      "sha256": "8dd505acd75b65672d2e14528cd0f27538b2efd5421a50b819145bd1a41f672b"
+    },
+    {
+      "file": "test/review_regressions_test.dart",
+      "sha256": "1e1b918cea87d0610a5e2074d4a4efd37c06fbe9c2db6816d6ea0b67c3c27640"
+    },
+    {
+      "file": "test/safety_parity_test.dart",
+      "sha256": "c47a0d039ae59837692bf1a991085cd72fdb38e5633164ff5f05d669959d76db"
+    },
+    {
+      "file": "test/saved_cards_page_test.dart",
+      "sha256": "24fb72fb09a250d3475ddb7a3d5600bfdca2109807cca5697388ae4819d091eb"
+    },
+    {
+      "file": "test/share_invitation_test.dart",
+      "sha256": "52d97fda36171514decf54189b0e1dc1496fc992224ce35588d8cea7bf592a64"
+    },
+    {
+      "file": "test/signup_validation_test.dart",
+      "sha256": "b00c7e81df5e46a111134fce1646d82fdefa8729e7bf39f06151db784df3898d"
+    },
+    {
+      "file": "test/support/engagement_fakes.dart",
+      "sha256": "02973248215e80dd3ee4ad58f8f715b75838681ee05a78ce92c16df96cf68cef"
+    },
+    {
+      "file": "test/theme_selection_test.dart",
+      "sha256": "ec272833b42a53ccdae17c2e704c54e87a75f6c8d0ebdee9e6b53856dd092c42"
+    },
+    {
+      "file": "test/ui_readability_test.dart",
+      "sha256": "05e2b9231a866cc7cadc2e96f4ab46b65a9ed55d1def5da119eb67647d685530"
+    },
+    {
+      "file": "test/verse_speech_lifecycle_test.dart",
+      "sha256": "47b9d0f7ef98f97833949eb8608ab8ce9645f13964070adaddfaa9347f265df0"
+    },
+    {
+      "file": "test/verse_speech_test.dart",
+      "sha256": "f76133c1585a52dd7ca3766fc7a40e885b7fba34cc7444f583dbafc1ae99834c"
+    },
+    {
+      "file": "test/voice_auto_send_test.dart",
+      "sha256": "ea10976f0181fbee06e390fb41d3d7cdf7eee36b1222cd7e3a39886e6bf656db"
+    },
+    {
+      "file": "test/widget_test.dart",
+      "sha256": "7508bbded2c49b57fd9b3580bc883cf934e1e5bdb359f527b975e3974fea4b7c"
+    },
+    {
+      "file": "web/favicon.png",
+      "sha256": "7ab2525f4b86b65d3e4c70358a17e5a1aaf6f437f99cbcc046dad73d59bb9015"
+    },
+    {
+      "file": "web/icons/Icon-192.png",
+      "sha256": "3dce99077602f70421c1c6b2a240bc9b83d64d86681d45f2154143310c980be3"
+    },
+    {
+      "file": "web/icons/Icon-512.png",
+      "sha256": "baccb205ae45f0b421be1657259b4943ac40c95094ab877f3bcbe12cd544dcbe"
+    },
+    {
+      "file": "web/icons/Icon-maskable-192.png",
+      "sha256": "d2c842e22a9f4ec9d996b23373a905c88d9a203b220c5c151885ad621f974b5c"
+    },
+    {
+      "file": "web/icons/Icon-maskable-512.png",
+      "sha256": "6aee06cdcab6b2aef74b1734c4778f4421d2da100b0ff9e52b21b55240202929"
+    },
+    {
+      "file": "web/index.html",
+      "sha256": "107fdb7fc9f4f14e864a413cd760195ebe5af0549900f533f9c154d11c70cd37"
+    },
+    {
+      "file": "web/manifest.json",
+      "sha256": "b34357d7de6835ce68f0cb478f79422807df6f58083ddb83d41810dbbf0a0926"
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "build/app/outputs/flutter-apk/app-debug.apk",
+      "bytes": 163739735,
+      "sha256": "75e70860feece979148bb2642921315b2bd239e25fa7e04bb120a78974178c07"
+    },
+    {
+      "file": "build/app/outputs/flutter-apk/app-release.apk",
+      "bytes": 56856578,
+      "sha256": "ef7b3af07c73373f037494f6056bdba1f26656a8676c50138c469ddf235e735d"
+    },
+    {
+      "file": "build/app/outputs/bundle/release/app-release.aab",
+      "bytes": 55221843,
+      "sha256": "252eb1fdf92d3a0835280b12eb3fed34498c7d062032974329c5d4f51323c795"
+    }
+  ]
+}

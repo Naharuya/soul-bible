@@ -17,6 +17,9 @@ function logout() {
   $('logoutButton').classList.add('hidden');
   $('loginPanel').classList.remove('hidden');
   $('memberRows').replaceChildren();
+  $('contentReports')?.replaceChildren();
+  $('eraseMemberForm')?.reset();
+  if ($('eraseMemberStatus')) $('eraseMemberStatus').textContent = '';
   $('loginError').textContent = '';
   $('dashboardError').textContent = '';
   $('lastUpdated').textContent = '로그아웃됨';
@@ -205,6 +208,21 @@ async function resumeSession() {
   }
 }
 function renderOperations(data) {
+  if (typeof location !== 'undefined' && location.pathname.split('/')[2] === 'analytics') loadContentReports();
+  const feedbackElement = $('feedbackCounts');
+  if (feedbackElement) {
+    const ratings = { helpful: '도움됐어요', not_helpful: '맞지 않았어요' };
+    const reasons = { empathy: '공감 표현', relevance: '질문과 답변 연결', scripture: '말씀 연결', voice: '음성', usability: '사용 방법', other: '기타' };
+    feedbackElement.replaceChildren();
+    const entries = Object.entries(data.feedback?.counts ?? {});
+    if (!entries.length) feedbackElement.textContent = '아직 받은 의견이 없습니다.';
+    for (const [key, count] of entries) {
+      const [rating, reason] = key.split(':');
+      const row = document.createElement('p');
+      row.textContent = `${ratings[rating] ?? '기타'} · ${reasons[reason] ?? '기타'} · ${formatNumber(count)}건`;
+      feedbackElement.append(row);
+    }
+  }
   const ops = data.operations;
   $('fallbackRate').textContent = typeof ops?.fallbackRate === 'number' ? `${(ops.fallbackRate * 100).toFixed(1)}%` : '데이터 없음';
   $('opsScope').textContent = ops ? `서버 시작 이후 · ${formatDate(ops.startedAt)} · 재시작 시 초기화` : '측정 준비 중';
@@ -266,3 +284,60 @@ if (typeof document.addEventListener === 'function') {
     window.addEventListener('pageshow', event => { if (event.persisted) { logout(); resumeSession(); } });
   });
 }
+
+async function loadContentReports() {
+  const container = $('contentReports');
+  if (!container || !authenticated) return;
+  const version = requestVersion;
+  try {
+    const response = await fetch('/v1/admin/reports', { cache:'no-store', credentials:'same-origin' });
+    if (version !== requestVersion || !authenticated) return;
+    if (response.status === 401) { logout(); return; }
+    if (!response.ok) throw Error();
+    const data = await response.json();
+    if (version !== requestVersion || !authenticated) return;
+    container.replaceChildren();
+    if (!data.available) { container.textContent = '신고 저장소 준비 중'; return; }
+    if (!data.reports.length) { container.textContent = '접수된 신고가 없습니다.'; return; }
+    for (const report of data.reports) {
+      const card = document.createElement('article');
+      const text = document.createElement('p');
+      text.textContent = `${report.reason} · ${formatDate(report.createdAt)} · ${report.status === 'reviewed' ? '검토 완료' : '검토 대기'}`;
+      card.append(text);
+      if (report.responseText) { const content = document.createElement('pre'); content.style.whiteSpace = 'pre-wrap'; content.style.overflowWrap = 'anywhere'; content.textContent = report.responseText; card.append(content); }
+      if (report.status !== 'reviewed') {
+        const button = document.createElement('button'); button.textContent = '검토 완료로 표시';
+        button.addEventListener('click', async () => {
+          if (!confirm('내용을 검토했나요? 필요한 콘텐츠 수정과 배포는 별도로 진행해야 합니다.')) return;
+          button.disabled = true;
+          try {
+            const result = await fetch(`/v1/admin/reports/${encodeURIComponent(report.id)}/review`, { method:'POST',cache:'no-store',credentials:'same-origin',headers:{'Content-Type':'application/json','X-CSRF-Token':csrfToken},body:JSON.stringify({confirmation:'REVIEWED'}) });
+            if (version !== requestVersion || !authenticated) return;
+            if (result.status === 401) { logout(); return; }
+            if (!result.ok) throw Error();
+            await loadContentReports();
+          } catch { if (version === requestVersion && authenticated) { button.disabled = false; button.textContent = '처리 실패 · 다시 시도'; } }
+        });
+        card.append(button);
+      }
+      container.append(card);
+    }
+  } catch { if (version === requestVersion && authenticated) container.textContent = '신고를 불러오지 못했습니다.'; }
+}
+$('eraseMemberForm')?.addEventListener('submit', async event => {
+  event.preventDefault();
+  if (!authenticated || !$('eraseVerified').checked) return;
+  const id = $('eraseMemberId').value;
+  if (!/^[1-9][0-9]*$/.test(id)) return;
+  if (!confirm(`본인 확인된 회원 ID ${id}의 서버 회원정보를 삭제할까요? 되돌릴 수 없습니다.`)) return;
+  const version = requestVersion;
+  const button = event.currentTarget.querySelector('button'); button.disabled = true;
+  try {
+    const response = await fetch(`/v1/admin/members/${id}`, {method:'DELETE',cache:'no-store',credentials:'same-origin',headers:{'Content-Type':'application/json','X-CSRF-Token':csrfToken},body:JSON.stringify({confirmation:`DELETE_MEMBER:${id}`,verificationReference:$('eraseVerification').value})});
+    if (version !== requestVersion || !authenticated) return;
+    if (response.status === 401) { logout(); return; }
+    if (response.status !== 204) throw Error();
+    $('eraseMemberForm').reset(); $('eraseMemberStatus').textContent = '지정한 회원정보 삭제를 처리했습니다. 백업·기기 기록·구독은 별도로 확인하세요.';
+  } catch { if (version === requestVersion && authenticated) $('eraseMemberStatus').textContent = '삭제를 완료하지 못했습니다. 대상과 본인 확인 기록을 다시 확인하세요.'; }
+  finally { button.disabled = false; }
+});

@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "libraries": [
+    {
+      "name": "lib/arm64-v8a/libapp.so",
+      "loadSegmentAlignments": [
+        65536,
+        65536,
+        65536
+      ],
+      "pass": true
+    },
+    {
+      "name": "lib/arm64-v8a/libdartjni.so",
+      "loadSegmentAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "pass": true
+    },
+    {
+      "name": "lib/arm64-v8a/libdatastore_shared_counter.so",
+      "loadSegmentAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "pass": true
+    },
+    {
+      "name": "lib/arm64-v8a/libflutter.so",
+      "loadSegmentAlignments": [
+        65536,
+        65536,
+        65536
+      ],
+      "pass": true
+    },
+    {
+      "name": "lib/x86_64/libapp.so",
+      "loadSegmentAlignments": [
+        65536,
+        65536,
+        65536
+      ],
+      "pass": true
+    },
+    {
+      "name": "lib/x86_64/libdartjni.so",
+      "loadSegmentAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "pass": true
+    },
+    {
+      "name": "lib/x86_64/libdatastore_shared_counter.so",
+      "loadSegmentAlignments": [
+        16384,
+        16384
+      ],
+      "pass": true
+    },
+    {
+      "name": "lib/x86_64/libflutter.so",
+      "loadSegmentAlignments": [
+        65536,
+        65536,
+        65536
+      ],
+      "pass": true
+    }
+  ]
+}

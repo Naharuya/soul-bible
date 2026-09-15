@@ -7,7 +7,7 @@ import { createApp } from '../src/app.js';
 test('late session restore cannot reopen a logged-out dashboard', async () => {
   const elements = new Map();
   const element = id => {
-    if (!elements.has(id)) elements.set(id, { value: '', textContent: '', classList: { add() {}, remove() {} }, replaceChildren() {}, addEventListener() {} });
+    if (!elements.has(id)) elements.set(id, { value: '', textContent: '', classList: { add() {}, remove() {} }, replaceChildren() {}, reset() {}, addEventListener() {} });
     return elements.get(id);
   };
   let complete;
@@ -25,7 +25,7 @@ test('API key form sends authenticated write, clears secret and ignores response
   const elements = new Map();
   const element = id => {
     if (!elements.has(id)) elements.set(id, { value: '', textContent: '', disabled: false, handlers: {},
-      classList: { add() {}, remove() {} }, replaceChildren() {}, addEventListener(name, fn) { this.handlers[name] = fn; } });
+      classList: { add() {}, remove() {} }, replaceChildren() {}, reset() {}, addEventListener(name, fn) { this.handlers[name] = fn; } });
     return elements.get(id);
   };
   let resolveResponse;

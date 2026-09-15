@@ -5,6 +5,7 @@ import '../engagement_controller.dart';
 import '../sharing/share_card.dart';
 import '../sharing/share_preview_page.dart';
 import 'journey.dart';
+import '../safety_notice.dart';
 
 class JourneyPage extends StatefulWidget {
   const JourneyPage({super.key});
@@ -104,6 +105,10 @@ class _JourneyPageState extends State<JourneyPage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final controller = EngagementScope.of(context);
+    if (controller.safetyBlocked) {
+      return SpaceScaffold(appBar: AppBar(title: const Text('안전 안내')),
+          body: const SafetyNotice());
+    }
     final journey = controller.journey;
     final verse =
         journey == null ? null : controller.journeyVerse(journey.currentDay);

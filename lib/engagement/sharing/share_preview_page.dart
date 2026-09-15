@@ -5,6 +5,7 @@ import '../engagement_controller.dart';
 import '../domain_events.dart';
 import 'share_card.dart';
 import 'native_share.dart';
+import '../safety_notice.dart';
 
 class SharePreviewPage extends StatefulWidget {
   const SharePreviewPage(
@@ -25,18 +26,19 @@ class _SharePreviewPageState extends State<SharePreviewPage> {
   Future<void> _export(BuildContext buttonContext, {bool save = false}) async {
     if (_busy) return;
     final controller = EngagementScope.maybeOf(context);
+    if (controller?.safetyBlocked == true) return;
     final route = ModalRoute.of(context);
     final box = buttonContext.findRenderObject() as RenderBox;
     final origin = box.localToGlobal(Offset.zero) & box.size;
     setState(() => _busy = true);
     try {
       final bytes = await _image;
-      if (!mounted || route?.isCurrent == false) return;
+      if (!mounted || route?.isCurrent == false || controller?.safetyBlocked == true) return;
       if (!save) {
         await controller?.emit(EngagementEventType.shareCardRequested,
             resourceRef: widget.content.kind.name);
       }
-      if (!mounted || route?.isCurrent == false) return;
+      if (!mounted || route?.isCurrent == false || controller?.safetyBlocked == true) return;
       final result = save
           ? (await _gateway.save(bytes)
               ? CardShareResult.completed
@@ -49,7 +51,7 @@ class _SharePreviewPageState extends State<SharePreviewPage> {
       final message = switch (result) {
         CardShareResult.completed => save ? '이미지를 저장했어요.' : '선택한 공유창에 전달했어요.',
         CardShareResult.dismissed => '취소했어요. 언제든 다시 나눌 수 있어요.',
-        CardShareResult.unavailable => '공유창을 열었어요. 전달 여부는 대상 앱에서 확인해 주세요.',
+        CardShareResult.unavailable => '공유 결과를 확인할 수 없어요. 대상 앱에서 확인해 주세요.',
       };
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(message)));
@@ -68,11 +70,15 @@ class _SharePreviewPageState extends State<SharePreviewPage> {
   @override
   Widget build(BuildContext context) => SpaceScaffold(
       appBar: AppBar(title: const Text('공유 미리보기')),
-      body: ListView(padding: const EdgeInsets.all(20), children: [
+      body: EngagementScope.maybeOf(context)?.safetyBlocked == true
+          ? const SafetyNotice()
+          : ListView(padding: const EdgeInsets.all(20), children: [
         const Text('이 이미지에 보이는 내용만 나눠요.',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
         const Text('감정 강도, 대화, 이름, 개인 기록은 포함하지 않았어요.'),
+        if (NativeCardShare.invitationText != null)
+          Text(NativeCardShare.invitationText!),
         const SizedBox(height: 20),
         Center(
             child: ConstrainedBox(
@@ -111,6 +117,8 @@ class _SharePreviewPageState extends State<SharePreviewPage> {
                 onPressed: _busy ? null : () => _export(buttonContext),
                 icon: const Icon(Icons.ios_share),
                 label: const Text('이 이미지 공유하기'))),
+        TextButton(onPressed: _busy ? null : () => Navigator.of(context).maybePop(),
+            child: const Text('취소')),
         if (widget.gateway != null || NativeCardShare.supportsSave) ...[
           const SizedBox(height: 8),
           Builder(

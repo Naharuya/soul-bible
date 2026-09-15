@@ -1,0 +1,30 @@
+{
+  "artifacts": [
+    {
+      "file": "build/app/outputs/flutter-apk/app-debug.apk",
+      "bytes": 163762603,
+      "sha256": "3418ac7d426341173a32ff62479b8d58ca454609329d6de84a3f1cbdaaf44b9c"
+    },
+    {
+      "file": "build/app/outputs/flutter-apk/app-release.apk",
+      "bytes": 57151010,
+      "sha256": "1747387f4623ba630b85fa3eb17381957bf64ab5dde374c87a2102ff12782e10"
+    },
+    {
+      "file": "build/app/outputs/bundle/release/app-release.aab",
+      "bytes": 55433279,
+      "sha256": "eafb6d11a137213a9d01db080d3e910727d147799b1ad35718bb727c7f74eeea"
+    }
+  ],
+  "release": {
+    "package": "com.example.bible_mind_core",
+    "versionName": "0.4.2",
+    "versionCode": 7,
+    "minSdk": 24,
+    "targetSdk": 36,
+    "certificateSha256": "692eabafe55986612f5aa3d475cea16e0e5e7db20ce2e09219a2f536f7e8f6bb",
+    "apkSignatureVerified": true,
+    "apkZipAlignment16Kb": true
+  },
+  "scope": "Local compilation and APK inspection only; no device install or store submission; not an ELF runtime test."
+}

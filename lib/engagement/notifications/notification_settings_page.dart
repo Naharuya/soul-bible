@@ -27,7 +27,7 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
               TimeOfDay? time,
               ReminderKind? kind,
               bool? gentle}) async {
-            if (_busy || !controller.ready) return;
+            if (_busy) return;
             setState(() => _busy = true);
             final next = ReminderSettings(
                 startOn: widget.startTomorrow
@@ -64,8 +64,9 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                       child: Text('알림이 일시 중지되어 있어요. 원할 때 다시 켤 수 있어요.')),
                 SwitchListTile(
                     title: const Text('알림 사용'),
+                    subtitle: const Text('켜면 알림 권한을 확인하고 선택한 시간에 알려드려요.'),
                     value: settings.enabled && !settings.paused,
-                    onChanged: _busy || !controller.ready
+                    onChanged: _busy
                         ? null
                         : (value) => update(enabled: value)),
                 ListTile(
@@ -101,11 +102,11 @@ class _NotificationSettingsPageState extends State<NotificationSettingsPage> {
                             : () => update(kind: kind))),
                 SwitchListTile(
                     title: const Text('3일 미방문 시 부드러운 안부'),
-                    subtitle: const Text('한 번만 안부를 전해요. 기록은 사라지지 않아요.'),
-                    value: settings.gentle,
-                    onChanged: _busy || !controller.ready
+                    subtitle: const Text('켜면 알림 사용도 함께 켜져요. 3일 미방문 후 선택한 시간에 한 번만 안부를 전해요.'),
+                    value: settings.enabled && !settings.paused && settings.gentle,
+                    onChanged: _busy
                         ? null
-                        : (value) => update(gentle: value)),
+                        : (value) => update(gentle: value, enabled: value ? true : null)),
                 const SizedBox(height: 12),
                 const Text('기기 절전 설정에 따라 선택한 시간보다 조금 늦게 올 수 있어요.'),
                 if (controller.message != null)

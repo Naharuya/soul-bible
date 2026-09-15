@@ -108,6 +108,10 @@ void main() {
   Future<void> menu(WidgetTester tester, String label) async {
     await tester.tap(find.byTooltip('메뉴'));
     await settle(tester);
+    if (['작은 성장 기록', '말씀과 작은 기록', '저장된 카드', '7일 마음의 여정'].contains(label)) {
+      await tester.tap(find.text('내 기록'));
+      await settle(tester);
+    }
     await tester.tap(find.text(label));
     await settle(tester);
   }
@@ -123,8 +127,12 @@ void main() {
     }.entries) {
       await menu(tester, entry.key);
       expect(find.text(entry.value), findsOneWidget);
-      await tester.pageBack();
-      await settle(tester);
+        await tester.pageBack();
+        await settle(tester);
+        if (find.text('내 기록').evaluate().isNotEmpty) {
+          await tester.pageBack();
+          await settle(tester);
+        }
       expect(find.byTooltip('메뉴'), findsOneWidget);
     }
     expect(tester.takeException(), isNull);

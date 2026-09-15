@@ -1,8 +1,40 @@
 {
   "schemaVersion": "1.0",
-  "translation": "KRV_NIV",
-  "copyrightNotice": "Korean: 개역한글 (Public Domain), English: NIV (For development reference).",
+  "translation": "KRV",
+  "copyrightNotice": "Korean source and license review pending. English translation withheld until licensed and approved.",
   "verses": [
+    {
+      "id": "ROM_15_13",
+      "book": "로마서",
+      "chapter": 15,
+      "verseStart": 13,
+      "verseEnd": null,
+      "reference": "로마서 15:13",
+      "translation": "KRV",
+      "text": "소망의 하나님이 모든 기쁨과 평강을 믿음 안에서 너희에게 충만케 하사 성령의 능력으로 소망이 넘치게 하시기를 원하노라",
+      "englishText": "",
+      "emotions": [
+        "기쁨",
+        "행복",
+        "기대",
+        "벅찬",
+        "감탄"
+      ],
+      "tags": [
+        "소망",
+        "기쁨",
+        "평안"
+      ],
+      "reflectionQuestion": "지금 품고 있는 작은 소망은 무엇인가요?",
+      "sourceUrl": "https://www.bskorea.or.kr/bible/korbibReadpage.php?back=yes&book=rom&chap=15&sec=13&version=HAN",
+      "approval": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "licenseEvidence": null,
+        "contentSha256": "093f8539b40419e24683d382f7e2c9e445b816bab397d5b2d935bcbd868c0d11"
+      }
+    },
     {
       "id": "PHP_4_6_7",
       "book": "빌립보서",
@@ -12,10 +44,26 @@
       "reference": "빌립보서 4:6-7",
       "translation": "KRV",
       "text": "아무 것도 염려하지 말고 다만 모든 일에 기도와 간구로, 너희 구할 것을 감사함으로 하나님께 아뢰라. 그리하면 모든 지각에 뛰어난 하나님의 평안이 그리스도 예수 안에서 너희 마음과 생각을 지키시리라.",
-      "englishText": "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus.",
-      "emotions": ["불안", "공포", "놀람"],
-      "tags": ["염려", "평안", "기도", "맡김"],
-      "reflectionQuestion": "지금 하나님께 맡기고 싶은 걱정은 무엇인가요?"
+      "englishText": "",
+      "emotions": [
+        "불안",
+        "공포",
+        "놀람"
+      ],
+      "tags": [
+        "염려",
+        "평안",
+        "기도",
+        "맡김"
+      ],
+      "reflectionQuestion": "지금 하나님께 맡기고 싶은 걱정은 무엇인가요?",
+      "approval": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "licenseEvidence": null,
+        "contentSha256": "1fc84a88ea35e31c7d74a6f0e28cf8282760a71ef673c2814555eb8e4c422e44"
+      }
     },
     {
       "id": "ISA_41_10",
@@ -26,10 +74,26 @@
       "reference": "이사야 41:10",
       "translation": "KRV",
       "text": "두려워하지 말라 내가 너와 함께 함이라 놀라지 말라 나는 네 하나님이 됨이라 내가 너를 굳세게 하리라 참으로 너를 도와 주리라 참으로 나의 의로운 오른손으로 너를 붙들리라.",
-      "englishText": "So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand.",
-      "emotions": ["불안", "외로움", "공포"],
-      "tags": ["두려움", "함께함", "도움", "보호"],
-      "reflectionQuestion": "지금 가장 도움이 필요하다고 느끼는 부분은 무엇인가요?"
+      "englishText": "",
+      "emotions": [
+        "불안",
+        "외로움",
+        "공포"
+      ],
+      "tags": [
+        "두려움",
+        "함께함",
+        "도움",
+        "보호"
+      ],
+      "reflectionQuestion": "지금 가장 도움이 필요하다고 느끼는 부분은 무엇인가요?",
+      "approval": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "licenseEvidence": null,
+        "contentSha256": "3521841458a64d6116e75c79bef4dcbef7f85dffc5cbde78699187dcf43620fc"
+      }
     },
     {
       "id": "PSA_23_4",
@@ -40,10 +104,25 @@
       "reference": "시편 23:4",
       "translation": "KRV",
       "text": "내가 사망의 음침한 골짜기로 다닐지라도 해를 두려워하지 않을 것은 주께서 나와 함께 하심이라 주의 지팡이와 막대기가 나를 안위하시나이다.",
-      "englishText": "Even though I walk through the darkest valley, I will fear no evil, for you are with me; your rod and your staff, they comfort me.",
-      "emotions": ["외로움", "슬픔", "공포"],
-      "tags": ["동행", "보호", "위로"],
-      "reflectionQuestion": "혼자가 아니라고 느끼게 해줄 사람이나 기억이 있나요?"
+      "englishText": "",
+      "emotions": [
+        "외로움",
+        "슬픔",
+        "공포"
+      ],
+      "tags": [
+        "동행",
+        "보호",
+        "위로"
+      ],
+      "reflectionQuestion": "혼자가 아니라고 느끼게 해줄 사람이나 기억이 있나요?",
+      "approval": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "licenseEvidence": null,
+        "contentSha256": "6902bbdb400055a19fcdc6670665beda1b5d14e11c81082168a28529e9200c69"
+      }
     },
     {
       "id": "HEB_13_5",
@@ -54,10 +133,23 @@
       "reference": "히브리서 13:5",
       "translation": "KRV",
       "text": "돈을 사랑하지 말고 있는 바를 족한 줄로 알라 그가 친히 말씀하시기를 내가 결코 너희를 버리지 아니하고 너희를 떠나지 아니하리라 하셨느니라.",
-      "englishText": "Keep your lives free from the love of money and be content with what you have, because God has said, 'Never will I leave you; never will I forsake you.'",
-      "emotions": ["외로움"],
-      "tags": ["버리지않음", "함께함", "신실함"],
-      "reflectionQuestion": "이 말씀을 읽으며 떠오르는 관계가 있나요?"
+      "englishText": "",
+      "emotions": [
+        "외로움"
+      ],
+      "tags": [
+        "버리지않음",
+        "함께함",
+        "신실함"
+      ],
+      "reflectionQuestion": "이 말씀을 읽으며 떠오르는 관계가 있나요?",
+      "approval": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "licenseEvidence": null,
+        "contentSha256": "94b220a133e31fe1cbedde8b25f62cbb50ff92a2f0f06649ca0563051ce9aba8"
+      }
     },
     {
       "id": "MAT_11_28",
@@ -68,10 +160,24 @@
       "reference": "마태복음 11:28",
       "translation": "KRV",
       "text": "수고하고 무거운 짐 진 자들아 다 내게로 오라 내가 너희를 쉬게 하리라.",
-      "englishText": "Come to me, all you who are weary and burdened, and I will give you rest.",
-      "emotions": ["지침", "슬픔"],
-      "tags": ["쉼", "무거운짐", "회복"],
-      "reflectionQuestion": "지금 잠시 내려놓아도 되는 짐은 무엇인가요?"
+      "englishText": "",
+      "emotions": [
+        "지침",
+        "슬픔"
+      ],
+      "tags": [
+        "쉼",
+        "무거운짐",
+        "회복"
+      ],
+      "reflectionQuestion": "지금 잠시 내려놓아도 되는 짐은 무엇인가요?",
+      "approval": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "licenseEvidence": null,
+        "contentSha256": "2f5d2a37a2d080bfd57c58906e95c26cf18794886c98adac0b9396f53232dd0a"
+      }
     },
     {
       "id": "ISA_40_31",
@@ -82,10 +188,24 @@
       "reference": "이사야 40:31",
       "translation": "KRV",
       "text": "오직 여호와를 앙망하는 자는 새 힘을 얻으리니 독수리가 날개치며 올라감 같을 것이요 달음박질하여도 곤비하지 아니하겠고 걸어가도 피곤하지 아니하리로다.",
-      "englishText": "but those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint.",
-      "emotions": ["지침", "기대"],
-      "tags": ["새힘", "기다림", "회복"],
-      "reflectionQuestion": "오늘 회복을 위해 가장 먼저 필요한 것은 무엇인가요?"
+      "englishText": "",
+      "emotions": [
+        "지침",
+        "기대"
+      ],
+      "tags": [
+        "새힘",
+        "기다림",
+        "회복"
+      ],
+      "reflectionQuestion": "오늘 회복을 위해 가장 먼저 필요한 것은 무엇인가요?",
+      "approval": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "licenseEvidence": null,
+        "contentSha256": "122617a36db7ebee5d7abc5eff4ee67fefb6334c87740f06e29c9ff5f90c9ae8"
+      }
     },
     {
       "id": "JAS_1_19_20",
@@ -96,10 +216,25 @@
       "reference": "야고보서 1:19-20",
       "translation": "KRV",
       "text": "내 사랑하는 형제들아 너희가 알지니 사람마다 듣기는 속히 하고 말하기는 더디 하며 성내기도 더디 하라. 사람이 성내는 것이 하나님의 의를 이루지 못함이라.",
-      "englishText": "My dear brothers and sisters, take note of this: Everyone should be quick to listen, slow to speak and slow to become angry, because human anger does not produce the righteousness that God desires.",
-      "emotions": ["분노", "혐오"],
-      "tags": ["분노", "경청", "절제", "말"],
-      "reflectionQuestion": "감정을 해치지 않게 표현하려면 어떤 문장이 좋을까요?"
+      "englishText": "",
+      "emotions": [
+        "분노",
+        "혐오"
+      ],
+      "tags": [
+        "분노",
+        "경청",
+        "절제",
+        "말"
+      ],
+      "reflectionQuestion": "감정을 해치지 않게 표현하려면 어떤 문장이 좋을까요?",
+      "approval": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "licenseEvidence": null,
+        "contentSha256": "b5e1e6f09f28ada49245347b60578635c656b522040a611af510eb9729e35917"
+      }
     },
     {
       "id": "PRO_15_1",
@@ -110,10 +245,24 @@
       "reference": "잠언 15:1",
       "translation": "KRV",
       "text": "유순한 대답은 분노를 쉬게 하여도 과격한 말은 노를 격동하느니라.",
-      "englishText": "A gentle answer turns away wrath, but a harsh word stirs up anger.",
-      "emotions": ["분노", "질투"],
-      "tags": ["온유", "말", "갈등"],
-      "reflectionQuestion": "사실과 요청을 차분하게 표현한다면 어떻게 말할 수 있을까요?"
+      "englishText": "",
+      "emotions": [
+        "분노",
+        "질투"
+      ],
+      "tags": [
+        "온유",
+        "말",
+        "갈등"
+      ],
+      "reflectionQuestion": "사실과 요청을 차분하게 표현한다면 어떻게 말할 수 있을까요?",
+      "approval": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "licenseEvidence": null,
+        "contentSha256": "1fc95a5867e8c28f05f149f169c0be3ac3aea5b9da4e9350a7d66b4cf61cecfd"
+      }
     },
     {
       "id": "PSA_34_18",
@@ -124,10 +273,25 @@
       "reference": "시편 34:18",
       "translation": "KRV",
       "text": "여호와는 마음이 상한 자를 가까이 하시고 충심으로 통회하는 자를 구원하시는도다.",
-      "englishText": "The Lord is close to the brokenhearted and saves those who are crushed in spirit.",
-      "emotions": ["슬픔", "혐오", "질투"],
-      "tags": ["상한마음", "위로", "가까이함"],
-      "reflectionQuestion": "지금 가장 위로받고 싶은 마음은 무엇인가요?"
+      "englishText": "",
+      "emotions": [
+        "슬픔",
+        "혐오",
+        "질투"
+      ],
+      "tags": [
+        "상한마음",
+        "위로",
+        "가까이함"
+      ],
+      "reflectionQuestion": "지금 가장 위로받고 싶은 마음은 무엇인가요?",
+      "approval": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "licenseEvidence": null,
+        "contentSha256": "754cecde82ccda69a9504479bd786546fb759599db567cafc8fb91bb37fdd827"
+      }
     },
     {
       "id": "JHN_14_27",
@@ -138,10 +302,24 @@
       "reference": "요한복음 14:27",
       "translation": "KRV",
       "text": "평안을 너희에게 끼치노니 곧 나의 평안을 너희에게 주노라 내가 너희에게 주는 것은 세상이 주는 것과 같지 아니하니라 너희는 마음에 근심하지도 말고 두려워하지도 말라.",
-      "englishText": "Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid.",
-      "emotions": ["슬픔", "불안"],
-      "tags": ["평안", "두려움", "마음"],
-      "reflectionQuestion": "지금 마음에 필요한 평안은 어떤 모습인가요?"
+      "englishText": "",
+      "emotions": [
+        "슬픔",
+        "불안"
+      ],
+      "tags": [
+        "평안",
+        "두려움",
+        "마음"
+      ],
+      "reflectionQuestion": "지금 마음에 필요한 평안은 어떤 모습인가요?",
+      "approval": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "licenseEvidence": null,
+        "contentSha256": "39e4ccfffaa175bbe57d70cec2ae597444e589eff484ccc830e80d1e4e760d8c"
+      }
     },
     {
       "id": "PRO_3_5_6",
@@ -152,10 +330,25 @@
       "reference": "잠언 3:5-6",
       "translation": "KRV",
       "text": "너는 마음을 다하여 여호와를 신뢰하고 네 명철을 의지하지 말라. 너는 범사에 그를 인정하라 그리하면 네 길을 지도하시리라.",
-      "englishText": "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
-      "emotions": ["복잡함", "불안"],
-      "tags": ["인도", "길", "신뢰", "선택"],
-      "reflectionQuestion": "오늘 당장 결론 내리지 않아도 되는 부분은 무엇인가요?"
+      "englishText": "",
+      "emotions": [
+        "복잡함",
+        "불안"
+      ],
+      "tags": [
+        "인도",
+        "길",
+        "신뢰",
+        "선택"
+      ],
+      "reflectionQuestion": "오늘 당장 결론 내리지 않아도 되는 부분은 무엇인가요?",
+      "approval": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "licenseEvidence": null,
+        "contentSha256": "71275429476d33c9b5272f0aeeccaf1e5af3556f7a58cb383f8bc442a942c525"
+      }
     },
     {
       "id": "JAS_1_5",
@@ -166,10 +359,23 @@
       "reference": "야고보서 1:5",
       "translation": "KRV",
       "text": "너희 중에 누구든지 지혜가 부족하거든 모든 사람에게 후히 주시고 꾸짖지 아니하시는 하나님께 구하라 그리하면 주시리라.",
-      "englishText": "If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you.",
-      "emotions": ["복잡함"],
-      "tags": ["지혜", "분별", "구함"],
-      "reflectionQuestion": "결정 전에 더 확인해야 할 정보는 무엇인가요?"
+      "englishText": "",
+      "emotions": [
+        "복잡함"
+      ],
+      "tags": [
+        "지혜",
+        "분별",
+        "구함"
+      ],
+      "reflectionQuestion": "결정 전에 더 확인해야 할 정보는 무엇인가요?",
+      "approval": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "licenseEvidence": null,
+        "contentSha256": "19575227fbe661e9b1f9c808a7a3a1d2c5c7bbeac38e08b1ffb6184f7515c387"
+      }
     },
     {
       "id": "1TH_5_18",
@@ -180,10 +386,24 @@
       "reference": "데살로니가전서 5:18",
       "translation": "KRV",
       "text": "범사에 감사하라 이것이 그리스도 예수 안에서 너희를 향하신 하나님의 뜻이니라.",
-      "englishText": "give thanks in all circumstances; for this is God’s will for you in Christ Jesus.",
-      "emotions": ["감사", "벅참"],
-      "tags": ["감사", "일상", "기도"],
-      "reflectionQuestion": ""
+      "englishText": "",
+      "emotions": [
+        "감사",
+        "벅찬"
+      ],
+      "tags": [
+        "감사",
+        "일상",
+        "기도"
+      ],
+      "reflectionQuestion": "",
+      "approval": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "licenseEvidence": null,
+        "contentSha256": "9aed92e44335be8704f0b0c126af28817f039d4529883ff9c7387f51e16ee603"
+      }
     },
     {
       "id": "PSA_100_4",
@@ -194,10 +414,28 @@
       "reference": "시편 100:4",
       "translation": "KRV",
       "text": "감사함으로 그의 문에 들어가며 찬송함으로 그의 궁정에 들어가서 그에게 감사하며 그의 이름을 송축할지어다.",
-      "englishText": "Enter his gates with thanksgiving and his courts with praise; give thanks to him and praise his name.",
-      "emotions": ["감사", "기쁨", "행복", "감탄", "벅참", "놀람"],
-      "tags": ["감사", "찬양", "기쁨"],
-      "reflectionQuestion": "오늘 기억하고 싶은 감사 한 가지는 무엇인가요?"
+      "englishText": "",
+      "emotions": [
+        "감사",
+        "기쁨",
+        "행복",
+        "감탄",
+        "벅찬",
+        "놀람"
+      ],
+      "tags": [
+        "감사",
+        "찬양",
+        "기쁨"
+      ],
+      "reflectionQuestion": "오늘 기억하고 싶은 감사 한 가지는 무엇인가요?",
+      "approval": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewedAt": null,
+        "licenseEvidence": null,
+        "contentSha256": "821975e0f1d0e74beb94ebcc771995b2a608f7c2595ceba302e7462460c4d09b"
+      }
     }
   ]
 }

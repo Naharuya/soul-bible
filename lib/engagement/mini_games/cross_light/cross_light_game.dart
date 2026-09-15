@@ -52,6 +52,10 @@ class CrossLightGame {
 
   bool collect(String word) {
     if (!ready ||
+        word !=
+            crossLightWords.keys
+                .where((key) => !_pieces.contains(key))
+                .firstOrNull ||
         !crossLightWords.containsKey(word) ||
         _pieces.contains(word)) {
       return false;

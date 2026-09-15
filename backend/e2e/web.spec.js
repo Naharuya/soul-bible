@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './browser-fixtures.js';
 import AxeBuilder from '@axe-core/playwright';
 
 for (const width of [360, 390, 430, 768, 1024, 1280, 1440]) {

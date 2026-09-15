@@ -28,7 +28,9 @@ export function execute(file, args, cwd) {
 }
 
 export function certificate(output) {
-  const fingerprints = [...output.matchAll(/^Signer #\d+ certificate SHA-256 digest:\s*([a-f0-9]{64})\s*$/gim)].map(m => m[1].toLowerCase());
+  // Build Tools 37 labels a v2-only APK "V2 Signer:" instead of "Signer #1".
+  // Continue rejecting missing/ambiguous signers; never relax fingerprint checks.
+  const fingerprints = [...output.matchAll(/^(?:Signer #\d+|V2 Signer:) certificate SHA-256 digest:\s*([a-f0-9]{64})\s*$/gim)].map(m => m[1].toLowerCase());
   if (fingerprints.length !== 1) throw Error('Expected exactly one APK signing certificate');
   return fingerprints[0];
 }
@@ -46,10 +48,17 @@ export function updateRelease({ root, tools, device, run = execute, report = con
   if (state === 'unauthorized') throw Error('Allow USB debugging on the phone, then retry');
   if (state !== 'device') throw Error('Selected device is not connected and authorized');
   const adb = args => call('adb', ['-s', device, ...args]);
-  const installed = adb(['shell', 'pm', 'path', packageId]);
+  // `pm path` exits 1 for an absent app on some devices. Verify absence with
+  // a successful package listing, without swallowing device/tool failures.
+  const packages = adb(['shell', 'pm', 'list', 'packages', packageId]).trim();
+  if (packages && packages.split(/\r?\n/).some(line => !/^package:[\w.]+$/.test(line))) {
+    throw Error('Could not verify installed packages; stopped');
+  }
+  const hasInstalled = packages.split(/\r?\n/).includes(`package:${packageId}`);
+  const installed = hasInstalled ? adb(['shell', 'pm', 'path', packageId]) : '';
   const base = installed.split(/\r?\n/).find(line => /^package:\/[^\r\n]*\/base\.apk$/.test(line));
   let previousVersion = null;
-  if (installed.trim() && !base) throw Error('Could not identify installed base APK; stopped');
+  if (hasInstalled && !base) throw Error('Could not identify installed base APK; stopped');
   if (base) {
     const snapshot = join(mkdtempSync(join(tmpdir(), 'onaria-cert-')), 'installed.apk');
     // Copies APK code only, never app data. No recursive cleanup operation.

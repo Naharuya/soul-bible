@@ -6,6 +6,7 @@ import 'journey/journey_page.dart';
 import 'mini_games/cross_light/cross_light_page.dart';
 import 'sharing/share_card.dart';
 import 'sharing/share_preview_page.dart';
+import 'safety_notice.dart';
 
 class EngagementPage extends StatelessWidget {
   const EngagementPage({super.key, this.savedOnly = false});
@@ -17,7 +18,7 @@ class EngagementPage extends StatelessWidget {
     final today = controller.todayVerse;
     return SpaceScaffold(
       appBar: AppBar(title: Text(savedOnly ? '저장한 말씀' : '말씀과 작은 기록')),
-      body: controller.error != null
+      body: controller.safetyBlocked ? const SafetyNotice() : controller.error != null
           ? Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
               Text(controller.error!),
               TextButton(onPressed: controller.load, child: const Text('다시 시도')),
@@ -61,6 +62,10 @@ class EngagementPage extends StatelessWidget {
                     const Padding(
                         padding: EdgeInsets.symmetric(vertical: 16),
                         child: Text('곁에 두고 싶은 말씀을 저장해 보세요.')),
+                  if (controller.savedVerseIds.any((id) => controller.verse(id) == null))
+                    const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        child: Text('일부 말씀은 자료 검토 중이라 표시하지 않아요. 저장 기록은 보존되어 있어요.')),
                   for (final verse in controller.catalog
                       .where((v) => controller.savedVerseIds.contains(v.id)))
                     _verseCard(context, controller, verse),

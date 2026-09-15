@@ -1,0 +1,80 @@
+{
+  "status": "BLOCKED_RELEASE",
+  "blockers": [
+    {
+      "gate": "privacy",
+      "missing": [
+        "operatorName",
+        "supportEmail",
+        "memberRetention",
+        "usageRetention",
+        "reportsRetentionDays",
+        "internationalTransfer",
+        "reviewer",
+        "reviewedAt"
+      ],
+      "approved": false
+    },
+    {
+      "gate": "verse_approval",
+      "id": "ROM_15_13"
+    },
+    {
+      "gate": "verse_approval",
+      "id": "PHP_4_6_7"
+    },
+    {
+      "gate": "verse_approval",
+      "id": "ISA_41_10"
+    },
+    {
+      "gate": "verse_approval",
+      "id": "PSA_23_4"
+    },
+    {
+      "gate": "verse_approval",
+      "id": "HEB_13_5"
+    },
+    {
+      "gate": "verse_approval",
+      "id": "MAT_11_28"
+    },
+    {
+      "gate": "verse_approval",
+      "id": "ISA_40_31"
+    },
+    {
+      "gate": "verse_approval",
+      "id": "JAS_1_19_20"
+    },
+    {
+      "gate": "verse_approval",
+      "id": "PRO_15_1"
+    },
+    {
+      "gate": "verse_approval",
+      "id": "PSA_34_18"
+    },
+    {
+      "gate": "verse_approval",
+      "id": "JHN_14_27"
+    },
+    {
+      "gate": "verse_approval",
+      "id": "PRO_3_5_6"
+    },
+    {
+      "gate": "verse_approval",
+      "id": "JAS_1_5"
+    },
+    {
+      "gate": "verse_approval",
+      "id": "1TH_5_18"
+    },
+    {
+      "gate": "verse_approval",
+      "id": "PSA_100_4"
+    }
+  ],
+  "limitation": "Human evidence must be reviewed. This does not approve production deployment, account erasure identity checks, store declarations, payments or device tests."
+}

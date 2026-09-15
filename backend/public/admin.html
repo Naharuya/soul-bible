@@ -122,10 +122,20 @@
         </section>
         <section class="panel" id="analyticsPanel" aria-labelledby="analyticsTitle">
           <h2 id="analyticsTitle">전통별 검색·통합 경로</h2><p class="sub">AI 라우터가 전통을 기록한 응답의 횟수입니다. 종교별 회원 수나 전체 대화 점유율이 아닙니다. 서버 재시작 시 초기화됩니다.</p><div id="traditionUsage">데이터 없음</div>
+          <h3>앱 개선 의견</h3><p class="sub">사용자가 보낸 평가·이유만 집계합니다. 대화 원문은 수집하지 않습니다. 서버 재시작 시 초기화됩니다.</p><div id="feedbackCounts">데이터 없음</div>
+          <h3>AI 응답 신고</h3><p class="sub">최근 신고 100건입니다. 첨부 동의를 받은 AI 응답만 표시합니다. 검토 완료는 콘텐츠 수정·배포 완료를 의미하지 않습니다.</p><div id="contentReports">로그인 후 확인할 수 있습니다.</div>
         </section>
         <section class="panel" id="contentPanel" aria-labelledby="contentTitle">
           <p class="eyebrow">CONTENT GOVERNANCE</p><h2 id="contentTitle">콘텐츠 관리 안내</h2><p class="sub">기존 RAG·경전 데이터와 검토 절차를 재사용합니다. 브라우저 편집·배포 기능은 아직 연결되지 않았습니다.</p>
           <ul><li>새 경전과 해석은 출처·라이선스·전통별 검토를 거친 뒤 저장소의 기존 콘텐츠 검토 도구로 반영합니다.</li><li>공개 홈페이지에는 승인되지 않은 경전 본문이나 새로운 교리 해석을 추가하지 않습니다.</li><li>이 화면에서 콘텐츠 수정 또는 운영 DB 초기화를 수행하지 않습니다.</li></ul>
+          <h3>본인 확인된 기존 회원정보 삭제</h3>
+          <p>등록 전화번호를 아는 것만으로 본인 확인이 되지 않습니다. 승인된 별도 절차로 요청자의 소유권을 확인하고 대상 ID를 대조한 후 처리하세요. 서버 회원 행만 삭제하며 기기 기록·백업·구독은 별도입니다.</p>
+          <form id="eraseMemberForm">
+            <label for="eraseMemberId">확인한 회원 ID</label><input id="eraseMemberId" type="number" min="1" required>
+            <label for="eraseVerification">본인 확인 기록 참조번호 (개인정보 제외)</label><input id="eraseVerification" pattern="[A-Za-z0-9-]{8,80}" required>
+            <label><input id="eraseVerified" type="checkbox" required> 요청자 본인 확인과 삭제 범위를 확인했습니다.</label>
+            <button type="submit">회원정보 삭제 확인</button><p id="eraseMemberStatus" role="status"></p>
+          </form>
         </section>
       </div>
     </main>

@@ -49,6 +49,16 @@ jobs:
         run: |
           bash -n scripts/deploy-cafe24.sh
           python3 scripts/test_deploy_cafe24.py
+      - name: Set up Node for release approval checks
+        if: steps.gate.outputs.ready == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Require approved privacy and unchanged licensed content
+        if: steps.gate.outputs.ready == 'true'
+        run: |
+          npm ci --prefix backend --omit=dev
+          node scripts/check-store-readiness.mjs
       - name: Build secret-free ZIP from committed files
         if: steps.gate.outputs.ready == 'true'
         run: |

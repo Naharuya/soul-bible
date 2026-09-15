@@ -1,0 +1,38 @@
+[
+  {
+    "word": "평안",
+    "stars": 6,
+    "selected": 1,
+    "complete": false
+  },
+  {
+    "word": "희망",
+    "stars": 6,
+    "selected": 2,
+    "complete": false
+  },
+  {
+    "word": "사랑",
+    "stars": 6,
+    "selected": 3,
+    "complete": false
+  },
+  {
+    "word": "은혜",
+    "stars": 6,
+    "selected": 4,
+    "complete": false
+  },
+  {
+    "word": "용기",
+    "stars": 6,
+    "selected": 5,
+    "complete": false
+  },
+  {
+    "word": "용서",
+    "stars": 6,
+    "selected": 6,
+    "complete": true
+  }
+]

@@ -53,8 +53,19 @@ class _SavedCardsPageState extends State<SavedCardsPage> {
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(
-              child: Text('아직 저장된 카드가 없어요.',
-                  style: TextStyle(color: AppTheme.of(context).muted)),
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  const Icon(Icons.bookmarks_outlined, size: 40),
+                  const SizedBox(height: 16),
+                  Text('아직 저장된 카드가 없어요.', style: TextStyle(color: AppTheme.of(context).muted)),
+                  const SizedBox(height: 8),
+                  const Text('마음 대화를 마치고 오늘의 마음 카드를 저장해 보세요.', textAlign: TextAlign.center),
+                  const SizedBox(height: 20),
+                  if (Navigator.of(context).canPop())
+                    FilledButton(onPressed: () => Navigator.of(context).pop(), child: const Text('마음 고르러 가기')),
+                ]),
+              ),
             );
           }
 
@@ -117,6 +128,7 @@ class _SavedCardsPageState extends State<SavedCardsPage> {
                           Text(card.verseReference,
                               style:
                                   TextStyle(color: AppTheme.of(context).muted)),
+                          if (EngagementScope.maybeOf(context)?.safetyBlocked != true)
                           TextButton.icon(
                             icon: const Icon(Icons.ios_share),
                             label: const Text('공유 미리보기'),

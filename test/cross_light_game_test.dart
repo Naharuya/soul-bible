@@ -11,6 +11,9 @@ void main() {
     for (final word in crossLightWords.keys) {
       expect(game.collect(word), isFalse);
       now = now.add(const Duration(seconds: 5));
+      for (final other in crossLightWords.keys.where((key) => key != word)) {
+        expect(game.collect(other), isFalse);
+      }
       expect(game.collect('unknown'), isFalse);
       expect(game.collect(word), isTrue);
       expect(game.collect(word), isFalse);

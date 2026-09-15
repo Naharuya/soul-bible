@@ -11,7 +11,7 @@ const git = args => execFileSync('git', args, { cwd: root, maxBuffer: 64 * 1024 
 const sha = git(['rev-parse', '--verify', `${ref}^{commit}`]).toString().trim();
 // Explicit runtime configuration only, not reviewer registries or corpus exports.
 const paths = ['backend/src', 'backend/public', 'backend/package.json', 'backend/package-lock.json',
-  'backend/config/retrieval-concepts.json', 'backend/config/tradition-branches.json', 'backend/production-corpus-policy'];
+  'backend/config/retrieval-concepts.json', 'backend/config/tradition-branches.json', 'backend/config/privacy-policy.json', 'backend/production-corpus-policy'];
 const entries = git(['ls-tree', '-rz', sha, '--', ...paths]).toString().split('\0').filter(Boolean);
 for (const entry of entries) {
   const [metadata, path] = entry.split('\t');

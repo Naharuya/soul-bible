@@ -1,0 +1,13 @@
+{
+  "version": "2026-09-15",
+  "approved": false,
+  "operatorName": null,
+  "supportEmail": null,
+  "memberRetention": null,
+  "usageRetention": null,
+  "reportsRetentionDays": null,
+  "internationalTransfer": null,
+  "aiProviders": ["OpenAI"],
+  "reviewer": null,
+  "reviewedAt": null
+}

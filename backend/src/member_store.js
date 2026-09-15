@@ -7,6 +7,7 @@ export function createMemberStore({ filename = path.resolve('data', 'members.sql
   fs.mkdirSync(path.dirname(filename), { recursive: true });
   const db = new Database(filename);
   db.pragma('journal_mode = WAL');
+  db.pragma('secure_delete = ON');
   db.exec(`
     CREATE TABLE IF NOT EXISTS members (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,6 +30,12 @@ export function createMemberStore({ filename = path.resolve('data', 'members.sql
   const insert = db.prepare(`INSERT INTO members (name, phone, church_name, login_provider, provider_user_id)
     VALUES (@name, @phone, @churchName, @loginProvider, @providerUserId)`);
   return {
+    eraseVerifiedMember(id) {
+      if (!Number.isSafeInteger(id) || id < 1) throw Error('Invalid member ID');
+      // Only the authenticated administrative workflow calls this method.
+      // Never infer ownership from a submitted phone or providerUserId.
+      return db.prepare('DELETE FROM members WHERE id = ?').run(id).changes > 0;
+    },
     create(member) {
       if (findByPhone.get(member.phone)) {
         const error = new Error('이미 가입된 휴대폰 번호입니다.');

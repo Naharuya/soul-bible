@@ -6,10 +6,12 @@ import 'app_theme.dart';
 
 /// A static star field keeps the atmosphere quiet and avoids animation overhead.
 class SpaceScaffold extends StatelessWidget {
-  const SpaceScaffold({super.key, this.appBar, required this.body});
+  const SpaceScaffold(
+      {super.key, this.appBar, required this.body, this.bottomBar});
 
   final PreferredSizeWidget? appBar;
   final Widget body;
+  final Widget? bottomBar;
 
   @override
   Widget build(BuildContext context) => Stack(
@@ -22,7 +24,26 @@ class SpaceScaffold extends StatelessWidget {
           Scaffold(
             backgroundColor: Colors.transparent,
             appBar: appBar,
-            body: body,
+            body: SafeArea(
+                top: appBar == null,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 840),
+                      child: body),
+                )),
+            bottomNavigationBar: bottomBar == null
+                ? null
+                : SafeArea(
+                    top: false,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
+                      child: Align(
+                          heightFactor: 1,
+                          child: ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 792),
+                              child: bottomBar)),
+                    )),
           ),
         ],
       );
@@ -57,10 +78,17 @@ class _SpacePainter extends CustomPainter {
           ).createShader(rect));
     final random = math.Random(27);
     // Fine stars and a lavender nebula echo the reference without bitmap scaling.
-    canvas.drawRect(rect, Paint()..shader = RadialGradient(
-      center: const Alignment(.65, -.35), radius: .85,
-      colors: [palette.gold.withValues(alpha: .13), palette.cream.withValues(alpha: 0)],
-    ).createShader(rect));
+    canvas.drawRect(
+        rect,
+        Paint()
+          ..shader = RadialGradient(
+            center: const Alignment(.65, -.35),
+            radius: .85,
+            colors: [
+              palette.gold.withValues(alpha: .13),
+              palette.cream.withValues(alpha: 0)
+            ],
+          ).createShader(rect));
     for (var i = 0; i < 180; i++) {
       final point = Offset(
           random.nextDouble() * size.width, random.nextDouble() * size.height);
@@ -88,12 +116,20 @@ class _SpacePainter extends CustomPainter {
     canvas.restore();
     final horizon = Rect.fromLTWH(-size.width * .35, size.height * .92,
         size.width * 1.7, size.height * .45);
-    canvas.drawOval(horizon, Paint()..shader = LinearGradient(
-      begin: Alignment.topCenter, end: Alignment.bottomCenter,
-      colors: [palette.gold.withValues(alpha: .14), palette.cream],
-    ).createShader(horizon));
-    canvas.drawOval(horizon, Paint()..color = palette.green.withValues(alpha: .22)
-      ..style = PaintingStyle.stroke..strokeWidth = 1.2);
+    canvas.drawOval(
+        horizon,
+        Paint()
+          ..shader = LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [palette.gold.withValues(alpha: .14), palette.cream],
+          ).createShader(horizon));
+    canvas.drawOval(
+        horizon,
+        Paint()
+          ..color = palette.green.withValues(alpha: .22)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1.2);
   }
 
   @override
